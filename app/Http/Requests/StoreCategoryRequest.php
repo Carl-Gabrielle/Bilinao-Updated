@@ -20,10 +20,10 @@ class StoreCategoryRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            'image' => ['nullable', 'image'],
-            "name"=>['required','max:255'],
-        ];
-    }
+{
+    return [
+        'image' => ['nullable', 'image', 'mimes:jpeg,png,jpg,gif,svg', 'max:2048'],
+        'name' => ['required', 'max:255', 'unique:categories,name'],
+    ];
+}
 }

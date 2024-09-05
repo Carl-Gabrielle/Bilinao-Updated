@@ -4,6 +4,7 @@ import InputLabel from '@/Components/InputLabel';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
 import { Head, Link, useForm } from '@inertiajs/react';
+import Carousel from '@/Components/Carousel';
 
 export default function Register() {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -24,8 +25,17 @@ export default function Register() {
     return (
         <GuestLayout>
             <Head title="Register" />
-
-            <form onSubmit={submit}>
+            <div className=" rounded-t-3xl sm:rounded-none scroll max-w-4xl overflow-y-auto lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-white ">
+        <h1 id="text" className="text-2xl font-bold text-gray-800 mb-2">
+        Welcome to Bili-Nao!👋
+        </h1>
+        <p className="text-gray-600 mb-8">
+            Already have an account?{' '}
+            <Link href="/login" className="text-lime-700 font-semibold">
+                Login
+            </Link>
+        </p>
+        <form onSubmit={submit}>
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
@@ -77,7 +87,7 @@ export default function Register() {
                     <InputError message={errors.password} className="mt-2" />
                 </div>
 
-                <div className="mt-4">
+                <div className="mt-4 mb-6">
                     <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
 
                     <TextInput
@@ -93,20 +103,14 @@ export default function Register() {
 
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
-
-                <div className="flex items-center justify-end mt-4">
-                    <Link
-                        href={route('login')}
-                        className="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
-                    >
-                        Already registered?
-                    </Link>
-
-                    <PrimaryButton className="ms-4" disabled={processing}>
-                        Register
-                    </PrimaryButton>
-                </div>
+                <div className="pb-10">
+                <PrimaryButton disabled={processing}>
+                    Signup  
+                </PrimaryButton>
+            </div>
             </form>
+        </div>
+        <Carousel/>
         </GuestLayout>
     );
 }

@@ -11,7 +11,7 @@ class UpdateSellerRequest extends FormRequest
      */
     public function authorize(): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -20,9 +20,18 @@ class UpdateSellerRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            //
-        ];
-    }
+{
+    return [
+        'name' => 'required|string|max:255',
+        'address' => 'required|string|max:255',
+        'contact_number' => [
+            'required',
+            'string',
+            'max:15',
+            'regex:/^(?:\+63|0)\d{10}$/'
+        ],
+        'email' => 'required|string|email|max:255|unique:sellers,email,' . $this->route('seller')->id,
+    ];
+}
+
 }

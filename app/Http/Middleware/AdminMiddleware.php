@@ -20,7 +20,6 @@ class AdminMiddleware
         if (Auth::check() && Auth::user()->role === 'admin') {
             return $next($request);
         }
-
         return redirect('/dashboard');
     }
 }

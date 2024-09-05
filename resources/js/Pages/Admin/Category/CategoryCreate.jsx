@@ -50,7 +50,7 @@ export default function Create({ auth }) {
                 }
             >
                 <Head title="Create category" />
-                    <div className="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8">
+                    <div className="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8 pt-14">
                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                             <form onSubmit={onSubmit} className="p-4 sm:p-8 bg-white shadow-md sm:rounded-lg">
                             {imagePreview && (
@@ -96,12 +96,12 @@ export default function Create({ auth }) {
                                 <div className="mt-4 text-right">
                                     <Link
                                         href={route("category.index")}
-                                        className="bg-gray-100 py-1 px-3 text-gray-800 rounded shadow transition-all hover:bg-gray-200 mr-2"
+                                        className=" py-1 px-3 text-gray-800 rounded  border border-primary mr-2"
                                     >
                                         Cancel
                                     </Link>
                                     <button
-                                        className="bg-emerald-500 py-1 px-3 text-white rounded shadow transition-all hover:bg-emerald-600"
+                                        className="bg-primary py-1 px-3 text-white rounded shadow transition-all "
                                         disabled={processing}
                                     >
                                         Submit

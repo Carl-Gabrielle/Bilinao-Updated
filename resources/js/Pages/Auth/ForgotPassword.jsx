@@ -2,7 +2,7 @@ import GuestLayout from '@/Layouts/GuestLayout';
 import InputError from '@/Components/InputError';
 import PrimaryButton from '@/Components/PrimaryButton';
 import TextInput from '@/Components/TextInput';
-import { Head, useForm } from '@inertiajs/react';
+import { Head, useForm,Link} from '@inertiajs/react';
 
 export default function ForgotPassword({ status }) {
     const { data, setData, post, processing, errors } = useForm({
@@ -16,9 +16,11 @@ export default function ForgotPassword({ status }) {
     };
 
     return (
-        <GuestLayout>
+        <>
             <Head title="Forgot Password" />
-
+        <div className='flex flex-col items-center justify-center min-h-screen bg-gray-100'>
+        <div className='w-full  max-w-lg mx-auto px-4 '>
+        <div className="bg-white p-8 rounded-2xl shadow-lg ">
             <div className="mb-4 text-sm text-gray-600">
                 Forgot your password? No problem. Just let us know your email address and we will email you a password
                 reset link that will allow you to choose a new one.
@@ -39,12 +41,22 @@ export default function ForgotPassword({ status }) {
 
                 <InputError message={errors.email} className="mt-2" />
 
-                <div className="flex items-center justify-end mt-4">
-                    <PrimaryButton className="ms-4" disabled={processing}>
+                            <div className="flex flex-col items-center space-y-4 mt-6">
+                <div className="w-full flex justify-end">
+                    <PrimaryButton disabled={processing}>
                         Email Password Reset Link
                     </PrimaryButton>
                 </div>
+                <div className="w-full flex justify-center text-md font-semibold text-slate-800">
+                    <Link href="/login" >
+                        Back to Login
+                    </Link>
+                </div>
+            </div>
             </form>
-        </GuestLayout>
+            </div>
+            </div>
+            </div>
+            </>
     );
 }

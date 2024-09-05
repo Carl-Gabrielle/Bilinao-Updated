@@ -15,6 +15,9 @@ export default {
             fontFamily: {
                 sans: ['Figtree', ...defaultTheme.fontFamily.sans],
             },
+            colors: {
+                'primary': 'rgb(77, 124, 15)', // Lime-700 color
+            },
         },
     },
 

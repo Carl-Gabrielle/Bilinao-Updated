@@ -1,6 +1,7 @@
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import DivContainer from "@/Components/DivContainer";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm,Link } from "@inertiajs/react";
+import { IoCreateOutline } from "react-icons/io5";
 import { useEffect } from "react";
 
 export default function SellerCreate({ auth }) {
@@ -33,15 +34,10 @@ export default function SellerCreate({ auth }) {
         <>
             <AuthenticatedLayout
                 user={auth.user}
-                header={
-                    <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
-                        Seller Create
-                    </h2>
-                }
             >
                 <Head title="Seller" />
-                <DivContainer>
-                    <div className="mt-10 bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                <div className="max-w-7xl mx-auto sm:px-20 lg:px-8 pb-10 pt-24 ">
+                    <div className=" bg-white overflow-hidden shadow-sm sm:rounded-lg p-6 ">
                         <form onSubmit={submit}>
                             <div className="mb-4">
                                 <label className="block text-gray-700 text-sm font-bold mb-2" htmlFor="name">
@@ -52,7 +48,7 @@ export default function SellerCreate({ auth }) {
                                     type="text"
                                     value={data.name}
                                     onChange={(e) => setData("name", e.target.value)}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 />
                                 {errors.name && <p className="text-red-500 text-xs mt-1">{errors.name}</p>}
                             </div>
@@ -66,7 +62,7 @@ export default function SellerCreate({ auth }) {
                                     type="text"
                                     value={data.address}
                                     onChange={(e) => setData("address", e.target.value)}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 />
                                 {errors.address && <p className="text-red-500 text-xs mt-1">{errors.address}</p>}
                             </div>
@@ -80,7 +76,7 @@ export default function SellerCreate({ auth }) {
                                     type="text"
                                     value={data.contact_number}
                                     onChange={(e) => setData("contact_number", e.target.value)}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 />
                                 {errors.contact_number && <p className="text-red-500 text-xs mt-1">{errors.contact_number}</p>}
                             </div>
@@ -94,23 +90,28 @@ export default function SellerCreate({ auth }) {
                                     type="email"
                                     value={data.email}
                                     onChange={(e) => setData("email", e.target.value)}
-                                    className="shadow appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                                    className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                 />
                                 {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
                             </div>
-
-                            <div className="flex items-center justify-between">
+                            <div className="flex items-center ">
+                                <Link
+                                        href={route("seller.index")}
+                                        className=" py-1 px-3 text-gray-800 rounded  border border-primary mr-2"
+                                    >
+                                        Cancel
+                                    </Link>
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+                                    className="bg-primary text-white font-bold py-1 px-3 rounded focus:outline-none focus:shadow-outline flex items-center"
                                 >
-                                    Create Seller
+                                <IoCreateOutline className="mr-2" /> Create Seller
                                 </button>
                             </div>
                         </form>
                     </div>
-                </DivContainer>
+                    </div>
             </AuthenticatedLayout>
         </>
     );

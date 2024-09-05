@@ -16,13 +16,12 @@ class CategoryController extends Controller
     public function index()
     {
         $query = Category::query();
-        $category = $query->paginate(10);
-        return Inertia('Admin/Category/CategoryIndex',[
+        $category = $query->paginate(7);
+        return Inertia('Admin/Category/CategoryIndex', [
             'category' => CategoryResource::collection($category),
-            'success'=>session('success'),
+            'success' => session('success'),
         ]);      
     }
-
     /**
      * Show the form for creating a new resource.
      */
@@ -96,7 +95,6 @@ class CategoryController extends Controller
         Storage::disk('public')->deleteDirectory
         (dirname($category->image_path));
     }
-    return to_route('category.index')
-    ->with('success', "Category \"$name\" Was Deleted");
+    return to_route('category.index');
     }
 }
