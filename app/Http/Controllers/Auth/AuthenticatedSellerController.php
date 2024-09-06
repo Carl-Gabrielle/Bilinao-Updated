@@ -29,11 +29,12 @@ class AuthenticatedSellerController extends Controller
      */
     public function store(SellerLoginRequest $request): RedirectResponse
     {
+
         $credentials = $request->only('username', 'password');
         
-        if (Auth::guard('seller')->attempt($credentials)) {
+        if (auth()->guard('seller')->attempt($credentials)) {
             $request->session()->regenerate();
-            return redirect()->intended(route('seller.dashboard'));
+            return redirect()->intended(route('seller.dashboard',absolute:false));
         }
         return back()->withErrors([
             'username' => 'The provided credentials do not match our records.',

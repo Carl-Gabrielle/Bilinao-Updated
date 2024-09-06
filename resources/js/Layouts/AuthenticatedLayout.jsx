@@ -1,127 +1,143 @@
 import { useState } from 'react';
-import ApplicationLogo from '@/Components/ApplicationLogo';
-import Dropdown from '@/Components/Dropdown';
+import {  FaUser } from 'react-icons/fa';
+import { FaRegUser } from "react-icons/fa";
+import { LuLogOut } from "react-icons/lu";
+import { IoHomeOutline } from "react-icons/io5";
+import { BiCategory } from "react-icons/bi";
+import { MdMenuOpen } from "react-icons/md";
+import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import NavLink from '@/Components/NavLink';
-import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
 
 export default function AuthenticatedLayout({ user, header, children }) {
-    const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
+    const [isSidebarOpen, setIsSidebarOpen] = useState(true);
+
+    const toggleSidebar = () => {
+        setIsSidebarOpen(!isSidebarOpen);
+    };
 
     return (
-        <div className="min-h-screen bg-gray-100 ">
-            <nav className="bg-white border-b border-gray-100 fixed w-full top-0 z-10 ">
-                <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-                    <div className="flex justify-between h-16">
-                        <div className="flex">
-                            <div className="shrink-0 flex items-center">
-                                <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
-                                </Link>
-                            </div>
-                            <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
-                                    Dashboard
-                                </NavLink>
-                                <NavLink href={route('category.index')} active={route().current('category.index')}>
-                                    Category
-                                </NavLink>
-                                <NavLink href={route('seller.index')} active={route().current('seller.index')}>
-                                    Sellers
-                                </NavLink>
-                            </div>
-                        </div>
-                        <div className="hidden sm:flex sm:items-center sm:ms-6">
-                            <div className="ms-3 relative">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <span className="inline-flex rounded-md">
-                                            <button
-                                                type="button"
-                                                className="inline-flex items-center px-3 py-2 border border-transparent text-sm leading-4 font-medium rounded-md text-gray-500 bg-white hover:text-gray-700 focus:outline-none transition ease-in-out duration-150"
-                                            >
-                                                {user.name}
-                                                <svg
-                                                    className="ms-2 -me-0.5 h-4 w-4"
-                                                    xmlns="http://www.w3.org/2000/svg"
-                                                    viewBox="0 0 20 20"
-                                                    fill="currentColor"
-                                                >
-                                                    <path
-                                                        fillRule="evenodd"
-                                                        d="M5.293 7.293a1 1 0 011.414 0L10 10.586l3.293-3.293a1 1 0 111.414 1.414l-4 4a1 1 0 01-1.414 0l-4-4a1 1 0 010-1.414z"
-                                                        clipRule="evenodd"
-                                                    />
-                                                </svg>
-                                            </button>
-                                        </span>
-                                    </Dropdown.Trigger>
-
-                                    <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
-                                        <Dropdown.Link href={route('logout')} method="post" as="button">
-                                            Log Out
-                                        </Dropdown.Link>
-                                    </Dropdown.Content>
-                                </Dropdown>
-                            </div>
-                        </div>
-
-                        <div className="-me-2 flex items-center sm:hidden">
-                            <button
-                                onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}
-                                className="inline-flex items-center justify-center p-2 rounded-md text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 focus:text-gray-500 transition duration-150 ease-in-out"
-                            >
-                                <svg className="h-6 w-6" stroke="currentColor" fill="none" viewBox="0 0 24 24">
-                                    <path
-                                        className={!showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M4 6h16M4 12h16M4 18h16"
-                                    />
-                                    <path
-                                        className={showingNavigationDropdown ? 'inline-flex' : 'hidden'}
-                                        strokeLinecap="round"
-                                        strokeLinejoin="round"
-                                        strokeWidth="2"
-                                        d="M6 18L18 6M6 6l12 12"
-                                    />
-                                </svg>
-                            </button>
-                        </div>
-                    </div>
+        <div className="min-h-screen bg-gray-100">
+            {/* Sidebar */}
+            <div className={`fixed top-0 hidden sm:block sm:top-5 left-0 sm:left-5 bottom-0 sm:bottom-5 bg-gradient-to-br from-white to-gray-50 rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${isSidebarOpen ? 'w-72 px-6' : 'w-28 px-4'}`}>
+    <div className="flex flex-col justify-between h-full">
+        <div className="mt-6">
+            {/* Burger Menu */}
+            <div className="flex justify-between items-center mb-6">
+                <h3 className="text-gray-600 text-lg font-semibold tracking-wider">Bilinao</h3>
+                <button onClick={toggleSidebar} className="text-gray-600 focus:outline-none">
+                    <MdMenuOpen className="w-6 h-6" />
+                </button>
+            </div>
+            {/* User Info */}
+            <NavLink href={route('profile.edit')} active={route().current('profile.edit')} className="flex items-center space-x-4 mb-6">
+                <div className='w-14 h-14 flex items-center justify-center rounded-full bg-gray-100'>
+                    <img src="" alt="" className="w-12 h-12 rounded-full" />
                 </div>
-
-                <div className={(showingNavigationDropdown ? 'block' : 'hidden') + ' sm:hidden'}>
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink href={route('dashboard')} active={route().current('dashboard')}>
-                            Dashboard
-                        </ResponsiveNavLink>
+                {isSidebarOpen && (
+                    <div className="flex flex-col">
+                        <span className="font-medium">{user.name}</span>
+                        <span className={`rounded-md px-4 py-1 mt-1 text-xs flex items-center justify-center ${
+                            route().current('profile.edit') ? 'bg-white text-gray-800' : 'bg-blue-700 text-white'
+                        }`}>
+                            System
+                        </span>
                     </div>
-
-                    <div className="pt-4 pb-1 border-t border-gray-200">
-                        <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">{user.name}</div>
-                            <div className="font-medium text-sm text-gray-500">{user.email}</div>
-                        </div>
-                        <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
-                            <ResponsiveNavLink href={route('category.index')}>Category</ResponsiveNavLink>
-                            <ResponsiveNavLink href={route('seller.index')}>Sellers</ResponsiveNavLink>
-                            <ResponsiveNavLink method="post" href={route('logout')} as="button">
-                                Log Out
-                            </ResponsiveNavLink>
-                        </div>
+                )}
+            </NavLink>
+            <div className="space-y-4">
+                <NavLink
+                    href={route('dashboard')}
+                    active={route().current('dashboard')}
+                    className='flex items-center justify-between rounded-lg transition-colors px-4 py-3'
+                >
+                    <div className="flex items-center space-x-3">
+                        <IoHomeOutline
+                            className={`w-5 h-5 ${
+                                route().current('dashboard') ? 'text-white' : 'text-gray-600'
+                            }`}
+                        />
+                        <span className="font-medium">Dashboard</span>
                     </div>
+                    <MdOutlineKeyboardArrowRight
+                        className={`w-5 h-5 ${
+                            route().current('dashboard') ? 'text-white' : 'text-gray-600'
+                        }`}
+                    />
+                </NavLink>
+                <NavLink
+                    href={route('category.index')}
+                    active={route().current('category.index')}
+                    className='flex items-center justify-between rounded-lg transition-colors px-4 py-3'
+                >
+                    <div className="flex items-center space-x-3">
+                        <BiCategory
+                            className={`w-5 h-5 ${
+                                route().current('category.index') ? 'text-white' : 'text-gray-600'
+                            }`}
+                        />
+                        <span className="font-medium">Category</span>
+                    </div>
+                    <MdOutlineKeyboardArrowRight
+                        className={`w-5 h-5 ${
+                            route().current('category.index') ? 'text-white' : 'text-gray-600'
+                        }`}
+                    />
+                </NavLink>
+                <NavLink
+                    href={route('seller.index')}
+                    active={route().current('seller.index')}
+                    className='flex items-center justify-between rounded-lg transition-colors px-4 py-3'
+                >
+                    <div className="flex items-center space-x-3">
+                        <FaRegUser
+                            className={`w-5 h-5 ${
+                                route().current('seller.index') ? 'text-white' : 'text-gray-600'
+                            }`}
+                        />
+                        <span className="font-medium">Sellers</span>
+                    </div>
+                    <MdOutlineKeyboardArrowRight
+                        className={`w-5 h-5 ${
+                            route().current('seller.index') ? 'text-white' : 'text-gray-600'
+                        }`}
+                    />
+                </NavLink>
+            </div>
+        </div>
+        <div className="mb-6">
+            <NavLink
+                href={route('logout')}
+                method="post" as="button"
+                active={route().current('logout')}
+                className='flex items-center justify-between rounded-lg transition-colors px-4 py-3'
+            >
+                <div className="flex items-center space-x-3">
+                    <LuLogOut
+                        className={`w-5 h-5 ${
+                            route().current('logout') ? 'text-white' : 'text-red-600'
+                        }`}
+                    />
+                    <span className="font-medium text-red-600">Logout</span>
                 </div>
-            </nav>
-            {header && (
-                <header className="bg-white shadow">
-                    <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
-                </header>
-            )}
-            <main className='pt-10 ' >{children}</main>
+                <MdOutlineKeyboardArrowRight
+                    className={`w-5 h-5 ${
+                        route().current('logout') ? 'text-white' : 'text-red-600'
+                    }`}
+                />
+            </NavLink>
+        </div>
+    </div>
+</div>
+
+            <div className={`transition-all duration-300 ease-in-out ${isSidebarOpen ? 'ml-72' : 'ml-32'}`}>
+                {header && (
+                    <header className="bg-white shadow">
+                        <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">{header}</div>
+                    </header>
+                )}
+                <main className="px-6">{children}</main>
+            </div>
         </div>
     );
 }

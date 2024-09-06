@@ -1,35 +1,56 @@
-import React from 'react';
-import { Head, Link, usePage } from '@inertiajs/react';
-import { useState, useEffect } from 'react';
+import React, { useState, useEffect } from 'react';
+import { Head, Link, usePage, router } from '@inertiajs/react';
 import { FaCheck, FaPesoSign } from "react-icons/fa6";
 import SellerLayout from '@/Layouts/SellerLayout';
 import { LiaEditSolid } from 'react-icons/lia';
 import { RiDeleteBinLine } from "react-icons/ri";
 import { MdAdd } from "react-icons/md";
 import Pagination from '@/Components/Pagination';
+import ConfirmationModal from '@/Components/ConfirmationModal'; 
 
 export default function ShowProduct({ success }) {
     const [visibleSuccess, setVisibleSuccess] = useState(!!success);
     const { props } = usePage();
     const user = props.auth.user;
     const products = props.products || [];
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [productToDelete, setProductToDelete] = useState(null);
 
     useEffect(() => {
         if (success) {
             const timer = setTimeout(() => {
                 setVisibleSuccess(false);
-            }, 3000); 
-            return () => clearTimeout(timer); 
+            }, 3000);
+            return () => clearTimeout(timer);
         }
     }, [success]);
+    
+    const handleDeleteClick = (product) => {
+        setProductToDelete(product);
+        setIsModalOpen(true);
+    };
+
+    const handleConfirmDelete = () => {
+        if (productToDelete) {
+            router.delete(route('products.destroy', productToDelete.id), {
+                onSuccess: () => {
+                    setIsModalOpen(false);
+                    setProductToDelete(null);
+                }
+            });
+        }
+    };
 
     return (
         <SellerLayout user={user}>
             <Head title="Show Products" />
             <div className="container mx-auto px-4 py-6">
                 {visibleSuccess && (
-                    <div className="mt-3 bg-green-600 py-2 px-4 text-white rounded mb-5 flex items-center justify-center w-full">
-                        <FaCheck className="mr-2" /> {success}
+                    <div className="mt-3 bg-gray-50 py-3 px-5 rounded-lg mb-5 flex items-center justify-center w-1/2 ml-auto shadow-lg">
+                        <div className="bg-green-500 p-1 rounded-full flex items-center justify-center">
+                            <FaCheck className="text-white text-lg" />
+                        </div>
+                        <span className="ml-3 text-gray-700 font-medium">{success}</span>
                     </div>
                 )}
                 <div className='px-10 bg-white py-8 rounded-3xl'>
@@ -85,9 +106,12 @@ export default function ShowProduct({ success }) {
                                                 <Link href={`/products/${product.id}/edit`} className="flex items-center justify-center">
                                                     <LiaEditSolid className="w-5 h-5 mr-2" />
                                                 </Link>
-                                                <Link className="flex items-center justify-center">
+                                                <button 
+                                                    onClick={() => handleDeleteClick(product)} 
+                                                    className="flex items-center justify-center text-red-600"
+                                                >
                                                     <RiDeleteBinLine />
-                                                </Link>
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
@@ -100,6 +124,14 @@ export default function ShowProduct({ success }) {
                     )}
                 </div>
             </div>
+            
+            {/* Confirmation Modal */}
+            <ConfirmationModal 
+                isOpen={isModalOpen} 
+                onClose={() => setIsModalOpen(false)} 
+                onConfirm={handleConfirmDelete} 
+                message={`Are you sure you want to delete ${productToDelete?.name}?`}
+            />
         </SellerLayout>
     );
 }

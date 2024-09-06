@@ -1,12 +1,13 @@
 import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import DeleteUserForm from './Partials/DeleteUserForm';
-import UpdatePasswordForm from './Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from './Partials/UpdateProfileInformationForm';
+import DeleteUserForm from '../Profile/Partials/DeleteUserForm';
+import CustomerLayout from '@/Layouts/CustomerLayout';
+import UpdatePasswordForm from '../Profile/Partials/UpdatePasswordForm';
+import UpdateProfileInformationForm from '../Profile/Partials/UpdateProfileInformationForm';
 import { Head } from '@inertiajs/react';
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     return (
-        <AuthenticatedLayout
+        <CustomerLayout
             user={auth.user}
         >
             <Head title="Profile" />
@@ -27,6 +28,6 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
 
                 </div>
             </div>
-        </AuthenticatedLayout>
+        </CustomerLayout>
     );
 }

@@ -61,19 +61,20 @@ const SellerDashboard = ({ categories}) => {
         <SellerLayout user={user}>
             <Head title="Add Product" />
             <div className="container mx-auto px-4 py-6">
-                <div className='px-10 py-8 bg-white rounded-3xl'>
+                <div className='px-7 py-8 '>
                     <form onSubmit={handleSubmit}>
-                        <div className='flex items-center justify-between'>
-                            <h1 className="sm:text-2xl text-sm  font-bold mb-6">Add New Product</h1>
-                            <button
-                                type="submit"
-                                className="flex text-xs items-center px-6 py-3 bg-lime-700 text-white font-semibold rounded-md shadow-lg"
-                            >
-                                <MdPublish className='mr-2' /> Publish Product
-                            </button>
-                        </div>
+                    <div className='flex items-center justify-between '>
+                <h1 className="text-xl  font-bold text-gray-800 mb-0">Add a New Product</h1>
+                <button
+                    type="submit"
+                    className="flex items-center text-sm px-4 py-2 sm:px-6 sm:py-3  text-white font-semibold rounded-lg shadow-md bg-lime-700 "
+                >
+                    <MdPublish className='mr-2 text-lg sm:text-md' /> Publish Product
+                </button>
+            </div>
+
                         <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5'>
-                            <div className='w-full col-span-2 border px-6 py-4 rounded-3xl'>
+                            <div className='w-full col-span-2 bg-white px-6 py-4 rounded-3xl'>
                                 <div className="mb-4">
                                     <SectionHeader text="Product Information" />
                                     <label htmlFor="title" className="text-gray-700 text-sm font-medium flex items-center">
@@ -105,7 +106,7 @@ const SellerDashboard = ({ categories}) => {
                                     <Label text="Maximum of 255 words. Exceeding this limit requires shortening." />
                                 </div>
                             </div>
-                            <div className="border h-96 px-6 py-4 rounded-3xl  w-full">
+                            <div className="bg-white h-96 px-6 py-4 rounded-3xl  w-full">
                                 <SectionHeader text="Pricing & Stock" />
                                 <div className="mb-4">
                                     <label className="text-sm font-medium text-gray-700 flex items-center">
@@ -138,7 +139,7 @@ const SellerDashboard = ({ categories}) => {
                             </div>
                         </div>
                         <div className='grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5'>
-                            <div className="col-span-2 border px-6 py-4 rounded-3xl  w-full">
+                            <div className="col-span-2 bg-white px-6 py-4 rounded-3xl  w-full">
                                 <SectionHeader text="Product Images" />
                                 <div className="mb-4">
                                     <div className="w-full border-2 border-dashed rounded-md h-72 flex items-center justify-center relative">
@@ -200,7 +201,7 @@ const SellerDashboard = ({ categories}) => {
                                 )}
                             </div>
 
-                            <div className="border h-96 px-6 py-4 rounded-3xl w-full">
+                            <div className="bg-white h-96 px-6 py-4 rounded-3xl w-full">
                                 <SectionHeader text="Category Selection" />
                                 <div className="mb-4">
                                     <label className="flex items-center text-sm font-medium text-gray-700 ">

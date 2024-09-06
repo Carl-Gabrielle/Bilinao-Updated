@@ -14,7 +14,17 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
-   
+    public function productsByCategory(Category $category)
+{
+    $products = Product::where('category_id', $category->id)
+        ->with(['images', 'category'])
+        ->paginate(10);
+
+    return Inertia::render('Customer/CategoryProducts', [
+        'products' => $products,
+        'category' => $category->name,
+    ]);
+}
     public function index()
     {
         $user = Auth::user();
@@ -90,14 +100,20 @@ class ProductController extends Controller
      */
     public function update(UpdateProductRequest $request, Product $product)
     {
-    
+        $validatedData = $request->validated();
+        $product->update($validatedData);
+        return redirect()->route('products.index')->with('success', 'Product updated successfully.');
     }
+    
+
 
     /**
      * Remove the specified resource from storage.
      */
     public function destroy(Product $product)
-    {
-        //
-    }
+{
+    $product->delete();
+    return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+}
+
 }

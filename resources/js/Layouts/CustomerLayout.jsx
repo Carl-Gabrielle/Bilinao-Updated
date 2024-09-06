@@ -7,10 +7,9 @@ import { Link } from '@inertiajs/react';
 
 export default function AuthenticatedLayout({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
-
     return (
         <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100">
+            <nav className="bg-white border-b border-gray-100 fixed w-full z-20 ">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
@@ -20,14 +19,17 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 </Link>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
-                                <NavLink href={route('dashboard')} active={route().current('dashboard')}>
+                                <NavLink href={route('customer.index')} active={route().current('customer.index')}>
                                     Home
                                 </NavLink>
-                                <NavLink href={route('category.index')} active={route().current('category.index')}>
+                                <NavLink href={route('')} active={route().current('')}>
                                     About Us
                                 </NavLink>
-                                <NavLink href={route('seller.index')} active={route().current('seller.index')}>
+                                <NavLink  >
                                     Shop
+                                </NavLink>
+                                <NavLink>
+                                    Categories
                                 </NavLink>
                             </div>
                         </div>
@@ -56,9 +58,8 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             </button>
                                         </span>
                                     </Dropdown.Trigger>
-
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('profile.edit')}>Profile</Dropdown.Link>
+                                        <Dropdown.Link href={route('customer.index')}>Profile</Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
                                         </Dropdown.Link>
@@ -66,7 +67,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 </Dropdown>
                             </div>
                         </div>
-
                         <div className="-me-2 flex items-center sm:hidden">
                             <button
                                 onClick={() => setShowingNavigationDropdown((previousState) => !previousState)}

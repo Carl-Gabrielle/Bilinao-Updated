@@ -12,18 +12,19 @@ import SellerInput from '@/Components/SellerInput';
 export default function ProductEdit() {
     const { props } = usePage();
     const product = props.product;
-    const { data, setData, patch, processing, errors } = useForm({
+    const { data, setData, post, processing, errors } = useForm({
         name: product.name || '',
         description: product.description || '',
         price: product.price || '',
         stock: product.stock || '',
-        images: product.images || [] // Assuming images is an array
+        images: product.images || [], 
+        _method: 'PUT'
     });
     const [newImages, setNewImages] = useState([]);
 
     const handleImageChange = (index, event) => {
         const newImagesArray = [...data.images];
-        newImagesArray[index].image_path = event.target.value; // Update the image path
+        newImagesArray[index].image_path = event.target.value; 
         setData('images', newImagesArray);
     };
 
@@ -34,11 +35,10 @@ export default function ProductEdit() {
 
     const handleImageUpload = (event) => {
         const files = Array.from(event.target.files);
-        // Assuming a method to handle image upload to the server and get the URL
         files.forEach(file => {
             const reader = new FileReader();
             reader.onloadend = () => {
-                setData('images', [...data.images, { image_path: reader.result }]); // For demo purposes
+                setData('images', [...data.images, { image_path: reader.result }]);
             };
             reader.readAsDataURL(file);
         });
@@ -46,7 +46,7 @@ export default function ProductEdit() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        patch(route('products.update', product.id), {
+        post(route('products.update', product.id), {
             onSuccess: () => {
                 // Handle success
             },

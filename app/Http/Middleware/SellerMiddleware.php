@@ -14,12 +14,10 @@ class SellerMiddleware
      *
      * @param  \Closure(\Illuminate\Http\Request): (\Symfony\Component\HttpFoundation\Response)  $next
      */
-//     public function handle(Request $request, Closure $next, $guard = 'seller'): Response
-// {
-//     if (!Auth::guard($guard)->check()) {
-//         return redirect()->route('seller.login');
-//     }
-//     return $next($request);
+    
+// public function handle (Request $request, Closure $next):Response
+//  {
+//     dd(Auth::seller());
 // }
 
 }

@@ -20,7 +20,7 @@ return Application::configure(basePath: dirname(__DIR__))
         $middleware->alias([
             'admin'=>AdminMiddleware::class,
             'customer'=>CustomerMiddleware::class,
-            'seller'=>SellerMiddleware::class,
+            // 'seller'=>SellerMiddleware::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

@@ -57,14 +57,14 @@ export default function SellerIndex({ auth, sellers, success }) {
                             <FaCheck className="mr-2" /> {success}
                         </div>
                     )}
-                    <div className="mt-10 bg-white overflow-hidden shadow-sm sm:rounded-lg p-6  ">
+                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6  ">
                     <div className="flex justify-between items-center mb-5">
                         <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
                             Sellers
                         </h2>
                         <Link
                             href={route("seller.create")}
-                            className="bg-primary py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                            className="bg-lime-600 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
                         >
                         <MdAdd className='mr-2 size-4'/> Add a New Seller
                         </Link>

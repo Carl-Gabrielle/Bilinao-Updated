@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerController;
@@ -12,13 +13,13 @@ use App\Http\Controllers\Auth\AuthenticatedSellerController;
 use App\Http\Controllers\SellerDashboardController;
 
 
-Route::middleware('guest:seller')->group(function () {
+Route::middleware('guest')->group(function () {
     Route::get('seller/login', [AuthenticatedSellerController::class, 'create'])
                 ->name('seller.login');
-
     Route::post('seller/login', [AuthenticatedSellerController::class, 'store'])
                 ->name('seller.authenticate');
 });
+
 
 Route::middleware('auth:seller')->group(function () {
     Route::get('seller/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
@@ -46,7 +47,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     // Customer routes
     Route::middleware('customer')->group(function () {
-        
+        Route::resource('customer', CustomerController::class);
+        Route::resource('category', CategoryController::class);
+        Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
     });
     
 });

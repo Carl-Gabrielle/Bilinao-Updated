@@ -42,12 +42,15 @@ export default function Index({ auth, category, success,categoryCount }) {
                 user={auth.user}
             >
                 <Head title="Category" />
-                <div className="py-12 bg-gray-50 min-h-screen">
+                <div className="  min-h-screen">
                     <div className="max-w-7xl mx-auto sm:px-20 lg:px-8 pb-10  pt-12">
                         {visibleSuccess && (
-                            <div className="mt-3 bg-green-600 py-2 px-4 text-white rounded mb-5 flex items-center justify-center w-full">
-                                <FaCheck className="mr-2" /> {success}
+                            <div className="mt-3 bg-gray-50 py-3 px-5 rounded-lg mb-5 flex items-center justify-center w-1/2 ml-auto shadow-lg">
+                            <div className="bg-green-500 p-1 rounded-full flex items-center justify-center">
+                                <FaCheck className="text-white text-lg" />
                             </div>
+                            <span className="ml-3 text-gray-700 font-medium">{success}</span>
+                        </div>
                         )}
                         <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
                         <div className="flex justify-between items-center mb-5">
@@ -56,7 +59,7 @@ export default function Index({ auth, category, success,categoryCount }) {
                         </h2>
                         <Link
                             href={route("category.create")}
-                            className="bg-primary py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                            className="bg-lime-600 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
                         >
                         <MdAdd className='mr-2 size-4'/> Add New Category
                         </Link>
@@ -78,7 +81,7 @@ export default function Index({ auth, category, success,categoryCount }) {
                                                 </div>
                                                 <Link
                                                     href={route("category.edit", item.id)}
-                                                    className="border border-lime-700 text-slate-800 px-3 py-2 rounded"
+                                                    className="border border-lime-600 text-slate-800 px-3 py-2 rounded"
                                                 >
                                                     <LiaEditSolid />
                                                 </Link>
@@ -87,7 +90,7 @@ export default function Index({ auth, category, success,categoryCount }) {
                                                         e.preventDefault();
                                                         openModal(item);
                                                     }}
-                                                    className="bg-primary text-white px-3 py-2 rounded"
+                                                    className="bg-lime-600 text-white px-3 py-2 rounded"
                                                 >
                                                     <RiDeleteBinLine />
                                                 </Link>
