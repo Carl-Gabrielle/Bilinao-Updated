@@ -6,6 +6,7 @@ import { LiaEditSolid } from "react-icons/lia";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import ConfirmationModal from "@/Components/ConfirmationModal";
+import DivContainer from '@/Components/DivContainer';
 export default function Index({ auth, category, success,categoryCount }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [categoryToDelete, setCategoryToDelete] = useState(null);
@@ -42,8 +43,7 @@ export default function Index({ auth, category, success,categoryCount }) {
                 user={auth.user}
             >
                 <Head title="Category" />
-                <div className="  min-h-screen">
-                    <div className="max-w-7xl mx-auto sm:px-20 lg:px-8 pb-10  pt-12">
+                    <DivContainer>
                         {visibleSuccess && (
                             <div className="mt-3 bg-gray-50 py-3 px-5 rounded-lg mb-5 flex items-center justify-center w-1/2 ml-auto shadow-lg">
                             <div className="bg-green-500 p-1 rounded-full flex items-center justify-center">
@@ -100,8 +100,7 @@ export default function Index({ auth, category, success,categoryCount }) {
                                 </ul>
                             )}
                         </div>
-                    </div>
-                </div>
+                        </DivContainer>
             </AuthenticatedLayout>
             <ConfirmationModal
                 isOpen={isModalOpen}

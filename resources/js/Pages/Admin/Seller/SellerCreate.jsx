@@ -39,7 +39,7 @@ export default function SellerCreate({ auth }) {
                 user={auth.user}
             >
                 <Head title="Seller" />
-                <div className="max-w-7xl mx-auto sm:px-20 lg:px-8 pb-10 pt-24 ">
+                <DivContainer>
                 <Link href={route('seller.index')} className="mb-5 flex items-center text-lime-600  font-semibold">
                             <MdOutlineKeyboardArrowLeft className="mr-2" /> Go Back
                         </Link>
@@ -108,7 +108,7 @@ export default function SellerCreate({ auth }) {
                             </div>
                         </form>
                     </div>
-                    </div>
+                    </DivContainer>
             </AuthenticatedLayout>
         </>
     );

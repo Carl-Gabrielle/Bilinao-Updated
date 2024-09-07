@@ -22,7 +22,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 <NavLink href={route('customer.index')} active={route().current('customer.index')}>
                                     Home
                                 </NavLink>
-                                <NavLink href={route('')} active={route().current('')}>
+                                <NavLink >
                                     About Us
                                 </NavLink>
                                 <NavLink  >

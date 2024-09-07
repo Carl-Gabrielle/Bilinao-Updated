@@ -14,15 +14,19 @@ class CustomerController extends Controller
     // {
     //  return Inertia::render('Customer/ProfileEdit');
     // }
+
     public function index()
     {
         $query = Category::query();
-        $category = $query->paginate(7); 
-        return Inertia('CustomerDashboard', [
-            'category' => CategoryResource::collection($category),
+        $category = $query->paginate(7);
+        return Inertia::render('CustomerDashboard', [
+            'category' => CategoryResource::collection($category), 
             'success' => session('success'),
-        ]);      
+        ]);
     }
+    
+    
+    
     /**
      * Show the form for creating a new resource.
      */

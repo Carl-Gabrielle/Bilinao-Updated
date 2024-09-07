@@ -7,6 +7,7 @@ import { HiX } from "react-icons/hi";
 import SellerInput from "@/Components/SellerInput";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm, Link } from "@inertiajs/react";
+import DivContainer from "@/Components/DivContainer";
 
 export default function Create({ auth }) {
     const [imagePreview, setImagePreview] = useState(null);
@@ -44,10 +45,10 @@ export default function Create({ auth }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Create Category" />
 
-            <div className="py-12 max-w-7xl mx-auto sm:px-6 lg:px-8 pt-14">
+            <DivContainer>
                 <Link
                     href={route("category.index")}
-                    className="mb-5 px-6 py-2  font-bold text-lime-700  flex items-center"
+                    className="mb-5 flex items-center text-lime-600  font-semibold"
                 >
                     <MdOutlineKeyboardArrowLeft className="mr-2 text-2xl" /> Go Back
                 </Link>
@@ -62,7 +63,7 @@ export default function Create({ auth }) {
                                 Add Category
                             </h1>
                             <button
-                                className="flex items-center px-6 py-2 bg-lime-700 text-white font-semibold rounded-md shadow hover:bg-lime-700 transition duration-200"
+                                className="flex items-center px-4 py-2 bg-lime-600  text-white text-sm font-medium rounded-md transition-all duration-200"
                                 disabled={processing}
                             >
                                 <MdPublish className="mr-2 text-xl" /> Publish Category
@@ -73,30 +74,17 @@ export default function Create({ auth }) {
                                             <img
                                                 src={imagePreview}
                                                 alt="Image Preview"
-                                                className="w-32 h-32 object-cover rounded-lg"
+                                                className="size-28 object-cover rounded-lg"
                                             />
                                             <button
                                                 type="button"
                                                 onClick={handleImageRemove}
-                                                className="absolute top-0 left-32 bg-red-500 text-white rounded-full p-1 transform -translate-x-1/2 -translate-y-1/2 hover:bg-red-600"
+                                                className="absolute top-0 left-28 bg-red-600 text-white rounded-full p-1 transform -translate-x-1/2 -translate-y-1/2 "
                                             >
                                                 <HiX className="size-4" />
                                             </button>
                                         </div>
                                     )}
-
-                        <div className="mt-6">
-                            <InputLabel htmlFor="category_image_path" value="Category Image" />
-                            <SellerInput
-                                id="category_image_path"
-                                type="file"
-                                name="image"
-                                className="mt-2 block w-full"
-                                onChange={handleImageChange}
-                            />
-                            <InputError message={errors.image} className="mt-2" />
-                        </div>
-
                         <div className="mt-6">
                             <InputLabel htmlFor="category_name" value="Category Name" />
                             <SellerInput
@@ -110,9 +98,20 @@ export default function Create({ auth }) {
                             />
                             <InputError message={errors.name} className="mt-2" />
                         </div>
+                        <div className="mt-6">
+                            <InputLabel htmlFor="category_image_path" value="Category Image" />
+                            <SellerInput
+                                id="category_image_path"
+                                type="file"
+                                name="image"
+                                className="mt-2 block w-full"
+                                onChange={handleImageChange}
+                            />
+                            <InputError message={errors.image} className="mt-2" />
+                        </div>
                     </form>
                 </div>
-            </div>
+                </DivContainer>
         </AuthenticatedLayout>
     );
 }

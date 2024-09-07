@@ -51,7 +51,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                 user={auth.user} 
             >
                 <Head title="Seller" />
-                <div className="max-w-7xl mx-auto sm:px-20 lg:px-8 pb-10  pt-14">
+                <DivContainer>
                     {visibleSuccess && (
                         <div className="mt-3 bg-green-600 py-2 px-4 text-white rounded mb-5 flex items-center justify-center w-full">
                             <FaCheck className="mr-2" /> {success}
@@ -114,7 +114,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                             <td className="px-6 py-4 whitespace-nowrap text-gray-500 flex items-center space-x-4">
                                                 <Link
                                                     href={route("seller.edit", user.id)}
-                                                    className="border border-lime-700 text-slate-800 px-3 py-2 rounded"
+                                                    className="border border-lime-600 text-slate-800 px-3 py-2 rounded"
                                                 >
                                                     <LiaEditSolid />
                                                 </Link>
@@ -123,7 +123,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                                         e.preventDefault();
                                                         openModal(user);
                                                     }}
-                                                    className="bg-primary text-white px-3 py-2 rounded"
+                                                    className="bg-lime-600 text-white px-3 py-2 rounded"
                                                 >
                                                     <RiDeleteBinLine />
                                                 </Link>
@@ -135,7 +135,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                         </div>
                         <Pagination links={sellers.links} /> 
                     </div>
-                    </div>
+                    </DivContainer>
             </AuthenticatedLayout>
             <ConfirmationModal
                 isOpen={isModalOpen}

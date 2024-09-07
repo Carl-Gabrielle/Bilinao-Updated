@@ -1,18 +1,25 @@
-export default function Categories({ category }) {
-    return (
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-6">
-            {category.map((cat) => (
-                <div key={cat.id} className="bg-white shadow-md rounded-lg p-4">
-                    {cat.image_path && (
-                        <img
-                            src={`/storage/${cat.image_path}`}
-                            alt={cat.name}
-                            className="w-full h-48 object-cover rounded-t-lg"
-                        />
-                    )}
-                    <h2 className="text-xl font-semibold mt-4">{cat.name}</h2>
-                </div>
-            ))}
-        </div>
-    );
-}
+<div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+{/* Safeguard by checking if categoryData is an array */}
+{categoryData && categoryData.length > 0 ? (
+    categoryData.map((cat) => (
+        <Link
+            key={cat.id}
+            href={`/category/${cat.id}/products`}
+            className="bg-white shadow-lg rounded-lg overflow-hidden"
+        >
+            {cat.image_path && (
+                <img
+                    src={cat.image_path}
+                    alt={cat.name}
+                    className="w-full h-64 object-cover"
+                />
+            )}
+            <div className="p-6">
+                <h3 className="text-xl font-bold text-gray-800">{cat.name}</h3>
+            </div>
+        </Link>
+    ))
+) : (
+    <p className="text-center text-gray-600">No categories available</p>
+)}
+</div>

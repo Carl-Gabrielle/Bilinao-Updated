@@ -7,6 +7,7 @@ import { MdOutlineKeyboardArrowLeft } from 'react-icons/md';
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, useForm, Link } from "@inertiajs/react";
 import { useState } from "react";
+import DivContainer from "@/Components/DivContainer";
 
 export default function Edit({ auth, category }) {
     const { data, setData, post, processing, errors, reset } = useForm({
@@ -37,8 +38,7 @@ export default function Edit({ auth, category }) {
         <>
             <AuthenticatedLayout user={auth.user}>
                 <Head title="Edit Category" />
-                <div className="py-12">
-                    <div className="max-w-7xl mx-auto sm:px-6 lg:px-8">
+                <DivContainer>
                         <Link href={route('category.index')} className="mb-5 flex items-center text-lime-600  font-semibold">
                             <MdOutlineKeyboardArrowLeft className="mr-2" /> Go Back
                         </Link>
@@ -84,8 +84,7 @@ export default function Edit({ auth, category }) {
                                 </div>
                             </form>
                         </div>
-                    </div>
-                </div>
+                        </DivContainer>
             </AuthenticatedLayout>
         </>
     );
