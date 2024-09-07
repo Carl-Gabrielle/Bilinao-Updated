@@ -15,16 +15,17 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function productsByCategory(Category $category)
-{
-    $products = Product::where('category_id', $category->id)
-        ->with(['images', 'category'])
-        ->paginate(10);
-
-    return Inertia::render('Customer/CategoryProducts', [
-        'products' => $products,
-        'category' => $category->name,
-    ]);
-}
+    {
+        $products = Product::where('category_id', $category->id)
+            ->with(['images', 'category', 'seller'])  
+            ->paginate(10);
+    
+        return Inertia::render('Customer/CategoryProducts', [
+            'products' => $products,
+            'category' => $category->name,
+        ]);
+    }
+    
     public function index()
     {
         $user = Auth::user();
@@ -78,9 +79,13 @@ class ProductController extends Controller
      * Display the specified resource.
      */
     public function show(Product $product)
-    {
-        
-    }
+{
+    $product->load(['images', 'category', 'seller']);
+    return Inertia::render('Customer/ProductDetails', [
+        'product' => $product,
+    ]);
+}
+
     /**
      * Show the form for editing the specified resource.
      */

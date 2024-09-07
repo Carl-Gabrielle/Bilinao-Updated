@@ -16,14 +16,15 @@ class CustomerController extends Controller
     // }
 
     public function index()
-    {
-        $query = Category::query();
-        $category = $query->paginate(7);
-        return Inertia::render('CustomerDashboard', [
-            'category' => CategoryResource::collection($category), 
-            'success' => session('success'),
-        ]);
-    }
+{
+    $query = Category::query();
+    $category = $query->paginate(7);
+    return Inertia::render('CustomerDashboard', [
+        'category' => CategoryResource::collection($category)
+    ]);
+}
+
+    
     
     
     

@@ -45,14 +45,12 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('seller', SellerController::class);
     });
-
     // Customer routes
     Route::middleware('customer')->group(function () {
         Route::resource('customer', CustomerController::class);
+        Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
     });
-    
-    
 });
 
 Route::middleware('auth')->group(function () {

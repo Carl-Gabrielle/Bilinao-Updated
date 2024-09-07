@@ -34,28 +34,33 @@ export default function CustomerDashboard({ auth, category }) {
                         <div className="py-12 px-12">
                             <h2 className="text-3xl font-bold text-center mb-8">Shop Our Categories</h2>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        {categoryData && categoryData.length > 0 ? (
-                            categoryData.map((cat) => (
-                                <Link
-                                    key={cat.id}
-                                    href={`/category/${cat.id}/products`}
-                                    className="bg-white shadow-lg rounded-lg overflow-hidden"
-                                >
-                                    {cat.image_path && (
-                                        <img
-                                            src={cat.image_path}
-                                            alt={cat.name}
-                                            className="w-full h-64 object-cover"
-                                        />
-                                    )}
-                                    <div className="p-6">
-                                        <h3 className="text-xl font-bold text-gray-800">{cat.name}</h3>
-                                    </div>
-                                </Link>
-                            ))
-                        ) : (
-                            <p className="text-center text-gray-600">No categories available</p>
-                        )}
+                    {categoryData.length > 0 ? (
+                        categoryData.map((cat) => (
+                        <div
+                            key={cat.id}
+                            className="bg-white shadow-lg rounded-lg overflow-hidden"
+                        >
+                            {cat.image_path && (
+                            <img
+                                src={cat.image_path}
+                                alt={cat.name}
+                                className="w-full h-64 object-cover"
+                            />
+                            )}
+                            <div className="p-6 flex items-center justify-between">
+                            <h3 className="text-xl font-bold text-gray-800">{cat.name}</h3>
+                            <Link
+                                href={`/category/${cat.id}/products`}
+                                className="bg-lime-700 px-6 py-2 rounded-md text-white text-center"
+                            >
+                                View Products
+                            </Link>
+                            </div>
+                        </div>
+                        ))
+                    ) : (
+                        <p className="text-center text-gray-600">No categories available</p>
+                    )}
                     </div>
                         </div>
                     </div>
