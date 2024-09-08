@@ -10,7 +10,6 @@ import { BsBasket } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import {  FaListAlt, FaSignOutAlt,FaRegUser } from 'react-icons/fa';
 import { HiMenu, HiOutlineX, HiChevronDown } from 'react-icons/hi';
-
 const SellerLayout = ({ user, children }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -63,14 +62,14 @@ const SellerLayout = ({ user, children }) => {
                 <div className="flex items-center space-x-3">
                     <MdOutlineDashboard
                         className={`size-4 ${
-                            route().current('seller.dashboard') ? 'text-white' : 'text-gray-600'
+                            route().current('seller.dashboard') ? 'text-white' : 'text-slate-800'
                         }`}
                     />
-                    <span className="font-medium">Dashboard</span>
+                    <span>Dashboard</span>
                 </div>
                 <MdOutlineKeyboardArrowRight
                     className={`size-5 ${
-                        route().current('seller.dashboard') ? 'text-white' : 'text-gray-600'
+                        route().current('seller.dashboard') ? 'text-white' : 'text-slate-800'
                     }`}
                 />
             </NavLink>
@@ -79,10 +78,10 @@ const SellerLayout = ({ user, children }) => {
             <div className="relative">
                 <button
                     onClick={handleManageProductsClick}
-                    className="flex items-center justify-between px-4 py-3 rounded-lg font-medium transition-colors hover:bg-gray-100 w-full text-left"
+                    className="flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100 w-full text-left"
                 >
-                    <span className='text-gray-700 text-sm font-medium flex items-center space-x-3'> <IoStorefrontOutline  className='size-4 mr-2'/>Manage Products</span>
-                    <MdOutlineKeyboardArrowRight className={`size-5  text-gray-700 text-sm font-medium ${isManageProductsOpen ? 'rotate-90' : ''}`} />
+                    <span className='flex items-center space-x-3'> <IoStorefrontOutline  className='size-4 mr-2'/>Manage Products</span>
+                    <MdOutlineKeyboardArrowRight className={`size-5  text-slate-800 text-sm font-medium ${isManageProductsOpen ? 'rotate-90' : ''}`} />
                 </button>
                 
                 {isManageProductsOpen && (
@@ -98,14 +97,14 @@ const SellerLayout = ({ user, children }) => {
                             <div className="flex items-center space-x-3">
                                 <IoMdAdd
                                     className={`size-4 ${
-                                        route().current('products.create') ? 'text-white' : 'text-gray-600'
+                                        route().current('products.create') ? 'text-white' : 'text-slate-800'
                                     }`}
                                 />
-                                <span className="font-medium">Add Products</span>
+                                <span >Add Products</span>
                             </div>
                             <MdOutlineKeyboardArrowRight
                                 className={`size-5 ${
-                                    route().current('products.create') ? 'text-white' : 'text-gray-600'
+                                    route().current('products.create') ? 'text-white' : 'text-slate-800'
                                 }`}
                             />
                         </NavLink>
@@ -121,14 +120,14 @@ const SellerLayout = ({ user, children }) => {
                             <div className="flex items-center space-x-3">
                                 <BsBasket
                                     className={`size-4 ${
-                                        route().current('products.index') ? 'text-white' : 'text-gray-600'
+                                        route().current('products.index') ? 'text-white' : 'text-slate-800'
                                     }`}
                                 />
-                                <span className="font-medium low">Show Products</span>
+                                <span >Show Products</span>
                             </div>
                             <MdOutlineKeyboardArrowRight
                                 className={`size-5 ${
-                                    route().current('products.index') ? 'text-white' : 'text-gray-600'
+                                    route().current('products.index') ? 'text-white' : 'text-slate-800'
                                 }`}
                             />
                         </NavLink>
@@ -151,14 +150,14 @@ const SellerLayout = ({ user, children }) => {
                 <div className="flex items-center space-x-3">
                     <FaRegUser
                         className={`size-4 ${
-                            route().current('products.profile') ? 'text-white' : 'text-gray-600'
+                            route().current('products.profile') ? 'text-white' : 'text-slate-800'
                         }`}
                     />
-                    <span className="font-medium">Profile</span>
+                    <span >Profile</span>
                 </div>
                 <MdOutlineKeyboardArrowRight
                     className={`size-5 ${
-                        route().current('products.profile') ? 'text-white' : 'text-gray-600'
+                        route().current('products.profile') ? 'text-white' : 'text-slate-800'
                     }`}
                 />
             </NavLink>
@@ -178,7 +177,7 @@ const SellerLayout = ({ user, children }) => {
                             route().current('logout') ? 'text-white' : 'text-red-600'
                         }`}
                     />
-                    <span className="font-medium text-red-600">Logout</span>
+                    <span className=" text-red-600">Logout</span>
                 </div>
                 <MdOutlineKeyboardArrowRight
                     className={`size-5 ${

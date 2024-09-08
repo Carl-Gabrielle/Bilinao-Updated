@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $query = Category::query();
-        $category = $query->paginate(7);
+        $category = $query->paginate(5);
         return Inertia('Admin/Category/CategoryIndex', [
             'category' => CategoryResource::collection($category),
             'success' => session('success'),

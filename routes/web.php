@@ -10,6 +10,7 @@ use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
 use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSellerController;
+use App\Http\Controllers\CartController;
 use App\Http\Controllers\SellerDashboardController;
 
 
@@ -47,7 +48,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
     // Customer routes
     Route::middleware('customer')->group(function () {
+        Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
+        Route::inertia('/categories', 'Customer/Categories');
+        Route::get('customer/profile', [CustomerController::class, 'profile'])->name('customer.profile');
         Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
     });

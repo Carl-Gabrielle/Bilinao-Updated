@@ -18,7 +18,7 @@ class ProductController extends Controller
     {
         $products = Product::where('category_id', $category->id)
             ->with(['images', 'category', 'seller'])  
-            ->paginate(10);
+            ->paginate(8);
     
         return Inertia::render('Customer/CategoryProducts', [
             'products' => $products,
@@ -79,12 +79,21 @@ class ProductController extends Controller
      * Display the specified resource.
      */
     public function show(Product $product)
-{
-    $product->load(['images', 'category', 'seller']);
-    return Inertia::render('Customer/ProductDetails', [
-        'product' => $product,
-    ]);
-}
+    {
+        $product->load(['images', 'category', 'seller']);
+    
+        $relatedProducts = Product::where('category_id', $product->category_id)
+                            ->where('id', '!=', $product->id)
+                            ->take(4)
+                            ->get();
+                            
+        return Inertia::render('Customer/ProductDetails', [
+            'product' => $product,
+            'relatedProducts' => $relatedProducts,
+        ]);
+    }
+    
+    
 
     /**
      * Show the form for editing the specified resource.

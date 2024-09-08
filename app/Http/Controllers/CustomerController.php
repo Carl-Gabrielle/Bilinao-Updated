@@ -10,10 +10,13 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    // public function profile()
-    // {
-    //  return Inertia::render('Customer/ProfileEdit');
-    // }
+    public function categories (){
+        return Inertia::render('Customer/Categories');
+    }
+    public function profile()
+    {
+    return Inertia::render('Customer/ProfileEdit');
+    }
 
     public function index()
 {

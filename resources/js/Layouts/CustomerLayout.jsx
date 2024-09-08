@@ -1,21 +1,60 @@
 import { useState } from 'react';
 import ApplicationLogo from '@/Components/ApplicationLogo';
+import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
+import { FaCartShopping } from "react-icons/fa6";
+import { FaPhoneAlt } from "react-icons/fa";
+import Logo from '../Pages/Illustrations/LOGO.png'
 import Dropdown from '@/Components/Dropdown';
 import NavLink from '@/Components/NavLink';
 import ResponsiveNavLink from '@/Components/ResponsiveNavLink';
 import { Link } from '@inertiajs/react';
+import Footer from '@/Components/Footer';
+import SearchProduct from '@/Components/SearchProduct';
 
 export default function AuthenticatedLayout({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] = useState(false);
     return (
-        <div className="min-h-screen bg-gray-100">
-            <nav className="bg-white border-b border-gray-100 fixed w-full z-20 ">
+                        <div className="min-h-screen bg-gray-100">
+                                    <div className='w-full h-10  z-20 fixed   bg-black '>
+                                                                <div className='flex justify-between items-center text-sm w-full h-full text-white max-w-6xl px-4 mx-auto'>
+                                                                    
+                                                                    <div className='flex items-center justify-center space-x-4 text-gray-500'>
+                                                                    <span className=''>Follow Us</span>
+                                                                    <div className="flex gap-4">
+                                                                        <a href="" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white">
+                                                                        <FaFacebook size={18} />
+                                                                        </a>
+                                                                        <a href="" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white">
+                                                                        <FaInstagram size={18} />
+                                                                        </a>
+                                                                        <a href="" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white">
+                                                                        <FaTwitter size={18} />
+                                                                        </a>
+                                                                        <a href="" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 transition duration-300">
+                                                                        <FaYoutube size={18} />
+                                                                        </a>
+                                                                    </div>
+                                                                    </div>
+                                                                    <div>
+                                                            <p className=' text-gray-500 text-sm flex items-center'>
+                                                                <FaPhoneAlt className='mr-2' />
+                                                                +1 (555) 123-4567
+                                                            </p>
+                                                            </div>
+                                                                </div>
+                                                            </div>
+            <nav className="bg-white border-b border-gray-100 fixed w-full z-20 mt-10 ">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16">
                         <div className="flex">
                             <div className="shrink-0 flex items-center">
                                 <Link href="/">
-                                    <ApplicationLogo className="block h-9 w-auto fill-current text-gray-800" />
+                                    <img src={Logo} alt="Bilinao Logo" 
+                                    className='size-10 '  style={{
+                                        backgroundSize: 'cover',
+                                        backgroundPosition: 'center',
+                                        backgroundRepeat: 'no-repeat',
+                                    }} />
                                 </Link>
                             </div>
                             <div className="hidden space-x-8 sm:-my-px sm:ms-10 sm:flex">
@@ -29,11 +68,20 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 <NavLink  >
                                     Shop
                                 </NavLink>
-                                <NavLink>
-                                    Categories
-                                </NavLink>
+                                <NavLink href='/categories' active={window.location.pathname === '/categories'} >
+                                Categories
+                            </NavLink>
+
                             </div>
                         </div>
+                        <SearchProduct/>
+                        <Link  className='cursor-pointer flex items-center mr-0 lg:mr-28 relative py-1 '>
+                                                
+                                                <FaCartShopping className="mr-4 text-2xl text-gray-900" />
+                                                <span className="absolute top-3 right-0 inline-flex items-center justify-center h-5 w-5 text-xs font-bold text-white bg-lime-700 rounded-full">
+                                                8
+                                                </span>
+                                            </Link>
                         <div className="hidden sm:flex sm:items-center sm:ms-6">
                             <div className="ms-3 relative">
                                 <Dropdown>
@@ -60,7 +108,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         </span>
                                     </Dropdown.Trigger>
                                     <Dropdown.Content>
-                                        <Dropdown.Link href={route('customer.index')}>Profile</Dropdown.Link>
+                                    <Dropdown.Link  href={route('customer.profile')}>Profile</Dropdown.Link>
                                         <Dropdown.Link href={route('logout')} method="post" as="button">
                                             Log Out
                                         </Dropdown.Link>
@@ -108,7 +156,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                         </div>
 
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink href={route('profile.edit')}>Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink href={route('customer.profile')}>Profile</ResponsiveNavLink>
                             <ResponsiveNavLink method="post" href={route('logout')} as="button">
                                 Log Out
                             </ResponsiveNavLink>
@@ -124,6 +172,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
             )}
 
             <main>{children}</main>
+            <Footer/>
         </div>
     );
 }
