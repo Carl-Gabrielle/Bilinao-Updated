@@ -15,17 +15,27 @@ class ProductController extends Controller
      * Display a listing of the resource.
      */
     public function productsByCategory(Category $category)
-    {
-        $products = Product::where('category_id', $category->id)
-            ->with(['images', 'category', 'seller'])  
-            ->paginate(8);
-    
-        return Inertia::render('Customer/CategoryProducts', [
-            'products' => $products,
-            'category' => $category->name,
-        ]);
+{
+    $sortOption = request('sort');  
+
+    $query = Product::where('category_id', $category->id)
+        ->with(['images', 'category', 'seller']);
+        
+    if ($sortOption === 'price-asc') {
+        $query->orderBy('price', 'asc'); 
+    } elseif ($sortOption === 'price-desc') {
+        $query->orderBy('price', 'desc'); 
     }
-    
+
+    $products = $query->paginate(8);
+
+    return Inertia::render('Customer/CategoryProducts', [
+        'products' => $products,
+        'category' => $category->name,
+        'sort' => $sortOption,  
+    ]);
+}
+
     public function index()
     {
         $user = Auth::user();

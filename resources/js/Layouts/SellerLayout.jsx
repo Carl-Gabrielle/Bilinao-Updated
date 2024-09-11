@@ -28,10 +28,14 @@ const SellerLayout = ({ user, children }) => {
     const toggleSidebar = () => setSidebarOpen(prev => !prev);
 
     return (
+        <>
+        {/* <div className='h-16 bg-white/30 border-b border-white/30 backdrop-blur-md shadow-lg z-20 w-full fixed'>
+   </div> */}
+
         <div className="min-h-screen flex flex-col sm:flex-row bg-gray-100">
         <aside className={`fixed inset-y-0 left-0 w-72 z-20 bg-white transform ${sidebarOpen ? "translate-x-0" : "-translate-x-full"} transition-transform duration-300 ease-in-out sm:translate-x-0 z-40`}>
     <div className="flex flex-col h-full">
-        <div className="flex items-center justify-between h-16 px-4 bg-white">
+        <div className="flex items-center justify-between h-16 px-4 ">
         <Link href={route('seller.dashboard')} className='flex items-center p-4 '>
                 <div className='flex items-center space-x-4'>
                     <img src={Logo} alt="Bilinao Logo" className='size-10 ' />
@@ -55,7 +59,7 @@ const SellerLayout = ({ user, children }) => {
                 href={route('seller.dashboard')}
                 active={route().current('seller.dashboard')}
                 onClick={handleNavLinkClick}
-                className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
+                className={`flex items-center justify-between  rounded-lg transition-colors ${
                     route().current('seller.dashboard') ? 'bg-gray-800 text-white' : 'hover:bg-gray-100'
                 }`}
             >
@@ -73,25 +77,42 @@ const SellerLayout = ({ user, children }) => {
                     }`}
                 />
             </NavLink>
-
+                 {/* Orders Link */}
+            {/* <NavLink
+                onClick={handleNavLinkClick}
+            >
+                <div className="flex items-center space-x-3">
+                    <MdOutlineDashboard
+                        className={`size-4 ${
+                            route().current('seller.dashboard') ? 'text-white' : 'text-slate-800'
+                        }`}
+                    />
+                    <span>Manage Orders </span>
+                </div>
+                <MdOutlineKeyboardArrowRight
+                    className={`size-5 ${
+                        route().current('seller.dashboard') ? 'text-white' : 'text-slate-800'
+                    }`}
+                />
+            </NavLink> */}
             {/* Manage Products */}
             <div className="relative">
                 <button
                     onClick={handleManageProductsClick}
-                    className="flex items-center justify-between px-4 py-3 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100 w-full text-left"
+                    className="flex items-center justify-between px-4 py-2 mb-2 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100 w-full text-left"
                 >
                     <span className='flex items-center space-x-3'> <IoStorefrontOutline  className='size-4 mr-2'/>Manage Products</span>
                     <MdOutlineKeyboardArrowRight className={`size-5  text-slate-800 text-sm font-medium ${isManageProductsOpen ? 'rotate-90' : ''}`} />
                 </button>
                 
                 {isManageProductsOpen && (
-                    <div className="ml-4 mt-2 space-y-2 ">
+                    <div className="ml-4  space-y-2 ">
                         <NavLink
                             href={route('products.create')}
                             active={route().current('products.create')}
                             onClick={handleNavLinkClick}
-                            className={`flex items-center justify-between px-4 py-3 w-full rounded-lg transition-colors ${
-                                route().current('products.create') ? 'bg-gray-800 text-white' : 'hover:bg-gray-100'
+                            className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${
+                                route().current('products.create') ? 'bg-lime-700 text-white' : 'hover:bg-gray-100'
                             }`}
                         >
                             <div className="flex items-center space-x-3">
@@ -113,7 +134,7 @@ const SellerLayout = ({ user, children }) => {
                             href={route('products.index')}
                             active={route().current('products.index')}
                             onClick={handleNavLinkClick}
-                            className={`flex items-center justify-between w-full px-4 py-3 rounded-lg transition-colors ${
+                            className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${
                                 route().current('products.index') ? 'bg-gray-800 text-white' : 'hover:bg-gray-100'
                             }`}
                         >
@@ -143,7 +164,7 @@ const SellerLayout = ({ user, children }) => {
                 href={route('products.profile')}
                 active={route().current('products.profile')}
                 onClick={handleNavLinkClick}
-                className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
+                className={`flex items-center justify-between  rounded-lg transition-colors ${
                     route().current('products.profile') ? 'bg-gray-800 text-white' : 'hover:bg-gray-100'
                 }`}
             >
@@ -201,6 +222,7 @@ const SellerLayout = ({ user, children }) => {
                 {children}
             </div>
         </div>
+        </>
     );
 };
 

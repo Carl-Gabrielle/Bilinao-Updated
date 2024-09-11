@@ -52,7 +52,7 @@ export default function Index({ auth, category, success,categoryCount }) {
                             <span className="ml-3 text-gray-700 font-medium">{success}</span>
                         </div>
                         )}
-                        <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                        <div className="bg-white overflow-hidden shadow-sm rounded-3xl p-6">
                         <div className="flex justify-between items-center mb-5">
                         <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
                             Category

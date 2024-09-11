@@ -57,7 +57,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                             <FaCheck className="mr-2" /> {success}
                         </div>
                     )}
-                    <div className="bg-white overflow-hidden shadow-sm sm:rounded-lg p-6  ">
+                    <div className="bg-white overflow-hidden shadow-sm rounded-3xl p-6  ">
                     <div className="flex justify-between items-center mb-5">
                         <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
                             Sellers
@@ -79,7 +79,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Address
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider  whitespace-nowrap">
                                             Contact Number
                                         </th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">

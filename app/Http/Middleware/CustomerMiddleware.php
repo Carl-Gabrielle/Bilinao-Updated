@@ -21,6 +21,6 @@ class CustomerMiddleware
             return $next($request);
         }
 
-        return redirect('/dashboard');
+        return redirect('/customer');
     }
 }

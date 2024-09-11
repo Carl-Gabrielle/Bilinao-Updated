@@ -24,7 +24,7 @@ const SellerDashboard = ({ categories}) => {
         category_id: '',
         images: [],
     });
-
+ console.log(data.name);
     const handleImageChange = (e) => {
         const newImages = Array.from(e.target.files).map((file) => ({
             url: URL.createObjectURL(file),
@@ -201,7 +201,7 @@ const SellerDashboard = ({ categories}) => {
                                 )}
                             </div>
 
-                            <div className="bg-white h-96 px-6 py-4 rounded-3xl w-full">
+                            <div className="bg-white h-52 px-6 py-4 rounded-3xl w-full ">
                                 <SectionHeader text="Category Selection" />
                                 <div className="mb-4">
                                     <label className="flex items-center text-sm font-medium text-gray-700 ">

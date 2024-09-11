@@ -1,39 +1,67 @@
-import React from 'react';
-import Menu from '@/Components/Menu';
-import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from 'react-icons/fa';
-import SellerInput from './SellerInput';
+import React from "react";
+import Menu from "@/Components/Menu";
+import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
+import SellerInput from "./SellerInput";
 
 const Footer = () => {
     return (
-        <div className="text-white bg-black">
+        <div className="text-white bg-slate-900">
             <div className="mx-auto py-8 lg:py-12 px-6 lg:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                     <div className="flex flex-col items-center md:items-start mb-6 lg:mb-0">
-                        <h2 className="text-2xl lg:text-3xl font-semibold mb-4">Bilinao</h2>
+                        <h2 className="text-2xl lg:text-3xl font-semibold mb-4">
+                            Bilinao
+                        </h2>
                         <div className="flex gap-4 mt-4">
-                            <a href="" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white">
+                            <a
+                                href=""
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-500 hover:text-white"
+                            >
                                 <FaFacebook size={18} />
                             </a>
-                            <a href="" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white">
+                            <a
+                                href=""
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-500 hover:text-white"
+                            >
                                 <FaInstagram size={18} />
                             </a>
-                            <a href="" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-white">
+                            <a
+                                href=""
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-500 hover:text-white"
+                            >
                                 <FaTwitter size={18} />
                             </a>
-                            <a href="" target="_blank" rel="noopener noreferrer" className="text-gray-500 hover:text-gray-400 transition duration-300">
+                            <a
+                                href=""
+                                target="_blank"
+                                rel="noopener noreferrer"
+                                className="text-gray-500 hover:text-gray-400 transition duration-300"
+                            >
                                 <FaYoutube size={18} />
                             </a>
                         </div>
                     </div>
                     <div className="flex flex-col items-center md:items-start">
-                        <h3 className="text-lg lg:text-xl font-semibold mb-4">About Us</h3>
+                        <h3 className="text-lg lg:text-xl font-semibold mb-4">
+                            About Us
+                        </h3>
                         <Menu href="/about">About Us</Menu>
                         <Menu href="/about">Story</Menu>
                         <Menu href="/about">Contact Us</Menu>
                     </div>
                     <div className="flex flex-col items-center md:items-start">
-                        <h3 className="text-lg lg:text-xl font-semibold mb-4">Subscribe to our Newsletter</h3>
-                        <p className="text-gray-400 mb-4">Stay updated on new arrivals and exclusive offers!</p>
+                        <h3 className="text-lg lg:text-xl font-semibold mb-4">
+                            Subscribe to our Newsletter
+                        </h3>
+                        <p className="text-gray-400 mb-4">
+                            Stay updated on new arrivals and exclusive offers!
+                        </p>
                         <form className="flex w-full">
                             <SellerInput
                                 type="email"
@@ -49,7 +77,9 @@ const Footer = () => {
                         </form>
                     </div>
                     <div className="flex flex-col items-center md:items-start">
-                        <h3 className="text-lg lg:text-xl font-semibold mb-4">Information</h3>
+                        <h3 className="text-lg lg:text-xl font-semibold mb-4">
+                            Information
+                        </h3>
                         <Menu href="/faqs">FAQs</Menu>
                         <Menu href="/refund-policy">Refund Policy</Menu>
                         <Menu href="/privacy-policy">Privacy Policy</Menu>

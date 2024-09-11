@@ -10,6 +10,20 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function index()
+    {
+        $query = Category::query();
+        $category = $query->paginate(7);
+        return Inertia::render('CustomerDashboard', [
+            'category' => CategoryResource::collection($category)
+        ]);
+    }
+    public function shop (){
+        return Inertia::render('Customer/Shop');
+    }
+        public function  about (){
+            return Inertia::render('Customer/About');
+        }
     public function categories (){
         return Inertia::render('Customer/Categories');
     }
@@ -18,14 +32,6 @@ class CustomerController extends Controller
     return Inertia::render('Customer/ProfileEdit');
     }
 
-    public function index()
-{
-    $query = Category::query();
-    $category = $query->paginate(7);
-    return Inertia::render('CustomerDashboard', [
-        'category' => CategoryResource::collection($category)
-    ]);
-}
 
     
     

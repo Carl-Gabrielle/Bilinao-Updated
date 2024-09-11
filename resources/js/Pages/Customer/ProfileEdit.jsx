@@ -1,15 +1,13 @@
-import AuthenticatedLayout from '@/Layouts/AuthenticatedLayout';
-import DeleteUserForm from '../Profile/Partials/DeleteUserForm';
-import CustomerLayout from '@/Layouts/CustomerLayout';
-import UpdatePasswordForm from '../Profile/Partials/UpdatePasswordForm';
-import UpdateProfileInformationForm from '../Profile/Partials/UpdateProfileInformationForm';
-import { Head } from '@inertiajs/react';
+import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import DeleteUserForm from "../Profile/Partials/DeleteUserForm";
+import CustomerLayout from "@/Layouts/CustomerLayout";
+import UpdatePasswordForm from "../Profile/Partials/UpdatePasswordForm";
+import UpdateProfileInformationForm from "../Profile/Partials/UpdateProfileInformationForm";
+import { Head } from "@inertiajs/react";
 
 export default function Edit({ auth, mustVerifyEmail, status }) {
     return (
-        <CustomerLayout
-            user={auth.user}
-        >
+        <CustomerLayout user={auth.user}>
             <Head title="Profile" />
 
             <div className="py-12">
@@ -25,7 +23,6 @@ export default function Edit({ auth, mustVerifyEmail, status }) {
                     <div className="p-4 sm:p-8 bg-white shadow sm:rounded-lg">
                         <UpdatePasswordForm className="max-w-xl" />
                     </div>
-
                 </div>
             </div>
         </CustomerLayout>

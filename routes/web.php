@@ -3,6 +3,7 @@
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CustomerController;
 use App\Http\Controllers\ProfileController;
+use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerController;
 use Illuminate\Foundation\Application;
@@ -21,6 +22,8 @@ Route::middleware('guest')->group(function () {
                 ->name('seller.authenticate');
 });
 
+// Public route for seller profile
+Route::get('seller/{seller}/profile', [SellerDashboardController::class, 'publicProfile'])->name('seller.public.profile');
 
 Route::middleware('auth:seller')->group(function () {
     Route::get('seller/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
@@ -28,32 +31,28 @@ Route::middleware('auth:seller')->group(function () {
     Route::get('seller/profile', [SellerDashboardController::class, 'profile'])->name('products.profile');
     Route::resource('products', ProductController::class);
 });
-
 Route::inertia('/sellerLogin', 'SellerLogin')->name('seller.login');
 
 Route::redirect('/', '/dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
-    // Route for dashboard
-    Route::get('/dashboard', function () {
-        if (Auth::user()->role === 'admin') {
-            return Inertia::render('Dashboard');
-        }
-        return Inertia::render('CustomerDashboard');
-    })->name('dashboard');
-    // Admin routes
+    Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
+    
     Route::middleware('admin')->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('seller', SellerController::class);
     });
-    // Customer routes
+    
+    // CUSTOMER ROUTES 
     Route::middleware('customer')->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
-        Route::inertia('/categories', 'Customer/Categories');
-        Route::get('customer/profile', [CustomerController::class, 'profile'])->name('customer.profile');
+        // Route::get('/profile/customer', [ProfileController::class, 'customer'])->name('profile.customer');
         Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
+        Route::get('/about', [CustomerController::class, 'about'])->name('customer.about');
+        Route::get('/categories', [CustomerController::class, 'categories'])->name('customer.categories');
+        Route::get('/shop', [CustomerController::class, 'shop'])->name('customer.shop');
     });
 });
 

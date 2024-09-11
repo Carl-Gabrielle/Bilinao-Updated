@@ -25,12 +25,16 @@ const Trigger = ({ children }) => {
         <>
             <div onClick={toggleOpen}>{children}</div>
 
-            {open && <div className="fixed inset-0 z-40" onClick={() => setOpen(false)}></div>}
+            <div
+                className={`fixed inset-0 z-40 bg-black transition-opacity duration-300 ${open ? 'opacity-50' : 'opacity-0 pointer-events-none'}`}
+                onClick={() => setOpen(false)}
+            ></div>
         </>
     );
 };
 
-const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-white', children }) => {
+
+const Content = ({ align = 'right', width = '72', contentClasses = 'py-4 px-6 bg-white rounded-2xl shadow-md  text-gray-800', children }) => {
     const { open, setOpen } = useContext(DropDownContext);
 
     let alignmentClasses = 'origin-top';
@@ -43,8 +47,8 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
 
     let widthClasses = '';
 
-    if (width === '48') {
-        widthClasses = 'w-48';
+    if (width === '72') {
+        widthClasses = 'w-72';
     }
 
     return (
@@ -62,19 +66,20 @@ const Content = ({ align = 'right', width = '48', contentClasses = 'py-1 bg-whit
                     className={`absolute z-50 mt-2 rounded-md shadow-lg ${alignmentClasses} ${widthClasses}`}
                     onClick={() => setOpen(false)}
                 >
-                    <div className={`rounded-md ring-1 ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
+                    <div className={`rounded-2xl ring-1 ring-black ring-opacity-5 ` + contentClasses}>{children}</div>
                 </div>
             </Transition>
         </>
     );
 };
 
+
 const DropdownLink = ({ className = '', children, ...props }) => {
     return (
         <Link
             {...props}
             className={
-                'block w-full px-4 py-2 text-start text-sm leading-5 text-gray-700 hover:bg-gray-100 focus:outline-none focus:bg-gray-100 transition duration-150 ease-in-out ' +
+                'block w-full   py-2   leading-5  font-medium    px-3  text-sm ' +
                 className
             }
         >
