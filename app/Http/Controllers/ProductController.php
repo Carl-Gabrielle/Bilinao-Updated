@@ -14,6 +14,15 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function products()
+{
+    $products = Product::with('images')->get();
+
+    return Inertia::render('Customer/Products', [
+        'products' => $products,
+    ]);
+}
+
     public function productsByCategory(Category $category)
 {
     $sortOption = request('sort');  
@@ -94,6 +103,7 @@ class ProductController extends Controller
     
         $relatedProducts = Product::where('category_id', $product->category_id)
                             ->where('id', '!=', $product->id)
+                            ->with('images')
                             ->take(4)
                             ->get();
                             

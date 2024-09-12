@@ -11,7 +11,7 @@ export default function CustomerDashboard({ auth, category }) {
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen bg-gray-100">
-                <Head title="Customer Dashboard" />
+                <Head title="Home" />
                 <main>
                     <div className="max-w-screen-xl mx-auto">
                         <div className="min-h-[650px] pt-24 relative sm:min-h-[630px] flex justify-center items-center">

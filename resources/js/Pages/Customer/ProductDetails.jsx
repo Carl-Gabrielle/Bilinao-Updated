@@ -133,15 +133,8 @@ export default function ProductDetails({
                                 <h1 className="text-gray-800 font-semibold lg:text-2xl xl:text-3xl mb-6">
                                     Related Products
                                 </h1>
-                                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8  pb-10">
+                                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 pb-10">
                                     {relatedProducts.map((relatedProduct) => {
-                                        const imagePath =
-                                            relatedProduct.images?.[0]
-                                                ?.image_path;
-                                        const imageUrl = imagePath
-                                            ? `/storage/${imagePath}`
-                                            : "/images/default-image.jpg";
-
                                         return (
                                             <Link
                                                 key={relatedProduct.id}
@@ -152,7 +145,13 @@ export default function ProductDetails({
                                             >
                                                 <div className="bg-white shadow-lg rounded-3xl overflow-hidden">
                                                     <img
-                                                        src={imageUrl}
+                                                        src={
+                                                            relatedProduct
+                                                                .images?.[0]
+                                                                ?.image_path
+                                                                ? `/storage/${relatedProduct.images[0].image_path}`
+                                                                : "/storage/default-image.jpg" // Fallback image
+                                                        }
                                                         alt={
                                                             relatedProduct.name
                                                         }

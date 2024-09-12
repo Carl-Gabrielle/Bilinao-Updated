@@ -14,11 +14,14 @@ class SellerDashboardController extends Controller
         return Inertia::render('Seller/SellerProfile');
     }
     public function publicProfile(Seller $seller)
-{
-    return Inertia::render('Seller/PublicProfile', [
-        'seller' => $seller,
-        'products' => $seller->products()->get()
-    ]);
-}
+    {
+        $products = $seller->products()->with('images')->get();
+    
+        return Inertia::render('Seller/PublicProfile', [
+            'seller' => $seller,
+            'products' => $products
+        ]);
+    }
+    
 
 }

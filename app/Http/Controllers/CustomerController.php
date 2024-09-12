@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Http\Resources\CategoryResource;
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Category;
@@ -10,6 +11,9 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public  function orders(){
+        return Inertia::render('Customer/Orders');
+    }
     public function index()
     {
         $query = Category::query();
@@ -18,15 +22,24 @@ class CustomerController extends Controller
             'category' => CategoryResource::collection($category)
         ]);
     }
-    public function shop (){
-        return Inertia::render('Customer/Shop');
+    public function products (){
+        $products = Product::with('images')->get();
+
+        return Inertia::render('Customer/Products', [
+            'products' => $products,
+        ]);
     }
+    
         public function  about (){
             return Inertia::render('Customer/About');
         }
-    public function categories (){
-        return Inertia::render('Customer/Categories');
-    }
+        public function categories()
+        {
+            $categories = Category::all(); 
+            return Inertia::render('Customer/Categories', [
+                'categories' => CategoryResource::collection($categories),
+            ]);
+        }
     public function profile()
     {
     return Inertia::render('Customer/ProfileEdit');

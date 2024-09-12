@@ -28,9 +28,11 @@ Route::get('seller/{seller}/profile', [SellerDashboardController::class, 'public
 Route::middleware('auth:seller')->group(function () {
     Route::get('seller/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
     Route::get('seller/products', [ProductController::class, 'showProductsBySeller'])->name('seller.products.index');
+    Route::get('seller/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('seller/profile', [SellerDashboardController::class, 'profile'])->name('products.profile');
     Route::resource('products', ProductController::class);
 });
+
 Route::inertia('/sellerLogin', 'SellerLogin')->name('seller.login');
 
 Route::redirect('/', '/dashboard');
@@ -47,12 +49,14 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('customer')->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
-        // Route::get('/profile/customer', [ProfileController::class, 'customer'])->name('profile.customer');
+        Route::get('/products', [ProductController::class, 'products'])->name('products.list');
         Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
         Route::get('/about', [CustomerController::class, 'about'])->name('customer.about');
         Route::get('/categories', [CustomerController::class, 'categories'])->name('customer.categories');
-        Route::get('/shop', [CustomerController::class, 'shop'])->name('customer.shop');
+        Route::get('/products', [CustomerController::class, 'products'])->name('customer.products');
+        Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
+        Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');
     });
 });
 

@@ -13,6 +13,9 @@ class CartController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function carts (){
+        Return Inertia::render('Customer/Carts');
+    }
     public function index()
     {
         //

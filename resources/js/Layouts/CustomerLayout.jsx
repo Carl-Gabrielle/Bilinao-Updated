@@ -8,11 +8,11 @@ import { GrCart } from "react-icons/gr";
 import { FaPhoneAlt } from "react-icons/fa";
 import Logo from "../Pages/Illustrations/LOGO.png";
 import Dropdown from "@/Components/Dropdown";
-import NavLink from "@/Components/NavLink";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
 import { Link } from "@inertiajs/react";
 import Footer from "@/Components/Footer";
 import SearchProduct from "@/Components/SearchProduct";
+import CustomerLink from "@/Components/CustomerLink";
 
 export default function AuthenticatedLayout({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
@@ -81,32 +81,34 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             </Link>
                             {/* Nav Links */}
                             <div className="hidden sm:flex space-x-8 sm:ms-10 ">
-                                <NavLink
+                                <CustomerLink
                                     href={route("customer.index")}
                                     active={route().current("customer.index")}
                                 >
                                     Home
-                                </NavLink>
-                                <NavLink
+                                </CustomerLink>
+                                <CustomerLink
                                     href={route("customer.about")}
                                     active={route().current("customer.about")}
                                 >
                                     About Us
-                                </NavLink>
-                                <NavLink
-                                    href={route("customer.shop")}
-                                    active={route().current("customer.shop")}
+                                </CustomerLink>
+                                <CustomerLink
+                                    href={route("customer.products")}
+                                    active={route().current(
+                                        "customer.products"
+                                    )}
                                 >
-                                    Shop
-                                </NavLink>
-                                <NavLink
+                                    Products
+                                </CustomerLink>
+                                <CustomerLink
                                     href={route("customer.categories")}
                                     active={route().current(
                                         "customer.categories"
                                     )}
                                 >
                                     Categories
-                                </NavLink>
+                                </CustomerLink>
                             </div>
                         </div>
                         {/* Search and Icons */}
@@ -114,7 +116,10 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <SearchProduct />
                             <div className="relative flex items-center ">
                                 {/* Cart Icon */}
-                                <Link className="relative flex items-center cursor-pointer hover:bg-gray-100 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out">
+                                <Link
+                                    href={route("customer.carts")}
+                                    className="relative flex items-center cursor-pointer hover:bg-gray-100 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
+                                >
                                     <GrCart className="size-5 text-slate-900    font-extrabold transition-colors duration-300 ease-in-out" />
                                     <span className=" absolute left-6  -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-lime-700 rounded-full">
                                         8
@@ -228,7 +233,10 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         >
                                             My Account
                                         </Dropdown.Link>
-                                        <Dropdown.Link className="hover:bg-gray-100 transition-colors duration-300 ease-in-out mb-2 rounded-md">
+                                        <Dropdown.Link
+                                            href={route("customer.orders")}
+                                            className="hover:bg-gray-100 transition-colors duration-300 ease-in-out mb-2 rounded-md"
+                                        >
                                             My Orders
                                         </Dropdown.Link>
                                         <Dropdown.Link
