@@ -9,12 +9,14 @@ import { FaPhoneAlt } from "react-icons/fa";
 import Logo from "../Pages/Illustrations/LOGO.png";
 import Dropdown from "@/Components/Dropdown";
 import ResponsiveNavLink from "@/Components/ResponsiveNavLink";
-import { Link } from "@inertiajs/react";
+import { Link, usePage } from "@inertiajs/react";
 import Footer from "@/Components/Footer";
 import SearchProduct from "@/Components/SearchProduct";
 import CustomerLink from "@/Components/CustomerLink";
 
 export default function AuthenticatedLayout({ user, header, children }) {
+    const { cartCount } = usePage().props;
+
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     return (
@@ -120,10 +122,12 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     href={route("customer.carts")}
                                     className="relative flex items-center cursor-pointer hover:bg-gray-100 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
                                 >
-                                    <GrCart className="size-5 text-slate-900    font-extrabold transition-colors duration-300 ease-in-out" />
-                                    <span className=" absolute left-6  -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-lime-700 rounded-full">
-                                        8
-                                    </span>
+                                    <GrCart className="size-5 text-slate-900 font-extrabold transition-colors duration-300 ease-in-out" />
+                                    {cartCount > 0 && (
+                                        <span className="absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-lime-700 rounded-full">
+                                            {cartCount}
+                                        </span>
+                                    )}
                                 </Link>
                                 <Dropdown>
                                     <Dropdown.Trigger>
@@ -191,7 +195,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     <Dropdown.Trigger>
                                         <button
                                             type="button"
-                                            className="ml-2 flex items-center justify-center px-3 py-2 border border-transparent text-sm font-medium rounded-md text-slate-900 bg-white hover:bg-gray-100  focus:outline-none transition-colors duration-150 ease-in-out"
+                                            className="ml-2 flex items-center justify-center px-3 py-2 border border-transparent text-xs whitespace-nowrap font-medium rounded-md text-slate-900 bg-white hover:bg-gray-100  focus:outline-none transition-colors duration-150 ease-in-out "
                                         >
                                             <FaRegUser className="mr-2" />
                                             <span>

@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { MdAdd } from "react-icons/md";
 import DivContainer from "@/Components/DivContainer";
@@ -7,13 +7,13 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import { LiaEditSolid } from "react-icons/lia";
 import { Head, Link, router } from "@inertiajs/react";
 import ConfirmationModal from "@/Components/ConfirmationModal";
-import Pagination from "@/Components/Pagination"; 
+import Pagination from "@/Components/Pagination";
 
 export default function SellerIndex({ auth, sellers, success }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [visibleSuccess, setVisibleSuccess] = useState(!!success);
     const [sellerToDelete, setSellerToDelete] = useState(null);
-    const [sellerName, setSellerName] = useState('');
+    const [sellerName, setSellerName] = useState("");
 
     useEffect(() => {
         if (success) {
@@ -32,24 +32,24 @@ export default function SellerIndex({ auth, sellers, success }) {
 
     const closeModal = () => {
         setSellerToDelete(null);
-        setSellerName('');
+        setSellerName("");
         setIsModalOpen(false);
     };
 
     const confirmDelete = () => {
         if (sellerToDelete) {
-            router.delete(route('seller.destroy', { seller: sellerToDelete.id }));
+            router.delete(
+                route("seller.destroy", { seller: sellerToDelete.id })
+            );
             setSellerToDelete(null);
-            setSellerName('');
+            setSellerName("");
             setIsModalOpen(false);
         }
     };
 
     return (
         <>
-            <AuthenticatedLayout 
-                user={auth.user} 
-            >
+            <AuthenticatedLayout user={auth.user}>
                 <Head title="Seller" />
                 <DivContainer>
                     {visibleSuccess && (
@@ -58,17 +58,18 @@ export default function SellerIndex({ auth, sellers, success }) {
                         </div>
                     )}
                     <div className="bg-white overflow-hidden shadow-sm rounded-3xl p-6  ">
-                    <div className="flex justify-between items-center mb-5">
-                        <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
-                            Sellers
-                        </h2>
-                        <Link
-                            href={route("seller.create")}
-                            className="bg-lime-600 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
-                        >
-                        <MdAdd className='mr-2 size-4'/> Add a New Seller
-                        </Link>
-                    </div>
+                        <div className="flex justify-between items-center mb-5">
+                            <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
+                                Sellers
+                            </h2>
+                            <Link
+                                href={route("seller.create")}
+                                className="bg-lime-600 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                            >
+                                <MdAdd className="mr-2 size-4" /> Add a New
+                                Seller
+                            </Link>
+                        </div>
                         <div className="overflow-x-auto">
                             <table className="min-w-full divide-y divide-gray-200">
                                 <thead className="bg-gray-50">
@@ -113,7 +114,10 @@ export default function SellerIndex({ auth, sellers, success }) {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-gray-500 flex items-center space-x-4">
                                                 <Link
-                                                    href={route("seller.edit", user.id)}
+                                                    href={route(
+                                                        "seller.edit",
+                                                        user.id
+                                                    )}
                                                     className="border border-lime-600 text-slate-800 px-3 py-2 rounded"
                                                 >
                                                     <LiaEditSolid />
@@ -133,9 +137,9 @@ export default function SellerIndex({ auth, sellers, success }) {
                                 </tbody>
                             </table>
                         </div>
-                        <Pagination links={sellers.links} /> 
+                        <Pagination links={sellers.links} />
                     </div>
-                    </DivContainer>
+                </DivContainer>
             </AuthenticatedLayout>
             <ConfirmationModal
                 isOpen={isModalOpen}

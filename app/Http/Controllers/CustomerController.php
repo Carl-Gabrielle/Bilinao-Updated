@@ -23,8 +23,7 @@ class CustomerController extends Controller
         ]);
     }
     public function products (){
-        $products = Product::with('images')->get();
-
+        $products = Product::with('images')->paginate(6);
         return Inertia::render('Customer/Products', [
             'products' => $products,
         ]);

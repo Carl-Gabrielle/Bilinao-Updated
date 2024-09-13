@@ -11,6 +11,7 @@ export default function ProductDetails({
     auth,
     seller,
     relatedProducts = [],
+    success,
 }) {
     const [selectedImage, setSelectedImage] = useState(
         product.images?.[0]?.image_path || ""
@@ -29,6 +30,14 @@ export default function ProductDetails({
                 <Head title={`${product.name} Details`} />
                 <main>
                     <CustomerContainer>
+                        {success && (
+                            <div className="bg-white rounded-md text-green-700 px-4 py-2 flex items-center  space-x-4 relative  ml-auto w-1/2    mb-6">
+                                <strong className="font-bold">Success!</strong>
+                                <span className="block sm:inline">
+                                    {success}
+                                </span>
+                            </div>
+                        )}
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <div className="mb-4 overflow-hidden ">
                                 {selectedImage ? (
@@ -97,9 +106,18 @@ export default function ProductDetails({
                                             +
                                         </button>
                                     </div>
-                                    <button className="flex items-center justify-center w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-green-500 rounded-lg shadow lg:mt-0 hover:bg-green-600">
-                                        <LuShoppingCart /> Add to Cart
-                                    </button>
+                                    <Link
+                                        href={route("cart.store")}
+                                        method="post"
+                                        data={{
+                                            product_id: product.id,
+                                            quantity: 1,
+                                        }}
+                                    >
+                                        <button className="flex items-center justify-center w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-green-500 rounded-lg shadow lg:mt-0 hover:bg-green-600">
+                                            <LuShoppingCart /> Add to Cart
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
                         </div>
@@ -128,9 +146,14 @@ export default function ProductDetails({
                                 ))}
                             </div>
                         )}
+                        <div className="h-screen">
+                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-10">
+                                Product Ratings & Reviews
+                            </h1>
+                        </div>
                         {relatedProducts && relatedProducts.length > 0 && (
                             <div className="mt-20">
-                                <h1 className="text-gray-800 font-semibold lg:text-2xl xl:text-3xl mb-6">
+                                <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6">
                                     Related Products
                                 </h1>
                                 <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 pb-10">

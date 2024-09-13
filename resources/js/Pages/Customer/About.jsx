@@ -18,13 +18,13 @@ export default function About({ auth }) {
                 <div className=" w-full h-auto  py-10  ">
                     <div className="max-w-5xl mx-auto px-6 ">
                         <div className="flex items-center space-x-3">
-                            <hr className="w-28 border  border-lime-700 mb-6" />
-                            <h1 className="text-md font-bold text-lime-700 mb-6 uppercase tracking-wide">
+                            <hr className="w-28 border  border-gray-300 mb-6" />
+                            <h1 className="text-md font-bold text-gray-300 mb-6 uppercase tracking-wide">
                                 About Bilinao
                             </h1>
                         </div>
 
-                        <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
+                        <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
                             Know Our{" "}
                             <span className="text-lime-700">Story</span>
                         </h1>
@@ -47,12 +47,12 @@ export default function About({ auth }) {
                             <div className="order-1 md:order-2 h-72 w-full bg-gray-200 rounded-md"></div>
                             <div className="order-2 md:order-1 text-center md:text-left">
                                 <div className="flex items-center space-x-3">
-                                    <hr className="w-28 border  border-lime-700 mb-6" />
-                                    <h1 className="text-md font-bold text-lime-700 mb-6 uppercase tracking-wide">
+                                    <hr className="w-28 border  border-gray-300 mb-6" />
+                                    <h1 className="text-md font-bold text-gray-300  mb-6 uppercase tracking-wide">
                                         Mission
                                     </h1>
                                 </div>
-                                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
+                                <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
                                     Our{" "}
                                     <span className="text-lime-700">
                                         Mission
@@ -74,12 +74,12 @@ export default function About({ auth }) {
                             <div className="order-2 md:order-1 h-72 w-full bg-gray-200 rounded-md"></div>
                             <div className="order-1 md:order-2 text-center md:text-left">
                                 <div className="flex items-center space-x-3">
-                                    <hr className="w-28 border  border-lime-700 mb-6" />
-                                    <h1 className="text-md font-bold text-lime-700 mb-6 uppercase tracking-wide">
+                                    <hr className="w-28 border  border-gray-300 mb-6" />
+                                    <h1 className="text-md font-bold text-gray-300 mb-6 uppercase tracking-wide">
                                         Vision
                                     </h1>
                                 </div>
-                                <h1 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
+                                <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
                                     Our{" "}
                                     <span className="text-lime-700">
                                         Vision

@@ -14,6 +14,27 @@ class ProductController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function search()
+    {
+        $query = request('query');
+        
+        // Validate query
+        if (!$query) {
+            return redirect()->route('products.list')->withErrors('No search query provided');
+        }
+    
+        // Perform search
+        $products = Product::where('name', 'like', '%' . $query . '%')
+            ->with(['images'])
+            ->get();
+    
+        return Inertia::render('Customer/SearchResults', [
+            'products' => $products,
+            'query' => $query,
+        ]);
+    }
+    
+
     public function products()
 {
     $products = Product::with('images')->get();
@@ -109,6 +130,7 @@ class ProductController extends Controller
                             
         return Inertia::render('Customer/ProductDetails', [
             'product' => $product,
+            'success' => session('success'),
             'relatedProducts' => $relatedProducts,
         ]);
     }

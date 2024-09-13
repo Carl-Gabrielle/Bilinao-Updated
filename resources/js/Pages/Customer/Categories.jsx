@@ -18,7 +18,13 @@ export default function Categories({ auth, categories }) {
                     </h2>
                 </div>
                 <CustomerContainer className="mt-32">
-                    <h1 className="text-2xl font-medium">
+                    <div className="flex items-center space-x-3">
+                        <hr className="w-28 border  border-lime-700 mb-6 opacity-45" />
+                        <h1 className="text-md font-bold text-lime-700 mb-6 uppercase tracking-wide opacity-45">
+                            Categories
+                        </h1>
+                    </div>
+                    <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide ">
                         Explore Our Categories
                     </h1>
                     <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-10 mt-10">

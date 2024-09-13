@@ -35,7 +35,7 @@ export default function CategoryProducts({ auth, products, category }) {
                                             )}
                                             className="w-full flex justify-center"
                                         >
-                                            <div className="bg-white shadow-lg rounded-3xl overflow-hidden flex flex-col items-center relative">
+                                            <div className="bg-white shadow-lg rounded-3xl overflow-hidden flex flex-col  relative">
                                                 <div className="absolute right-4 top-4 bg-white px-2 py-2 rounded-full">
                                                     <FaRegHeart />
                                                 </div>
@@ -46,11 +46,11 @@ export default function CategoryProducts({ auth, products, category }) {
                                                         className="size-64 object-cover cursor-pointer"
                                                     />
                                                 )}
-                                                <div className="p-6 text-center">
-                                                    <h3 className="text-md font-normal mb-2">
+                                                <div className="p-6  text-xs">
+                                                    <h3 className=" text-md font-semibold  mb-2">
                                                         {product.name}
                                                     </h3>
-                                                    <p className="text-gray-800 font-bold flex items-center justify-center space-x-1">
+                                                    <p className=" flex items-center  space-x-1">
                                                         <FaPesoSign />
                                                         <span>
                                                             {product.price}
