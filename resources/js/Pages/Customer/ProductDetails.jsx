@@ -52,8 +52,8 @@ export default function ProductDetails({
                             </div>
                         )}
                         <Link href={route("customer.products")}>
-                            <h1 className="mb-6 font-semibold text-lime-700 w-48 px-4 py-2 text-md  hover:bg-gray-200 rounded-full transition-colors duration-300 ease-in-out">
-                                <MdOutlineKeyboardArrowLeft className="inline-block text-lg mr-1" />
+                            <h1 className="mb-6 font-semibold text-white w-48 px-4 py-2 text-md  bg-slate-800 rounded-full shadow-md">
+                                <MdOutlineKeyboardArrowLeft className="inline-block text-lg mr-1 " />
                                 Back to Product
                             </h1>
                         </Link>

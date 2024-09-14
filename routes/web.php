@@ -50,6 +50,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::middleware('customer')->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
+        Route::get('/customerProfile',[CustomerController::class,'profile'])->name('customer.customerProfile');
         Route::get('/customer/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/products', [ProductController::class, 'products'])->name('products.list');
         Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
@@ -60,6 +61,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');
         Route::get('/search', [ProductController::class, 'search'])->name('products.search');
+        Route::get('/customerProfile/edit', [CustomerController::class, 'edit'])->name('customer.editProfile'); 
+        Route::put('/customerProfile/{id}', [CustomerController::class, 'update'])->name('customer.updateProfile');
+        Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+
     });
 });
 

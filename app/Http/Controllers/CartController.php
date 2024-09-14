@@ -15,13 +15,15 @@ class CartController extends Controller
      */
     public function carts()
     {
-        // Eager load the 'images' relationship on the product model
-        $carts = Cart::with(['product.images'])->where('user_id', Auth::id())->get();
-        
+        $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
+    
         return Inertia::render('Customer/Carts', [
             'carts' => $carts,
+
         ]);
     }
+    
+    
     
     
     public function index()
@@ -51,7 +53,6 @@ class CartController extends Controller
         $product_id = $validatedData['product_id'];
         $quantity = $validatedData['quantity'];
     
-        // Check if the product already exists in the cart
         $existingCart = Cart::where('user_id', $user->id)
                             ->where('product_id', $product_id)
                             ->first();
@@ -67,6 +68,29 @@ class CartController extends Controller
             ]);
         }
         return redirect()->back()->with('success', 'Product added to cart successfully!');
+    }
+    
+    public function updateQuantity(Request $request, $id)
+    {
+        $validatedData = $request->validate([
+            'quantity' => 'required|integer|min:1',
+        ]);
+    
+        $user = auth()->user();
+        $quantity = $validatedData['quantity'];
+    
+        $cart = Cart::where('user_id', $user->id)
+                    ->where('product_id', $id)
+                    ->first();
+    
+        if ($cart) {
+            $cart->quantity = $quantity;
+            $cart->save();
+        } else {
+            return redirect()->back()->with('error', 'Cart item not found.');
+        }
+    
+        return redirect()->back()->with('success', 'Cart quantity updated successfully!');
     }
     
 
@@ -93,12 +117,20 @@ class CartController extends Controller
     {
         //
     }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(Cart $cart)
+    // Destroy the cart 
+    public function destroy($id)
     {
-        //
+        $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
+    
+        if ($cartItem) {
+            $cartItem->delete();
+        }
+    
+        $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
+    
+        return Inertia::render('Customer/Carts', [
+            'carts' => $carts,
+            'success' => 'Item removed from cart.',
+        ]);
     }
 }

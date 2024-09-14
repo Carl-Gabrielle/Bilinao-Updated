@@ -232,7 +232,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         </p>
                                         <hr className="my-2" />
                                         <Dropdown.Link
-                                            // href={route("profile.customer")}
+                                            href="/customerProfile"
                                             className="hover:bg-gray-100 transition-colors duration-300 ease-in-out rounded-md"
                                         >
                                             My Account

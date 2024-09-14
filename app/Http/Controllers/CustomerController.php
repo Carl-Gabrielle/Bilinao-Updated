@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\User;
 use App\Http\Resources\CategoryResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
@@ -41,7 +42,7 @@ class CustomerController extends Controller
         }
     public function profile()
     {
-    return Inertia::render('Customer/ProfileEdit');
+    return Inertia::render('Customer/ProfileIndex');
     }
 
 
@@ -76,18 +77,19 @@ class CustomerController extends Controller
     /**
      * Show the form for editing the specified resource.
      */
-    public function edit(string $id)
+    public function edit()
     {
-        //
+        
     }
+    
 
     /**
      * Update the specified resource in storage.
      */
     public function update(Request $request, string $id)
     {
-        //
     }
+
 
     /**
      * Remove the specified resource from storage.

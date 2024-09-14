@@ -100,8 +100,8 @@ export default function About({ auth }) {
                                 Why We Are Here?
                             </h1>
                         </div>
-                        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-4xl mx-auto px-6">
-                            <div className="px-6 py-4 bg-white tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center">
+                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-4xl mx-auto px-6">
+                            <div className="px-6 py-4 bg-white tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center ">
                                 <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
                                     <LiaHandHoldingHeartSolid className="text-white size-6 " />
                                 </div>
