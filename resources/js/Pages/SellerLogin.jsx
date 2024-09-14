@@ -1,15 +1,15 @@
-import React, { useState } from 'react';
-import { useForm } from '@inertiajs/react';
-import TextInput from '@/Components/TextInput';
-import { MdOutlineKeyboardArrowLeft, MdLogin } from 'react-icons/md';
-import { Head, Link } from '@inertiajs/react';
-import Checkbox from '@/Components/Checkbox';
-import Bgimage from './Illustrations/BgImage.jpg';
+import React, { useState } from "react";
+import { useForm } from "@inertiajs/react";
+import TextInput from "@/Components/TextInput";
+import { MdOutlineKeyboardArrowLeft, MdLogin } from "react-icons/md";
+import { Head, Link } from "@inertiajs/react";
+import Checkbox from "@/Components/Checkbox";
+import Bgimage from "./Illustrations/BgImage.jpg";
 
 const SellerLogin = () => {
     const { data, setData, post, processing, errors } = useForm({
-        username: '',
-        password: '',
+        username: "",
+        password: "",
     });
     const [showPassword, setShowPassword] = useState(false);
     const togglePasswordVisibility = () => {
@@ -18,13 +18,12 @@ const SellerLogin = () => {
 
     const handleLogin = (e) => {
         e.preventDefault();
-        post(route('seller.authenticate'), {
+        post(route("seller.authenticate"), {
             onSuccess: () => {
-                window.location.href = route('seller.dashboard');
+                window.location.href = route("seller.dashboard");
             },
         });
     };
-    
 
     return (
         <>
@@ -33,9 +32,9 @@ const SellerLogin = () => {
                 className="w-full bg-gray-100 h-screen flex items-center justify-center relative"
                 style={{
                     backgroundImage: `url(${Bgimage})`,
-                    backgroundSize: 'cover',
-                    backgroundPosition: 'center',
-                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: "cover",
+                    backgroundPosition: "center",
+                    backgroundRepeat: "no-repeat",
                 }}
             >
                 <div className="absolute inset-0 bg-black opacity-40"></div>
@@ -44,9 +43,10 @@ const SellerLogin = () => {
                         <Link href="/">
                             <button
                                 className="mb-5 px-6 py-2 bg-white shadow-md bg-opacity-70 backdrop-blur-lg rounded-full font-bold flex items-center"
-                                style={{ cursor: 'pointer' }}
+                                style={{ cursor: "pointer" }}
                             >
-                                <MdOutlineKeyboardArrowLeft className="mr-2" /> Go back Home
+                                <MdOutlineKeyboardArrowLeft className="mr-2" />{" "}
+                                Go back Home
                             </button>
                         </Link>
                     </div>
@@ -65,7 +65,8 @@ const SellerLogin = () => {
                                     Create Your Bili-Nao Store now
                                 </h1>
                                 <p className="uppercase text-gray-800 text-sm mt-2">
-                                    Enter your username and password to start selling
+                                    Enter your username and password to start
+                                    selling
                                 </p>
                                 <form onSubmit={handleLogin} className="mt-5">
                                     <div className="mt-5">
@@ -74,24 +75,42 @@ const SellerLogin = () => {
                                             required
                                             placeholder="Enter your Username"
                                             value={data.username}
-                                            onChange={(e) => setData('username', e.target.value)}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "username",
+                                                    e.target.value
+                                                )
+                                            }
                                         />
                                     </div>
                                     <div className="mt-5">
                                         <TextInput
                                             className="bg-white border-2 border-transparent focus:border-2"
                                             required
-                                            type={showPassword ? 'text' : 'password'}
+                                            type={
+                                                showPassword
+                                                    ? "text"
+                                                    : "password"
+                                            }
                                             placeholder="Enter your Password"
                                             value={data.password}
-                                            onChange={(e) => setData('password', e.target.value)}
+                                            onChange={(e) =>
+                                                setData(
+                                                    "password",
+                                                    e.target.value
+                                                )
+                                            }
                                         />
                                     </div>
                                     {errors.username && (
-                                        <p className="text-red-500 mt-2 text-xs">{errors.username}</p>
+                                        <p className="text-red-500 mt-2 text-xs">
+                                            {errors.username}
+                                        </p>
                                     )}
                                     {errors.password && (
-                                        <p className="text-red-500 mt-2 text-xs">{errors.password}</p>
+                                        <p className="text-red-500 mt-2 text-xs">
+                                            {errors.password}
+                                        </p>
                                     )}
                                     <div className="mb-2 flex items-center gap-2 mt-2">
                                         <Checkbox

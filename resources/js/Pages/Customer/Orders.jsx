@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Head } from "@inertiajs/react";
+import Banner from "@/Components/Banner";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 
 import {
     FaMoneyCheckAlt,
+    FaCheckCircle,
     FaShippingFast,
     FaBoxOpen,
     FaUndoAlt,
@@ -21,11 +23,7 @@ const Orders = ({ auth }) => {
         <CustomerLayout user={auth.user}>
             <Head title="My Orders" />
             <div className="min-h-screen bg-gray-100 pt-20 pb-1">
-                <div className="h-72 w-full bg-lime-700 mt-6 flex items-center justify-center rounded-b-3xl">
-                    <h2 className=" text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-5xl text-white text-center">
-                        My Orders
-                    </h2>
-                </div>
+                <Banner title="My Orders" />
                 <CustomerContainer>
                     <div className="mb-6">
                         <p className="text-xs text-slate-900">
@@ -34,7 +32,7 @@ const Orders = ({ auth }) => {
                             corresponding orders
                         </p>
                     </div>
-                    <div className="grid grid-cols-3  lg:grid-cols-3 gap-4 mb-8">
+                    <div className="grid grid-cols-2  lg:grid-cols-4 gap-4 mb-8">
                         <OrderStatus
                             title="To Pay"
                             icon={<FaMoneyCheckAlt size={20} />}
@@ -52,6 +50,12 @@ const Orders = ({ auth }) => {
                             icon={<FaBoxOpen size={20} />}
                             isActive={activeStatus === "To Receive"}
                             onClick={() => handleStatusClick("To Receive")}
+                        />
+                        <OrderStatus
+                            title="Received"
+                            icon={<FaCheckCircle size={20} />}
+                            isActive={activeStatus === "Received"}
+                            onClick={() => handleStatusClick("Received")}
                         />
                     </div>
 

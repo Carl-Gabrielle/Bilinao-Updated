@@ -16,10 +16,6 @@
         /**
          * Display a listing of the resource.
          */
-        public function changePass (){
-            return Inertia::render('Seller/changePass');
-        }
-    
         public function index()
         {
             $sellers = Seller::paginate(5);

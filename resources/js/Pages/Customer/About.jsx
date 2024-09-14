@@ -2,6 +2,7 @@ import CustomerContainer from "@/Components/CustomerContainer";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { LiaHandHoldingHeartSolid, LiaPeopleCarrySolid } from "react-icons/lia";
 import { IoHomeOutline } from "react-icons/io5";
+import Banner from "@/Components/Banner";
 import { MdOutlineRocket } from "react-icons/md";
 import { Head } from "@inertiajs/react";
 
@@ -9,12 +10,8 @@ export default function About({ auth }) {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="About Us" />
-            <div className="min-h-screen  pt-20 pb-1">
-                <div className="h-72 w-full bg-lime-700 mt-6 flex items-center justify-center rounded-b-3xl">
-                    <h2 className=" text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-5xl text-white text-center">
-                        About Us
-                    </h2>
-                </div>
+            <div className="min-h-screen   pt-20 pb-1">
+                <Banner title="About Us" />
                 <div className=" w-full h-auto  py-10  ">
                     <div className="max-w-5xl mx-auto px-6 ">
                         <div className="flex items-center space-x-3">
@@ -95,7 +92,7 @@ export default function About({ auth }) {
                     </div>
                 </div>
 
-                <div className=" w-full h-auto mb-10 bg-gray-50 py-10">
+                <div className=" w-full h-auto mb-10 bg-slate-50 py-10">
                     <div className="max-w-5xl mx-auto px-6 py-5 ">
                         <div className="flex items-center justify-center space-x-6">
                             <hr className="w-28 border  border-lime-700 mb-6" />
@@ -104,35 +101,35 @@ export default function About({ auth }) {
                             </h1>
                         </div>
                         <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-4xl mx-auto px-6">
-                            <div className="px-6 py-4 bg-white rounded-md text-xs font-medium flex flex-col gap-3 items-center">
-                                <div className="bg-yellow-400 size-12 rounded-full flex items-center justify-center">
+                            <div className="px-6 py-4 bg-white tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center">
+                                <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
                                     <LiaHandHoldingHeartSolid className="text-white size-6 " />
                                 </div>
                                 <span className="text-center text-slate-800">
                                     Preserving Traditions
                                 </span>
                             </div>
-                            <div className="px-6 py-4 bg-white rounded-md text-xs font-medium flex flex-col gap-3 items-center">
-                                <div className="bg-yellow-400 size-12 rounded-full flex items-center justify-center">
+                            <div className="px-6 py-4 bg-white tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center">
+                                <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
                                     <LiaPeopleCarrySolid className="text-white size-6" />
                                 </div>
                                 <span className="text-center text-slate-800">
                                     Supporting Artisans
                                 </span>
                             </div>
-                            <div className="px-6 py-4 bg-white rounded-md text-xs font-medium flex flex-col gap-3 items-center ">
-                                <div className="bg-yellow-400 size-12 rounded-full flex items-center justify-center">
+                            <div className="px-6 py-4 bg-white  tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center ">
+                                <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
                                     <MdOutlineRocket className="text-white size-6 " />
                                 </div>
                                 <span className="text-center text-slate-800">
                                     Successful Digital Business
                                 </span>
                             </div>
-                            <div className="px-6 py-4 bg-white rounded-md text-xs font-medium flex flex-col gap-3 items-center">
-                                <div className="bg-yellow-400 size-12 rounded-full flex items-center justify-center">
+                            <div className="px-6 py-4 bg-white tracking-wide rounded-md text-xs font-medium flex flex-col gap-3 items-center">
+                                <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
                                     <IoHomeOutline className="text-white size-6" />
                                 </div>
-                                <span className="text-center text-slate-800">
+                                <span className="text-center text-slate-800  ">
                                     Showcasing Craftsmanship
                                 </span>
                             </div>

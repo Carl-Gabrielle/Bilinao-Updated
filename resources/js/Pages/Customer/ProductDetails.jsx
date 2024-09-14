@@ -1,10 +1,13 @@
 import React, { useState } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import { LuShoppingCart } from "react-icons/lu";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { Head, Link } from "@inertiajs/react";
+import { IoCheckmarkSharp } from "react-icons/io5";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import CustomerContainer from "@/Components/CustomerContainer";
+import Banner from "@/Components/Banner";
 
 export default function ProductDetails({
     product,
@@ -28,18 +31,34 @@ export default function ProductDetails({
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen bg-gray-100 pt-20 pb-1">
                 <Head title={`${product.name} Details`} />
+                <Banner
+                    title="Products/"
+                    suffix={product.category.name}
+                    prefix="/Product Details"
+                />
                 <main>
                     <CustomerContainer>
                         {success && (
-                            <div className="bg-white rounded-md text-green-700 px-4 py-2 flex items-center  space-x-4 relative  ml-auto w-1/2    mb-6">
-                                <strong className="font-bold">Success!</strong>
-                                <span className="block sm:inline">
-                                    {success}
-                                </span>
+                            <div
+                                id="toast"
+                                className="fixed bottom-4 right-4 z-50"
+                            >
+                                <div className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-3">
+                                    <IoCheckmarkSharp className="text-white w-6 h-6" />
+                                    <span className="text-sm font-medium">
+                                        {success}
+                                    </span>
+                                </div>
                             </div>
                         )}
+                        <Link href={route("customer.products")}>
+                            <h1 className="mb-6 font-semibold text-lime-700 w-48 px-4 py-2 text-md  hover:bg-gray-200 rounded-full transition-colors duration-300 ease-in-out">
+                                <MdOutlineKeyboardArrowLeft className="inline-block text-lg mr-1" />
+                                Back to Product
+                            </h1>
+                        </Link>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div className="mb-4 overflow-hidden ">
+                            <div className="mb-4 overflow-hidden  h-96">
                                 {selectedImage ? (
                                     <img
                                         src={`/storage/${selectedImage}`}
@@ -52,8 +71,8 @@ export default function ProductDetails({
                                     </p>
                                 )}
                             </div>
-                            <div className="max-w-lg mx-auto flex flex-col items-start justify-center">
-                                <p className="mt-5 text-green-500 text-xl font-bold mb-4">
+                            <div className="max-w-lg mx-auto flex flex-col items-start justify-center ">
+                                <p className="mt-5 text-lime-700 text-xl font-bold mb-4">
                                     Category: {product.category.name}
                                 </p>
                                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold font-Roboto text-gray-900 leading-tight mb-4">
@@ -82,7 +101,7 @@ export default function ProductDetails({
                                     {product.stock} Products
                                 </p>
 
-                                <div className="flex items-center text-green-600 font-bold text-xl mb-4">
+                                <div className="flex items-center text-lime-700 font-bold text-xl mb-4">
                                     <FaPesoSign className="text-lg" />
                                     <span className="ml-1">
                                         {product.price}
@@ -114,7 +133,7 @@ export default function ProductDetails({
                                             quantity: 1,
                                         }}
                                     >
-                                        <button className="flex items-center justify-center w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-green-500 rounded-lg shadow lg:mt-0 hover:bg-green-600">
+                                        <button className="flex items-center justify-center sm:w-52 w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-lime-700 rounded-lg shadow lg:mt-0 ">
                                             <LuShoppingCart /> Add to Cart
                                         </button>
                                     </Link>
@@ -122,9 +141,8 @@ export default function ProductDetails({
                             </div>
                         </div>
 
-                        {/* Thumbnails for product images */}
                         {product.images?.length > 0 && (
-                            <div className="flex overflow-x-auto space-x-4 ">
+                            <div className="flex overflow-x-auto space-x-4">
                                 {product.images.map((image) => (
                                     <div
                                         key={image.id}

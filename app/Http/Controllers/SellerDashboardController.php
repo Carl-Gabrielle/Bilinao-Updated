@@ -6,7 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 class SellerDashboardController extends Controller
 {
-    public function index()
+    public function dashboard()
     {
         return Inertia::render('SellerDashboard');
     }

@@ -26,10 +26,10 @@ Route::middleware('guest')->group(function () {
 Route::get('seller/{seller}/profile', [SellerDashboardController::class, 'publicProfile'])->name('seller.public.profile');
 
 Route::middleware('auth:seller')->group(function () {
-    Route::get('seller/dashboard', [SellerDashboardController::class, 'index'])->name('seller.dashboard');
+    Route::get('seller/dashboard', [SellerDashboardController::class, 'dashboard'])->name('seller.dashboard');
     Route::get('seller/products', [ProductController::class, 'showProductsBySeller'])->name('seller.products.index');
     Route::get('seller/products', [ProductController::class, 'index'])->name('products.index');
-    Route::get('seller/profile', [SellerDashboardController::class, 'profile'])->name('products.profile');
+    Route::get('seller/profile', [SellerDashboardController::class, 'profile'])->name('seller.profile');
     Route::resource('products', ProductController::class);
 });
 

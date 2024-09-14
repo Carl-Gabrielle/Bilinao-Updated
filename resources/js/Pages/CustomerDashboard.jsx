@@ -10,7 +10,7 @@ export default function CustomerDashboard({ auth, category }) {
     const categoryData = category?.data ?? [];
     return (
         <CustomerLayout user={auth.user}>
-            <div className="min-h-screen bg-gray-100">
+            <div className="min-h-screen bg-gray-50">
                 <Head title="Home" />
                 <main>
                     <div className="max-w-screen-xl mx-auto">
@@ -96,9 +96,9 @@ export default function CustomerDashboard({ auth, category }) {
                             </div>
                         </div>
                         <div className="h-screen py-12 px-12">
-                            <h2 className="text-3xl font-bold  mb-8">
+                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide ">
                                 New Products
-                            </h2>
+                            </h1>
                         </div>
                     </div>
                 </main>

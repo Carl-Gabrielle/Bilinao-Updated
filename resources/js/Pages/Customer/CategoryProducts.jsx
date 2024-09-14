@@ -1,24 +1,22 @@
 import React from "react";
 import { FaRegHeart } from "react-icons/fa";
+import { GrCart } from "react-icons/gr";
 import { FaPesoSign } from "react-icons/fa6";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { Head, Link } from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
 import CustomerLayout from "@/Layouts/CustomerLayout";
+import Banner from "@/Components/Banner";
 import CustomerContainer from "@/Components/CustomerContainer";
 import FilterBar from "./FilterBar";
 
 export default function CategoryProducts({ auth, products, category }) {
     return (
         <CustomerLayout user={auth.user}>
-            <div className="min-h-screen bg-gray-100 pt-20 pb-1">
+            <div className="min-h-screen bg-gray-100 pt-20 pb-1 ">
                 <Head title={`${category} Products`} />
                 <main>
-                    <div className="h-72 w-full bg-lime-700 mt-6 flex items-center justify-center rounded-b-3xl">
-                        <h2 className=" text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl text-white text-center">
-                            {category} Products
-                        </h2>
-                    </div>
+                    <Banner title={category} suffix="Products" />
                     <CustomerContainer>
                         {/* FILTER BAR  */}
                         <FilterBar count={products.data.length} />
@@ -35,27 +33,47 @@ export default function CategoryProducts({ auth, products, category }) {
                                             )}
                                             className="w-full flex justify-center"
                                         >
-                                            <div className="bg-white shadow-lg rounded-3xl overflow-hidden flex flex-col  relative">
-                                                <div className="absolute right-4 top-4 bg-white px-2 py-2 rounded-full">
-                                                    <FaRegHeart />
-                                                </div>
-                                                {product.images.length > 0 && (
-                                                    <img
-                                                        src={`/storage/${product.images[0].image_path}`}
-                                                        alt={product.name}
-                                                        className="size-64 object-cover cursor-pointer"
-                                                    />
-                                                )}
-                                                <div className="p-6  text-xs">
-                                                    <h3 className=" text-md font-semibold  mb-2">
-                                                        {product.name}
-                                                    </h3>
-                                                    <p className=" flex items-center  space-x-1">
-                                                        <FaPesoSign />
-                                                        <span>
-                                                            {product.price}
-                                                        </span>
-                                                    </p>
+                                            <div className="bg-gray-200 rounded-3xl relative mb-7 h-72 ">
+                                                <div className="rounded-t-3xl  rounded-b-2xl  overflow-hidden flex flex-col  ">
+                                                    <div className="absolute right-4 top-4 px-2 py-2 rounded-full text-lime-700 bg-white z-10">
+                                                        <FaRegHeart />
+                                                    </div>
+                                                    {product.images.length >
+                                                        0 && (
+                                                        <img
+                                                            src={`/storage/${product.images[0].image_path}`}
+                                                            alt={product.name}
+                                                            className="size-72  object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
+                                                        />
+                                                    )}
+                                                    <div className="text-xs px-4 py-4 flex items-center justify-between bg-lime-700 text-white w-full z-10 rounded-2xl absolute -bottom-8">
+                                                        <div className="flex flex-col gap-1">
+                                                            <span className="font-medium">
+                                                                {product.name}
+                                                            </span>
+                                                            <span className="font-normal  ">
+                                                                <FaPesoSign className="inline-block mr-" />{" "}
+                                                                {product.price}
+                                                            </span>
+                                                        </div>
+                                                        <Link
+                                                            href={route(
+                                                                "cart.store"
+                                                            )}
+                                                            method="post"
+                                                            data={{
+                                                                product_id:
+                                                                    product.id,
+                                                                quantity: 1,
+                                                            }}
+                                                        >
+                                                            <div className="bg-white px-3 py-3 rounded-full text-lime-700 ">
+                                                                <GrCart
+                                                                    size={15}
+                                                                />
+                                                            </div>
+                                                        </Link>
+                                                    </div>
                                                 </div>
                                             </div>
                                         </Link>

@@ -18,12 +18,10 @@ class ProductController extends Controller
     {
         $query = request('query');
         
-        // Validate query
         if (!$query) {
             return redirect()->route('products.list')->withErrors('No search query provided');
         }
     
-        // Perform search
         $products = Product::where('name', 'like', '%' . $query . '%')
             ->with(['images'])
             ->get();
@@ -38,8 +36,8 @@ class ProductController extends Controller
     public function products()
 {
     $products = Product::with('images')->get();
-
     return Inertia::render('Customer/Products', [
+        'success' => session('success'),
         'products' => $products,
     ]);
 }

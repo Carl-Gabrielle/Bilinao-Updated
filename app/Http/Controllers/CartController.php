@@ -15,11 +15,14 @@ class CartController extends Controller
      */
     public function carts()
     {
-        $carts = Cart::with('product')->where('user_id', Auth::id())->get();
+        // Eager load the 'images' relationship on the product model
+        $carts = Cart::with(['product.images'])->where('user_id', Auth::id())->get();
+        
         return Inertia::render('Customer/Carts', [
             'carts' => $carts,
         ]);
     }
+    
     
     public function index()
     {
@@ -39,12 +42,6 @@ class CartController extends Controller
      */
     public function store(Request $request)
     {
-        // Ensure the user is authenticated
-        if (!auth()->check()) {
-            return redirect()->route('login')->with('error', 'You must be logged in to add items to the cart.');
-        }
-    
-        // Validate incoming request
         $validatedData = $request->validate([
             'product_id' => 'required|exists:products,id',
             'quantity' => 'required|integer|min:1',
@@ -60,19 +57,15 @@ class CartController extends Controller
                             ->first();
     
         if ($existingCart) {
-            // Increment the quantity if the product already exists in the cart
             $existingCart->quantity += $quantity;
             $existingCart->save();
         } else {
-            // Create a new cart entry if the product is not in the cart
             Cart::create([
                 'user_id' => $user->id,
                 'product_id' => $product_id,
                 'quantity' => $quantity,
             ]);
         }
-    
-        // Redirect back with success message
         return redirect()->back()->with('success', 'Product added to cart successfully!');
     }
     

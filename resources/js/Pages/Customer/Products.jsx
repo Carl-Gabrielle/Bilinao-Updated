@@ -1,32 +1,42 @@
 import CustomerContainer from "@/Components/CustomerContainer";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { GrCart } from "react-icons/gr";
+import { IoCheckmarkSharp } from "react-icons/io5";
+import Banner from "@/Components/Banner";
 import { FaPesoSign } from "react-icons/fa6";
 import { Head, Link } from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
 
-export default function Products({ products, auth, category }) {
+export default function Products({ products, auth, category, success }) {
     const categoryData = category?.data ?? [];
     const productData = products.data;
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Products" />
             <div className="min-h-screen pt-20 pb-1">
-                <div className="h-72 w-full bg-lime-700 mt-6 flex items-center justify-center rounded-b-3xl">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-5xl text-white text-center">
-                        Products
-                    </h2>
-                </div>
-
+                <Banner title="Products" />
                 <div className="flex flex-col lg:flex-row mt-12">
                     {/* ASIDE */}
                     {/* Products Grid */}
                     <CustomerContainer className="flex-1">
+                        {success && (
+                            <div
+                                id="toast"
+                                className="fixed bottom-4 right-4 z-50"
+                            >
+                                <div className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-3">
+                                    <IoCheckmarkSharp className="text-white w-6 h-6" />
+                                    <span className="text-sm font-medium">
+                                        {success}
+                                    </span>
+                                </div>
+                            </div>
+                        )}
                         <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
                             {productData.map((product) => (
                                 <Link
                                     key={product.id}
-                                    // href={route("product.show", product.id)}
+                                    href={route("product.show", product.id)}
                                 >
                                     <div className="bg-gray-50 rounded-2xl p-4">
                                         <img
@@ -53,7 +63,7 @@ export default function Products({ products, auth, category }) {
                                                 quantity: 1,
                                             }}
                                         >
-                                            <div className="bg-yellow-500 px-3 py-3 rounded-full text-white">
+                                            <div className="bg-lime-700 px-3 py-3 rounded-full text-white">
                                                 <GrCart size={15} />
                                             </div>
                                         </Link>

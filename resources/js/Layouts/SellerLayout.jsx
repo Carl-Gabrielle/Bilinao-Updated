@@ -100,23 +100,25 @@ const SellerLayout = ({ user, children }) => {
                                 />
                             </NavLink>
                             {/* Orders Link */}
-                            {/* <NavLink
-                onClick={handleNavLinkClick}
-            >
-                <div className="flex items-center space-x-3">
-                    <MdOutlineDashboard
-                        className={`size-4 ${
-                            route().current('seller.dashboard') ? 'text-white' : 'text-slate-800'
-                        }`}
-                    />
-                    <span>Manage Orders </span>
-                </div>
-                <MdOutlineKeyboardArrowRight
-                    className={`size-5 ${
-                        route().current('seller.dashboard') ? 'text-white' : 'text-slate-800'
-                    }`}
-                />
-            </NavLink> */}
+                            {/* <NavLink onClick={handleNavLinkClick}>
+                                <div className="flex items-center space-x-3">
+                                    <MdOutlineDashboard
+                                        className={`size-4 ${
+                                            route().current("seller.dashboard")
+                                                ? "text-white"
+                                                : "text-slate-800"
+                                        }`}
+                                    />
+                                    <span>Manage Orders </span>
+                                </div>
+                                <MdOutlineKeyboardArrowRight
+                                    className={`size-5 ${
+                                        route().current("seller.dashboard")
+                                            ? "text-white"
+                                            : "text-slate-800"
+                                    }`}
+                                />
+                            </NavLink> */}
                             {/* Manage Products */}
                             <div className="relative">
                                 <button
@@ -223,11 +225,11 @@ const SellerLayout = ({ user, children }) => {
                                 </h3>
                             </div>
                             <NavLink
-                                href={route("products.profile")}
-                                active={route().current("products.profile")}
+                                href={route("seller.profile")}
+                                active={route().current("seller.profile")}
                                 onClick={handleNavLinkClick}
                                 className={`flex items-center justify-between  rounded-lg transition-colors ${
-                                    route().current("products.profile")
+                                    route().current("seller.profile")
                                         ? "bg-gray-800 text-white"
                                         : "hover:bg-gray-100"
                                 }`}
@@ -235,7 +237,7 @@ const SellerLayout = ({ user, children }) => {
                                 <div className="flex items-center space-x-3">
                                     <FaRegUser
                                         className={`size-4 ${
-                                            route().current("products.profile")
+                                            route().current("seller.profile")
                                                 ? "text-white"
                                                 : "text-slate-800"
                                         }`}
@@ -244,7 +246,7 @@ const SellerLayout = ({ user, children }) => {
                                 </div>
                                 <MdOutlineKeyboardArrowRight
                                     className={`size-5 ${
-                                        route().current("products.profile")
+                                        route().current("seller.profile")
                                             ? "text-white"
                                             : "text-slate-800"
                                     }`}
@@ -287,19 +289,33 @@ const SellerLayout = ({ user, children }) => {
                 </aside>
 
                 {!sidebarOpen && (
-                    <div className="sm:hidden fixed top-4 left-4 z-50">
-                        <button
-                            onClick={toggleSidebar}
-                            className="p-2  text-white bg-lime-700  rounded-full"
-                        >
-                            <HiMenu className="h-6 w-6" />
-                        </button>
+                    <div className="sm:hidden w-full bg-white h-16 fixed top-0 left-0 right-0 flex items-center justify-between px-4">
+                        <div className="flex items-center">
+                            <button
+                                onClick={toggleSidebar}
+                                className="p-2 text-slate-800 hover:bg-gray-800 rounded-full"
+                            >
+                                <HiMenu className="h-6 w-6" />
+                            </button>
+                        </div>
+                        <Link href={route("seller.profile")}>
+                            <div className="flex items-center text-xs  py-1 px-3 rounded-md hover:bg-gray-100">
+                                <FaRegUser className="mr-2" />
+                                <span>
+                                    {" "}
+                                    Hi,{" "}
+                                    <span className="font-semibold">
+                                        {user.name}
+                                    </span>{" "}
+                                </span>
+                            </div>
+                        </Link>
                     </div>
                 )}
                 {/* Main Content */}
                 <div
-                    className={`flex-1 p-0 sm:p-10 transition-all duration-300 ${
-                        sidebarOpen ? "ml-0" : "ml-0"
+                    className={`flex-1 p-0 sm:p-10 transition-all duration-300 overflow-x-hidden ${
+                        sidebarOpen ? "ml-0 " : "ml-0 mt-16 sm:mt-0"
                     } sm:ml-64`}
                 >
                     {children}

@@ -3,6 +3,7 @@ import { PiArrowRightBold } from "react-icons/pi";
 import { Head, Link } from "@inertiajs/react";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
 import CustomerLayout from "@/Layouts/CustomerLayout";
+import Banner from "@/Components/Banner";
 import CustomerContainer from "@/Components/CustomerContainer";
 
 export default function Categories({ auth, categories }) {
@@ -11,16 +12,12 @@ export default function Categories({ auth, categories }) {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Categories" />
-            <div className="min-h-screen bg-gray-100 pt-20 pb-1">
-                <div className="h-72 w-full bg-lime-700 mt-6 flex items-center justify-center rounded-b-3xl">
-                    <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-5xl text-white text-center">
-                        Categories
-                    </h2>
-                </div>
+            <div className="min-h-screen  pt-20 pb-1 ">
+                <Banner title="Categories" />
                 <CustomerContainer className="mt-32">
                     <div className="flex items-center space-x-3">
-                        <hr className="w-28 border  border-lime-700 mb-6 opacity-45" />
-                        <h1 className="text-md font-bold text-lime-700 mb-6 uppercase tracking-wide opacity-45">
+                        <hr className="w-28 border   mb-6 border-gray-300" />
+                        <h1 className="text-md font-bold text-gray-300 mb-6 uppercase tracking-wide">
                             Categories
                         </h1>
                     </div>
