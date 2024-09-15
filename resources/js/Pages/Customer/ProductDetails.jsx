@@ -29,7 +29,7 @@ export default function ProductDetails({
 
     return (
         <CustomerLayout user={auth.user}>
-            <div className="min-h-screen bg-gray-100 pt-20 pb-1">
+            <div className="min-h-screen  pt-20 pb-1">
                 <Head title={`${product.name} Details`} />
                 <Banner
                     title="Products/"
@@ -52,8 +52,8 @@ export default function ProductDetails({
                             </div>
                         )}
                         <Link href={route("customer.products")}>
-                            <h1 className="mb-6 font-semibold text-white w-48 px-4 py-2 text-md  bg-slate-800 rounded-full shadow-md">
-                                <MdOutlineKeyboardArrowLeft className="inline-block text-lg mr-1 " />
+                            <h1 className="mb-6 font-semibold text-lime-700  px-4 py-2 text-md  ">
+                                <MdOutlineKeyboardArrowLeft className="inline-block text-lg mr-2 " />
                                 Back to Product
                             </h1>
                         </Link>
@@ -125,18 +125,24 @@ export default function ProductDetails({
                                             +
                                         </button>
                                     </div>
-                                    <Link
-                                        href={route("cart.store")}
-                                        method="post"
-                                        data={{
-                                            product_id: product.id,
-                                            quantity: 1,
-                                        }}
-                                    >
-                                        <button className="flex items-center justify-center sm:w-52 w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-lime-700 rounded-lg shadow lg:mt-0 ">
-                                            <LuShoppingCart /> Add to Cart
-                                        </button>
-                                    </Link>
+                                    {product.stock > 0 ? (
+                                        <Link
+                                            href={route("cart.store")}
+                                            method="post"
+                                            data={{
+                                                product_id: product.id,
+                                                quantity: 1,
+                                            }}
+                                        >
+                                            <button className="flex items-center justify-center sm:w-52 w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-lime-700 rounded-lg shadow lg:mt-0 ">
+                                                <LuShoppingCart /> Add to Cart
+                                            </button>
+                                        </Link>
+                                    ) : (
+                                        <div className="flex items-center cursor-not-allowed justify-center sm:w-52 w-full gap-4 px-4 py-2 mt-3 text-xs text-gray-600  bg-gray-300 rounded-lg shadow lg:mt-0 ">
+                                            <span>Out of Stock</span>
+                                        </div>
+                                    )}
                                 </div>
                             </div>
                         </div>

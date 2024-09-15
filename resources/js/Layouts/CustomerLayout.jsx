@@ -21,7 +21,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
         useState(false);
     return (
         <div className="min-h-screen ">
-            <div className="w-full h-10  z-20 fixed   bg-slate-900 ">
+            <div className="w-full h-10  z-30 fixed   bg-[#032123]">
                 <div className="flex justify-between items-center text-sm w-full h-full text-white max-w-6xl px-4 mx-auto">
                     <div className="flex items-center justify-center space-x-4">
                         <span className="">Follow Us</span>
@@ -64,7 +64,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     </div>
                 </div>
             </div>
-            <nav className="bg-white fixed w-full z-20 mt-10 shadow-sm">
+            <nav className="bg-white fixed w-full z-30 mt-10 shadow-sm">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center ">
                         {/* Logo Section */}

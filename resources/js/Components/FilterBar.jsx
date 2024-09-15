@@ -54,7 +54,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                         <MdOutlineKeyboardArrowDown className="ml-2" />
                     </span>
                     {availabilityOpen && (
-                        <div className="z-10 absolute top-full -left-10 sm:left-0 mt-2 w-72 sm:w-96 bg-white rounded-2xl shadow-lg">
+                        <div className="z-20 absolute top-full -left-10 sm:left-0 mt-2 w-72 sm:w-96 bg-white rounded-2xl shadow-lg">
                             <div className="px-6 py-4">
                                 <div className="flex justify-between items-center mb-4">
                                     <p className="text-gray-800 font-semibold">
@@ -148,6 +148,26 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                                 className="block px-4 py-3 hover:bg-gray-100"
                             >
                                 Price: High to Low
+                            </a>
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleSortChange("new-old");
+                                }}
+                                className="block px-4 py-3 hover:bg-gray-100"
+                            >
+                                New to Old
+                            </a>
+                            <a
+                                href="#"
+                                onClick={(e) => {
+                                    e.preventDefault();
+                                    handleSortChange("old-new");
+                                }}
+                                className="block px-4 py-3 hover:bg-gray-100"
+                            >
+                                Old to New
                             </a>
                         </div>
                     )}

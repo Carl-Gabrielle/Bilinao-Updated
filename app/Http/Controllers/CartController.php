@@ -23,7 +23,9 @@ class CartController extends Controller
         ]);
     }
     
-    
+    public function checkout(){
+        return Inertia::render('Customer/Checkout');
+    }
     
     
     public function index()

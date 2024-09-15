@@ -64,6 +64,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/customerProfile/edit', [CustomerController::class, 'edit'])->name('customer.editProfile'); 
         Route::put('/customerProfile/{id}', [CustomerController::class, 'update'])->name('customer.updateProfile');
         Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
+        Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
+
 
     });
 });

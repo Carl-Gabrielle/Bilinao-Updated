@@ -18,17 +18,16 @@ export default function Carts({ auth, carts, cartCount }) {
             )
         );
     };
+
     const handleDelete = async (id) => {
         try {
             await axios.delete(route("cart.destroy", id));
             setCartItems(cartItems.filter((cart) => cart.product.id !== id));
         } catch (error) {
-            console.error(
-                "There was an error removing the item from the cart!",
-                error
-            );
+            console.error("Error removing item from the cart!", error);
         }
     };
+
     const handleIncrement = (id) => {
         const updatedCart = cartItems.map((cart) =>
             cart.product.id === id
@@ -57,12 +56,18 @@ export default function Carts({ auth, carts, cartCount }) {
             )
         );
     };
+    const calculateTotal = () => {
+        return cartItems.reduce(
+            (acc, cart) => acc + cart.product.price * cart.quantity,
+            0
+        );
+    };
 
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Carts" />
             <div className="min-h-screen bg-gray-100 pt-20 pb-1">
-                <Banner title="Carts" />
+                <Banner title="Shopping Cart" />
                 <CustomerContainer className="mt-32">
                     <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide">
                         Your Cart{" "}
@@ -72,14 +77,14 @@ export default function Carts({ auth, carts, cartCount }) {
                     </h1>
                     <div className="py-10 grid grid-cols-1 lg:grid-cols-3 gap-4">
                         <div className="col-span-2 shadow-lg rounded-2xl bg-white">
-                            <div className="flex items-center justify-between py-5 px-4 sm:px-0  space-x-14 bg-lime-700 text-white rounded-t-2xl">
-                                <span className="uppercase text-xs flex-1 text-center">
+                            <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0  space-x-14 bg-lime-700 text-white rounded-t-2xl">
+                                <span className="uppercase  flex-1 text-center">
                                     Product
                                 </span>
-                                <span className="uppercase text-xs flex-1 text-center">
+                                <span className="uppercase  flex-1 text-center">
                                     Quantity
                                 </span>
-                                <span className="uppercase text-xs flex-1 text-center">
+                                <span className="uppercase flex-1 text-center">
                                     Subtotal
                                 </span>
                             </div>
@@ -170,37 +175,72 @@ export default function Carts({ auth, carts, cartCount }) {
                                     })}
                                 </div>
                             ) : (
-                                <>
-                                    <div className="my-5  flex flex-col items-center justify-center">
-                                        <div className="flex flex-col items-center gap-2 justify-center">
-                                            <p>No items in the cart</p>
-                                            <img
-                                                className="w-40 h-32"
-                                                src={emptyImg}
-                                                alt="emptyIcon"
-                                            />
-                                        </div>
-                                        <div className="flex items-center justify-center pt-10">
-                                            <Link
-                                                href={route(
-                                                    "customer.products"
-                                                )}
-                                            >
-                                                <button className=" sm:self-start self-center px-8 py-3 rounded-full text-white font-semibold flex items-center bg-lime-700">
-                                                    Continue Shopping{" "}
-                                                    <HiMiniArrowLongRight className="ml-2" />
-                                                </button>
-                                            </Link>
-                                        </div>
+                                <div className="my-5  flex flex-col items-center justify-center text-xs text-medium">
+                                    <div className="flex flex-col items-center gap-2 justify-center">
+                                        <p>No items in the cart</p>
+                                        <img
+                                            className="w-40 h-32"
+                                            src={emptyImg}
+                                            alt="emptyIcon"
+                                        />
                                     </div>
-                                </>
+                                    <div className="flex items-center justify-center pt-10">
+                                        <Link href={route("customer.products")}>
+                                            <button className="text-xs sm:self-start self-center px-8 py-3 rounded-full text-white font-semibold flex items-center bg-lime-700">
+                                                Continue Shopping{" "}
+                                                <HiMiniArrowLongRight className="ml-2" />
+                                            </button>
+                                        </Link>
+                                    </div>
+                                </div>
                             )}
                         </div>
+                        {/* Order Summary */}
                         <div className="w-full lg:w-96 rounded-2xl flex flex-col min-h-full">
                             <div className="py-4 px-6 bg-lime-700 text-white rounded-t-2xl">
                                 <span className="uppercase text-xs flex-1">
                                     Order Summary
                                 </span>
+                            </div>
+                            <div className="bg-white text-xs rounded-b-2xl">
+                                <div className="pt-5 px-6 ">
+                                    <div className="flex justify-between items-start mb-4">
+                                        <p className="text-md">Subtotal</p>
+                                        <p className="text-md font-semibold">
+                                            &#8369;{" "}
+                                            {calculateTotal().toLocaleString(
+                                                undefined,
+                                                {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2,
+                                                }
+                                            )}
+                                        </p>
+                                    </div>
+                                </div>
+                                <div className="px-6 flex justify-between items-start font-semibold bg-gray-100 mb-4">
+                                    <p className="text-md">Total</p>
+                                    <p className="text-md">
+                                        &#8369;{" "}
+                                        {calculateTotal().toLocaleString(
+                                            undefined,
+                                            {
+                                                minimumFractionDigits: 2,
+                                                maximumFractionDigits: 2,
+                                            }
+                                        )}
+                                    </p>
+                                </div>
+                                {cartItems.length > 0 && (
+                                    <div className="px-6 flex flex-col pb-6 mt-auto gap-4">
+                                        <Link href={route("cart.checkout")}>
+                                            <button className="w-full text-white py-3 rounded-full flex items-center justify-center bg-lime-700">
+                                                Proceed to Checkout{" "}
+                                                <HiMiniArrowLongRight className="ml-2" />
+                                            </button>
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
                         </div>
                     </div>
