@@ -78,7 +78,7 @@ export default function ProductEdit() {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex text-sm items-center px-6 py-3 bg-lime-700 text-white font-semibold rounded-md shadow-lg"
+                                className="flex text-sm items-center px-6 py-3 bg-primary text-white font-semibold rounded-md shadow-lg"
                             >
                                 <RxUpdate className="mr-2" /> Update Product
                             </button>

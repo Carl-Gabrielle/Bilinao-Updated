@@ -13,7 +13,7 @@ export default function SellerProfile() {
                 <div className="container mx-auto px-4 py-8">
                     <div className="bg-white shadow-lg rounded-3xl overflow-hidden">
                         {/* Cover Image */}
-                        <div className="bg-lime-700 h-32"></div>
+                        <div className="bg-primary h-32"></div>
                         <div className="relative -mt-16 flex justify-center">
                             {/* Profile Image */}
                             <img

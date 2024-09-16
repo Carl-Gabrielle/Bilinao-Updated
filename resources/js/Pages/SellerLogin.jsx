@@ -128,7 +128,7 @@ const SellerLogin = () => {
                                     </div>
                                     <div className="mt-6">
                                         <button
-                                            className="w-full bg-lime-700 text-white py-3 rounded-md transition duration-300 flex items-center justify-center font-bold"
+                                            className="w-full bg-primary text-white py-3 rounded-md transition duration-300 flex items-center justify-center font-bold"
                                             disabled={processing}
                                         >
                                             Log In <MdLogin className="ml-2" />

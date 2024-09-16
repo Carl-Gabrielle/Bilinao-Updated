@@ -71,13 +71,13 @@ export default function Carts({ auth, carts, cartCount }) {
                 <CustomerContainer className="mt-32">
                     <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide">
                         Your Cart{" "}
-                        <span className="bg-lime-700 text-white px-4 rounded-md">
+                        <span className="bg-primary text-white px-4 rounded-md">
                             {cartCount}
                         </span>
                     </h1>
                     <div className="py-10 grid grid-cols-1 lg:grid-cols-3 gap-4">
                         <div className="col-span-2 shadow-lg rounded-2xl bg-white">
-                            <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0  space-x-14 bg-lime-700 text-white rounded-t-2xl">
+                            <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0  space-x-14 bg-primary text-white rounded-t-2xl">
                                 <span className="uppercase  flex-1 text-center">
                                     Product
                                 </span>
@@ -134,7 +134,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                                         .id
                                                                 )
                                                             }
-                                                            className="sm:size-7  size-4 bg-lime-700 text-white flex items-center justify-center rounded-full"
+                                                            className="sm:size-7  size-4 bg-primary text-white flex items-center justify-center rounded-full"
                                                         >
                                                             -
                                                         </button>
@@ -148,7 +148,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                                         .id
                                                                 )
                                                             }
-                                                            className="sm:size-7  size-4 bg-lime-700 text-white flex items-center justify-center rounded-full"
+                                                            className="sm:size-7  size-4 bg-primary text-white flex items-center justify-center rounded-full"
                                                         >
                                                             +
                                                         </button>
@@ -186,7 +186,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                     </div>
                                     <div className="flex items-center justify-center pt-10">
                                         <Link href={route("customer.products")}>
-                                            <button className="text-xs sm:self-start self-center px-8 py-3 rounded-full text-white font-semibold flex items-center bg-lime-700">
+                                            <button className="text-xs sm:self-start self-center px-8 py-3 rounded-full text-white font-semibold flex items-center bg-primary">
                                                 Continue Shopping{" "}
                                                 <HiMiniArrowLongRight className="ml-2" />
                                             </button>
@@ -197,7 +197,7 @@ export default function Carts({ auth, carts, cartCount }) {
                         </div>
                         {/* Order Summary */}
                         <div className="w-full lg:w-96 rounded-2xl flex flex-col min-h-full">
-                            <div className="py-4 px-6 bg-lime-700 text-white rounded-t-2xl">
+                            <div className="py-4 px-6 bg-primary text-white rounded-t-2xl">
                                 <span className="uppercase text-xs flex-1">
                                     Order Summary
                                 </span>
@@ -234,7 +234,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                 {cartItems.length > 0 && (
                                     <div className="px-6 flex flex-col pb-6 mt-auto gap-4">
                                         <Link href={route("cart.checkout")}>
-                                            <button className="w-full text-white py-3 rounded-full flex items-center justify-center bg-lime-700">
+                                            <button className="w-full text-white py-3 rounded-full flex items-center justify-center bg-primary">
                                                 Proceed to Checkout{" "}
                                                 <HiMiniArrowLongRight className="ml-2" />
                                             </button>

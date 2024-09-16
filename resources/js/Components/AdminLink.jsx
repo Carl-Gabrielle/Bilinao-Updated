@@ -1,6 +1,6 @@
 import { Link } from "@inertiajs/react";
 
-export default function CustomerLink({
+export default function AdminLink({
     active = false,
     className = "",
     children,
@@ -11,8 +11,8 @@ export default function CustomerLink({
             {...props}
             className={`w-full  font-medium inline-flex items-center px-4 text-nowrap py-2 text-sm  transition-all duration-300 ease-in-out rounded-lg ${
                 active
-                    ? "text-primary  font-semibold underline underline-offset-8 "
-                    : "text-slate-900  hover:text-primary transition-colors duration-300 ease-in-out "
+                    ? "bg-[#548235] text-white "
+                    : "text-slate-900 hover:bg-gray-100"
             } ${className}`}
         >
             {children}

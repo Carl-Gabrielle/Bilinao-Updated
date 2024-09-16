@@ -74,9 +74,9 @@ const Orders = ({ auth }) => {
 const OrderStatus = ({ title, icon, isActive, onClick }) => {
     return (
         <div
-            className={`flex flex-col items-center text-center px-3 py-3 rounded-md cursor-pointer transition-colors duration-150 ${
+            className={`flex flex-col items-center text-center px-3 py-3 rounded-md cursor-pointer transition-colors duration-300 ${
                 isActive
-                    ? "bg-lime-700 text-white"
+                    ? "bg-primary text-white"
                     : "bg-white hover:bg-gray-200"
             }`}
             onClick={onClick}

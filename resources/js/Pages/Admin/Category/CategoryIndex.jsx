@@ -54,14 +54,14 @@ export default function Index({ auth, category, success, categoryCount }) {
                             </span>
                         </div>
                     )}
-                    <div className="bg-white overflow-hidden shadow-sm rounded-3xl p-6">
+                    <div className="bg-white   overflow-hidden shadow-sm rounded-3xl p-6">
                         <div className="flex justify-between items-center mb-5">
                             <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
                                 Category
                             </h2>
                             <Link
                                 href={route("category.create")}
-                                className="bg-lime-600 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                                className="bg-primary py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
                             >
                                 <MdAdd className="mr-2 size-4" /> Add New
                                 Category
@@ -74,41 +74,43 @@ export default function Index({ auth, category, success, categoryCount }) {
                         ) : (
                             <ul className="space-y-4">
                                 {category.data.map((item) => (
-                                    <li
-                                        key={item.id}
-                                        className="border p-4 rounded-lg shadow-sm text-xs"
-                                    >
-                                        <div className="flex items-center space-x-4">
-                                            <img
-                                                src={item.image_path}
-                                                alt={item.name}
-                                                className="w-20 h-20 object-cover rounded"
-                                            />
-                                            <div className="flex-1">
-                                                <span className="font-semibold text-sm text-gray-700">
-                                                    {item.name}
-                                                </span>
+                                    <>
+                                        <li
+                                            key={item.id}
+                                            className="border border-slate-400 p-4 rounded-lg shadow-md text-xs"
+                                        >
+                                            <div className="flex items-center space-x-4">
+                                                <img
+                                                    src={item.image_path}
+                                                    alt={item.name}
+                                                    className="w-20 h-20 object-cover rounded"
+                                                />
+                                                <div className="flex-1">
+                                                    <span className="font-semibold text-sm text-gray-700">
+                                                        {item.name}
+                                                    </span>
+                                                </div>
+                                                <Link
+                                                    href={route(
+                                                        "category.edit",
+                                                        item.id
+                                                    )}
+                                                    className="border border-[#548235] text-slate-800 px-3 py-2 rounded"
+                                                >
+                                                    <LiaEditSolid />
+                                                </Link>
+                                                <Link
+                                                    onClick={(e) => {
+                                                        e.preventDefault();
+                                                        openModal(item);
+                                                    }}
+                                                    className="bg-primary text-white px-3 py-2 rounded"
+                                                >
+                                                    <RiDeleteBinLine />
+                                                </Link>
                                             </div>
-                                            <Link
-                                                href={route(
-                                                    "category.edit",
-                                                    item.id
-                                                )}
-                                                className="border border-lime-600 text-slate-800 px-3 py-2 rounded"
-                                            >
-                                                <LiaEditSolid />
-                                            </Link>
-                                            <Link
-                                                onClick={(e) => {
-                                                    e.preventDefault();
-                                                    openModal(item);
-                                                }}
-                                                className="bg-lime-600 text-white px-3 py-2 rounded"
-                                            >
-                                                <RiDeleteBinLine />
-                                            </Link>
-                                        </div>
-                                    </li>
+                                        </li>
+                                    </>
                                 ))}
                             </ul>
                         )}

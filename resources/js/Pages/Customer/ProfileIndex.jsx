@@ -9,9 +9,9 @@ export default function ProfileIndex({ auth }) {
 
     return (
         <CustomerLayout user={user}>
-            <Head title="Profile" />
+            <Head title="My Account" />
             <div className="min-h-screen bg-gray-100 pt-20 pb-12">
-                <Banner title="Profile" />
+                <Banner title="My Account" />
                 <CustomerContainer>
                     <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-10 ">
                         {/* Profile Header */}

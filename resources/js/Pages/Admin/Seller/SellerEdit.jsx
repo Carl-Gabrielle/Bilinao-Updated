@@ -28,11 +28,12 @@ export default function SellerCreate({ auth, seller }) {
                 <DivContainer>
                     <Link
                         href={route("seller.index")}
-                        className="mb-5 flex items-center text-lime-600  font-semibold"
+                        className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
                     >
-                        <MdOutlineKeyboardArrowLeft className="mr-2" /> Go Back
+                        <MdOutlineKeyboardArrowLeft className="mr-2" />
+                        <span>Go Back</span>
                     </Link>
-                    <div className="mt-10 bg-white overflow-hidden shadow-sm sm:rounded-lg p-6">
+                    <div className="mt-10 bg-[#f1f1f1] overflow-hidden shadow-sm rounded-3xl p-6">
                         <form onSubmit={onSubmit}>
                             <div className="flex items-center justify-between  mb-6">
                                 <h1 className="text-2xl font-semibold text-gray-800">
@@ -43,7 +44,7 @@ export default function SellerCreate({ auth, seller }) {
                                 </h1>
                                 <button
                                     type="submit"
-                                    className="flex items-center px-4 py-2 bg-lime-600  text-white text-sm font-medium rounded-md transition-all duration-200"
+                                    className="flex items-center px-4 py-2 bg-[#023123]  text-white text-sm font-medium rounded-md transition-all duration-200"
                                     disabled={processing}
                                 >
                                     <RxUpdate className="mr-2" /> Update Seller

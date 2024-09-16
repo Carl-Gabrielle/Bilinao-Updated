@@ -11,7 +11,7 @@ export default function Pagination({ links }) {
                             href={link.url || "#"}
                             className={`inline-block py-1 px-3 rounded-lg border ${
                                 link.active
-                                    ? "bg-lime-700  text-white"
+                                    ? "bg-primary  text-white"
                                     : link.url
                                     ? "bg-white border-gray-300 text-gray-700 hover:bg-gray-100 hover:border-gray-400"
                                     : "bg-gray-200 border-gray-200 text-gray-500 cursor-not-allowed"

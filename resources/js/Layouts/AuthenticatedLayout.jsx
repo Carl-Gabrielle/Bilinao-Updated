@@ -8,8 +8,8 @@ import { IoHomeOutline } from "react-icons/io5";
 import { BiCategory } from "react-icons/bi";
 import { MdMenuOpen } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
-import NavLink from "@/Components/NavLink";
 import { Link } from "@inertiajs/react";
+import AdminLink from "@/Components/AdminLink";
 
 export default function AuthenticatedLayout({ user, header, children }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -20,9 +20,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
     return (
         <div className="min-h-screen bg-gray-100">
+            {/* NAVBAR */}
+            <div className="h-14 bg-white fixed top-0 w-full"></div>
             {/* Sidebar */}
             <div
-                className={`fixed top-0 hidden sm:block sm:top-5 left-0 sm:left-5 bottom-0 sm:bottom-5 bg-gradient-to-br from-white to-gray-50 rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
+                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-white  rounded-lg text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
                     isSidebarOpen ? "w-72 px-6" : "w-28 px-4"
                 }`}
             >
@@ -53,7 +55,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             )}
                         </div>
                         {/* User Info */}
-                        <NavLink
+                        <AdminLink
                             href={route("profile.edit")}
                             active={route().current("profile.edit")}
                             className="flex items-center space-x-4 mb-6"
@@ -81,9 +83,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     </span>
                                 </div>
                             )}
-                        </NavLink>
+                        </AdminLink>
                         <div className="space-y-4">
-                            <NavLink
+                            <AdminLink
                                 href={route("dashboard")}
                                 active={route().current("dashboard")}
                                 className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
@@ -122,8 +124,8 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         }`}
                                     />
                                 )}
-                            </NavLink>
-                            <NavLink
+                            </AdminLink>
+                            <AdminLink
                                 href={route("category.index")}
                                 active={route().current("category.index")}
                                 className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
@@ -166,9 +168,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         }`}
                                     />
                                 )}
-                            </NavLink>
+                            </AdminLink>
 
-                            <NavLink
+                            <AdminLink
                                 href={route("seller.index")}
                                 active={route().current("seller.index")}
                                 className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
@@ -211,11 +213,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         }`}
                                     />
                                 )}
-                            </NavLink>
+                            </AdminLink>
                         </div>
                     </div>
                     <div className="mb-6">
-                        <NavLink
+                        <AdminLink
                             href={route("logout")}
                             method="post"
                             as="button"
@@ -258,24 +260,24 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     }`}
                                 />
                             )}
-                        </NavLink>
+                        </AdminLink>
                     </div>
                 </div>
             </div>
 
             <div
                 className={`transition-all duration-300 ease-in-out ${
-                    isSidebarOpen ? "sm:ml-72 ml-0" : "ml-32"
+                    isSidebarOpen ? "sm:ml-72 ml-0" : "ml-24"
                 }`}
             >
                 {header && (
-                    <header className="bg-white shadow">
+                    <header className="bg-white ">
                         <div className="max-w-7xl mx-auto py-6 px-4 sm:px-6 lg:px-8">
                             {header}
                         </div>
                     </header>
                 )}
-                <main className="px-6">{children}</main>
+                <main className="px-4  sm:px-6">{children}</main>
             </div>
         </div>
     );

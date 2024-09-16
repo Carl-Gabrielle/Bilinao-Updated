@@ -22,8 +22,7 @@ export default function About({ auth }) {
                         </div>
 
                         <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
-                            Know Our{" "}
-                            <span className="text-lime-700">Story</span>
+                            Know Our <span className="text-primary">Story</span>
                         </h1>
 
                         <p className="text-md  leading-8 mx-auto tracking-wide">
@@ -51,7 +50,7 @@ export default function About({ auth }) {
                                 </div>
                                 <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
                                     Our{" "}
-                                    <span className="text-lime-700">
+                                    <span className="text-primary">
                                         Mission
                                     </span>
                                 </h1>
@@ -78,9 +77,7 @@ export default function About({ auth }) {
                                 </div>
                                 <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
                                     Our{" "}
-                                    <span className="text-lime-700">
-                                        Vision
-                                    </span>
+                                    <span className="text-primary">Vision</span>
                                 </h1>
                                 <p className="text-md leading-8 max-w-3xl mx-auto md:mx-0 tracking-wide">
                                     To become the leading platform for Bolinao's
@@ -96,13 +93,13 @@ export default function About({ auth }) {
                     <div className="max-w-5xl mx-auto px-6 py-5 ">
                         <div className="flex items-center justify-center space-x-6">
                             <hr className="w-28 border  border-lime-700 mb-6" />
-                            <h1 className="text-md font-bold text-lime-700 mb-6 uppercase tracking-wide">
+                            <h1 className="text-md font-bold text-primary mb-6 uppercase tracking-wide">
                                 Why We Are Here?
                             </h1>
                         </div>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-4xl mx-auto px-6">
                             <div className="px-6 py-4 bg-white tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center ">
-                                <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
+                                <div className="bg-primary size-12 rounded-full flex items-center justify-center">
                                     <LiaHandHoldingHeartSolid className="text-white size-6 " />
                                 </div>
                                 <span className="text-center text-slate-800">
@@ -110,7 +107,7 @@ export default function About({ auth }) {
                                 </span>
                             </div>
                             <div className="px-6 py-4 bg-white tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center">
-                                <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
+                                <div className="bg-primary size-12 rounded-full flex items-center justify-center">
                                     <LiaPeopleCarrySolid className="text-white size-6" />
                                 </div>
                                 <span className="text-center text-slate-800">
@@ -118,7 +115,7 @@ export default function About({ auth }) {
                                 </span>
                             </div>
                             <div className="px-6 py-4 bg-white  tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center ">
-                                <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
+                                <div className="bg-primary size-12 rounded-full flex items-center justify-center">
                                     <MdOutlineRocket className="text-white size-6 " />
                                 </div>
                                 <span className="text-center text-slate-800">
@@ -126,7 +123,7 @@ export default function About({ auth }) {
                                 </span>
                             </div>
                             <div className="px-6 py-4 bg-white tracking-wide rounded-md text-xs font-medium flex flex-col gap-3 items-center">
-                                <div className="bg-lime-700 size-12 rounded-full flex items-center justify-center">
+                                <div className="bg-primary size-12 rounded-full flex items-center justify-center">
                                     <IoHomeOutline className="text-white size-6" />
                                 </div>
                                 <span className="text-center text-slate-800  ">

@@ -119,7 +119,7 @@ export default function Products({ products, auth, success }) {
                                                     quantity: 1,
                                                 }}
                                             >
-                                                <div className="bg-lime-700 px-3 py-3 rounded-full text-white">
+                                                <div className="bg-primary px-3 py-3 rounded-full text-white">
                                                     <GrCart size={15} />
                                                 </div>
                                             </Link>

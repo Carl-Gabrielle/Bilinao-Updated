@@ -86,7 +86,7 @@ export default function CategoryProducts({ auth, products, category }) {
                                         >
                                             <div className="bg-gray-200 rounded-3xl relative mb-7 h-72">
                                                 <div className="rounded-t-3xl rounded-b-2xl overflow-hidden flex flex-col">
-                                                    <div className="absolute right-4 top-4 px-2 py-2 rounded-full text-lime-700 bg-white z-10">
+                                                    <div className="absolute right-4 top-4 px-2 py-2 rounded-full text-primary bg-white z-10">
                                                         <FaRegHeart />
                                                     </div>
                                                     {product.images.length >
@@ -97,7 +97,7 @@ export default function CategoryProducts({ auth, products, category }) {
                                                             className="size-72 object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
                                                         />
                                                     )}
-                                                    <div className="text-xs px-4 py-4 flex items-center justify-between bg-lime-700 text-white w-full z-10 rounded-2xl absolute -bottom-8">
+                                                    <div className="text-xs px-4 py-4 flex items-center justify-between bg-primary text-white w-full z-10 rounded-2xl absolute -bottom-8">
                                                         <div className="flex flex-col gap-1">
                                                             <span className="font-medium">
                                                                 {product.name}
@@ -119,7 +119,7 @@ export default function CategoryProducts({ auth, products, category }) {
                                                                     quantity: 1,
                                                                 }}
                                                             >
-                                                                <div className="bg-white px-3 py-3 rounded-full text-lime-700 cursor-pointer">
+                                                                <div className="bg-white px-3 py-3 rounded-full text-primary cursor-pointer">
                                                                     <GrCart
                                                                         size={
                                                                             15

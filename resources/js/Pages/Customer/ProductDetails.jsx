@@ -52,7 +52,7 @@ export default function ProductDetails({
                             </div>
                         )}
                         <Link href={route("customer.products")}>
-                            <h1 className="mb-6 font-semibold text-lime-700  px-4 py-2 text-md  ">
+                            <h1 className="mb-6 font-semibold text-primary  px-4 py-2 text-md  ">
                                 <MdOutlineKeyboardArrowLeft className="inline-block text-lg mr-2 " />
                                 Back to Product
                             </h1>
@@ -72,7 +72,7 @@ export default function ProductDetails({
                                 )}
                             </div>
                             <div className="max-w-lg mx-auto flex flex-col items-start justify-center ">
-                                <p className="mt-5 text-lime-700 text-xl font-bold mb-4">
+                                <p className="mt-5 text-primary text-xl font-bold mb-4">
                                     Category: {product.category.name}
                                 </p>
                                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold font-Roboto text-gray-900 leading-tight mb-4">
@@ -101,7 +101,7 @@ export default function ProductDetails({
                                     {product.stock} Products
                                 </p>
 
-                                <div className="flex items-center text-lime-700 font-bold text-xl mb-4">
+                                <div className="flex items-center text-primary font-bold text-xl mb-4">
                                     <FaPesoSign className="text-lg" />
                                     <span className="ml-1">
                                         {product.price}
@@ -134,7 +134,7 @@ export default function ProductDetails({
                                                 quantity: 1,
                                             }}
                                         >
-                                            <button className="flex items-center justify-center sm:w-52 w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-lime-700 rounded-lg shadow lg:mt-0 ">
+                                            <button className="flex items-center justify-center sm:w-52 w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-primary rounded-lg shadow lg:mt-0 ">
                                                 <LuShoppingCart /> Add to Cart
                                             </button>
                                         </Link>

@@ -21,7 +21,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
         useState(false);
     return (
         <div className="min-h-screen ">
-            <div className="w-full h-10  z-30 fixed   bg-[#032123]">
+            <div className="w-full h-10  z-30 fixed   bg-slate-900">
                 <div className="flex justify-between items-center text-sm w-full h-full text-white max-w-6xl px-4 mx-auto">
                     <div className="flex items-center justify-center space-x-4">
                         <span className="">Follow Us</span>
@@ -124,7 +124,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 >
                                     <GrCart className="size-5 text-slate-900 font-extrabold transition-colors duration-300 ease-in-out" />
                                     {cartCount > 0 && (
-                                        <span className="absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-lime-700 rounded-full">
+                                        <span className="absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-primary rounded-full">
                                             {cartCount}
                                         </span>
                                     )}
@@ -133,7 +133,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     <Dropdown.Trigger>
                                         <div className="relative ml-2 flex items-center cursor-pointer hover:bg-gray-100 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out">
                                             <MdNotificationsNone className="size-5 text-slate-900" />
-                                            <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-lime-700 rounded-full">
+                                            <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-primary rounded-full">
                                                 8
                                             </span>
                                         </div>
@@ -143,7 +143,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             <h1 className="text-md font-semibold text-slate">
                                                 Notifications
                                             </h1>
-                                            <div className="bg-lime-700 text-white px-3 rounded-md py-1">
+                                            <div className="bg-primary text-white px-3 rounded-md py-1">
                                                 <span>3 new</span>
                                             </div>
                                         </div>
@@ -247,7 +247,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             href={route("logout")}
                                             method="post"
                                             as="button"
-                                            className="bg-lime-700 text-white flex items-center hover:bg-lime-800 transition-colors duration-300 ease-in-out  justify-center rounded-md "
+                                            className="bg-primary text-white flex items-center hover:bg-lime-800 transition-colors duration-300 ease-in-out  justify-center rounded-md "
                                         >
                                             Log Out
                                         </Dropdown.Link>

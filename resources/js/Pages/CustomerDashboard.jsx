@@ -31,7 +31,7 @@ export default function CustomerDashboard({ auth, category }) {
                                         repellat!
                                     </p>
                                     <Link href="#">
-                                        <button className="shop-button sm:self-start self-center px-8 py-3 rounded-md text-white font-semibold flex items-center bg-lime-700">
+                                        <button className="shop-button sm:self-start self-center px-8 py-3 rounded-md text-white font-semibold flex items-center bg-primary">
                                             Shop Now{" "}
                                             <HiMiniArrowLongRight className="ml-2" />
                                         </button>
@@ -76,7 +76,7 @@ export default function CustomerDashboard({ auth, category }) {
                                                         </p>
                                                         <Link
                                                             href={`/category/${cat.id}/products`}
-                                                            className="inline-flex items-center px-4 sm:px-6 py-2 rounded-lg text-white bg-lime-700"
+                                                            className="inline-flex items-center px-4 sm:px-6 py-2 rounded-lg text-white bg-primary"
                                                         >
                                                             <span className="mr-2">
                                                                 View Products

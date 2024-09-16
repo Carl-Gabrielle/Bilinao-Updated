@@ -72,7 +72,7 @@ const SellerDashboard = ({ categories }) => {
                             </h1>
                             <button
                                 type="submit"
-                                className="flex items-center text-sm px-4 py-2 sm:px-6 sm:py-3  text-white font-semibold rounded-lg shadow-md bg-lime-700 "
+                                className="flex items-center text-sm px-4 py-2 sm:px-6 sm:py-3  text-white font-semibold rounded-lg shadow-md bg-primary"
                             >
                                 <MdPublish className="mr-2 text-lg sm:text-md" />{" "}
                                 Publish Product
@@ -203,7 +203,7 @@ const SellerDashboard = ({ categories }) => {
                                             htmlFor="product_images"
                                             className="flex flex-col items-center cursor-pointer"
                                         >
-                                            <div className="text-white bg-lime-700 p-3 rounded-md flex items-center justify-center">
+                                            <div className="text-white bg-primary p-3 rounded-md flex items-center justify-center">
                                                 <GoUpload size={23} />
                                             </div>
                                             <h1 className="font-medium mt-3 text-gray-800 text-sm">
