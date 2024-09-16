@@ -73,7 +73,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 <img
                                     src={Logo}
                                     alt="Bilinao Logo"
-                                    className="h-10"
+                                    className="h-10 "
                                     style={{
                                         backgroundSize: "cover",
                                         backgroundPosition: "center",

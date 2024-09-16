@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { RiMenuUnfold3Line2 } from "react-icons/ri";
+import { RxHamburgerMenu } from "react-icons/rx";
 import Logo from "../Pages/Illustrations/LOGO.png";
 import { FaRegUser } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
@@ -21,76 +22,52 @@ export default function AuthenticatedLayout({ user, header, children }) {
     return (
         <div className="min-h-screen bg-gray-100">
             {/* NAVBAR */}
-            <div className="h-14 bg-white fixed top-0 w-full"></div>
+            <div className="h-14 bg-white fixed top-0 w-full flex items-center justify-between px-6">
+                <img src={Logo} className="size-10" />
+                <div className="max-w-4xl mx-auto px-6 w-full flex justify-between items-center">
+                    <div className="flex items-center">
+                        <div className="ml-5">
+                            <button
+                                onClick={toggleSidebar}
+                                className="text-gray-600 focus:outline-none hover:bg-gray-100 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
+                            >
+                                <RxHamburgerMenu className="size-6" />
+                            </button>
+                        </div>
+                    </div>
+                    <div>
+                        <Link href={route("profile.edit")}>
+                            <h1 className="text-sm">
+                                Hi,
+                                <span className="font-semibold">
+                                    {user.name}
+                                </span>{" "}
+                            </h1>
+                        </Link>
+                    </div>
+                </div>
+            </div>
+
             {/* Sidebar */}
             <div
-                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-white  rounded-lg text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
-                    isSidebarOpen ? "w-72 px-6" : "w-28 px-4"
+                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-white  rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
+                    isSidebarOpen ? "w-64 px-6" : "w-28 px-4"
                 }`}
             >
                 <div className="flex flex-col justify-between h-full">
                     <div className="mt-6">
-                        {/* Burger Menu */}
-                        <div className="flex justify-between items-center mb-6">
-                            {isSidebarOpen && (
-                                <img src={Logo} className="size-10" />
-                            )}
-                            {!isSidebarOpen && (
-                                <div className="ml-5">
-                                    <button
-                                        onClick={toggleSidebar}
-                                        className="text-gray-600 focus:outline-none hover:bg-gray-100 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
-                                    >
-                                        <RiMenuUnfold3Line2 className="size-6" />
-                                    </button>
-                                </div>
-                            )}
-                            {isSidebarOpen && (
-                                <button
-                                    onClick={toggleSidebar}
-                                    className="text-gray-600 focus:outline-none hover:bg-gray-100 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
-                                >
-                                    <MdMenuOpen className="size-6" />
-                                </button>
-                            )}
-                        </div>
-                        {/* User Info */}
-                        <AdminLink
-                            href={route("profile.edit")}
-                            active={route().current("profile.edit")}
-                            className="flex items-center space-x-4 mb-6"
-                        >
-                            <div className="w-14 h-14 flex items-center justify-center rounded-full bg-gray-100">
-                                <img
-                                    src=""
-                                    alt=""
-                                    className="w-12 h-12 rounded-full"
-                                />
-                            </div>
-                            {isSidebarOpen && (
-                                <div className="flex flex-col">
-                                    <span className="font-medium">
-                                        {user.name}
-                                    </span>
-                                    <span
-                                        className={`rounded-md px-4 py-1 mt-1 text-xs flex items-center justify-center ${
-                                            route().current("profile.edit")
-                                                ? "bg-white text-gray-800"
-                                                : "bg-blue-700 text-white"
-                                        }`}
-                                    >
-                                        System
-                                    </span>
-                                </div>
-                            )}
-                        </AdminLink>
-                        <div className="space-y-4">
+                        {isSidebarOpen && (
+                            <span className="uppercase text-gray-400 tracking-wide text-sm font-normal ">
+                                Bilinao
+                            </span>
+                        )}
+                        <div className="space-y-4 mt-5">
                             <AdminLink
                                 href={route("dashboard")}
                                 active={route().current("dashboard")}
                                 className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
                             >
-                                <div className="flex items-center space-x-3">
+                                <div className="flex items-center space-x-5">
                                     {!isSidebarOpen && (
                                         <div className="ml-3 ">
                                             <IoHomeOutline
@@ -130,7 +107,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 active={route().current("category.index")}
                                 className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
                             >
-                                <div className="flex items-center space-x-3">
+                                <div className="flex items-center space-x-5">
                                     {!isSidebarOpen && (
                                         <div className="ml-3 ">
                                             <BiCategory
@@ -175,7 +152,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 active={route().current("seller.index")}
                                 className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
                             >
-                                <div className="flex items-center space-x-3">
+                                <div className="flex items-center space-x-5">
                                     {!isSidebarOpen && (
                                         <div className="ml-3 ">
                                             <FaRegUser
@@ -224,7 +201,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             active={route().current("logout")}
                             className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
                         >
-                            <div className="flex items-center space-x-3">
+                            <div className="flex items-center space-x-5">
                                 {!isSidebarOpen && (
                                     <div className="ml-3">
                                         <LuLogOut

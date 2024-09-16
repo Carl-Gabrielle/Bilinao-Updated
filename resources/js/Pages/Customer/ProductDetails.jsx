@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import { LuShoppingCart } from "react-icons/lu";
+import { GrCart } from "react-icons/gr";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { Head, Link } from "@inertiajs/react";
@@ -51,11 +52,14 @@ export default function ProductDetails({
                                 </div>
                             </div>
                         )}
-                        <Link href={route("customer.products")}>
-                            <h1 className="mb-6 font-semibold text-primary  px-4 py-2 text-md  ">
+                        <Link
+                            href={route("customer.products")}
+                            className="w-1/2"
+                        >
+                            <button className="mb-6 font-semibold text-primary  px-4 py-2 text-md">
                                 <MdOutlineKeyboardArrowLeft className="inline-block text-lg mr-2 " />
                                 Back to Product
-                            </h1>
+                            </button>
                         </Link>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                             <div className="mb-4 overflow-hidden  h-96">
@@ -93,14 +97,23 @@ export default function ProductDetails({
                                         </span>
                                     </p>
                                 </Link>
-                                <p className="text-slate-800 text-sm class-name mb-5 font-medium">
-                                    {" "}
-                                    <span className="bg-yellow-500 text-white px-3 rounded-md">
-                                        In Stock:
-                                    </span>{" "}
-                                    {product.stock} Products
-                                </p>
-
+                                {product.stock > 0 ? (
+                                    <p className="text-slate-800 text-sm class-name mb-5 font-medium">
+                                        {" "}
+                                        <span className="bg-yellow-500 text-white px-3 py-1 rounded-md">
+                                            In Stock:
+                                        </span>{" "}
+                                        {product.stock} products
+                                    </p>
+                                ) : (
+                                    <p className="text-slate-800 text-sm class-name mb-5 font-medium">
+                                        {" "}
+                                        <span className="bg-red-500 text-white px-3 py-1 rounded-md">
+                                            Out of Stock:
+                                        </span>{" "}
+                                        {product.stock} products
+                                    </p>
+                                )}
                                 <div className="flex items-center text-primary font-bold text-xl mb-4">
                                     <FaPesoSign className="text-lg" />
                                     <span className="ml-1">
@@ -190,33 +203,59 @@ export default function ProductDetails({
                                                     relatedProduct.id
                                                 )}
                                             >
-                                                <div className="bg-white shadow-lg rounded-3xl overflow-hidden">
+                                                <div className="bg-gray-50 rounded-2xl p-4">
                                                     <img
                                                         src={
                                                             relatedProduct
                                                                 .images?.[0]
                                                                 ?.image_path
                                                                 ? `/storage/${relatedProduct.images[0].image_path}`
-                                                                : "/storage/default-image.jpg" // Fallback image
+                                                                : "/storage/default-image.jpg"
                                                         }
                                                         alt={
                                                             relatedProduct.name
                                                         }
-                                                        className="size-64 object-cover cursor-pointer"
+                                                        className="w-full h-48 object-cover mb-4 rounded-lg"
                                                     />
-                                                    <div className="p-4">
-                                                        <h3 className="text-md font-normal mb-2">
+                                                </div>
+                                                <div className="rounded-2xl text-xs p-3 flex items-center justify-between">
+                                                    <div>
+                                                        <h3 className="pb-1 text-md font-semibold">
                                                             {
                                                                 relatedProduct.name
                                                             }
                                                         </h3>
-                                                        <p className="text-gray-800 font-bold">
-                                                            <FaPesoSign className="inline-block text-lg mr-1" />
+                                                        <p className="text-sm">
+                                                            <FaPesoSign className="inline-block mr-1" />
                                                             {
                                                                 relatedProduct.price
                                                             }
                                                         </p>
                                                     </div>
+                                                    {relatedProduct.stock >
+                                                    0 ? (
+                                                        <Link
+                                                            href={route(
+                                                                "cart.store"
+                                                            )}
+                                                            method="post"
+                                                            data={{
+                                                                product_id:
+                                                                    product.id,
+                                                                quantity: 1,
+                                                            }}
+                                                        >
+                                                            <div className="bg-primary px-3 py-3 rounded-full text-white">
+                                                                <GrCart
+                                                                    size={15}
+                                                                />
+                                                            </div>
+                                                        </Link>
+                                                    ) : (
+                                                        <div className="bg-gray-300 text-xs  cursor-not-allowed  w-full sm:w-1/2  px-2 sm:py-2 py-1  rounded-full text-gray-600 text-center">
+                                                            Out of Stock
+                                                        </div>
+                                                    )}
                                                 </div>
                                             </Link>
                                         );

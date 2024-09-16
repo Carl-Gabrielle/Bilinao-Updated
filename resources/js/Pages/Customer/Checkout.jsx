@@ -26,7 +26,7 @@ export default function Checkout({ auth }) {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
-            <div className="min-h-screen  pt-20 pb-1">
+            <div className="min-h-screen  pt-20 pb-1 bg-gray-100">
                 <Banner title="Shopping Cart" suffix="/Checkout" />
                 <CustomerContainer className="mt-32">
                     <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide ">
@@ -60,6 +60,9 @@ export default function Checkout({ auth }) {
                                 <span className="uppercase text-xs flex-1">
                                     Order Summary
                                 </span>
+                            </div>
+                            <div className="bg-white">
+                                <span>Total</span>
                             </div>
                         </div>
                     </div>

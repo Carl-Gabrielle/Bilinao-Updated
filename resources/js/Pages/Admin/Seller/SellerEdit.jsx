@@ -33,7 +33,7 @@ export default function SellerCreate({ auth, seller }) {
                         <MdOutlineKeyboardArrowLeft className="mr-2" />
                         <span>Go Back</span>
                     </Link>
-                    <div className="mt-10 bg-[#f1f1f1] overflow-hidden shadow-sm rounded-3xl p-6">
+                    <div className="mt-10 bg-white overflow-hidden shadow-sm rounded-3xl p-6">
                         <form onSubmit={onSubmit}>
                             <div className="flex items-center justify-between  mb-6">
                                 <h1 className="text-2xl font-semibold text-gray-800">
