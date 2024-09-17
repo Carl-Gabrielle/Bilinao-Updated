@@ -10,7 +10,6 @@ export default function Checkout({ auth }) {
 
     const [billingDetails, setBillingDetails] = useState({
         name: user.name || "",
-        email: user.email || "",
         phone: user.phone || "",
         address: user.address || "",
     });
@@ -26,7 +25,7 @@ export default function Checkout({ auth }) {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
-            <div className="min-h-screen  pt-20 pb-1 bg-gray-100">
+            <div className="min-h-screen  pt-20 pb-1 ">
                 <Banner title="Shopping Cart" suffix="/Checkout" />
                 <CustomerContainer className="mt-32">
                     <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide ">
@@ -37,11 +36,6 @@ export default function Checkout({ auth }) {
                             <BillingInput
                                 label="Name"
                                 value={billingDetails.name}
-                                onChange={handleInputChange}
-                            />
-                            <BillingInput
-                                label="Email"
-                                value={billingDetails.email}
                                 onChange={handleInputChange}
                             />
                             <BillingInput
@@ -56,7 +50,7 @@ export default function Checkout({ auth }) {
                             />
                         </div>
                         <div className="w-full lg:w-96 rounded-2xl flex flex-col min-h-full">
-                            <div className="py-4 px-6 bg-lime-700 text-white rounded-t-2xl">
+                            <div className="py-4 px-6 bg-slate-700 text-white rounded-t-2xl">
                                 <span className="uppercase text-xs flex-1">
                                     Order Summary
                                 </span>

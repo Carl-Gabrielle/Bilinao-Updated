@@ -1,4 +1,5 @@
 import { Link } from "@inertiajs/react";
+import { IoIosArrowRoundDown } from "react-icons/io";
 
 export default function CustomerLink({
     active = false,
@@ -9,13 +10,14 @@ export default function CustomerLink({
     return (
         <Link
             {...props}
-            className={`w-full  font-medium inline-flex items-center px-4 text-nowrap py-2 text-sm  transition-all duration-300 ease-in-out rounded-lg ${
+            className={`w-full  tracking-wider uppercase font-normal inline-flex items-center sm:px-4 px-0 lg:px-4 md:px-0 xl:px-4 text-nowrap py-2 text-sm transition-all duration-300 ease-in-out rounded-lg ${
                 active
-                    ? "text-primary  font-semibold underline underline-offset-8 "
-                    : "text-slate-900  hover:text-primary transition-colors duration-300 ease-in-out "
+                    ? "text-white  bg-slate-800"
+                    : "text-slate-900 hover:bg-slate-50 transition-colors duration-300 ease-in-out"
             } ${className}`}
         >
             {children}
+            {active && <IoIosArrowRoundDown className="ml-2 text-base" />}
         </Link>
     );
 }

@@ -61,9 +61,17 @@ export default function Products({ products, auth, success }) {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Products" />
-            <div className="min-h-screen pt-20 pb-1">
+            <div className="min-h-screen pt-20 pb-1 ">
                 <Banner title="Products" />
-                <div className="flex flex-col lg:flex-row mt-12">
+                <div className="max-w-6xl mx-auto px-6 sm:px-6 lg:px-8 pt-20 ">
+                    <div className="flex items-center space-x-3">
+                        <hr className="w-28 border  border-slate-500 mb-6" />
+                        <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
+                            Explore our Products
+                        </h1>
+                    </div>
+                </div>
+                <div className="flex flex-col lg:flex-row ">
                     {/* Products Grid */}
                     <CustomerContainer className="flex-1">
                         {/* FILTER BAR */}
@@ -93,21 +101,26 @@ export default function Products({ products, auth, success }) {
                                     key={product.id}
                                     href={route("product.show", product.id)}
                                 >
-                                    <div className="bg-gray-50 rounded-2xl p-4">
+                                    <div className="bg-white bg-opacity-50 backdrop-blur-md  rounded-2xl p-4 flex space-x-2 shadow-lg">
                                         <img
                                             src={`/storage/${product.images[0].image_path}`}
                                             alt={product.name}
                                             className="w-full h-48 object-cover mb-4 rounded-lg"
                                         />
                                     </div>
-                                    <div className="rounded-2xl text-xs p-3 flex items-center justify-between">
+                                    <div className=" text-xs p-3 flex items-center justify-between">
                                         <div>
                                             <h3 className="pb-1 text-md font-semibold">
                                                 {product.name}
                                             </h3>
                                             <p className="text-sm">
                                                 <FaPesoSign className="inline-block mr-1" />
-                                                {product.price}
+                                                {Number(
+                                                    product.price
+                                                ).toLocaleString("en-US", {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2,
+                                                })}
                                             </p>
                                         </div>
                                         {product.stock > 0 ? (
@@ -119,12 +132,12 @@ export default function Products({ products, auth, success }) {
                                                     quantity: 1,
                                                 }}
                                             >
-                                                <div className="bg-primary px-3 py-3 rounded-full text-white">
+                                                <div className="bg-slate-800 px-3 py-3 rounded-full text-white">
                                                     <GrCart size={15} />
                                                 </div>
                                             </Link>
                                         ) : (
-                                            <div className="bg-gray-300 text-xs  cursor-not-allowed  w-full sm:w-1/2  px-2 sm:py-2 py-1  rounded-full text-gray-600 text-center">
+                                            <div className="bg-slate-100 text-xs  cursor-not-allowed  w-full sm:w-1/2  px-2 sm:py-2 py-1  rounded-full text-gray-600 text-center">
                                                 Out of Stock
                                             </div>
                                         )}

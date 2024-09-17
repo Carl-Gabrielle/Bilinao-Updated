@@ -48,13 +48,13 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                 <div className="relative">
                     <span
                         onClick={handleAvailabilityClick}
-                        className="flex items-center hover:bg-gray-50 px-2 py-1 rounded-md cursor-pointer"
+                        className="flex items-center hover:bg-slate-200 px-2 py-1 rounded-md cursor-pointer transition-colors duration-300 ease-in-out"
                     >
                         Availability
                         <MdOutlineKeyboardArrowDown className="ml-2" />
                     </span>
                     {availabilityOpen && (
-                        <div className="z-20 absolute top-full -left-10 sm:left-0 mt-2 w-72 sm:w-96 bg-white rounded-2xl shadow-lg">
+                        <div className="z-20 absolute top-full -left-10 sm:left-0 mt-2 w-72 sm:w-96 bg-slate-100 rounded-2xl shadow-lg">
                             <div className="px-6 py-4">
                                 <div className="flex justify-between items-center mb-4">
                                     <p className="text-gray-800 font-semibold">
@@ -121,21 +121,21 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                 <div className="relative hidden sm:block font-light">
                     <span
                         onClick={handleSortClick}
-                        className="hover:bg-gray-50 px-3 py-1 rounded-lg cursor-pointer flex items-center"
+                        className=" hover:bg-slate-200  transition-colors duration-300 ease-in-out px-3 py-1 rounded-lg cursor-pointer flex items-center"
                     >
                         <FaSort className="mr-2" />
                         Sort by:
                         <MdOutlineKeyboardArrowDown className="ml-2" />
                     </span>
                     {sortOpen && (
-                        <div className="z-10 absolute top-full left-0 w-40 bg-white border border-gray-200 shadow-lg rounded-lg">
+                        <div className="z-10 absolute top-full left-0 w-40 bg-slate-100   shadow-lg rounded-lg">
                             <a
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     handleSortChange("price-asc");
                                 }}
-                                className="block px-4 py-3 hover:bg-gray-100"
+                                className="block px-4 py-3  hover:bg-slate-200"
                             >
                                 Price: Low to High
                             </a>
@@ -145,7 +145,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                                     e.preventDefault();
                                     handleSortChange("price-desc");
                                 }}
-                                className="block px-4 py-3 hover:bg-gray-100"
+                                className="block px-4 py-3 hover:bg-slate-200"
                             >
                                 Price: High to Low
                             </a>
@@ -155,7 +155,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                                     e.preventDefault();
                                     handleSortChange("new-old");
                                 }}
-                                className="block px-4 py-3 hover:bg-gray-100"
+                                className="block px-4 py-3 hover:bg-slate-200"
                             >
                                 New to Old
                             </a>
@@ -165,7 +165,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                                     e.preventDefault();
                                     handleSortChange("old-new");
                                 }}
-                                className="block px-4 py-3 hover:bg-gray-100"
+                                className="block px-4 py-3 hover:bg-slate-200"
                             >
                                 Old to New
                             </a>

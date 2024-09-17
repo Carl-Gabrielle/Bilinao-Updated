@@ -6,6 +6,5 @@
 
 .text {
     color: transparent; /* Make text fill transparent */
-    -webkit-text-stroke: 3px #4d7c0f; /* 2px outline with black color */
-    text-stroke: 2px #000; /* Ensure it works in other browsers if needed */
+    -webkit-text-stroke: 1px #1e293b; /* 2px outline with black color */
 }

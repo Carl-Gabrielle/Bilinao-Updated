@@ -22,7 +22,7 @@ const Orders = ({ auth }) => {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="My Orders" />
-            <div className="min-h-screen bg-gray-100 pt-20 pb-1">
+            <div className="min-h-screen  pt-20 pb-1">
                 <Banner title="My Orders" />
                 <CustomerContainer>
                     <div className="mb-6">
@@ -76,7 +76,7 @@ const OrderStatus = ({ title, icon, isActive, onClick }) => {
         <div
             className={`flex flex-col items-center text-center px-3 py-3 rounded-md cursor-pointer transition-colors duration-300 ${
                 isActive
-                    ? "bg-primary text-white"
+                    ? "bg-slate-800 text-white"
                     : "bg-white hover:bg-gray-200"
             }`}
             onClick={onClick}

@@ -10,19 +10,19 @@ export default function About({ auth }) {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="About Us" />
-            <div className="min-h-screen   pt-20 pb-1">
+            <div className="min-h-screen   pt-20 pb-1 ">
                 <Banner title="About Us" />
                 <div className=" w-full h-auto  py-10  ">
                     <div className="max-w-5xl mx-auto px-6 ">
                         <div className="flex items-center space-x-3">
-                            <hr className="w-28 border  border-gray-300 mb-6" />
-                            <h1 className="text-md font-bold text-gray-300 mb-6 uppercase tracking-wide">
+                            <hr className="w-28 border  border-slate-500 mb-6" />
+                            <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
                                 About Bilinao
                             </h1>
                         </div>
 
                         <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
-                            Know Our <span className="text-primary">Story</span>
+                            Know Our Story
                         </h1>
 
                         <p className="text-md  leading-8 mx-auto tracking-wide">
@@ -40,19 +40,16 @@ export default function About({ auth }) {
                 <div className="py-10 w-full h-auto mb-10 ">
                     <div className="max-w-5xl mx-auto px-6 py-5">
                         <div className="grid grid-cols-1 md:grid-cols-2 sm:gap-20 gap-6 items-center">
-                            <div className="order-1 md:order-2 h-72 w-full bg-gray-200 rounded-md"></div>
+                            <div className="order-1 md:order-2 h-72 w-full bg-slate-50 rounded-md"></div>
                             <div className="order-2 md:order-1 text-center md:text-left">
                                 <div className="flex items-center space-x-3">
-                                    <hr className="w-28 border  border-gray-300 mb-6" />
-                                    <h1 className="text-md font-bold text-gray-300  mb-6 uppercase tracking-wide">
+                                    <hr className="w-28 border  border-slate-500 mb-6" />
+                                    <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
                                         Mission
                                     </h1>
                                 </div>
                                 <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
-                                    Our{" "}
-                                    <span className="text-primary">
-                                        Mission
-                                    </span>
+                                    Our Mission
                                 </h1>
                                 <p className="text-md leading-8 max-w-3xl mx-auto md:mx-0 tracking-wide">
                                     To promote and preserve the traditional
@@ -67,17 +64,16 @@ export default function About({ auth }) {
                 <div className="py-10 w-full h-auto mb-10 ">
                     <div className="max-w-5xl mx-auto px-6 py-5">
                         <div className="grid grid-cols-1 md:grid-cols-2 sm:gap-20 gap-6 items-center">
-                            <div className="order-2 md:order-1 h-72 w-full bg-gray-200 rounded-md"></div>
+                            <div className="order-2 md:order-1 h-72 w-full bg-slate-50 rounded-md"></div>
                             <div className="order-1 md:order-2 text-center md:text-left">
                                 <div className="flex items-center space-x-3">
-                                    <hr className="w-28 border  border-gray-300 mb-6" />
-                                    <h1 className="text-md font-bold text-gray-300 mb-6 uppercase tracking-wide">
+                                    <hr className="w-28 border  border-slate-500 mb-6" />
+                                    <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
                                         Vision
                                     </h1>
                                 </div>
                                 <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
-                                    Our{" "}
-                                    <span className="text-primary">Vision</span>
+                                    Our Vision
                                 </h1>
                                 <p className="text-md leading-8 max-w-3xl mx-auto md:mx-0 tracking-wide">
                                     To become the leading platform for Bolinao's
@@ -89,17 +85,14 @@ export default function About({ auth }) {
                     </div>
                 </div>
 
-                <div className=" w-full h-auto mb-10 bg-slate-50 py-10">
+                <div className=" w-full h-auto mb-10 bg-slate-200 py-10">
                     <div className="max-w-5xl mx-auto px-6 py-5 ">
-                        <div className="flex items-center justify-center space-x-6">
-                            <hr className="w-28 border  border-lime-700 mb-6" />
-                            <h1 className="text-md font-bold text-primary mb-6 uppercase tracking-wide">
-                                Why We Are Here?
-                            </h1>
-                        </div>
+                        <h1 className="text-lg text-center font-bold text-slate-800 mb-6 uppercase tracking-wide">
+                            Why We Are Here?
+                        </h1>
                         <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 max-w-4xl mx-auto px-6">
                             <div className="px-6 py-4 bg-white tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center ">
-                                <div className="bg-primary size-12 rounded-full flex items-center justify-center">
+                                <div className="bg-slate-800 size-12 rounded-full flex items-center justify-center">
                                     <LiaHandHoldingHeartSolid className="text-white size-6 " />
                                 </div>
                                 <span className="text-center text-slate-800">
@@ -107,7 +100,7 @@ export default function About({ auth }) {
                                 </span>
                             </div>
                             <div className="px-6 py-4 bg-white tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center">
-                                <div className="bg-primary size-12 rounded-full flex items-center justify-center">
+                                <div className="bg-slate-800 size-12 rounded-full flex items-center justify-center">
                                     <LiaPeopleCarrySolid className="text-white size-6" />
                                 </div>
                                 <span className="text-center text-slate-800">
@@ -115,7 +108,7 @@ export default function About({ auth }) {
                                 </span>
                             </div>
                             <div className="px-6 py-4 bg-white  tracking-wide  rounded-md text-xs font-medium flex flex-col gap-3 items-center ">
-                                <div className="bg-primary size-12 rounded-full flex items-center justify-center">
+                                <div className="bg-slate-800 size-12 rounded-full flex items-center justify-center">
                                     <MdOutlineRocket className="text-white size-6 " />
                                 </div>
                                 <span className="text-center text-slate-800">
@@ -123,7 +116,7 @@ export default function About({ auth }) {
                                 </span>
                             </div>
                             <div className="px-6 py-4 bg-white tracking-wide rounded-md text-xs font-medium flex flex-col gap-3 items-center">
-                                <div className="bg-primary size-12 rounded-full flex items-center justify-center">
+                                <div className="bg-slate-800 size-12 rounded-full flex items-center justify-center">
                                     <IoHomeOutline className="text-white size-6" />
                                 </div>
                                 <span className="text-center text-slate-800  ">

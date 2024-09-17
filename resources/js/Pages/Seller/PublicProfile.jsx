@@ -1,6 +1,7 @@
 import React from "react";
 import { Head, Link } from "@inertiajs/react";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import { FaPesoSign } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { IoHomeOutline } from "react-icons/io5";
@@ -125,32 +126,40 @@ const PublicProfile = ({ seller, products, auth }) => {
                                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
                                         {products.length > 0 ? (
                                             products.map((product) => (
-                                                <div
+                                                <Link
                                                     key={product.id}
-                                                    className="p-4 border rounded shadow-sm"
+                                                    href={route(
+                                                        "product.show",
+                                                        product.id
+                                                    )}
                                                 >
-                                                    <Link
-                                                        href={`/product/${product.id}`}
-                                                    >
-                                                        <img
-                                                            src={
-                                                                product
-                                                                    .images?.[0]
-                                                                    ?.image_path
-                                                                    ? `/storage/${product.images[0].image_path}`
-                                                                    : "/images/default-product.png"
-                                                            }
-                                                            alt={product.name}
-                                                            className="w-full h-40 object-cover rounded-lg mb-2"
-                                                        />
-                                                        <h4 className="font-semibold text-gray-800">
-                                                            {product.name}
-                                                        </h4>
-                                                    </Link>
-                                                    <p className="text-gray-600 mt-1">
-                                                        ${product.price}
-                                                    </p>
-                                                </div>
+                                                    <div className="p-4 border rounded shadow-sm">
+                                                        <Link
+                                                            href={`/product/${product.id}`}
+                                                        >
+                                                            <img
+                                                                src={
+                                                                    product
+                                                                        .images?.[0]
+                                                                        ?.image_path
+                                                                        ? `/storage/${product.images[0].image_path}`
+                                                                        : "/images/default-product.png"
+                                                                }
+                                                                alt={
+                                                                    product.name
+                                                                }
+                                                                className="w-full h-40 object-cover rounded-lg mb-2"
+                                                            />
+                                                            <h4 className="font-semibold text-gray-800">
+                                                                {product.name}
+                                                            </h4>
+                                                        </Link>
+                                                        <p className="text-gray-600 mt-1">
+                                                            <FaPesoSign className="inline-block" />
+                                                            {product.price}
+                                                        </p>
+                                                    </div>
+                                                </Link>
                                             ))
                                         ) : (
                                             <p className="text-gray-600">

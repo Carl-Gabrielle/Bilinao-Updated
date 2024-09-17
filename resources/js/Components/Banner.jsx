@@ -4,8 +4,8 @@ import { CiStar } from "react-icons/ci";
 const Banner = ({ title, suffix, prefix }) => {
     return (
         <>
-            <div className="h-72 w-full bg-primary mt-6 flex items-center justify-center rounded-b-3xl relative overflow-hidden">
-                <h2 className=" text-center  text-2xl md:text-3xl lg:text-4xl  text-white  text-wrap">
+            <div className="h-72 w-full bg-slate-800 mt-6 flex items-center justify-center rounded-b-3xl relative overflow-hidden">
+                <h2 className=" text-center  text-2xl md:text-3xl lg:text-4xl  text-white  text-wrap font-medium">
                     {title} {suffix} {prefix}
                 </h2>
                 <CiStar className="hidden sm:block absolute top-20 left-32 text-white size-7 opacity-30" />

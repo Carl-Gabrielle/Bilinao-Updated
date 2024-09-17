@@ -187,7 +187,7 @@ const SellerDashboard = ({ categories }) => {
                             <div className="col-span-2 bg-white px-6 py-4 rounded-3xl  w-full">
                                 <SectionHeader text="Product Images" />
                                 <div className="mb-4">
-                                    <div className="w-full border-2 border-dashed rounded-md h-72 flex items-center justify-center relative">
+                                    <div className="w-full border-primary border-2 border-dashed rounded-md h-52 flex items-center justify-center relative">
                                         <input
                                             type="file"
                                             id="product_images"
@@ -248,7 +248,7 @@ const SellerDashboard = ({ categories }) => {
                                                 onClick={() =>
                                                     handleRemoveImage(image)
                                                 }
-                                                className="text-gray-400 hover:bg-gray-100 px-1 py-1 rounded-md"
+                                                className="text-gray-400 hover:bg-gray-100 px-1 py-1 rounded-full transition-colors duration-300 ease-in-out"
                                             >
                                                 <IoClose size={18} />
                                             </button>

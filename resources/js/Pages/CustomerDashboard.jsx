@@ -10,11 +10,11 @@ export default function CustomerDashboard({ auth, category }) {
     const categoryData = category?.data ?? [];
     return (
         <CustomerLayout user={auth.user}>
-            <div className="min-h-screen ">
+            <div className="min-h-screen  ">
                 <Head title="Home" />
                 <main>
                     <div className="max-w-screen-xl mx-auto">
-                        <div className="min-h-[650px] pt-24 relative sm:min-h-[630px] flex justify-center items-center">
+                        <div className="min-h-[650px] pt-24 relative sm:min-h-[630px] flex justify-center items-center ">
                             <div className="px-8">
                                 <div className="flex flex-col justify-center gap-4 text-center sm:text-left px-6 py-6 rounded-3xl w-full order-2 sm:order-1">
                                     <p className="animated-text sm:w-2/3 w-full text-4xl tracking-wide text-slate-900 sm:text-6xl lg:text-7xl font-extrabold">
@@ -30,8 +30,8 @@ export default function CustomerDashboard({ auth, category }) {
                                         dignissimos sunt voluptatum error
                                         repellat!
                                     </p>
-                                    <Link href="#">
-                                        <button className="shop-button sm:self-start self-center px-8 py-3 rounded-md text-white font-semibold flex items-center bg-primary">
+                                    <Link href={route("customer.products")}>
+                                        <button className="shop-button sm:self-start self-center px-8 py-3 rounded-full text-white font-semibold flex items-center bg-slate-800">
                                             Shop Now{" "}
                                             <HiMiniArrowLongRight className="ml-2" />
                                         </button>
@@ -41,11 +41,11 @@ export default function CustomerDashboard({ auth, category }) {
                         </div>
                         <p className="-mb-20 sm:-mb-11 text-2xl text-center md:text-3xl lg:text-5xl uppercase font-extrabold text-slate-800">
                             Shop our{" "}
-                            <span className="bg-yellow-200 px-4 rounded-tr-3xl rounded-bl-3xl">
+                            <span className="bg-slate-100 px-4 rounded-tr-3xl rounded-bl-3xl ">
                                 Categories
                             </span>
                         </p>
-                        <div className="w-full h-full rounded-t-3xl bg-gray-50 mt-4">
+                        <div className="w-full h-full rounded-3xl bg-slate-200 mt-4">
                             <div
                                 className="max-w-6xl mx-auto px-6 sm:px-6 lg:px-8 pt-20 py-12 mb-10"
                                 style={{
@@ -60,7 +60,7 @@ export default function CustomerDashboard({ auth, category }) {
                                         categoryData.map((cat) => (
                                             <div
                                                 key={cat.id}
-                                                className="category-card relative  border  border-gray-400 rounded-3xl bg-white bg-opacity-20 backdrop-filter backdrop-blur-md w-full h-80 sm:h-80 md:h-96 xl:h-64 overflow-hidden transition-transform transform-gpu hover:scale-105 duration-700"
+                                                className="category-card relative  border border-slate-400  rounded-3xl bg-white bg-opacity-20 backdrop-filter backdrop-blur-md w-full h-80 sm:h-80 md:h-96 xl:h-64 overflow-hidden transition-transform transform-gpu hover:scale-105 duration-700"
                                             >
                                                 <div className="absolute inset-0 flex flex-col lg:flex-row items-center lg:justify-start  ">
                                                     {cat.image_path && (
@@ -76,7 +76,7 @@ export default function CustomerDashboard({ auth, category }) {
                                                         </p>
                                                         <Link
                                                             href={`/category/${cat.id}/products`}
-                                                            className="inline-flex items-center px-4 sm:px-6 py-2 rounded-lg text-white bg-primary"
+                                                            className="inline-flex items-center px-4 sm:px-6 py-2 rounded-lg text-white bg-slate-800"
                                                         >
                                                             <span className="mr-2">
                                                                 View Products

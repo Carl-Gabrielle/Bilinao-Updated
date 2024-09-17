@@ -12,18 +12,15 @@ export default function Categories({ auth, categories }) {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Categories" />
-            <div className="min-h-screen  pt-20 pb-1 ">
+            <div className="min-h-screen  pt-20 pb-1  ">
                 <Banner title="Categories" />
                 <CustomerContainer className="mt-32">
                     <div className="flex items-center space-x-3">
-                        <hr className="w-28 border   mb-6 border-gray-300" />
-                        <h1 className="text-md font-bold text-gray-300 mb-6 uppercase tracking-wide">
-                            Categories
+                        <hr className="w-28 border  border-slate-500 mb-6" />
+                        <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
+                            Explore our Categories
                         </h1>
                     </div>
-                    <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide ">
-                        Explore Our Categories
-                    </h1>
                     <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
                         {categoryData.length > 0 ? (
                             categoryData.map((cat) => (
@@ -45,7 +42,7 @@ export default function Categories({ auth, categories }) {
                                             </p>
                                             <Link
                                                 href={`/category/${cat.id}/products`}
-                                                className="inline-flex items-center px-4 sm:px-6 py-2 rounded-lg text-white bg-primary"
+                                                className="inline-flex items-center px-4 sm:px-6 py-2 rounded-lg text-white bg-slate-800"
                                             >
                                                 <span className="mr-2">
                                                     View Products

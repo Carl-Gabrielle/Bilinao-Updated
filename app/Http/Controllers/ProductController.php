@@ -23,14 +23,15 @@ class ProductController extends Controller
         }
     
         $products = Product::where('name', 'like', '%' . $query . '%')
-            ->with(['images'])
-            ->get();
+            ->with(['images']) 
+            ->get(['id', 'name', 'price']); 
     
         return Inertia::render('Customer/SearchResults', [
             'products' => $products,
             'query' => $query,
         ]);
     }
+    
     
 
     public function products()

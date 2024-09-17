@@ -5,7 +5,7 @@ import SellerInput from "./SellerInput";
 
 const Footer = () => {
     return (
-        <div className="text-white bg-slate-900 rounded-t-3xl">
+        <div className="text-white bg-black rounded-t-3xl">
             <div className="mx-auto py-8 lg:py-12 px-6 lg:px-12">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12">
                     <div className="flex flex-col items-center md:items-start mb-6 lg:mb-0">

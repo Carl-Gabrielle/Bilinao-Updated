@@ -115,24 +115,34 @@ class CartController extends Controller
     /**
      * Update the specified resource in storage.
      */
-    public function update(UpdateCartRequest $request, Cart $cart)
-    {
-        //
-    }
+    public function update(Request $request, $id)
+{
+    $cartItem = Cart::findOrFail($id);
+    $cartItem->quantity = $request->input('quantity');
+    $cartItem->save();
+
+    return response()->json(['message' => 'Cart updated successfully']);
+}
+
+    
     // Destroy the cart 
-    public function destroy($id)
-    {
-        $cartItem = Cart::where('user_id', Auth::id())->where('product_id', $id)->first();
-    
-        if ($cartItem) {
-            $cartItem->delete();
-        }
-    
-        $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
-    
-        return Inertia::render('Customer/Carts', [
-            'carts' => $carts,
-            'success' => 'Item removed from cart.',
-        ]);
+public function destroy($id)
+{
+    // Find the cart item by its unique cart id
+    $cartItem = Cart::where('id', $id)->where('user_id', Auth::id())->first();
+
+    // Check if cart item exists and delete it
+    if ($cartItem) {
+        $cartItem->delete();
     }
+
+    // Fetch updated cart items
+    $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
+
+    return Inertia::render('Customer/Carts', [
+        'carts' => $carts,
+        'success' => 'Item removed from cart.',
+    ]);
+}
+
 }
