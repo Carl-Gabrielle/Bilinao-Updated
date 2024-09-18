@@ -1,6 +1,5 @@
 import React from "react";
 import { CiStar } from "react-icons/ci";
-
 const Banner = ({ title, suffix, prefix }) => {
     return (
         <>

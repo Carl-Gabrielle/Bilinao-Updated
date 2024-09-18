@@ -72,7 +72,7 @@ const SellerDashboard = ({ categories }) => {
                             </h1>
                             <button
                                 type="submit"
-                                className="flex items-center text-sm px-4 py-2 sm:px-6 sm:py-3  text-white font-semibold rounded-lg shadow-md bg-primary"
+                                className="flex items-center text-sm px-4 py-2 sm:px-6 sm:py-3  text-white font-semibold rounded-lg shadow-md bg-slate-800"
                             >
                                 <MdPublish className="mr-2 text-lg sm:text-md" />{" "}
                                 Publish Product
@@ -80,7 +80,7 @@ const SellerDashboard = ({ categories }) => {
                         </div>
 
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
-                            <div className="w-full col-span-2 bg-white px-6 py-4 rounded-3xl">
+                            <div className="w-full col-span-2 bg-slate-50  px-6 py-4 rounded-3xl">
                                 <div className="mb-4">
                                     <SectionHeader text="Product Information" />
                                     <label
@@ -135,7 +135,7 @@ const SellerDashboard = ({ categories }) => {
                                     <Label text="Maximum of 255 words. Exceeding this limit requires shortening." />
                                 </div>
                             </div>
-                            <div className="bg-white h-96 px-6 py-4 rounded-3xl  w-full">
+                            <div className=" bg-slate-50  h-96 px-6 py-4 rounded-3xl  w-full">
                                 <SectionHeader text="Pricing & Stock" />
                                 <div className="mb-4">
                                     <label className="text-sm font-medium text-gray-700 flex items-center">
@@ -184,10 +184,10 @@ const SellerDashboard = ({ categories }) => {
                             </div>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
-                            <div className="col-span-2 bg-white px-6 py-4 rounded-3xl  w-full">
+                            <div className="col-span-2  bg-slate-50 px-6 py-4 rounded-3xl  w-full">
                                 <SectionHeader text="Product Images" />
                                 <div className="mb-4">
-                                    <div className="w-full border-primary border-2 border-dashed rounded-md h-52 flex items-center justify-center relative">
+                                    <div className="w-full border-slate-600 border-2 border-dashed rounded-md h-52 flex items-center justify-center relative">
                                         <input
                                             type="file"
                                             id="product_images"
@@ -203,7 +203,7 @@ const SellerDashboard = ({ categories }) => {
                                             htmlFor="product_images"
                                             className="flex flex-col items-center cursor-pointer"
                                         >
-                                            <div className="text-white bg-primary p-3 rounded-md flex items-center justify-center">
+                                            <div className="text-white bg-slate-800 p-3 rounded-md flex items-center justify-center">
                                                 <GoUpload size={23} />
                                             </div>
                                             <h1 className="font-medium mt-3 text-gray-800 text-sm">
@@ -268,7 +268,7 @@ const SellerDashboard = ({ categories }) => {
                                 )}
                             </div>
 
-                            <div className="bg-white h-52 px-6 py-4 rounded-3xl w-full ">
+                            <div className=" bg-slate-50 h-52 px-6 py-4 rounded-3xl w-full ">
                                 <SectionHeader text="Category Selection" />
                                 <div className="mb-4">
                                     <label className="flex items-center text-sm font-medium text-gray-700 ">

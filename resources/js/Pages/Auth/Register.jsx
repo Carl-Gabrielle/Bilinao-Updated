@@ -25,13 +25,16 @@ export default function Register() {
     return (
         <GuestLayout>
             <Head title="Register" />
-            <div className=" rounded-t-3xl sm:rounded-none scroll max-w-4xl overflow-y-auto lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-white ">
+            <div className=" rounded-t-3xl xl:rounded-r-3xl shadow-inner sm:rounded-none scroll max-w-4xl overflow-y-hidden lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-slate-50 ">
                 <h1 id="text" className="text-2xl font-bold text-gray-800 mb-2">
                     Welcome to Bili-Nao!👋
                 </h1>
                 <p className="text-gray-600 mb-8">
                     Already have an account?{" "}
-                    <Link href="/login" className="text-primary font-semibold">
+                    <Link
+                        href="/login"
+                        className="text-slate-800 font-semibold"
+                    >
                         Login
                     </Link>
                 </p>

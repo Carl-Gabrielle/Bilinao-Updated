@@ -65,6 +65,12 @@ export default function Carts({ auth, carts, cartCount }) {
             <div className="min-h-screen  pt-20 pb-1">
                 <Banner title="Shopping Cart" />
                 <CustomerContainer className="mt-32 ">
+                    <div className="flex items-center space-x-3">
+                        <hr className="w-28 border  border-slate-500 mb-6" />
+                        <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
+                            Cart Lists
+                        </h1>
+                    </div>
                     <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide">
                         Your Cart{" "}
                         <span className="bg-slate-800 text-white px-4 rounded-md">
@@ -72,7 +78,7 @@ export default function Carts({ auth, carts, cartCount }) {
                         </span>
                     </h1>
                     <div className="py-10 grid grid-cols-1 lg:grid-cols-3 gap-4">
-                        <div className="col-span-2 shadow-lg rounded-2xl bg-white bg-opacity-30 backdrop-blur-xs ">
+                        <div className="col-span-2 shadow-lg rounded-2xl bg-white  ">
                             <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0  space-x-14 bg-slate-800 text-white rounded-t-2xl">
                                 <span className="uppercase  flex-1 text-center">
                                     Product
@@ -117,7 +123,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                     </p>
                                                 </div>
                                                 <div className="flex-1 text-center text-xs">
-                                                    <div className="flex items-center justify-center space-x-2 sm:space-x-8 bg-slate-300 py-1 sm:py-2 sm:px-3 px-1 rounded-full">
+                                                    <div className="flex items-center justify-center space-x-2 sm:space-x-8 bg-slate-100 py-1 sm:py-2 sm:px-3 px-1 rounded-full">
                                                         <button
                                                             onClick={() =>
                                                                 handleDecrement(
@@ -159,7 +165,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                     onClick={() =>
                                                         handleDelete(cart.id)
                                                     }
-                                                    className="sm:ml-4 ml-2 hover:bg-slate-300 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out border border-slate-400"
+                                                    className="sm:ml-4 ml-2 hover:bg-slate-200 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out border border-slate-400"
                                                 >
                                                     <IoClose />
                                                 </button>
@@ -195,7 +201,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                     Order Summary
                                 </span>
                             </div>
-                            <div className="bg-white bg-opacity-50 backdrop-blur-lg text-xs shadow-lg rounded-b-2xl h-72 flex flex-col">
+                            <div className="bg-white text-xs shadow-lg rounded-b-2xl h-72 flex flex-col">
                                 <div className="pt-5 px-6">
                                     <div className="flex justify-between items-start mb-4">
                                         <p className="text-md">Subtotal</p>

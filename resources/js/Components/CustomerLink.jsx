@@ -1,6 +1,5 @@
 import { Link } from "@inertiajs/react";
-import { IoIosArrowRoundDown } from "react-icons/io";
-
+import { TiArrowDown } from "react-icons/ti";
 export default function CustomerLink({
     active = false,
     className = "",
@@ -17,7 +16,7 @@ export default function CustomerLink({
             } ${className}`}
         >
             {children}
-            {active && <IoIosArrowRoundDown className="ml-2 text-base" />}
+            {active && <TiArrowDown className="ml-2 text-base" />}
         </Link>
     );
 }

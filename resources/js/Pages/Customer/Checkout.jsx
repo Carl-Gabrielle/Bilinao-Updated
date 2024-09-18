@@ -50,7 +50,7 @@ export default function Checkout({ auth }) {
                             />
                         </div>
                         <div className="w-full lg:w-96 rounded-2xl flex flex-col min-h-full">
-                            <div className="py-4 px-6 bg-slate-700 text-white rounded-t-2xl">
+                            <div className="py-4 px-6 bg-slate-800 text-white rounded-t-2xl">
                                 <span className="uppercase text-xs flex-1">
                                     Order Summary
                                 </span>

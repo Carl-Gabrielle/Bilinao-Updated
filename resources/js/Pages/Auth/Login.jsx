@@ -38,11 +38,11 @@ export default function Login({ status, canResetPassword }) {
     return (
         <GuestLayout>
             <Head title="Log in" />
-            <div className="rounded-t-3xl sm:rounded-none scroll max-w-4xl lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-white overflow-y-auto">
+            <div className="rounded-t-3xl  sm:rounded-none xl:rounded-r-3xl scroll shadow-inner max-w-4xl lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-slate-50 overflow-hidden ">
                 <div className="mt-5 w-full flex flex-col">
                     <Link
                         href="/sellerLogin"
-                        className="inline-flex items-center text-sm px-6 py-2 w-80 mb-2 text-white bg-primary rounded-lg shadow-md transition-colors duration-300 font-semibold"
+                        className=" inline-flex items-center text-sm px-6 py-2 w-80 mb-2 text-white bg-slate-800 rounded-lg shadow-md transition-colors duration-300 font-semibold"
                     >
                         <FaRegUser className="mr-2" />
                         Log In to Your Seller Account
@@ -55,12 +55,12 @@ export default function Login({ status, canResetPassword }) {
                         New to Bili-Nao?{" "}
                         <Link
                             href="/register"
-                            className="text-primary font-semibold"
+                            className="text-slate-800 font-semibold"
                         >
                             Create an Account
                         </Link>
                     </p>
-                    <form onSubmit={submit} className="mt-2">
+                    <form onSubmit={submit} className="mt-2 z-10">
                         <div className="mb-6">
                             <InputLabel
                                 htmlFor="email"
@@ -114,14 +114,14 @@ export default function Login({ status, canResetPassword }) {
                             <div className="mb-6">
                                 <Link
                                     href={route("password.request")}
-                                    className="text-primary font-semibold"
+                                    className="text-slate-800 font-semibold"
                                 >
                                     Forgot Password?
                                 </Link>
                             </div>
                         )}
                         <PrimaryButton disabled={processing}>
-                            <MdLogin className="mr-2" /> Log in
+                            <MdLogin className="mr-2 " /> Log in
                         </PrimaryButton>
                     </form>
                     {status && (

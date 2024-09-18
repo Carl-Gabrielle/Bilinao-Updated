@@ -32,9 +32,9 @@ const SellerLayout = ({ user, children }) => {
             {/* <div className='h-16 bg-white/30 border-b border-white/30 backdrop-blur-md shadow-lg z-20 w-full fixed'>
    </div> */}
 
-            <div className="min-h-screen flex flex-col sm:flex-row bg-gray-100">
+            <div className="min-h-screen flex flex-col sm:flex-row bg-slate-300">
                 <aside
-                    className={`fixed inset-y-0 left-0 w-72 z-20 bg-white transform ${
+                    className={`fixed inset-y-0 left-0 w-72 z-20  bg-white bg-opacity-55 backdrop-blur-lg transform ${
                         sidebarOpen ? "translate-x-0" : "-translate-x-full"
                     } transition-transform duration-300 ease-in-out sm:translate-x-0 z-40`}
                 >
@@ -77,15 +77,15 @@ const SellerLayout = ({ user, children }) => {
                                 onClick={handleNavLinkClick}
                                 className={`flex items-center justify-between  rounded-lg transition-colors ${
                                     route().current("seller.dashboard")
-                                        ? "bg-gray-800 text-primary"
-                                        : "hover:bg-gray-100"
+                                        ? "bg-gray-800 "
+                                        : "hover:bg-gray-100 0"
                                 }`}
                             >
                                 <div className="flex items-center space-x-3">
                                     <MdOutlineDashboard
                                         className={`size-4 ${
                                             route().current("seller.dashboard")
-                                                ? "text-primary"
+                                                ? "text-slate-50"
                                                 : "text-slate-800"
                                         }`}
                                     />
@@ -94,7 +94,7 @@ const SellerLayout = ({ user, children }) => {
                                 <MdOutlineKeyboardArrowRight
                                     className={`size-5 ${
                                         route().current("seller.dashboard")
-                                            ? "text-primary"
+                                            ? "text-slate-50"
                                             : "text-slate-800"
                                     }`}
                                 />
@@ -105,7 +105,7 @@ const SellerLayout = ({ user, children }) => {
                                     <MdOutlineDashboard
                                         className={`size-4 ${
                                             route().current("seller.dashboard")
-                                                ? "text-primary"
+                                                ? "text-slate-800"
                                                 : "text-slate-800"
                                         }`}
                                     />
@@ -114,7 +114,7 @@ const SellerLayout = ({ user, children }) => {
                                 <MdOutlineKeyboardArrowRight
                                     className={`size-5 ${
                                         route().current("seller.dashboard")
-                                            ? "text-primary"
+                                            ? "text-slate-800"
                                             : "text-slate-800"
                                     }`}
                                 />
@@ -161,7 +161,7 @@ const SellerLayout = ({ user, children }) => {
                                                         route().current(
                                                             "products.create"
                                                         )
-                                                            ? "text-primary"
+                                                            ? "text-slate-50"
                                                             : "text-slate-800"
                                                     }`}
                                                 />
@@ -172,7 +172,7 @@ const SellerLayout = ({ user, children }) => {
                                                     route().current(
                                                         "products.create"
                                                     )
-                                                        ? "text-primary"
+                                                        ? "text-slate-50"
                                                         : "text-slate-800"
                                                 }`}
                                             />
@@ -188,7 +188,7 @@ const SellerLayout = ({ user, children }) => {
                                                 route().current(
                                                     "products.index"
                                                 )
-                                                    ? "bg-gray-800 text-primary"
+                                                    ? "bg-gray-800 text-slate-800"
                                                     : "hover:bg-gray-100"
                                             }`}
                                         >
@@ -198,7 +198,7 @@ const SellerLayout = ({ user, children }) => {
                                                         route().current(
                                                             "products.index"
                                                         )
-                                                            ? "text-primary"
+                                                            ? "text-slate-50"
                                                             : "text-slate-800"
                                                     }`}
                                                 />
@@ -209,7 +209,7 @@ const SellerLayout = ({ user, children }) => {
                                                     route().current(
                                                         "products.index"
                                                     )
-                                                        ? "text-primary"
+                                                        ? "text-slate-50"
                                                         : "text-slate-800"
                                                 }`}
                                             />
@@ -230,7 +230,7 @@ const SellerLayout = ({ user, children }) => {
                                 onClick={handleNavLinkClick}
                                 className={`flex items-center justify-between  rounded-lg transition-colors ${
                                     route().current("seller.profile")
-                                        ? "bg-gray-800 text-primary"
+                                        ? "bg-gray-800 text-slate-800"
                                         : "hover:bg-gray-100"
                                 }`}
                             >
@@ -238,7 +238,7 @@ const SellerLayout = ({ user, children }) => {
                                     <FaRegUser
                                         className={`size-4 ${
                                             route().current("seller.profile")
-                                                ? "text-primary"
+                                                ? "text-slate-50"
                                                 : "text-slate-800"
                                         }`}
                                     />
@@ -247,7 +247,7 @@ const SellerLayout = ({ user, children }) => {
                                 <MdOutlineKeyboardArrowRight
                                     className={`size-5 ${
                                         route().current("seller.profile")
-                                            ? "text-primary"
+                                            ? "text-slate-50"
                                             : "text-slate-800"
                                     }`}
                                 />
@@ -260,7 +260,7 @@ const SellerLayout = ({ user, children }) => {
                                 as="button"
                                 className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${
                                     route().current("logout")
-                                        ? "bg-gray-800 text-primary"
+                                        ? "bg-gray-800 text-slate-800"
                                         : "hover:bg-gray-100"
                                 }`}
                             >
@@ -268,7 +268,7 @@ const SellerLayout = ({ user, children }) => {
                                     <MdLogout
                                         className={`size-4 ${
                                             route().current("logout")
-                                                ? "text-primary"
+                                                ? "text-slate-800"
                                                 : "text-red-600"
                                         }`}
                                     />
@@ -279,7 +279,7 @@ const SellerLayout = ({ user, children }) => {
                                 <MdOutlineKeyboardArrowRight
                                     className={`size-5 ${
                                         route().current("logout")
-                                            ? "text-primary"
+                                            ? "text-slate-800"
                                             : "text-red-600"
                                     }`}
                                 />

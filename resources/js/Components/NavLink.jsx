@@ -11,7 +11,7 @@ export default function NavLink({
             {...props}
             className={`w-full  font-medium inline-flex items-center px-4 text-nowrap py-2 text-sm  transition-all duration-300 ease-in-out rounded-lg ${
                 active
-                    ? "bg-secondary  text-primary"
+                    ? "text-white  bg-slate-800"
                     : "text-slate-900 hover:bg-gray-100"
             } ${className}`}
         >

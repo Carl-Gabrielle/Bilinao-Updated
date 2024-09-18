@@ -65,7 +65,7 @@ export default function ProductEdit() {
             <div className="container mx-auto px-4 py-6">
                 <Link
                     href={route("products.index")}
-                    className="mb-5 px-6 py-2 w-36  flex items-center text-lime-600  font-semibold"
+                    className="mb-5 px-6 py-2 w-36  flex items-center text-slate-800 font-semibold"
                 >
                     <MdOutlineKeyboardArrowLeft className="mr-2" /> Go Back
                 </Link>
@@ -78,7 +78,7 @@ export default function ProductEdit() {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex text-sm items-center px-6 py-3 bg-primary text-white font-semibold rounded-md shadow-lg"
+                                className="flex text-sm items-center px-6 py-3 bg-slate-800 text-white font-semibold rounded-md shadow-lg"
                             >
                                 <RxUpdate className="mr-2" /> Update Product
                             </button>

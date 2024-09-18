@@ -59,12 +59,12 @@ const SellerLogin = () => {
                                 Turn Your Ideas into Global Wonders—Join Us Now!
                             </p>
                         </div>
-                        <div className="bg-white bg-opacity-70 backdrop-blur-lg rounded-2xl shadow-lg">
+                        <div className="bg-white bg-opacity-70 backdrop-blur-lg rounded-3xl shadow-lg">
                             <div className="px-9 py-8">
-                                <h1 className="text-2xl font-bold text-gray-800">
+                                <h1 className="text-2xl font-bold text-slate-800">
                                     Create Your Bili-Nao Store now
                                 </h1>
-                                <p className="uppercase text-gray-800 text-sm mt-2">
+                                <p className="uppercase text-slate-800 text-sm mt-2">
                                     Enter your username and password to start
                                     selling
                                 </p>
@@ -120,6 +120,9 @@ const SellerLogin = () => {
                                             checked={showPassword}
                                             onChange={togglePasswordVisibility}
                                         />
+                                        <span className="text-slate-800 text-sm ">
+                                            See Password
+                                        </span>
                                     </div>
                                     <div className="flex justify-between items-center mt-2">
                                         <span className="text-gray-800 cursor-pointer font-bold">
@@ -128,7 +131,7 @@ const SellerLogin = () => {
                                     </div>
                                     <div className="mt-6">
                                         <button
-                                            className="w-full bg-primary text-white py-3 rounded-md transition duration-300 flex items-center justify-center font-bold"
+                                            className="w-full bg-slate-800 text-white py-3 rounded-full transition duration-300 flex items-center justify-center font-bold"
                                             disabled={processing}
                                         >
                                             Log In <MdLogin className="ml-2" />

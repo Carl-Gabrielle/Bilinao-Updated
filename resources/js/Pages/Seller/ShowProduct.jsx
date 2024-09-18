@@ -55,21 +55,21 @@ export default function ShowProduct({ success }) {
                         </span>
                     </div>
                 )}
-                <div className="px-10 bg-white py-8 rounded-3xl">
+                <div className="px-10 bg-white bg-opacity-55 backdrop-blur-lg py-8 rounded-3xl">
                     <div className="flex items-center justify-between mb-8">
                         <h1 className="font-semibold text-2xl text-gray-800 leading-tight">
                             Your Products
                         </h1>
                         <Link
                             href={route("products.create")}
-                            className="bg-primary py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                            className="bg-slate-800 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
                         >
                             <MdAdd className="mr-2 size-4" /> Add a New Product
                         </Link>
                     </div>
                     {products.data.length > 0 ? (
                         <div className="overflow-x-auto">
-                            <table className="min-w-full bg-white rounded-lg ">
+                            <table className="min-w-full bg-white bg-opacity-65 backdrop-blur-lg rounded-lg ">
                                 <thead className="bg-gray-100 border-b border-gray-200 text-xs uppercase">
                                     <tr>
                                         <th className="py-3 px-6 text-left text-gray-600 font-medium">
