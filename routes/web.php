@@ -66,6 +66,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
         Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
         Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
+        Route::post('/buyNow', [CartController::class, 'buyNow'])->name('cart.buyNow');
     });
 });
 

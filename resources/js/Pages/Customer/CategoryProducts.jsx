@@ -97,7 +97,7 @@ export default function CategoryProducts({ auth, products, category }) {
                                                             className="size-72 object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
                                                         />
                                                     )}
-                                                    <div className="text-xs px-4 py-4 flex items-center justify-between bg-white bg-opacity-50 backdrop-blur-md text-slate-800 w-full z-10 rounded-2xl absolute -bottom-8">
+                                                    <div className="text-xs px-4 py-4 flex items-center justify-between bg-slate-400 bg-opacity-50 backdrop-blur-md text-slate-800 w-full z-10 rounded-2xl absolute -bottom-8">
                                                         <div className="flex flex-col gap-1">
                                                             <span className="font-semibold">
                                                                 {product.name}

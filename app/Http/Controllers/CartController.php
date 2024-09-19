@@ -24,7 +24,10 @@ class CartController extends Controller
     }
     
     public function checkout(){
-        return Inertia::render('Customer/Checkout');
+        $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
+        return Inertia::render('Customer/Checkout', [
+            'carts' => $carts,
+        ]);
     }
     
     
@@ -44,6 +47,38 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    public function buyNow(Request $request)
+{
+    $validatedData = $request->validate([
+        'product_id' => 'required|exists:products,id',
+        'quantity' => 'required|integer|min:1',
+    ]);
+
+    $user = Auth::user();
+    $product_id = $validatedData['product_id'];
+    $quantity = $validatedData['quantity'];
+
+    // Add to cart
+    $existingCart = Cart::where('user_id', $user->id)
+                        ->where('product_id', $product_id)
+                        ->first();
+
+    if ($existingCart) {
+        $existingCart->quantity += $quantity;
+        $existingCart->save();
+    } else {
+        Cart::create([
+            'user_id' => $user->id,
+            'product_id' => $product_id,
+            'quantity' => $quantity,
+        ]);
+    }
+
+    return response()->json([
+        'message' => 'Product added to cart successfully!',
+        'redirect' => route('customer.carts')
+    ]);
+}
     public function store(Request $request)
     {
         $validatedData = $request->validate([
@@ -69,7 +104,7 @@ class CartController extends Controller
                 'quantity' => $quantity,
             ]);
         }
-        return redirect()->back()->with('success', 'Product added to cart successfully!');
+        return redirect()->back()->with('success', 'has been added to your cart!');
     }
     
     public function updateQuantity(Request $request, $id)

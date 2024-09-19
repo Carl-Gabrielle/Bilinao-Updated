@@ -35,7 +35,6 @@ export default function Carts({ auth, carts, cartCount }) {
         }
     };
 
-    // Increment and Decrement handlers
     const handleIncrement = (id) => {
         const updatedQuantity =
             cartItems.find((cart) => cart.id === id).quantity + 1;
@@ -66,8 +65,8 @@ export default function Carts({ auth, carts, cartCount }) {
                 <Banner title="Shopping Cart" />
                 <CustomerContainer className="mt-32 ">
                     <div className="flex items-center space-x-3">
-                        <hr className="w-28 border  border-slate-500 mb-6" />
-                        <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
+                        <hr className="w-28 border border-slate-800 mb-6" />
+                        <h1 className="font-bold text-3xl mb-6 text-slate-800 uppercase tracking-widest">
                             Cart Lists
                         </h1>
                     </div>
@@ -77,7 +76,7 @@ export default function Carts({ auth, carts, cartCount }) {
                             {cartCount}
                         </span>
                     </h1>
-                    <div className="py-10 grid grid-cols-1 lg:grid-cols-3 gap-4">
+                    <div className="py-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
                         <div className="col-span-2 shadow-lg rounded-2xl bg-white  ">
                             <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0  space-x-14 bg-slate-800 text-white rounded-t-2xl">
                                 <span className="uppercase  flex-1 text-center">
@@ -134,7 +133,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                         >
                                                             -
                                                         </button>
-                                                        <p className="text-gray-600">
+                                                        <p className="text-slate-800">
                                                             {cart.quantity}
                                                         </p>
                                                         <button
@@ -201,11 +200,11 @@ export default function Carts({ auth, carts, cartCount }) {
                                     Order Summary
                                 </span>
                             </div>
-                            <div className="bg-white text-xs shadow-lg rounded-b-2xl h-72 flex flex-col">
+                            <div className="bg-white text-sm shadow-lg rounded-b-2xl h-72 flex flex-col">
                                 <div className="pt-5 px-6">
                                     <div className="flex justify-between items-start mb-4">
-                                        <p className="text-md">Subtotal</p>
-                                        <p className="text-md font-semibold">
+                                        <p>Subtotal</p>
+                                        <p className=" font-semibold">
                                             &#8369;{" "}
                                             {calculateTotal().toLocaleString(
                                                 undefined,
@@ -218,8 +217,8 @@ export default function Carts({ auth, carts, cartCount }) {
                                     </div>
                                 </div>
                                 <div className="px-6 flex justify-between items-start font-semibold bg-slate-300 py-2">
-                                    <p>Total</p>
-                                    <p className="text-md font-semibold">
+                                    <p className="uppercase">Total</p>
+                                    <p className=" font-semibold">
                                         &#8369;{" "}
                                         {calculateTotal().toLocaleString(
                                             undefined,
@@ -234,7 +233,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                     <div className="mt-auto p-6">
                                         <Link href={route("cart.checkout")}>
                                             <button className="w-full flex items-center justify-center rounded-full text-white font-semibold px-8 py-4 bg-slate-800">
-                                                Proceed to Checkout{" "}
+                                                Proceed To Checkout{" "}
                                                 <HiMiniArrowLongRight className="ml-2" />
                                             </button>
                                         </Link>

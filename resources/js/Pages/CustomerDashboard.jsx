@@ -60,7 +60,7 @@ export default function CustomerDashboard({ auth, category }) {
                                         categoryData.map((cat) => (
                                             <div
                                                 key={cat.id}
-                                                className="category-card relative  border border-slate-400  rounded-3xl bg-white bg-opacity-20 backdrop-filter backdrop-blur-md w-full h-80 sm:h-80 md:h-96 xl:h-64 overflow-hidden transition-transform transform-gpu hover:scale-105 duration-700"
+                                                className="category-card relative  bg-slate-50   rounded-3xl   w-full h-80 sm:h-80 md:h-96 xl:h-64 overflow-hidden transition-transform transform-gpu hover:scale-105 duration-700"
                                             >
                                                 <div className="absolute inset-0 flex flex-col lg:flex-row items-center lg:justify-start  ">
                                                     {cat.image_path && (

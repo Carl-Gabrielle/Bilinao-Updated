@@ -21,7 +21,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
         useState(false);
     return (
         <div className="min-h-screen  bg-slate-300 ">
-            <div className="w-full h-10  z-30 fixed  bg-black  ">
+            <div className="w-full h-10  z-30 fixed  bg-slate-900  ">
                 <div className="flex justify-between items-center text-sm w-full h-full text-white max-w-6xl px-4 mx-auto">
                     <div className="flex items-center justify-center space-x-4 text-white">
                         <span className="">Follow Us</span>
@@ -64,7 +64,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     </div>
                 </div>
             </div>
-            <nav className="bg-white bg-opacity-60 backdrop-blur-lg  fixed w-full z-30 mt-10 shadow-sm ">
+            <nav className="bg-slate-300 bg-opacity-60 backdrop-blur-lg  fixed w-full z-30 mt-10 shadow-md  border-b border-slate-400">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center ">
                         {/* Logo Section */}
@@ -120,9 +120,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 {/* Cart Icon */}
                                 <Link
                                     href={route("customer.carts")}
-                                    className="relative flex items-center cursor-pointer hover:bg-slate-50 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
+                                    className="relative flex items-center text-slate-900 cursor-pointer hover:text-slate-50  hover:bg-slate-800  px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
                                 >
-                                    <GrCart className="size-5 text-slate-900 font-extrabold transition-colors duration-300 ease-in-out" />
+                                    <GrCart className="size-5  font-extrabold    " />
                                     {cartCount > 0 && (
                                         <span className="absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-slate-800 rounded-full">
                                             {cartCount}
@@ -131,8 +131,8 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 </Link>
                                 <Dropdown>
                                     <Dropdown.Trigger>
-                                        <div className="relative ml-2 flex items-center cursor-pointer hover:bg-slate-50 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out">
-                                            <MdNotificationsNone className="size-5 text-slate-900" />
+                                        <div className="relative ml-2 flex items-center  text-slate-900 cursor-pointer hover:text-slate-50  hover:bg-slate-800 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out">
+                                            <MdNotificationsNone className="size-5 " />
                                             <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-slate-800 rounded-full">
                                                 8
                                             </span>

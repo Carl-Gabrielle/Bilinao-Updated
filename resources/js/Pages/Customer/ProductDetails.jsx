@@ -1,4 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import { Inertia } from "@inertiajs/inertia";
+import axios from "axios";
+import { HiMiniArrowLongRight } from "react-icons/hi2";
 import { FaPesoSign } from "react-icons/fa6";
 import { LuShoppingCart } from "react-icons/lu";
 import { GrCart } from "react-icons/gr";
@@ -32,6 +35,34 @@ export default function ProductDetails({
     const [selectedImage, setSelectedImage] = useState(
         product.images?.[0]?.image_path || ""
     );
+    const handleBuyNow = () => {
+        axios
+            .post(route("cart.buyNow"), {
+                product_id: product.id,
+                quantity: quantity,
+            })
+            .then((response) => {
+                if (response.data.redirect) {
+                    Inertia.visit(response.data.redirect);
+                }
+            })
+            .catch((error) => {
+                console.error(
+                    "There was an error adding the product to the cart:",
+                    error
+                );
+            });
+    };
+    const [isVisible, setIsVisible] = useState(true);
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                setIsVisible(false);
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [success]);
 
     return (
         <CustomerLayout user={auth.user}>
@@ -43,25 +74,40 @@ export default function ProductDetails({
                     prefix="/Product Details"
                 />
                 <main>
-                    <CustomerContainer>
-                        {success && (
-                            <div
-                                id="toast"
-                                className="fixed bottom-4 right-4 z-50"
-                            >
-                                <div className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-3">
-                                    <IoCheckmarkSharp className="text-white w-6 h-6" />
-                                    <span className="text-sm font-medium">
-                                        {success}
+                    {isVisible && success && (
+                        <div id="toast" className="fixed bottom-0  z-50 w-full">
+                            <div className="bg-slate-700 bg-opacity-60 backdrop-blur-lg px-6 py-5  shadow-inner flex flex-col gap-3 sm:flex-row items-center justify-between space-x-3 rounded-t-3xl">
+                                <div className="flex items-center space-x-4 bg-slate-100  bg-opacity-80 backdrop-blur-lg  py-2 px-4 rounded-md ">
+                                    <div className="sm:size-6  size-4 bg-green-500 flex items-center justify-center rounded-full">
+                                        <IoCheckmarkSharp className="text-slate-100  " />
+                                    </div>
+                                    <span className="sm:text-sm text-xs font-semibold  ">
+                                        <span className="font-medium space-x-1">
+                                            Product
+                                        </span>
+                                        <span> "{product.name}" </span>
+                                        <span className="font-medium">
+                                            {success}
+                                        </span>
                                     </span>
                                 </div>
+                                <div>
+                                    <Link href={route("customer.carts")}>
+                                        <button className="bg-slate-100 text-sm   bg-opacity-80 backdrop-blur-lg flex items-center   font-medium  px-6  py-2 rounded-full">
+                                            View Cart
+                                            <HiMiniArrowLongRight className=" ml-2" />
+                                        </button>
+                                    </Link>
+                                </div>
                             </div>
-                        )}
+                        </div>
+                    )}
+                    <CustomerContainer>
                         <Link
                             href={route("customer.products")}
                             className="w-1/2"
                         >
-                            <button className="mb-6 font-semibold text-slate-800 bg-slate-50 rounded-full px-4 py-2 text-sm shadow-lg">
+                            <button className="mb-6 font-semibold text-slate-800 bg-slate-100 rounded-full px-4 py-2 text-sm shadow-lg">
                                 <MdOutlineKeyboardArrowLeft className="inline-block  " />
                                 Back to Product
                             </button>
@@ -123,24 +169,32 @@ export default function ProductDetails({
                                         {product.price}
                                     </span>
                                 </div>
+                                <div className="border-slate-500 border shadow-md text-slate-800 px-3 py-2 rounded-full flex items-center justify-between">
+                                    <button
+                                        onClick={handleDecrease}
+                                        className="text-sm bg-slate-800 text-white size-6 flex items-center justify-center rounded-full"
+                                    >
+                                        -
+                                    </button>
+                                    <span className="px-7">{quantity}</span>
+                                    <button
+                                        onClick={handleIncrease}
+                                        className="text-sm bg-slate-800 text-white size-6 flex items-center justify-center rounded-full"
+                                    >
+                                        +
+                                    </button>
+                                </div>
+
                                 <div className="py-4 w-full flex flex-col sm:flex-row gap-4">
-                                    <div className="border-slate-800 border shadow-md  text-slate-800 px-10 py-2 rounded-md flex items-center justify-between">
+                                    {product.stock > 0 && (
                                         <button
-                                            onClick={handleDecrease}
-                                            className="px-6 text-1xl"
+                                            onClick={handleBuyNow}
+                                            className="  sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-slate-800 transition-all duration-200 bg-slate-50 rounded-full shadow lg:mt-0 "
                                         >
-                                            -
+                                            Buy Now
                                         </button>
-                                        <span className="px-9 ">
-                                            {quantity}
-                                        </span>
-                                        <button
-                                            onClick={handleIncrease}
-                                            className="px-6"
-                                        >
-                                            +
-                                        </button>
-                                    </div>
+                                    )}
+
                                     {product.stock > 0 ? (
                                         <Link
                                             href={route("cart.store")}
@@ -150,12 +204,12 @@ export default function ProductDetails({
                                                 quantity: quantity,
                                             }}
                                         >
-                                            <button className="flex items-center justify-center sm:w-52 w-full gap-4 px-4 py-2 mt-3 font-bold text-white transition-all duration-200 bg-slate-800 rounded-lg shadow lg:mt-0">
-                                                <LuShoppingCart /> Add to Cart
+                                            <button className=" sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-white transition-all duration-200 bg-slate-800 rounded-full shadow lg:mt-0">
+                                                Add to Cart
                                             </button>
                                         </Link>
                                     ) : (
-                                        <div className="flex items-center cursor-not-allowed justify-center sm:w-52 w-full gap-4 px-4 py-2 mt-3 text-xs font-medium bg-red-50 text-red-600 rounded-lg shadow-md lg:mt-0">
+                                        <div className="flex items-center cursor-not-allowed justify-center sm:w-52 w-full gap-4 px-4 py-3 mt-3 text-xs font-medium bg-red-50 text-red-600 rounded-full shadow-md lg:mt-0">
                                             <span>Out of Stock</span>
                                         </div>
                                     )}

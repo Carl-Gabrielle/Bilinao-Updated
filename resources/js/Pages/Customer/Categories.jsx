@@ -16,8 +16,8 @@ export default function Categories({ auth, categories }) {
                 <Banner title="Categories" />
                 <CustomerContainer className="mt-32">
                     <div className="flex items-center space-x-3">
-                        <hr className="w-28 border  border-slate-500 mb-6" />
-                        <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
+                        <hr className="w-28 border border-slate-800 mb-6" />
+                        <h1 className="font-bold text-3xl mb-6 text-slate-800 uppercase tracking-widest">
                             Explore our Categories
                         </h1>
                     </div>
