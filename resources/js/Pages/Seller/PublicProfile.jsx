@@ -14,7 +14,7 @@ const PublicProfile = ({ seller, products, auth }) => {
             <Head title={`${seller.name}'s Profile`} />
             <CustomerLayout user={auth.user}>
                 <div className="min-h-screen bg-gray-100 pt-20 pb-12">
-                    <Banner title={`${seller.name}'s Profile`} />
+                    <Banner title={`Seller ${seller.name}'s Profile`} />
                     <CustomerContainer>
                         <div className="container mx-auto px-4 py-8 pt-10">
                             {/* Profile Section */}

@@ -1,8 +1,8 @@
 import React, { useState, useEffect } from "react";
-import { FaRegHeart } from "react-icons/fa";
 import { GrCart } from "react-icons/gr";
-import { FaPesoSign } from "react-icons/fa6";
+import { FaPesoSign, FaRegStar } from "react-icons/fa6";
 import { Head, Link } from "@inertiajs/react";
+import { FaStar, FaRegHeart, FaStarHalfAlt } from "react-icons/fa";
 import Pagination from "@/Components/Pagination";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import Banner from "@/Components/Banner";
@@ -97,8 +97,8 @@ export default function CategoryProducts({ auth, products, category }) {
                                                             className="size-72 object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
                                                         />
                                                     )}
-                                                    <div className="text-xs px-4 py-4 flex items-center justify-between bg-slate-400 bg-opacity-50 backdrop-blur-md text-slate-800 w-full z-10 rounded-2xl absolute -bottom-8">
-                                                        <div className="flex flex-col gap-1">
+                                                    <div className="text-xs px-4 py-4 flex items-center justify-between bg-slate-300 bg-opacity-50 backdrop-blur-md text-slate-800 w-full z-10 rounded-2xl absolute -bottom-8">
+                                                        <div className="flex flex-col gap-1 ">
                                                             <span className="font-semibold">
                                                                 {product.name}
                                                             </span>
@@ -106,6 +106,13 @@ export default function CategoryProducts({ auth, products, category }) {
                                                                 <FaPesoSign className="inline-block mr-" />{" "}
                                                                 {product.price}
                                                             </span>
+                                                            <div className="flex items-center space-x-1 text-yellow-500">
+                                                                <FaStar className="text-xs" />
+                                                                <FaStar className="text-xs" />
+                                                                <FaStar className="text-xs" />
+                                                                <FaStarHalfAlt className="text-xs" />
+                                                                <FaRegStar className="text-xs" />
+                                                            </div>
                                                         </div>
                                                         {product.stock > 0 ? (
                                                             <Link

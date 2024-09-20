@@ -7,7 +7,7 @@ import { RiDeleteBinLine } from "react-icons/ri";
 import Banner from "@/Components/Banner";
 import { FaPesoSign } from "react-icons/fa6";
 import { Head, Link } from "@inertiajs/react";
-import axios from "axios"; // Import axios if not already imported
+import axios from "axios";
 import { IoClose } from "react-icons/io5";
 
 export default function Carts({ auth, carts, cartCount }) {
@@ -118,7 +118,15 @@ export default function Carts({ auth, carts, cartCount }) {
                                                     </h3>
                                                     <p className="flex items-center">
                                                         <FaPesoSign />
-                                                        {cart.product.price}
+                                                        {Number(
+                                                            cart.product.price
+                                                        ).toLocaleString(
+                                                            "en-US",
+                                                            {
+                                                                minimumFractionDigits: 2,
+                                                                maximumFractionDigits: 2,
+                                                            }
+                                                        )}
                                                     </p>
                                                 </div>
                                                 <div className="flex-1 text-center text-xs">
@@ -173,14 +181,9 @@ export default function Carts({ auth, carts, cartCount }) {
                                     })}
                                 </div>
                             ) : (
-                                <div className="my-5 flex flex-col items-center justify-between text-xs text-medium">
+                                <div className="my-5 flex flex-col items-center justify-between text-xs text-medium ">
                                     <div className="flex flex-col items-center gap-2 justify-center">
                                         <p>No items in the cart</p>
-                                        {/* <img
-                                            className="w-40 h-32"
-                                            src={emptyImg}
-                                            alt="emptyIcon"
-                                        /> */}
                                     </div>
                                     <div className="flex items-center justify-center pt-10">
                                         <Link href={route("customer.products")}>

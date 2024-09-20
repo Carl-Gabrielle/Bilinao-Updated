@@ -101,7 +101,7 @@ export default function Checkout({ auth, carts }) {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 ">
                         {/* Billing Information */}
                         <div className="col-span-2 space-y-6 bg-slate-50 p-8 rounded-3xl shadow-lg">
-                            <h2 className="text-xl font-semibold text-gray-700">
+                            <h2 className="text-md font-semibold text-gray-700">
                                 <h1>Contact and Shipping Information</h1>
                             </h2>
                             <BillingInput
@@ -119,7 +119,8 @@ export default function Checkout({ auth, carts }) {
                                 value={billingDetails.address}
                                 onChange={handleInputChange}
                             />
-                            <h2 className="text-xl font-semibold text-gray-700">
+                            <hr />
+                            <h2 className="text-md font-semibold text-gray-700">
                                 <h1>Billing Details</h1>
                             </h2>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -251,7 +252,8 @@ export default function Checkout({ auth, carts }) {
                                     </select>
                                 </div>
                             </div>
-                            <h2 className="text-xl font-semibold text-gray-700">
+                            <hr />
+                            <h2 className="text-md font-semibold text-gray-700">
                                 <h1>Nearby Landmark</h1>
                             </h2>
                             {/* Landmark Text Area */}
@@ -271,79 +273,102 @@ export default function Checkout({ auth, carts }) {
                                 </label>
                             </div>
                         </div>
-                        {/* Order Summary */}
-                        <div className="w-full lg:w-96 lg:h-72 bg-slate-50 rounded-3xl shadow-lg">
-                            <div className="bg-gray-800 text-white rounded-t-3xl px-6 py-4">
-                                <h3 className="uppercase text-xs tracking-wider">
-                                    Order Summary
-                                </h3>
-                            </div>
-                            <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto">
-                                <h1 className="font-medium">Your Order</h1>
+                        <div className="grid grid-rows-2 gap-8">
+                            {/* Order Summary */}
+                            <div className="w-full lg:w-96 lg:h-72 bg-slate-50 rounded-3xl shadow-lg">
+                                <div className="bg-gray-800 text-white rounded-t-3xl px-6 py-4">
+                                    <h3 className="uppercase text-xs tracking-wider">
+                                        Order Summary
+                                    </h3>
+                                </div>
+                                <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto">
+                                    <h1 className="font-medium">Your Order</h1>
 
-                                {cartItems.map((cart) => {
-                                    return (
-                                        <>
-                                            <div className="flex">
-                                                <div
-                                                    key={cart.id}
-                                                    className="relative border"
-                                                >
-                                                    <img
-                                                        src={`/storage/${cart.product.images[0].image_path}`}
-                                                        alt={cart.product.name}
-                                                        className="sm:size-20 size-10 object-cover rounded"
-                                                    />
-                                                    <div className="absolute -top-3 flex  text-slate-100 items-center justify-center -right-3   size-6 bg-slate-600 rounded-full">
-                                                        <span className="  ">
-                                                            {" "}
-                                                            {cart.quantity}
-                                                        </span>
+                                    {cartItems.map((cart) => {
+                                        return (
+                                            <>
+                                                <div className="flex">
+                                                    <div
+                                                        key={cart.id}
+                                                        className="relative border"
+                                                    >
+                                                        <img
+                                                            src={`/storage/${cart.product.images[0].image_path}`}
+                                                            alt={
+                                                                cart.product
+                                                                    .name
+                                                            }
+                                                            className="sm:size-20 size-10 object-cover rounded"
+                                                        />
+                                                        <div className="absolute -top-3 flex  text-slate-100 items-center justify-center -right-3   size-6 bg-slate-700 rounded-full">
+                                                            <span className="  ">
+                                                                {" "}
+                                                                {cart.quantity}
+                                                            </span>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex-1 ml-4 text-xs text-slate-800 ">
+                                                        <h3 className="font-semibold">
+                                                            {cart.product.name}
+                                                        </h3>
+                                                        <p className="flex items-center">
+                                                            <FaPesoSign className="inline-block mr-1" />
+                                                            {Number(
+                                                                cart.product
+                                                                    .price
+                                                            ).toLocaleString(
+                                                                "en-US",
+                                                                {
+                                                                    minimumFractionDigits: 2,
+                                                                    maximumFractionDigits: 2,
+                                                                }
+                                                            )}
+                                                        </p>
                                                     </div>
                                                 </div>
-                                                <div className="flex-1 ml-4 text-xs text-slate-800 ">
-                                                    <h3 className="font-semibold">
-                                                        {cart.product.name}
-                                                    </h3>
-                                                    <p className="flex items-center">
-                                                        {cart.product.price}
-                                                    </p>
-                                                </div>
-                                            </div>
-                                        </>
-                                    );
-                                })}
-                                <div className="flex justify-between text-sm border-t pt-4">
-                                    <span className="font-semibold">
-                                        Subtotal
-                                    </span>
-                                    <span>
-                                        {" "}
-                                        <FaPesoSign className="inline-block" />
-                                        150
-                                    </span>
+                                            </>
+                                        );
+                                    })}
+                                    <div className="flex justify-between text-sm border-t pt-4">
+                                        <span className="font-semibold">
+                                            Subtotal
+                                        </span>
+                                        <span>
+                                            {" "}
+                                            <FaPesoSign className="inline-block" />
+                                            150
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between text-sm border-b pb-4">
+                                        <span>Shipping</span>
+                                        <span>
+                                            {" "}
+                                            <FaPesoSign className="inline-block" />
+                                            80
+                                        </span>
+                                    </div>
+                                    <div className="flex justify-between text-lg font-bold">
+                                        <span>Total</span>
+                                        <span>
+                                            {" "}
+                                            <FaPesoSign className="inline-block" />
+                                            230
+                                        </span>
+                                    </div>
                                 </div>
-                                <div className="flex justify-between text-sm border-b pb-4">
-                                    <span>Shipping</span>
-                                    <span>
-                                        {" "}
-                                        <FaPesoSign className="inline-block" />
-                                        80
-                                    </span>
-                                </div>
-                                <div className="flex justify-between text-lg font-bold">
-                                    <span>Total</span>
-                                    <span>
-                                        {" "}
-                                        <FaPesoSign className="inline-block" />
-                                        230
-                                    </span>
+                                <div className="p-6 bg-slate-50 border-t border rounded-b-3xl">
+                                    <button className="w-full bg-amber-500 text-white rounded-full tracking-wide px-8 py-4">
+                                        Place Order
+                                    </button>
                                 </div>
                             </div>
-                            <div className="p-6 bg-slate-50 border-t border rounded-b-3xl">
-                                <button className="w-full bg-amber-500 text-white rounded-full tracking-wide px-8 py-4">
-                                    Place Order
-                                </button>
+
+                            <div className="w-full  lg:mt-6">
+                                <div className="bg-slate-50 p-6 lg:w-96 lg:h-72    rounded-3xl space-y-4 h-72 overflow-y-auto">
+                                    <h2 className="text-md font-semibold text-gray-700">
+                                        <h1>How would you like to pay?</h1>
+                                    </h2>
+                                </div>
                             </div>
                         </div>
                     </div>

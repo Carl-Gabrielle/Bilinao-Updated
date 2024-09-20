@@ -1,8 +1,9 @@
 import React, { useState, useEffect } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
+import { FaStar, FaRegHeart, FaStarHalfAlt } from "react-icons/fa";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
-import { FaPesoSign } from "react-icons/fa6";
+import { FaPesoSign, FaRegStar } from "react-icons/fa6";
 import { LuShoppingCart } from "react-icons/lu";
 import { GrCart } from "react-icons/gr";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
@@ -136,18 +137,7 @@ export default function ProductDetails({
                                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                                     {product.description}
                                 </p>
-                                <Link
-                                    href={route("seller.public.profile", {
-                                        seller: product.seller.id,
-                                    })}
-                                >
-                                    <p className="text-slate-800 flex items-center mb-4">
-                                        <IoStorefrontOutline className="mr-2" />
-                                        <span className="font-semibold">
-                                            {product.seller.name}
-                                        </span>
-                                    </p>
-                                </Link>
+
                                 {product.stock > 0 ? (
                                     <p className="text-slate-800 text-sm mb-5 font-medium">
                                         <span className="bg-green-500 text-white px-3 py-1 rounded-md shadow-md">
@@ -169,6 +159,37 @@ export default function ProductDetails({
                                         {product.price}
                                     </span>
                                 </div>
+                                <div className="mb-6 flex items-center justify-between space-x-4">
+                                    <div className="flex items-center space-x-1 text-yellow-500">
+                                        <FaStar className="text-sm" />
+                                        <FaStar className="text-sm" />
+                                        <FaStar className="text-sm" />
+                                        <FaStarHalfAlt className="text-sm" />
+                                        <FaRegStar className="text-sm" />
+                                    </div>
+
+                                    <span className="text-gray-600 text-sm">
+                                        140 reviews | 431 sold
+                                    </span>
+                                    <div className="flex items-center space-x-1">
+                                        <Link
+                                            href={route(
+                                                "seller.public.profile",
+                                                {
+                                                    seller: product.seller.id,
+                                                }
+                                            )}
+                                        >
+                                            <p className="text-slate-800 flex items-center ">
+                                                <IoStorefrontOutline className="mr-2" />
+                                                <span className="font-semibold">
+                                                    {product.seller.name}
+                                                </span>
+                                            </p>
+                                        </Link>
+                                    </div>
+                                </div>
+
                                 <div className="border-slate-500 border shadow-md text-slate-800 px-3 py-2 rounded-full flex items-center justify-between">
                                     <button
                                         onClick={handleDecrease}
@@ -241,8 +262,11 @@ export default function ProductDetails({
                             </div>
                         )}
                         <div className="h-screen">
-                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-10">
+                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-16">
                                 Product Ratings & Reviews
+                            </h1>
+                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-16">
+                                Customer Says
                             </h1>
                         </div>
                         {relatedProducts.length > 0 && (
@@ -295,20 +319,45 @@ export default function ProductDetails({
                                                 )}
                                             </div>
 
-                                            <div className="rounded-2xl text-xs p-3 flex items-center justify-between">
+                                            <div className=" text-xs p-3 flex items-center justify-between">
                                                 <div>
-                                                    <h1 className="text-lg font-medium mb-1">
+                                                    <h3 className="pb-1 text-md font-semibold">
                                                         {relatedProduct.name}
-                                                    </h1>
-                                                    <div className="flex items-center text-slate-800  text-md mb-4">
-                                                        <FaPesoSign className="text-lg" />
-                                                        <span className="ml-1">
+                                                    </h3>
+                                                    <p className="text-sm">
+                                                        <FaPesoSign className="inline-block mr-1" />
+                                                        {Number(
+                                                            relatedProduct.price
+                                                        ).toLocaleString(
+                                                            "en-US",
                                                             {
-                                                                relatedProduct.price
+                                                                minimumFractionDigits: 2,
+                                                                maximumFractionDigits: 2,
                                                             }
-                                                        </span>
-                                                    </div>
+                                                        )}
+                                                    </p>
                                                 </div>
+                                                {relatedProduct.stock > 0 ? (
+                                                    <Link
+                                                        href={route(
+                                                            "cart.store"
+                                                        )}
+                                                        method="post"
+                                                        data={{
+                                                            product_id:
+                                                                relatedProduct.id,
+                                                            quantity: 1,
+                                                        }}
+                                                    >
+                                                        <div className="bg-slate-800 px-3 py-3 rounded-full text-white">
+                                                            <GrCart size={15} />
+                                                        </div>
+                                                    </Link>
+                                                ) : (
+                                                    <div className="bg-slate-100 text-xs  cursor-not-allowed  w-full sm:w-1/2  px-2 sm:py-2 py-1  rounded-full text-gray-600 text-center">
+                                                        Out of Stock
+                                                    </div>
+                                                )}
                                             </div>
                                         </Link>
                                     ))}

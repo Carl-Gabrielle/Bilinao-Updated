@@ -34,7 +34,7 @@ const SearchResults = ({ products, auth, query }) => {
                                         key={product.id}
                                         href={route("product.show", product.id)}
                                     >
-                                        <div className="bg-gray-50 rounded-2xl p-4">
+                                        <div className="bg-white bg-opacity-50 backdrop-blur-md  rounded-2xl p-4">
                                             <img
                                                 src={`/storage/${product.images[0].image_path}`}
                                                 alt={product.name}
