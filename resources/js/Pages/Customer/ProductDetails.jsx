@@ -82,14 +82,8 @@ export default function ProductDetails({
                                     <div className="sm:size-6  size-4 bg-green-500 flex items-center justify-center rounded-full">
                                         <IoCheckmarkSharp className="text-slate-100  " />
                                     </div>
-                                    <span className="sm:text-sm text-xs font-semibold  ">
-                                        <span className="font-medium space-x-1">
-                                            Product
-                                        </span>
-                                        <span> "{product.name}" </span>
-                                        <span className="font-medium">
-                                            {success}
-                                        </span>
+                                    <span className="sm:text-sm text-xs font-medium  ">
+                                        <span>{success}</span>
                                     </span>
                                 </div>
                                 <div>

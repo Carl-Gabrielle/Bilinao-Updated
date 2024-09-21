@@ -37,7 +37,7 @@ const SellerLogin = () => {
                     backgroundRepeat: "no-repeat",
                 }}
             >
-                <div className="absolute inset-0 bg-black opacity-40"></div>
+                <div className="absolute inset-0 bg-slate-900 bg-opacity-30 backdrop-blur-sm"></div>
                 <div className="relative max-w-6xl mx-auto px-6 w-full">
                     <div className="w-48">
                         <Link href="/">

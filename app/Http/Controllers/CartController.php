@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Cart;
 use Illuminate\Http\Request;
+use App\Models\Product;
 use Inertia\Inertia;
 use App\Http\Requests\StoreCartRequest;
 use App\Http\Requests\UpdateCartRequest;
@@ -19,7 +20,7 @@ class CartController extends Controller
     
         return Inertia::render('Customer/Carts', [
             'carts' => $carts,
-
+            
         ]);
     }
     
@@ -88,6 +89,7 @@ class CartController extends Controller
     
         $user = auth()->user();
         $product_id = $validatedData['product_id'];
+        $product = Product::find($product_id);
         $quantity = $validatedData['quantity'];
     
         $existingCart = Cart::where('user_id', $user->id)
@@ -104,7 +106,7 @@ class CartController extends Controller
                 'quantity' => $quantity,
             ]);
         }
-        return redirect()->back()->with('success', 'has been added to your cart!');
+        return redirect()->back()->with('success', "  {$product->name} has been added to your cart!");
     }
     
     public function updateQuantity(Request $request, $id)
@@ -163,15 +165,12 @@ class CartController extends Controller
     // Destroy the cart 
 public function destroy($id)
 {
-    // Find the cart item by its unique cart id
     $cartItem = Cart::where('id', $id)->where('user_id', Auth::id())->first();
 
-    // Check if cart item exists and delete it
     if ($cartItem) {
         $cartItem->delete();
     }
 
-    // Fetch updated cart items
     $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
 
     return Inertia::render('Customer/Carts', [

@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { GrCart } from "react-icons/gr";
+import { IoCheckmarkSharp } from "react-icons/io5";
+import { HiMiniArrowLongRight } from "react-icons/hi2";
 import { FaPesoSign, FaRegStar } from "react-icons/fa6";
 import { Head, Link } from "@inertiajs/react";
 import { FaStar, FaRegHeart, FaStarHalfAlt } from "react-icons/fa";
@@ -9,7 +11,12 @@ import Banner from "@/Components/Banner";
 import CustomerContainer from "@/Components/CustomerContainer";
 import FilterBar from "../../Components/FilterBar";
 
-export default function CategoryProducts({ auth, products, category }) {
+export default function CategoryProducts({
+    auth,
+    products,
+    category,
+    success,
+}) {
     const [sortedProducts, setSortedProducts] = useState(products.data);
     const [sortOption, setSortOption] = useState(null);
     const [availabilityFilter, setAvailabilityFilter] = useState(null);
@@ -57,6 +64,16 @@ export default function CategoryProducts({ auth, products, category }) {
             setAvailabilityFilter(value);
         }
     };
+    const [isVisible, setIsVisible] = useState(true);
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                setIsVisible(false);
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [success]);
 
     return (
         <CustomerLayout user={auth.user}>
@@ -64,6 +81,31 @@ export default function CategoryProducts({ auth, products, category }) {
                 <Head title={`${category} Products`} />
                 <main>
                     <Banner title={category} suffix="Products" />
+                    {isVisible && success && (
+                        <div id="toast" className="fixed bottom-0 z-50 w-full">
+                            <div className="bg-slate-700 bg-opacity-60 backdrop-blur-lg px-6 py-5 shadow-inner flex flex-col gap-3 sm:flex-row items-center justify-between space-x-3 rounded-t-3xl">
+                                <div className="flex items-center space-x-4 bg-slate-100 bg-opacity-80 backdrop-blur-lg py-2 px-4 rounded-md">
+                                    <div className="sm:size-6 size-4 bg-green-500 flex items-center justify-center rounded-full">
+                                        <IoCheckmarkSharp className="text-slate-100  " />
+                                    </div>
+                                    <span className="sm:text-sm text-xs font-semibold">
+                                        <span className="font-medium space-x-1">
+                                            {success}{" "}
+                                        </span>
+                                    </span>
+                                </div>
+                                <div>
+                                    <Link href={route("customer.carts")}>
+                                        <button className="bg-slate-100 text-sm bg-opacity-80 backdrop-blur-lg flex items-center font-medium px-6 py-2 rounded-full">
+                                            View Cart
+                                            <HiMiniArrowLongRight className=" ml-2" />
+                                        </button>
+                                    </Link>
+                                </div>
+                            </div>
+                        </div>
+                    )}
+
                     <CustomerContainer>
                         {/* FILTER BAR */}
                         <FilterBar

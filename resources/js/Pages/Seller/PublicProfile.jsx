@@ -109,12 +109,6 @@ const PublicProfile = ({ seller, products, auth }) => {
                                             </span>{" "}
                                             {seller.address || "Not provided"}
                                         </p>
-                                        <p className="text-gray-600">
-                                            <span className="font-semibold">
-                                                Username:
-                                            </span>{" "}
-                                            @{seller.username || "Not provided"}
-                                        </p>
                                     </div>
                                 </div>
 

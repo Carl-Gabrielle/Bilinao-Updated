@@ -48,7 +48,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                 <div className="relative">
                     <span
                         onClick={handleAvailabilityClick}
-                        className="flex items-center hover:bg-slate-200 px-2 py-1 rounded-md cursor-pointer transition-colors duration-300 ease-in-out"
+                        className="flex items-center border  border-slate-500 rounded-full  px-3 py-1  cursor-pointer transition-colors duration-300 ease-in-out"
                     >
                         Availability
                         <MdOutlineKeyboardArrowDown className="ml-2" />
@@ -119,14 +119,17 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
             </div>
             <div className="flex gap-6">
                 <div className="relative hidden sm:block font-light">
-                    <span
-                        onClick={handleSortClick}
-                        className=" hover:bg-slate-200  transition-colors duration-300 ease-in-out px-3 py-1 rounded-lg cursor-pointer flex items-center"
-                    >
+                    <div className="flex items-center space-x-4">
                         <FaSort className="mr-2" />
                         Sort by:
-                        <MdOutlineKeyboardArrowDown className="ml-2" />
-                    </span>
+                        <span
+                            onClick={handleSortClick}
+                            className="  border border-slate-500  transition-colors duration-300 ease-in-out px-3 py-1 rounded-full cursor-pointer flex items-center"
+                        >
+                            Price & Date
+                            <MdOutlineKeyboardArrowDown className="ml-2" />
+                        </span>
+                    </div>
                     {sortOpen && (
                         <div className="z-10 absolute top-full left-0 w-40 bg-slate-100   shadow-lg rounded-lg">
                             <a
@@ -157,7 +160,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                                 }}
                                 className="block px-4 py-3 hover:bg-slate-200"
                             >
-                                New to Old
+                                Date: New to Old
                             </a>
                             <a
                                 href="#"
@@ -167,7 +170,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                                 }}
                                 className="block px-4 py-3 hover:bg-slate-200"
                             >
-                                Old to New
+                                Date: Old to New
                             </a>
                         </div>
                     )}

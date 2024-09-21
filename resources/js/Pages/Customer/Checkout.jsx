@@ -89,7 +89,7 @@ export default function Checkout({ auth, carts }) {
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
-            <div className="min-h-screen  pt-20 pb-1">
+            <div className="min-h-screen  pt-20 pb-1 ">
                 <Banner title="Shopping Cart" suffix="/Checkout" />
                 <CustomerContainer>
                     <div className="flex items-center space-x-3">
@@ -104,11 +104,13 @@ export default function Checkout({ auth, carts }) {
                             <h2 className="text-md font-semibold text-gray-700">
                                 <h1>Contact and Shipping Information</h1>
                             </h2>
-                            <BillingInput
+                            <input
                                 label="Full Name"
                                 value={billingDetails.name}
-                                onChange={handleInputChange}
+                                readOnly
+                                className="border-0 border-b w-full px-4 py-3 text-gray-800 bg-transparent focus:outline-none focus:border-slate-800 transition-all duration-300 ease-in-out cursor-not-allowed border-gray-300 hover:border-gray-600"
                             />
+
                             <BillingInput
                                 label="Phone Number"
                                 value={billingDetails.phone}
@@ -362,12 +364,11 @@ export default function Checkout({ auth, carts }) {
                                     </button>
                                 </div>
                             </div>
-
-                            <div className="w-full  lg:mt-6">
+                            <div className="w-full  lg:mt-4">
                                 <div className="bg-slate-50 p-6 lg:w-96 lg:h-72    rounded-3xl space-y-4 h-72 overflow-y-auto">
-                                    <h2 className="text-md font-semibold text-gray-700">
+                                    <div className="text-md font-semibold text-gray-700">
                                         <h1>How would you like to pay?</h1>
-                                    </h2>
+                                    </div>
                                 </div>
                             </div>
                         </div>

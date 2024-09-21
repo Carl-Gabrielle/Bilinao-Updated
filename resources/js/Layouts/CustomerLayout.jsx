@@ -64,12 +64,12 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     </div>
                 </div>
             </div>
-            <nav className="bg-slate-300 bg-opacity-60 backdrop-blur-lg  fixed w-full z-30 mt-10 shadow-md  border-b border-slate-400">
+            <nav className=" bg-slate-300 bg-opacity-60 backdrop-blur-lg  fixed w-full z-30 mt-10 shadow-md  border-b border-slate-400">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center ">
                         {/* Logo Section */}
                         <div className="flex items-center ">
-                            {/* <Link href="/customer" className="shrink-0">
+                            <Link href="/customer" className="shrink-0 ">
                                 <img
                                     src={Logo}
                                     alt="Bilinao Logo"
@@ -80,9 +80,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         backgroundRepeat: "no-repeat",
                                     }}
                                 />
-                            </Link> */}
+                            </Link>
                             {/* Nav Links */}
-                            <div className="hidden sm:flex space-x-8 sm:ms-10 ">
+                            <div className="hidden sm:flex space-x-2 sm:ms-10 ">
                                 <CustomerLink
                                     href={route("customer.index")}
                                     active={route().current("customer.index")}
@@ -233,13 +233,13 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         <hr className="my-2" />
                                         <Dropdown.Link
                                             href="/customerProfile"
-                                            className="hover:bg-gray-100 transition-colors duration-300 ease-in-out rounded-md"
+                                            className="hover:bg-slate-100 transition-colors duration-300 ease-in-out rounded-md"
                                         >
                                             My Account
                                         </Dropdown.Link>
                                         <Dropdown.Link
                                             href={route("customer.orders")}
-                                            className="hover:bg-gray-100 transition-colors duration-300 ease-in-out mb-2 rounded-md"
+                                            className="hover:bg-slate-100 transition-colors duration-300 ease-in-out  mb-2 rounded-md"
                                         >
                                             My Orders
                                         </Dropdown.Link>

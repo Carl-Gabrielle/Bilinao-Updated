@@ -60,6 +60,7 @@ class ProductController extends Controller
 
     return Inertia::render('Customer/CategoryProducts', [
         'products' => $products,
+        'success' => session('success'),
         'category' => $category->name,
         'sort' => $sortOption,  
     ]);
