@@ -26,7 +26,7 @@ const Trigger = ({ children }) => {
             <div onClick={toggleOpen}>{children}</div>
 
             <div
-                className={`fixed inset-0 z-50 bg-black transition-opacity duration-300 ${
+                className={`fixed inset-0 ${
                     open ? "opacity-50" : "opacity-0 pointer-events-none"
                 }`}
                 onClick={() => setOpen(false)}

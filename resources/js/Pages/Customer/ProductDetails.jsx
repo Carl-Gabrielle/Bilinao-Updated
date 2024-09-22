@@ -1,11 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
+import { MdOutlineKeyboardArrowDown } from "react-icons/md";
 import { FaStar, FaRegHeart, FaStarHalfAlt } from "react-icons/fa";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
 import { FaPesoSign, FaRegStar } from "react-icons/fa6";
 import { LuShoppingCart } from "react-icons/lu";
 import { GrCart } from "react-icons/gr";
+import ProfileImg from "../Illustrations/profile.jpeg";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { Head, Link } from "@inertiajs/react";
@@ -255,13 +257,160 @@ export default function ProductDetails({
                                 ))}
                             </div>
                         )}
-                        <div className="h-screen">
+                        <div className="h-full">
                             <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-16">
                                 Product Ratings & Reviews
                             </h1>
-                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-16">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                                {/* Customer Reviews Section */}
+                                <div className="col-span-1 sm:border-r border-0 border-slate-400 pr-4 ">
+                                    <h1 className="text-xl font-semibold text-slate-900">
+                                        Customer Reviews
+                                    </h1>
+                                    <div className="flex items-center space-x-3 mt-5">
+                                        <div className="flex text-lg items-center space-x-1 text-yellow-500">
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStarHalfAlt />
+                                            <FaRegStar />
+                                        </div>
+                                        <span className="text-sm text-slate-800">
+                                            4.7 out of 5
+                                        </span>
+                                    </div>
+                                </div>
+                                {/* Star Rating Distribution */}
+                                <div className="col-span-2 flex flex-col justify-center">
+                                    {[5, 4, 3, 2, 1].map((star, index) => (
+                                        <div
+                                            key={index}
+                                            className="flex items-center justify-between space-x-2 my-1"
+                                        >
+                                            <span className=" text-slate-800 text-sm  flex items-center ">
+                                                <span className="mr-2">
+                                                    {" "}
+                                                    {star}
+                                                </span>{" "}
+                                                star
+                                            </span>
+                                            {/* Progress Bar */}
+                                            <div className="w-full bg-slate-200 rounded-full h-3">
+                                                <div
+                                                    className="bg-yellow-500 h-3 rounded-full"
+                                                    style={{
+                                                        width: `${
+                                                            (5 - star + 1) * 20
+                                                        }%`,
+                                                    }} // Example percentage
+                                                ></div>
+                                            </div>
+                                            <span className="text-slate-800 text-sm">
+                                                {(5 - star + 1) * 20}%
+                                            </span>{" "}
+                                        </div>
+                                    ))}
+                                </div>
+                            </div>
+                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-10">
                                 Customer Says
                             </h1>
+                            <div className="sm:text-sm mb-6 text-xs text-slate-800 flex items-center justify-between">
+                                <div>
+                                    <span>Showing 1-5 of 160 results</span>
+                                </div>
+                                <div className="flex items-center space-x-3">
+                                    <span>Sort By: </span>
+                                    <span className=" border border-slate-500  transition-colors duration-300 ease-in-out px-3 py-1 rounded-full cursor-pointer flex items-center ">
+                                        Recent Reviews{" "}
+                                        <MdOutlineKeyboardArrowDown className="ml-2" />
+                                    </span>
+                                </div>
+                            </div>
+                            {/* CUSTOMER REVIEWS */}
+                            <div className="mt-4  bg-white bg-opacity-30 backdrop-blur-md  px-4 py-4 rounded-3xl">
+                                <div className="flex items-center justify-between">
+                                    <div className="flex  items-center space-x-3">
+                                        {/* CUSTOMER PROFILE */}
+                                        <img
+                                            src={ProfileImg}
+                                            alt="CustomerProfile"
+                                            className="object-cover size-12 rounded-full border-2 border-slate-700 border-opacity-30 backdrop-blur-md"
+                                        />
+                                        <div className="flex flex-col gap-1">
+                                            <span className="text-xs text-slate-800 font-semibold">
+                                                Carl Gabrielle
+                                            </span>
+                                            <span className="text-xs bg-slate-700 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
+                                                Verified Purchase
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {/*DATE AND RATINGS  */}
+                                    <div>
+                                        <span className="text-xs text-slate-800 ">
+                                            November 28,2024
+                                        </span>
+                                        <div className="flex text-xs items-center space-x-1 text-yellow-500 mt-2">
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStarHalfAlt />
+                                            <FaRegStar />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-2 px-14">
+                                    <h1 className="text-sm text-slate-800">
+                                        I absolutely love this vase! It arrived
+                                        in perfect condition and looks stunning
+                                        in my living room. The craftsmanship is
+                                        excellent, and it adds a beautiful touch
+                                        to my home decor.
+                                    </h1>
+                                </div>
+                                <hr className="mt-2 border-slate-300" />
+                                <div className="flex items-center justify-between mt-2">
+                                    <div className="flex  items-center space-x-3">
+                                        {/* CUSTOMER PROFILE */}
+                                        <img
+                                            src={ProfileImg}
+                                            alt="CustomerProfile"
+                                            className="object-cover size-12 rounded-full border-2 border-slate-700 border-opacity-30 backdrop-blur-md"
+                                        />
+                                        <div className="flex flex-col gap-1">
+                                            <span className="text-xs text-slate-800 font-semibold">
+                                                John Legaspi
+                                            </span>
+                                            <span className="text-xs bg-slate-700 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
+                                                Verified Purchase
+                                            </span>
+                                        </div>
+                                    </div>
+                                    {/*DATE AND RATINGS  */}
+                                    <div>
+                                        <span className="text-xs text-slate-800 ">
+                                            August 12,2024
+                                        </span>
+                                        <div className="flex text-xs items-center space-x-1 text-yellow-500 mt-2">
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStar />
+                                            <FaStarHalfAlt />
+                                            <FaRegStar />
+                                        </div>
+                                    </div>
+                                </div>
+                                <div className="mt-2 px-14">
+                                    <h1 className="text-sm text-slate-800">
+                                        I absolutely love this vase! It arrived
+                                        in perfect condition and looks stunning
+                                        in my living room. The craftsmanship is
+                                        excellent, and it adds a beautiful touch
+                                        to my home decor.
+                                    </h1>
+                                </div>
+                            </div>
                         </div>
                         {relatedProducts.length > 0 && (
                             <div className="mt-20">
@@ -277,7 +426,7 @@ export default function ProductDetails({
                                                 relatedProduct.id
                                             )}
                                         >
-                                            <div className="bg-white bg-opacity-30 backdrop-blur-md  rounded-2xl p-4 flex space-x-2 shadow-lg">
+                                            <div className="bg-slate-50 bg-opacity-30 backdrop-blur-md  rounded-2xl p-4 flex space-x-2 shadow-lg">
                                                 {relatedProduct.images &&
                                                 relatedProduct.images.length >
                                                     0 ? (
@@ -312,7 +461,6 @@ export default function ProductDetails({
                                                     </p>
                                                 )}
                                             </div>
-
                                             <div className=" text-xs p-3 flex items-center justify-between">
                                                 <div>
                                                     <h3 className="pb-1 text-md font-semibold">

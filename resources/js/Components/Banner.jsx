@@ -5,7 +5,7 @@ const Banner = ({ title, suffix, prefix }) => {
         <>
             <div className="h-72 w-full bg-slate-800 mt-6 flex items-center justify-center rounded-b-3xl relative overflow-hidden">
                 {/* Main text */}
-                <h2 className="text-center text-2xl md:text-3xl lg:text-5xl text-slate-100 font-medium z-10">
+                <h2 className="text-center text-2xl md:text-3xl lg:text-5xl text-slate-100 font-medium z-10 tracking-wide">
                     {title} {suffix} {prefix}
                 </h2>
 
@@ -22,7 +22,7 @@ const Banner = ({ title, suffix, prefix }) => {
                 <div className="absolute size-52 rounded-full border opacity-30 -bottom-10 -left-10 p-10"></div>
 
                 {/* Duplicate text for background effect */}
-                <h2 className="absolute top-28 text-center text-2xl md:text-3xl lg:text-5xl text-slate-100 font-medium opacity-10 transform translate-y-3 blur-sm tracking-wider">
+                <h2 className="absolute top-28 text-center text-2xl md:text-3xl text-banner lg:text-5xl text-slate-100 font-medium opacity-5 transform translate-y-3 blur-xs tracking-widest">
                     {title} {suffix} {prefix}
                 </h2>
             </div>

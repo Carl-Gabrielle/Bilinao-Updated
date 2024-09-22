@@ -69,17 +69,26 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     <div className="flex justify-between h-16 items-center ">
                         {/* Logo Section */}
                         <div className="flex items-center ">
-                            <Link href="/customer" className="shrink-0 ">
+                            <Link
+                                href="/customer"
+                                className="shrink-0 hidden md:block"
+                            >
                                 <img
                                     src={Logo}
                                     alt="Bilinao Logo"
-                                    className="h-10 "
+                                    className="h-10"
                                     style={{
                                         backgroundSize: "cover",
                                         backgroundPosition: "center",
                                         backgroundRepeat: "no-repeat",
                                     }}
                                 />
+                            </Link>
+                            <Link
+                                href="/customer"
+                                className="shrink-0 block sm:block  md:hidden bg-slate-800 px-3 py-2 rounded-md text-slate-100"
+                            >
+                                <span>BN</span>
                             </Link>
                             {/* Nav Links */}
                             <div className="hidden sm:flex space-x-2 sm:ms-10 ">

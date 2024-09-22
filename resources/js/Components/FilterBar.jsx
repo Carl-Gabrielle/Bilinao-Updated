@@ -131,14 +131,14 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                         </span>
                     </div>
                     {sortOpen && (
-                        <div className="z-10 absolute top-full left-0 w-40 bg-slate-100   shadow-lg rounded-lg">
+                        <div className="z-10 absolute top-full left-0 w-40 bg-slate-100   shadow-lg rounded-2xl">
                             <a
                                 href="#"
                                 onClick={(e) => {
                                     e.preventDefault();
                                     handleSortChange("price-asc");
                                 }}
-                                className="block px-4 py-3  hover:bg-slate-200"
+                                className="block px-4 py-3  hover:bg-slate-200 rounded-t-2xl"
                             >
                                 Price: Low to High
                             </a>
@@ -168,7 +168,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                                     e.preventDefault();
                                     handleSortChange("old-new");
                                 }}
-                                className="block px-4 py-3 hover:bg-slate-200"
+                                className="block px-4 py-3 hover:bg-slate-200 rounded-b-2xl"
                             >
                                 Date: Old to New
                             </a>

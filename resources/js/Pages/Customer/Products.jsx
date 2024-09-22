@@ -62,11 +62,12 @@ export default function Products({ products, auth, success, categories }) {
 
         setFilteredProducts(sortedAndFilteredProducts);
     }, [sortOption, availabilityFilter, products.data]);
-    const [isOpen, setIsOpen] = useState(false);
 
-    const toggleDropdown = () => {
-        setIsOpen((prev) => !prev);
-    };
+    // const [isOpen, setIsOpen] = useState(false);
+
+    // const toggleDropdown = () => {
+    //     setIsOpen((prev) => !prev);
+    // };
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Products" />
@@ -85,71 +86,69 @@ export default function Products({ products, auth, success, categories }) {
                         {/* Category Filter */}
                         <div className="flex-1">
                             <div className="p-6 w-64 bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-2xl shadow-md transition-all duration-300">
-                                <div
-                                    className="text-md font-semibold text-slate-700 flex items-center justify-between cursor-pointer"
-                                    onClick={toggleDropdown}
-                                >
+                                <div className="text-md font-semibold text-slate-700 flex items-center justify-between cursor-pointer">
                                     <h1>Category</h1>
-                                    {isOpen ? (
-                                        <MdOutlineKeyboardArrowUp />
-                                    ) : (
-                                        <MdOutlineKeyboardArrowDown />
-                                    )}
                                 </div>
-                                {isOpen && (
-                                    <div className="mt-4 space-y-2">
-                                        <label className="inline-flex items-center border border-slate-600 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                            <input
-                                                type="radio"
-                                                className="mr-2"
-                                                name="category"
-                                            />
-                                            <span className="text-xs ">
-                                                All
-                                            </span>
-                                        </label>
-                                        <label className="inline-flex items-center border border-slate-600 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                            <input
-                                                type="radio"
-                                                className="mr-2"
-                                                name="category"
-                                            />
-                                            <span className="text-xs ">
-                                                Vase for Home Decoration
-                                            </span>
-                                        </label>
-                                        <label className="inline-flex items-center border border-slate-600 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                            <input
-                                                type="radio"
-                                                className="mr-2"
-                                                name="category"
-                                            />
-                                            <span className="text-xs ">
-                                                Necklace
-                                            </span>
-                                        </label>
-                                        <label className="inline-flex items-center border border-slate-600 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                            <input
-                                                type="radio"
-                                                className="mr-2"
-                                                name="category"
-                                            />
-                                            <span className="text-xs ">
-                                                Handmade Bags
-                                            </span>
-                                        </label>
-                                        <label className="inline-flex items-center border border-slate-600 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                            <input
-                                                type="radio"
-                                                className="mr-2"
-                                                name="category"
-                                            />
-                                            <span className="text-xs ">
-                                                Paintings
-                                            </span>
-                                        </label>
-                                    </div>
-                                )}
+
+                                <div className="mt-4 space-y-2">
+                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
+                                        <input
+                                            type="radio"
+                                            className="hidden peer"
+                                            name="category"
+                                        />
+                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
+                                        <span className="text-xs">All</span>
+                                    </label>
+
+                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
+                                        <input
+                                            type="radio"
+                                            className="hidden peer"
+                                            name="category"
+                                        />
+                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
+                                        <span className="text-xs">
+                                            Vase for Home Decoration
+                                        </span>
+                                    </label>
+
+                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
+                                        <input
+                                            type="radio"
+                                            className="hidden peer"
+                                            name="category"
+                                        />
+                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
+                                        <span className="text-xs">
+                                            Necklace
+                                        </span>
+                                    </label>
+
+                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
+                                        <input
+                                            type="radio"
+                                            className="hidden peer"
+                                            name="category"
+                                        />
+                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
+                                        <span className="text-xs">
+                                            Handmade Bags
+                                        </span>
+                                    </label>
+
+                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
+                                        <input
+                                            type="radio"
+                                            className="hidden peer"
+                                            name="category"
+                                        />
+                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
+                                        <span className="text-xs">
+                                            Paintings
+                                        </span>
+                                    </label>
+                                </div>
                             </div>
                         </div>
 
