@@ -8,9 +8,12 @@ import {
     FaCheckCircle,
     FaShippingFast,
     FaBoxOpen,
-    FaUndoAlt,
 } from "react-icons/fa";
 import CustomerContainer from "@/Components/CustomerContainer";
+import ToPay from "./Topay";
+import ToShip from "./ToShip";
+import ToReceive from "./ToReceive";
+import Received from "./Received";
 
 const Orders = ({ auth }) => {
     const [activeStatus, setActiveStatus] = useState("To Pay");
@@ -19,20 +22,35 @@ const Orders = ({ auth }) => {
         setActiveStatus(status);
     };
 
+    const renderOrderDetails = () => {
+        switch (activeStatus) {
+            case "To Pay":
+                return <ToPay />;
+            case "To Ship":
+                return <ToShip />;
+            case "To Receive":
+                return <ToReceive />;
+            case "Received":
+                return <Received />;
+            default:
+                return <ToPay />;
+        }
+    };
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="My Orders" />
-            <div className="min-h-screen  pt-20 pb-1">
+            <div className="min-h-screen pt-20 pb-1">
                 <Banner title="My Orders" />
                 <CustomerContainer>
                     <div className="mb-6">
                         <p className="text-xs text-slate-900">
                             Below is a list of your current order statuses.
                             Click on each status to filter and view the
-                            corresponding orders
+                            corresponding orders.
                         </p>
                     </div>
-                    <div className="grid grid-cols-2  lg:grid-cols-4 gap-4 mb-8">
+                    <div className="grid grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
                         <OrderStatus
                             title="To Pay"
                             icon={<FaMoneyCheckAlt size={20} />}
@@ -59,11 +77,8 @@ const Orders = ({ auth }) => {
                         />
                     </div>
 
-                    <div className="bg-white p-6 rounded-lg shadow-md text-slate-900">
-                        <p>
-                            Your order details will appear here based on the
-                            selected status.
-                        </p>
+                    <div className="bg-slate-50  bg-opacity-60 backdrop-blur-lg p-6 rounded-lg shadow-md text-slate-900">
+                        {renderOrderDetails()}
                     </div>
                 </CustomerContainer>
             </div>
@@ -74,10 +89,10 @@ const Orders = ({ auth }) => {
 const OrderStatus = ({ title, icon, isActive, onClick }) => {
     return (
         <div
-            className={`flex flex-col items-center text-center px-3 py-3 rounded-md cursor-pointer transition-colors duration-300 ${
+            className={`flex flex-col items-center text-center px-3 py-2 rounded-md cursor-pointer transition-colors duration-300 ${
                 isActive
                     ? "bg-slate-800 text-white"
-                    : "bg-white hover:bg-gray-200"
+                    : "bg-slate-50  bg-opacity-60 backdrop-blur-lg hover:bg-slate-100"
             }`}
             onClick={onClick}
         >

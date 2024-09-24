@@ -106,14 +106,14 @@ export default function CustomerDashboard({ auth, category, products }) {
                                         productData.map((product) => (
                                             <div
                                                 key={product.id}
-                                                className="bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-3xl p-4 shadow-lg transition-transform transform-gpu hover:scale-105 duration-300"
+                                                className="bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-3xl shadow-lg transition-transform transform-gpu hover:scale-105 duration-300"
                                             >
                                                 <img
                                                     src={`/storage/${product.images[0].image_path}`}
                                                     alt={product.name}
                                                     className="w-full h-48 object-cover rounded-t-3xl"
                                                 />
-                                                <div className="">
+                                                <div className="p-4 ">
                                                     <div>
                                                         <h2 className="text-md font-bold text-slate-900 mt-2">
                                                             {product.name}
@@ -128,7 +128,7 @@ export default function CustomerDashboard({ auth, category, products }) {
                                                     </div>
                                                     <Link
                                                         href={`/product/${product.id}`}
-                                                        className="inline-flex items-center mt-3 px-4 py-2 rounded-lg text-white bg-slate-800"
+                                                        className="inline-flex items-center mt-3 px-4 py-2 rounded-lg border border-slate-500"
                                                     >
                                                         <span className="mr-2 text-xs">
                                                             View Product

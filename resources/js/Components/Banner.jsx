@@ -22,7 +22,7 @@ const Banner = ({ title, suffix, prefix }) => {
                 <div className="absolute size-52 rounded-full border opacity-30 -bottom-10 -left-10 p-10"></div>
 
                 {/* Duplicate text for background effect */}
-                <h2 className="absolute top-28 text-center text-2xl md:text-3xl text-banner lg:text-5xl text-slate-100 font-medium opacity-5 transform translate-y-3 blur-xs tracking-widest">
+                <h2 className="absolute top-10 text-center text-4xl md:text-5xl text-banner  lg:text-7xl text-slate-100 font-medium opacity-5 transform translate-y-3 blur-xs tracking-widest">
                     {title} {suffix} {prefix}
                 </h2>
             </div>

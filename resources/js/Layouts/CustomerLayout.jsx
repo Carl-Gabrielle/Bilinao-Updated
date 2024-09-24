@@ -204,7 +204,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     <Dropdown.Trigger>
                                         <button
                                             type="button"
-                                            className="ml-2 flex items-center justify-center px-3 py-2  text-xs whitespace-nowrap font-medium rounded-md text-slate-900 bg-slate-100 hover:bg-slate-50  focus:outline-none transition-colors duration-150 ease-in-out "
+                                            className="ml-2 flex items-center justify-center px-3 py-2  text-xs whitespace-nowrap font-medium rounded-md text-slate-900 bg-slate-200 hover:bg-slate-50  focus:outline-none transition-colors duration-150 ease-in-out "
                                         >
                                             <FaRegUser className="mr-2" />
                                             <span>

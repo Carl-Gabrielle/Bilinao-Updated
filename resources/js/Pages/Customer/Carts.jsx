@@ -77,7 +77,7 @@ export default function Carts({ auth, carts, cartCount }) {
                         </span>
                     </h1>
                     <div className="py-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        <div className="col-span-2 shadow-lg rounded-2xl bg-white  ">
+                        <div className="col-span-2 shadow-lg rounded-2xl bg-slate-50  bg-opacity-60 backdrop-blur-lg   ">
                             <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0  space-x-14 bg-slate-800 text-white rounded-t-2xl">
                                 <span className="uppercase  flex-1 text-center">
                                     Product
@@ -203,7 +203,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                     Order Summary
                                 </span>
                             </div>
-                            <div className="bg-white text-sm shadow-lg rounded-b-2xl h-72 flex flex-col">
+                            <div className="bg-slate-50  bg-opacity-60 backdrop-blur-lg   text-sm shadow-lg rounded-b-2xl h-72 flex flex-col">
                                 <div className="pt-5 px-6">
                                     <div className="flex justify-between items-start mb-4">
                                         <p>Subtotal</p>

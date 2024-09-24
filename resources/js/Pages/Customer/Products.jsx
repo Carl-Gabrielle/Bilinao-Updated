@@ -6,6 +6,8 @@ import {
     MdOutlineKeyboardArrowDown,
     MdOutlineKeyboardArrowUp,
 } from "react-icons/md";
+import { HiMiniArrowLongRight } from "react-icons/hi2";
+
 import { IoCheckmarkSharp } from "react-icons/io5";
 import Banner from "@/Components/Banner";
 import { FaPesoSign } from "react-icons/fa6";
@@ -67,6 +69,17 @@ export default function Products({ products, auth, success, category }) {
     // const toggleDropdown = () => {
     //     setIsOpen((prev) => !prev);
     // };
+    const [isVisible, setIsVisible] = useState(true);
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                setIsVisible(false);
+            }, 5000);
+
+            return () => clearTimeout(timer);
+        }
+    }, [success]);
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Products" />
@@ -80,6 +93,28 @@ export default function Products({ products, auth, success, category }) {
                         </h1>
                     </div>
                 </div>
+                {isVisible && success && (
+                    <div id="toast" className="fixed bottom-0  z-50 w-full">
+                        <div className="bg-slate-700 bg-opacity-60 backdrop-blur-lg px-6 py-5  shadow-inner flex flex-col gap-3 sm:flex-row items-center justify-between space-x-3 rounded-t-3xl">
+                            <div className="flex items-center space-x-4 bg-slate-100  bg-opacity-80 backdrop-blur-lg  py-2 px-4 rounded-md ">
+                                <div className="sm:size-6  size-4 bg-green-500 flex items-center justify-center rounded-full">
+                                    <IoCheckmarkSharp className="text-slate-100  " />
+                                </div>
+                                <span className="sm:text-sm text-xs font-medium  ">
+                                    <span>{success}</span>
+                                </span>
+                            </div>
+                            <div>
+                                <Link href={route("customer.carts")}>
+                                    <button className="bg-slate-100 text-sm   bg-opacity-80 backdrop-blur-lg flex items-center   font-medium  px-6  py-2 rounded-full">
+                                        View Cart
+                                        <HiMiniArrowLongRight className=" ml-2" />
+                                    </button>
+                                </Link>
+                            </div>
+                        </div>
+                    </div>
+                )}
                 <CustomerContainer>
                     <div className="flex flex-col lg:flex-row ">
                         {/* Category Filter */}
@@ -119,32 +154,20 @@ export default function Products({ products, auth, success, category }) {
                                     onSortChange={handleSortChange}
                                 />
                             </div>
-                            {success && (
-                                <div
-                                    id="toast"
-                                    className="fixed bottom-4 right-4 z-50"
-                                >
-                                    <div className="bg-green-600 text-white px-4 py-2 rounded-lg shadow-lg flex items-center space-x-3">
-                                        <IoCheckmarkSharp className="text-white w-6 h-6" />
-                                        <span className="text-sm font-medium">
-                                            {success}
-                                        </span>
-                                    </div>
-                                </div>
-                            )}
                             <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
                                 {filteredProducts.map((product) => (
                                     <Link
                                         key={product.id}
                                         href={route("product.show", product.id)}
                                     >
-                                        <div className="bg-slate-50 bg-opacity-50 backdrop-blur-md  rounded-2xl p-4 flex space-x-2 shadow-lg">
+                                        <div className="bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-2xl p-4 flex space-x-2 shadow-lg relative">
                                             <img
                                                 src={`/storage/${product.images[0].image_path}`}
                                                 alt={product.name}
-                                                className="w-full h-48 object-cover mb-4 rounded-lg"
+                                                className="w-full h-48 object-cover mb-4 rounded-lg "
                                             />
                                         </div>
+
                                         <div className=" text-xs p-3 flex items-center justify-between">
                                             <div>
                                                 <h3 className="pb-1 text-md font-semibold">
