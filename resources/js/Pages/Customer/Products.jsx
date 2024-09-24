@@ -13,8 +13,8 @@ import { Head, Link } from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
 import FilterBar from "../../Components/FilterBar";
 
-export default function Products({ products, auth, success, categories }) {
-    const categoryData = categories?.data ?? [];
+export default function Products({ products, auth, success, category }) {
+    const categoryData = category?.data ?? [];
     const [filteredProducts, setFilteredProducts] = useState(products.data);
     const [sortOption, setSortOption] = useState(null);
     const [availabilityFilter, setAvailabilityFilter] = useState(null);
@@ -31,7 +31,6 @@ export default function Products({ products, auth, success, categories }) {
 
     useEffect(() => {
         let sortedAndFilteredProducts = [...products.data];
-
         // Apply availability filter
         if (availabilityFilter) {
             if (availabilityFilter === "instock") {
@@ -89,69 +88,27 @@ export default function Products({ products, auth, success, categories }) {
                                 <div className="text-md font-semibold text-slate-700 flex items-center justify-between cursor-pointer">
                                     <h1>Category</h1>
                                 </div>
-
-                                <div className="mt-4 space-y-2">
-                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                        <input
-                                            type="radio"
-                                            className="hidden peer"
-                                            name="category"
-                                        />
-                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
-                                        <span className="text-xs">All</span>
-                                    </label>
-
-                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                        <input
-                                            type="radio"
-                                            className="hidden peer"
-                                            name="category"
-                                        />
-                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
-                                        <span className="text-xs">
-                                            Vase for Home Decoration
-                                        </span>
-                                    </label>
-
-                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                        <input
-                                            type="radio"
-                                            className="hidden peer"
-                                            name="category"
-                                        />
-                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
-                                        <span className="text-xs">
-                                            Necklace
-                                        </span>
-                                    </label>
-
-                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                        <input
-                                            type="radio"
-                                            className="hidden peer"
-                                            name="category"
-                                        />
-                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
-                                        <span className="text-xs">
-                                            Handmade Bags
-                                        </span>
-                                    </label>
-
-                                    <label className="inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
-                                        <input
-                                            type="radio"
-                                            className="hidden peer"
-                                            name="category"
-                                        />
-                                        <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
-                                        <span className="text-xs">
-                                            Paintings
-                                        </span>
-                                    </label>
-                                </div>
+                                {categoryData.length > 0 ? (
+                                    categoryData.map((category) => (
+                                        <div className="mt-4 space-y-2">
+                                            <label className="text-xs inline-flex items-center border border-slate-500 rounded-full px-3 py-2 cursor-pointer hover:bg-slate-50 transition-colors duration-200">
+                                                <input
+                                                    type="radio"
+                                                    className="hidden peer"
+                                                    name="category"
+                                                />
+                                                <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
+                                                <span>{category.name}</span>
+                                            </label>
+                                        </div>
+                                    ))
+                                ) : (
+                                    <p className="text-center text-gray-600 col-span-full">
+                                        No categories available
+                                    </p>
+                                )}
                             </div>
                         </div>
-
                         {/* Products Grid */}
                         {/* FILTER BAR */}
                         <div className="flex-3">
@@ -228,6 +185,11 @@ export default function Products({ products, auth, success, categories }) {
 
                             <Pagination links={products.links} />
                         </div>
+                    </div>
+                    <div>
+                        <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wider leading-relaxed mb-6 mt-10">
+                            Categories
+                        </h1>
                     </div>
                 </CustomerContainer>
             </div>

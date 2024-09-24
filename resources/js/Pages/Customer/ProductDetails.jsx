@@ -23,6 +23,7 @@ export default function ProductDetails({
     relatedProducts = [],
     success,
 }) {
+    const { user } = auth;
     const [quantity, setQuantity] = useState(1);
 
     const handleIncrease = () => {
@@ -258,7 +259,7 @@ export default function ProductDetails({
                             </div>
                         )}
                         <div className="h-full">
-                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-16">
+                            <h1 className="text-2xl font-medium text-slate-900 uppercase leading-relaxed tracking-wider mb-6 mt-16">
                                 Product Ratings & Reviews
                             </h1>
                             <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -312,7 +313,7 @@ export default function ProductDetails({
                                     ))}
                                 </div>
                             </div>
-                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6 mt-10">
+                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wider leading-relaxed mb-6 mt-10">
                                 Customer Says
                             </h1>
                             <div className="sm:text-sm mb-6 text-xs text-slate-800 flex items-center justify-between">
@@ -339,7 +340,7 @@ export default function ProductDetails({
                                         />
                                         <div className="flex flex-col gap-1">
                                             <span className="text-xs text-slate-800 font-semibold">
-                                                Carl Gabrielle
+                                                {user.name}
                                             </span>
                                             <span className="text-xs bg-slate-700 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
                                                 Verified Purchase

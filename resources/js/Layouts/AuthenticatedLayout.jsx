@@ -20,10 +20,10 @@ export default function AuthenticatedLayout({ user, header, children }) {
     };
 
     return (
-        <div className="min-h-screen bg-gray-100">
+        <div className="min-h-screen bg-slate-300">
             {/* NAVBAR */}
-            <div className="h-14 bg-white fixed top-0 w-full flex items-center justify-between px-6">
-                <img src={Logo} className="size-10" />
+            <div className="h-14 bg-slate-50 bg-opacity-80  backdrop-blur-lg  z-10  fixed top-0 w-full flex items-center justify-between px-6">
+                <img src={Logo} className="w-24" />
                 <div className="max-w-4xl mx-auto px-6 w-full flex justify-between items-center">
                     <div className="flex items-center">
                         <div className="ml-5">
@@ -50,7 +50,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
             {/* Sidebar */}
             <div
-                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-white  rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
+                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-slate-50 bg-opacity-80 backdrop-blur-lg    rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
                     isSidebarOpen ? "w-64 px-6" : "w-28 px-4"
                 }`}
             >
@@ -241,7 +241,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     </div>
                 </div>
             </div>
-
             <div
                 className={`transition-all duration-300 ease-in-out ${
                     isSidebarOpen ? "sm:ml-72 ml-0" : "ml-24"

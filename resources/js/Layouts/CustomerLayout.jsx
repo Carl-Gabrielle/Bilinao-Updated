@@ -20,7 +20,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     return (
-        <div className="min-h-screen  bg-slate-300 ">
+        <div className="min-h-screen  bg-slate-300  ">
             <div className="w-full h-10  z-30 fixed  bg-slate-900  ">
                 <div className="flex justify-between items-center text-sm w-full h-full text-white max-w-6xl px-4 mx-auto">
                     <div className="flex items-center justify-center space-x-4 text-white">
@@ -199,12 +199,12 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 </Dropdown>
                             </div>
                             {/* Profile Dropdown */}
-                            <div className="hidden sm:flex items-center space-x-4 border-l">
+                            <div className="hidden sm:flex items-center space-x-4 border-l border-slate-400">
                                 <Dropdown>
                                     <Dropdown.Trigger>
                                         <button
                                             type="button"
-                                            className="ml-2 flex items-center justify-center px-3 py-2 border border-transparent text-xs whitespace-nowrap font-medium rounded-md text-slate-900 bg-slate-100 hover:bg-slate-50  focus:outline-none transition-colors duration-150 ease-in-out "
+                                            className="ml-2 flex items-center justify-center px-3 py-2  text-xs whitespace-nowrap font-medium rounded-md text-slate-900 bg-slate-100 hover:bg-slate-50  focus:outline-none transition-colors duration-150 ease-in-out "
                                         >
                                             <FaRegUser className="mr-2" />
                                             <span>

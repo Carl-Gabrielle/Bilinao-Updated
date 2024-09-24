@@ -56,7 +56,7 @@ export default function Create({ auth }) {
 
                 <form
                     onSubmit={onSubmit}
-                    className="p-6 sm:p-8  bg-white shadow-md  rounded-3xl"
+                    className="p-6 sm:p-8  bg-slate-50 bg-opacity-80  backdrop-blur-lg    shadow-md  rounded-3xl"
                 >
                     <div className="flex items-center justify-between">
                         <h1 className="text-2xl font-semibold text-gray-900">

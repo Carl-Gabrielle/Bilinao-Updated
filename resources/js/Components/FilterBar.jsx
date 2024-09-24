@@ -131,7 +131,7 @@ const FilterBar = ({ count, onFilterChange, onSortChange }) => {
                         </span>
                     </div>
                     {sortOpen && (
-                        <div className="z-10 absolute top-full left-0 w-40 bg-slate-100   shadow-lg rounded-2xl">
+                        <div className="z-20 mt-2 absolute top-full left-0 w-40 bg-slate-100   shadow-lg rounded-2xl">
                             <a
                                 href="#"
                                 onClick={(e) => {

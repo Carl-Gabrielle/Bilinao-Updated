@@ -6,8 +6,9 @@ import { HiMiniArrowLongRight } from "react-icons/hi2";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import Footer from "@/Components/Footer";
 import CustomerContainer from "@/Components/CustomerContainer";
-export default function CustomerDashboard({ auth, category }) {
+export default function CustomerDashboard({ auth, category, products }) {
     const categoryData = category?.data ?? [];
+    const productData = products?.data ?? [];
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen  ">
@@ -95,10 +96,55 @@ export default function CustomerDashboard({ auth, category }) {
                                 </div>
                             </div>
                         </div>
-                        <div className="h-screen py-12 px-12">
-                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide ">
-                                New Products
-                            </h1>
+                        <div className="h-auto  ">
+                            <CustomerContainer>
+                                <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide">
+                                    New Products
+                                </h1>
+                                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
+                                    {productData.length > 0 ? (
+                                        productData.map((product) => (
+                                            <div
+                                                key={product.id}
+                                                className="bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-3xl p-4 shadow-lg transition-transform transform-gpu hover:scale-105 duration-300"
+                                            >
+                                                <img
+                                                    src={`/storage/${product.images[0].image_path}`}
+                                                    alt={product.name}
+                                                    className="w-full h-48 object-cover rounded-t-3xl"
+                                                />
+                                                <div className="">
+                                                    <div>
+                                                        <h2 className="text-md font-bold text-slate-900 mt-2">
+                                                            {product.name}
+                                                        </h2>
+                                                        <p className="text-gray-600 mt-1 text-xs">
+                                                            {product.description.substring(
+                                                                0,
+                                                                100
+                                                            )}
+                                                            ...
+                                                        </p>
+                                                    </div>
+                                                    <Link
+                                                        href={`/product/${product.id}`}
+                                                        className="inline-flex items-center mt-3 px-4 py-2 rounded-lg text-white bg-slate-800"
+                                                    >
+                                                        <span className="mr-2 text-xs">
+                                                            View Product
+                                                        </span>
+                                                        <PiArrowRightBold />
+                                                    </Link>
+                                                </div>
+                                            </div>
+                                        ))
+                                    ) : (
+                                        <p className="text-center text-gray-600 col-span-full">
+                                            No new products available
+                                        </p>
+                                    )}
+                                </div>
+                            </CustomerContainer>
                         </div>
                     </div>
                 </main>

@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Product;
+use App\Http\Resources\CategoryResource;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use Inertia\Inertia;
@@ -32,13 +33,13 @@ class ProductController extends Controller
         ]);
     }
     
-    
-
-    public function products()
-{
-    $products = Product::with('images')->get();
+public function products (){
+    $query = Category::query();
+    $category = $query->paginate(4);
+    $products = Product::with('images')->paginate(6);
     return Inertia::render('Customer/Products', [
         'success' => session('success'),
+        'category' => CategoryResource::collection($category),
         'products' => $products,
     ]);
 }

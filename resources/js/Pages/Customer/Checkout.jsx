@@ -283,7 +283,7 @@ export default function Checkout({ auth, carts }) {
                                         Order Summary
                                     </h3>
                                 </div>
-                                <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto">
+                                <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto scroll-bar">
                                     <h1 className="font-medium">Your Order</h1>
 
                                     {cartItems.map((cart) => {

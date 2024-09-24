@@ -48,7 +48,7 @@ export default function Edit({ auth, category }) {
                     </Link>
                     <form
                         onSubmit={onSubmit}
-                        className="p-6 bg-white rounded-3xl"
+                        className="p-6 bg-slate-50 bg-opacity-80  backdrop-blur-lg    rounded-3xl"
                     >
                         <div className="flex justify-between items-center mb-6">
                             <h1 className="text-2xl font-semibold text-gray-800">

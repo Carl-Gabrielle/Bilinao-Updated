@@ -19,17 +19,12 @@ class CustomerController extends Controller
     {
         $query = Category::query();
         $category = $query->paginate(7);
+        $products = Product::with('images')->orderBy('created_at', 'desc')->paginate(6);
         return Inertia::render('CustomerDashboard', [
-            'category' => CategoryResource::collection($category)
-        ]);
-    }
-    public function products (){
-        $products = Product::with('images')->paginate(6);
-        return Inertia::render('Customer/Products', [
+            'category' => CategoryResource::collection($category),
             'products' => $products,
         ]);
     }
-    
         public function  about (){
             return Inertia::render('Customer/About');
         }
@@ -44,18 +39,11 @@ class CustomerController extends Controller
     {
     return Inertia::render('Customer/ProfileIndex');
     }
-
-
-    
-    
-    
-    
     /**
      * Show the form for creating a new resource.
      */
     public function create()
     {
-       
     }
 
     /**

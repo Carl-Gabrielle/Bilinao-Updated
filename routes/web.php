@@ -57,7 +57,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
         Route::get('/about', [CustomerController::class, 'about'])->name('customer.about');
         Route::get('/categories', [CustomerController::class, 'categories'])->name('customer.categories');
-        Route::get('/products', [CustomerController::class, 'products'])->name('customer.products');
+        Route::get('/products', [ProductController::class, 'products'])->name('customer.products');
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');
         Route::get('/search', [ProductController::class, 'search'])->name('products.search');

@@ -187,7 +187,7 @@ const SellerDashboard = ({ categories }) => {
                             <div className="col-span-2  bg-slate-50 px-6 py-4 rounded-3xl  w-full">
                                 <SectionHeader text="Product Images" />
                                 <div className="mb-4">
-                                    <div className="w-full border-slate-600 border-2 border-dashed rounded-md h-52 flex items-center justify-center relative">
+                                    <div className="w-full border-slate-600 border-opacity-30 border-2 border-dashed rounded-md h-52 flex items-center justify-center relative">
                                         <input
                                             type="file"
                                             id="product_images"
@@ -203,8 +203,8 @@ const SellerDashboard = ({ categories }) => {
                                             htmlFor="product_images"
                                             className="flex flex-col items-center cursor-pointer"
                                         >
-                                            <div className="text-white bg-slate-800 p-3 rounded-md flex items-center justify-center">
-                                                <GoUpload size={23} />
+                                            <div className="text-white bg-slate-800 p-2 rounded-md flex items-center justify-center">
+                                                <GoUpload size={20} />
                                             </div>
                                             <h1 className="font-medium mt-3 text-gray-800 text-sm">
                                                 Click to upload product images
@@ -268,7 +268,7 @@ const SellerDashboard = ({ categories }) => {
                                 )}
                             </div>
 
-                            <div className=" bg-slate-50 h-52 px-6 py-4 rounded-3xl w-full ">
+                            <div className=" bg-slate-50 h-auto px-6 py-4 rounded-3xl w-full ">
                                 <SectionHeader text="Category Selection" />
                                 <div className="mb-4">
                                     <label className="flex items-center text-sm font-medium text-gray-700 ">
@@ -305,6 +305,14 @@ const SellerDashboard = ({ categories }) => {
                                     )}
                                     <Label text="Select a category for your product" />
                                 </div>
+                                {/* <div className="mb-4">
+                                    <label className="flex items-center text-sm font-medium text-gray-700 ">
+                                        <LuAsterisk className="ml-2 text-red-500" />
+                                        Type the Weight
+                                    </label>
+                                    <SellerInput></SellerInput>
+                                    <Label text="Input the weight for your product" />
+                                </div> */}
                             </div>
                         </div>
                     </form>

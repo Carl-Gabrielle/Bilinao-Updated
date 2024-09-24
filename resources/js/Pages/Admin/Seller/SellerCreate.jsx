@@ -45,7 +45,7 @@ export default function SellerCreate({ auth }) {
                         <MdOutlineKeyboardArrowLeft className="mr-2" />
                         <span>Go Back</span>
                     </Link>
-                    <div className="  bg-white overflow-hidden shadow-sm rounded-3xl p-6 ">
+                    <div className="  bg-slate-50 bg-opacity-80  backdrop-blur-lg   overflow-hidden shadow-sm rounded-3xl p-6 ">
                         <form onSubmit={submit}>
                             <div className="flex justify-between items-center mb-6">
                                 <h1 className="text-2xl font-semibold text-gray-800">
