@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { LiaShippingFastSolid } from "react-icons/lia";
 import { RiMenuUnfold3Line2 } from "react-icons/ri";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Logo from "../Pages/Illustrations/LOGO.png";
@@ -185,6 +186,50 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     <MdOutlineKeyboardArrowRight
                                         className={`w-5 h-5 font-semibold ${
                                             route().current("seller.index")
+                                                ? "text-white"
+                                                : "text-slate-900"
+                                        }`}
+                                    />
+                                )}
+                            </AdminLink>
+                            <AdminLink
+                                href={route("shipping.index")}
+                                active={route().current("shipping.index")}
+                                className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
+                            >
+                                <div className="flex items-center space-x-5">
+                                    {!isSidebarOpen && (
+                                        <div className="ml-3 ">
+                                            <LiaShippingFastSolid
+                                                className={`w-5 h-5 ${
+                                                    route().current(
+                                                        "shipping.index"
+                                                    )
+                                                        ? "text-white"
+                                                        : "text-slate-900"
+                                                }`}
+                                            />
+                                        </div>
+                                    )}
+                                    {isSidebarOpen && (
+                                        <>
+                                            <LiaShippingFastSolid
+                                                className={`w-5 h-5 ${
+                                                    route().current(
+                                                        "shipping.index"
+                                                    )
+                                                        ? "text-white"
+                                                        : "text-slate-900"
+                                                }`}
+                                            />
+                                            <span>Shipping Rates</span>
+                                        </>
+                                    )}
+                                </div>
+                                {isSidebarOpen && (
+                                    <MdOutlineKeyboardArrowRight
+                                        className={`w-5 h-5 font-semibold ${
+                                            route().current("shipping.index")
                                                 ? "text-white"
                                                 : "text-slate-900"
                                         }`}

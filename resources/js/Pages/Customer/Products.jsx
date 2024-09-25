@@ -177,7 +177,7 @@ export default function Products({ products, auth, success, category }) {
                                                     <FaPesoSign className="inline-block mr-1" />
                                                     {Number(
                                                         product.price
-                                                    ).toLocaleString("en-US", {
+                                                    ).toLocaleString("en-PH", {
                                                         minimumFractionDigits: 2,
                                                         maximumFractionDigits: 2,
                                                     })}

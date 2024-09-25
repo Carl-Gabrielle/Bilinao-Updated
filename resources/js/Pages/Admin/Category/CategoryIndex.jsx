@@ -77,16 +77,16 @@ export default function Index({ auth, category, success, categoryCount }) {
                                     <>
                                         <li
                                             key={item.id}
-                                            className="border border-slate-400 p-4 rounded-lg shadow-md text-xs"
+                                            className=" p-2 rounded-lg text-xs  border bg-slate-50 bg-opacity-80  backdrop-blur-lg  "
                                         >
                                             <div className="flex items-center space-x-4">
                                                 <img
                                                     src={item.image_path}
                                                     alt={item.name}
-                                                    className="w-20 h-20 object-cover rounded"
+                                                    className="size-14 object-cover rounded"
                                                 />
                                                 <div className="flex-1">
-                                                    <span className="font-semibold text-sm text-gray-700">
+                                                    <span className="font-medium text-sm text-slate-800">
                                                         {item.name}
                                                     </span>
                                                 </div>

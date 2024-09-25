@@ -1,0 +1,73 @@
+<?php
+
+    namespace App\Http\Controllers;
+
+    use App\Models\Shipping;
+use App\Http\Resources\ShippingResource;
+    use App\Http\Requests\StoreShippingRequest;
+    use App\Http\Requests\UpdateShippingRequest;
+
+    class ShippingController extends Controller
+    {
+        /**
+         * Display a listing of the resource.
+         */
+        public function index()
+        {
+            $shipping = Shipping::all();
+            return Inertia('Admin/Ship/Shipping',[
+            'shipping' => ShippingResource::collection($shipping),
+            ]);
+        }
+
+        /**
+         * Show the form for creating a new resource.
+         */
+        public function create()
+        {
+            //
+        }
+
+        /**
+         * Store a newly created resource in storage.
+         */
+        public function store(StoreShippingRequest $request)
+        {
+            //
+        }
+
+        /**
+         * Display the specified resource.
+         */
+        public function show(Shipping $shipping)
+        {
+            //
+        }
+
+        /**
+         * Show the form for editing the specified resource.
+         */
+        public function edit(Shipping $shipping)
+        {
+            //
+        }
+
+        /**
+         * Update the specified resource in storage.
+         */
+        public function update(UpdateShippingRequest $request, Shipping $shipping)
+        {
+            $shipping = Shipping::all();
+            return Inertia('Admin/Ship/ShippingUpdate',[
+            'shipping' => ShippingResource::collection($shipping),
+            ]);
+        }
+
+        /**
+         * Remove the specified resource from storage.
+         */
+        public function destroy(Shipping $shipping)
+        {
+            //
+        }
+    }

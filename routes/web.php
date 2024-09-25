@@ -13,7 +13,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSellerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SellerDashboardController;
-
+use App\Http\Controllers\ShippingController;
 
 Route::middleware('guest')->group(function () {
     Route::get('seller/login', [AuthenticatedSellerController::class, 'create'])
@@ -41,7 +41,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     
     Route::middleware('admin')->group(function () {
-        
+        Route::get('/ship', [ShippingController::class, 'index'])->name('shipping.index');
+        Route::get('/update', [ShippingController::class, 'update'])->name('shipping.update');
         Route::resource('category', CategoryController::class);
         Route::resource('seller', SellerController::class);
     });

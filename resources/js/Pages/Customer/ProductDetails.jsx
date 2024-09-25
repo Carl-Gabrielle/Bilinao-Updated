@@ -125,7 +125,7 @@ export default function ProductDetails({
                                 )}
                             </div>
                             <div className="max-w-lg mx-auto flex flex-col items-start justify-center">
-                                <p className="mt-5 text-slate-800 text-xl font-bold mb-4">
+                                <p className="mt-5 text-slate-800 text-xl font-medium mb-4">
                                     Category: {product.category.name}
                                 </p>
                                 <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold font-Roboto text-gray-900 leading-tight mb-4">
