@@ -42,7 +42,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
     
     Route::middleware('admin')->group(function () {
         Route::get('/ship', [ShippingController::class, 'index'])->name('shipping.index');
-        Route::get('/update', [ShippingController::class, 'update'])->name('shipping.update');
+        Route::get('/edit', [ShippingController::class, 'edit'])->name('shipping.edit');
         Route::resource('category', CategoryController::class);
         Route::resource('seller', SellerController::class);
     });

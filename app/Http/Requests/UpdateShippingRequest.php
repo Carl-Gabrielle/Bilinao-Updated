@@ -20,9 +20,16 @@ class UpdateShippingRequest extends FormRequest
      * @return array<string, \Illuminate\Contracts\Validation\ValidationRule|array<mixed>|string>
      */
     public function rules(): array
-    {
-        return [
-            //
-        ];
-    }
+{
+    return [
+        'weightMin' => 'required|numeric|min:0',
+        'weightMax' => 'required|numeric|min:0',
+        'luzon' => 'required|numeric|min:0',
+        'manila' => 'required|numeric|min:0',
+        'visayas' => 'required|numeric|min:0',
+        'mindanao' => 'required|numeric|min:0',
+        'island' => 'required|numeric|min:0',
+    ];
+}
+
 }

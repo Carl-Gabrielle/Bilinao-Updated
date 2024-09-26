@@ -87,16 +87,16 @@ export default function Shipping({ auth, shipping }) {
                                                             ship.island
                                                         )}
                                                     </td>
-                                                    <td className="px-7 py-4 whitespace-nowrap font-medium text-gray-900">
-                                                        {" "}
+                                                    <td className="px-6 py-4 whitespace-nowrap font-medium text-gray-900">
                                                         <Link
                                                             href={route(
-                                                                "shipping.update"
+                                                                "shipping.edit",
+                                                                ship.id
                                                             )}
                                                         >
-                                                            <div className="border border-slate-800  rounded py-1 flex items-center justify-center">
-                                                                <LiaEditSolid className="size-4  text-slate-800 " />
-                                                            </div>
+                                                            <button className=" text-xs   rounded py-2 px-2 flex items-center justify-center">
+                                                                <LiaEditSolid className="size-5  text-slate-800 mr-2" />
+                                                            </button>
                                                         </Link>
                                                     </td>
                                                 </tr>

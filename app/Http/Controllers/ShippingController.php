@@ -1,6 +1,7 @@
 <?php
 
     namespace App\Http\Controllers;
+    use Inertia\Inertia;
 
     use App\Models\Shipping;
 use App\Http\Resources\ShippingResource;
@@ -48,21 +49,35 @@ use App\Http\Resources\ShippingResource;
          * Show the form for editing the specified resource.
          */
         public function edit(Shipping $shipping)
-        {
-            //
-        }
+{
+    
+    return Inertia('Admin/Ship/ShippingUpdate', [
+        'shipping' => $shipping, // Directly pass $shipping to see if data is valid
+    ]);
+}
+
+        
 
         /**
          * Update the specified resource in storage.
          */
         public function update(UpdateShippingRequest $request, Shipping $shipping)
-        {
-            $shipping = Shipping::all();
-            return Inertia('Admin/Ship/ShippingUpdate',[
-            'shipping' => ShippingResource::collection($shipping),
-            ]);
-        }
+{
+    
+    $data = $request->validated();
 
+    $shipping->update([
+        'weight_min' => $data('weightMin'),
+        'weight_max' => $data('weightMax'),
+        'luzon' => $data('luzon'),
+        'manila' => $data('manila'),
+        'visayas' => $data('visayas'),
+        'mindanao' => $data('mindanao'),
+        'island' => $data('island'),
+    ]);
+
+    return redirect()->route('shipping.index')->with('success', 'Shipping rates updated successfully');
+}
         /**
          * Remove the specified resource from storage.
          */
