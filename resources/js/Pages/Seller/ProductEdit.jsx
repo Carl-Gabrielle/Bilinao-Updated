@@ -12,15 +12,22 @@ import SellerInput from "@/Components/SellerInput";
 export default function ProductEdit() {
     const { props } = usePage();
     const product = props.product;
+    const categories = props.categories;
+    console.log(categories);
+    console.log(product)
     const { data, setData, post, processing, errors } = useForm({
         name: product.name || "",
         description: product.description || "",
         price: product.price || "",
+        category_id: product.category_id,
         stock: product.stock || "",
         images: product.images || [],
+        new_uploaded_images: [],
         _method: "PUT",
     });
     const [newImages, setNewImages] = useState([]);
+    const [isolatedImages, setIsolatedImages] = useState(product.images);
+    const [originalImages, setOriginalImages] = useState(product.images);
 
     const handleImageChange = (index, event) => {
         const newImagesArray = [...data.images];
@@ -35,20 +42,23 @@ export default function ProductEdit() {
 
     const handleImageUpload = (event) => {
         const files = Array.from(event.target.files);
-        files.forEach((file) => {
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setData("images", [
-                    ...data.images,
-                    { image_path: reader.result },
-                ]);
-            };
-            reader.readAsDataURL(file);
-        });
+        setData('new_uploaded_images', [...data.new_uploaded_images, ...files])
+        // setData("newUploadedImages", [...data.newUploadedImages, ...files]);
+        // files.forEach((file) => {
+        //     const reader = new FileReader();
+        //     reader.onloadend = () => {
+        //         setData("images", [
+        //             ...data.images,
+        //             { image_path: reader.result },
+        //         ]);
+        //     };
+        //     reader.readAsDataURL(file);
+        // });
     };
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log('submitted');
         post(route("products.update", product.id), {
             onSuccess: () => {
                 // Handle success
@@ -62,34 +72,34 @@ export default function ProductEdit() {
     return (
         <SellerLayout user={props.auth.user}>
             <Head title="Edit Product" />
-            <div className="container mx-auto px-4 py-6">
+            <div className="container px-4 py-6 mx-auto">
                 <Link
                     href={route("products.index")}
-                    className="mb-5 px-6 py-2 w-36  flex items-center text-lime-600  font-semibold"
+                    className="flex items-center px-6 py-2 mb-5 font-semibold w-36 text-lime-600"
                 >
                     <MdOutlineKeyboardArrowLeft className="mr-2" /> Go Back
                 </Link>
                 <div className="px-10 py-8 bg-white rounded-3xl">
                     <form onSubmit={handleSubmit} className="space-y-4">
                         <div className="flex items-center justify-between">
-                            <h1 className="text-2xl font-bold mb-6">
+                            <h1 className="mb-6 text-2xl font-bold">
                                 Edit Product
                             </h1>
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex text-sm items-center px-6 py-3 bg-primary text-white font-semibold rounded-md shadow-lg"
+                                className="flex items-center px-6 py-3 text-sm font-semibold text-white rounded-md shadow-lg bg-primary"
                             >
                                 <RxUpdate className="mr-2" /> Update Product
                             </button>
                         </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
-                            <div className="w-full col-span-2 border px-6 py-4 rounded-3xl">
+                        <div className="grid grid-cols-1 gap-4 mt-5 lg:grid-cols-3">
+                            <div className="w-full col-span-2 px-6 py-4 border rounded-3xl">
                                 <div className="mb-4">
                                     <SectionHeader text="Product Information" />
                                     <label
                                         htmlFor="title"
-                                        className="text-gray-700 text-sm font-medium flex items-center"
+                                        className="flex items-center text-sm font-medium text-gray-700"
                                     >
                                         <LuAsterisk className="ml-2 text-red-500" />{" "}
                                         Product Name
@@ -101,11 +111,11 @@ export default function ProductEdit() {
                                         onChange={(e) =>
                                             setData("name", e.target.value)
                                         }
-                                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm"
                                         placeholder="Ex. Vase, Tie-Dye Shirts etc"
                                     />
                                     {errors.name && (
-                                        <span className="text-red-500 text-sm">
+                                        <span className="text-sm text-red-500">
                                             {errors.name}
                                         </span>
                                     )}
@@ -114,7 +124,7 @@ export default function ProductEdit() {
                                 <div className="mb-4">
                                     <label
                                         htmlFor="description"
-                                        className="text-gray-700 text-sm font-medium flex items-center"
+                                        className="flex items-center text-sm font-medium text-gray-700"
                                     >
                                         <LuAsterisk className="ml-2 text-red-500" />{" "}
                                         Product Description
@@ -128,21 +138,21 @@ export default function ProductEdit() {
                                                 e.target.value
                                             )
                                         }
-                                        className="focus:outline-none focus:ring-0 border focus:border-lime-600 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 bg-transparent border border-gray-500 rounded-md focus:outline-none focus:ring-0 focus:border-lime-600"
                                         placeholder="Describe the product"
                                     />
                                     {errors.description && (
-                                        <span className="text-red-500 text-sm">
+                                        <span className="text-sm text-red-500">
                                             {errors.description}
                                         </span>
                                     )}
                                     <Label text="Maximum of 255 words. Exceeding this limit requires shortening." />
                                 </div>
                             </div>
-                            <div className="border h-96 px-6 py-4 rounded-3xl w-full">
+                            <div className="w-full px-6 py-4 border h-96 rounded-3xl">
                                 <SectionHeader text="Pricing & Stock" />
                                 <div className="mb-4">
-                                    <label className="text-sm font-medium text-gray-700 flex items-center">
+                                    <label className="flex items-center text-sm font-medium text-gray-700">
                                         <LuAsterisk className="ml-2 text-red-500" />{" "}
                                         Price
                                     </label>
@@ -153,11 +163,11 @@ export default function ProductEdit() {
                                         onChange={(e) =>
                                             setData("price", e.target.value)
                                         }
-                                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm"
                                         placeholder="Enter base price"
                                     />
                                     {errors.price && (
-                                        <span className="text-red-500 text-sm">
+                                        <span className="text-sm text-red-500">
                                             {errors.price}
                                         </span>
                                     )}
@@ -175,11 +185,11 @@ export default function ProductEdit() {
                                         onChange={(e) =>
                                             setData("stock", e.target.value)
                                         }
-                                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                        className="block w-full mt-1 border-gray-300 rounded-md shadow-sm"
                                         placeholder="Enter stock quantity"
                                     />
                                     {errors.stock && (
-                                        <span className="text-red-500 text-sm">
+                                        <span className="text-sm text-red-500">
                                             {errors.stock}
                                         </span>
                                     )}
@@ -187,8 +197,8 @@ export default function ProductEdit() {
                                 </div>
                             </div>
                         </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
-                            <div className="w-full col-span-2 border px-6 py-4 rounded-3xl">
+                        <div className="grid grid-cols-1 gap-4 mt-5 lg:grid-cols-3">
+                            <div className="w-full col-span-2 px-6 py-4 border rounded-3xl">
                                 <div className="mb-4">
                                     <SectionHeader text="Product Images" />
                                     <div className="flex flex-wrap mt-4">
@@ -196,19 +206,17 @@ export default function ProductEdit() {
                                             data.images.map((image, index) => (
                                                 <div
                                                     key={index}
-                                                    className="border mt-2 w-full rounded-md px-3 py-2 flex items-center"
+                                                    className="flex items-center w-full px-3 py-2 mt-2 border rounded-md"
                                                 >
                                                     <img
                                                         src={`/storage/${image.image_path}`}
-                                                        alt={`Product Image ${
-                                                            index + 1
-                                                        }`}
-                                                        className="w-12 h-12 object-cover rounded-md mr-3"
+                                                        alt={`Product Image ${index + 1
+                                                            }`}
+                                                        className="object-cover w-12 h-12 mr-3 rounded-md"
                                                     />
                                                     <div className="flex-grow">
-                                                        <h2 className="font-semibold text-sm text-gray-700">{`Product Image ${
-                                                            index + 1
-                                                        }`}</h2>
+                                                        <h2 className="text-sm font-semibold text-gray-700">{`Product Image ${index + 1
+                                                            }`}</h2>
                                                     </div>
                                                     <button
                                                         type="button"
@@ -217,7 +225,7 @@ export default function ProductEdit() {
                                                                 index
                                                             )
                                                         }
-                                                        className="text-gray-400 hover:bg-gray-100 px-1 py-1 rounded-md"
+                                                        className="px-1 py-1 text-gray-400 rounded-md hover:bg-gray-100"
                                                     >
                                                         <IoClose size={18} />
                                                     </button>
@@ -228,6 +236,36 @@ export default function ProductEdit() {
                                                 No images found.
                                             </p>
                                         )}
+                                        {
+                                            data.new_uploaded_images.map((image, index) => (
+                                                <div
+                                                    key={index}
+                                                    className="flex items-center w-full px-3 py-2 mt-2 border rounded-md"
+                                                >
+                                                    <img
+                                                        src={URL.createObjectURL(image)}
+                                                        alt={`Product Image ${index + 1
+                                                            }`}
+                                                        className="object-cover w-12 h-12 mr-3 rounded-md"
+                                                    />
+                                                    <div className="flex-grow">
+                                                        <h2 className="text-sm font-semibold text-gray-700">{`Product Image ${index + 1
+                                                            }`}</h2>
+                                                    </div>
+                                                    <button
+                                                        type="button"
+                                                        onClick={() =>
+                                                            handleDeleteImage(
+                                                                index
+                                                            )
+                                                        }
+                                                        className="px-1 py-1 text-gray-400 rounded-md hover:bg-gray-100"
+                                                    >
+                                                        <IoClose size={18} />
+                                                    </button>
+                                                </div>
+                                            ))
+                                        }
                                     </div>
 
                                     <div className="mt-4">
@@ -238,6 +276,44 @@ export default function ProductEdit() {
                                             className="block w-full text-gray-700"
                                         />
                                     </div>
+                                </div>
+                            </div>
+                            <div className="w-full px-6 py-4 bg-white border h-52 rounded-3xl ">
+                                <SectionHeader text="Category Selection" />
+                                <div className="mb-4">
+                                    <label className="flex items-center text-sm font-medium text-gray-700 ">
+                                        <LuAsterisk className="ml-2 text-red-500" />
+                                        Select Category
+                                    </label>
+                                    <select
+                                        required
+                                        value={data.category_id}
+                                        onChange={(e) =>
+                                            setData(
+                                                "category_id",
+                                                e.target.value
+                                            )
+                                        }
+                                        className="w-full px-4 py-3 bg-transparent border border-gray-500 rounded-md focus:outline-none focus:ring-0 focus:border-lime-600 focus:border hover:border-gray-900"
+                                    >
+                                        <option value="">
+                                            Select category
+                                        </option>
+                                        {categories.map((category) => (
+                                            <option
+                                                key={category.id}
+                                                value={category.id}
+                                            >
+                                                {category.name}
+                                            </option>
+                                        ))}
+                                    </select>
+                                    {errors.category_id && (
+                                        <span className="text-sm text-red-500">
+                                            {errors.category_id}
+                                        </span>
+                                    )}
+                                    <Label text="Select a category for your product" />
                                 </div>
                             </div>
                         </div>
