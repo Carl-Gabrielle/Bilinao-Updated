@@ -41,8 +41,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
     
     Route::middleware('admin')->group(function () {
-        Route::get('/ship', [ShippingController::class, 'index'])->name('shipping.index');
-        Route::get('/edit', [ShippingController::class, 'edit'])->name('shipping.edit');
+        Route::get('/shipping', [ShippingController::class, 'index'])->name('shipping.index');
+        Route::get('/shipping/{id}/edit', [ShippingController::class, 'edit'])->name('shipping.edit');
+        Route::put('/shipping/{id}', [ShippingController::class, 'update'])->name('shipping.update');
         Route::resource('category', CategoryController::class);
         Route::resource('seller', SellerController::class);
     });
@@ -58,6 +59,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
         Route::get('/about', [CustomerController::class, 'about'])->name('customer.about');
         Route::get('/categories', [CustomerController::class, 'categories'])->name('customer.categories');
+        Route::get('/completeOrders', [CustomerController::class, 'completeOrders'])->name('customer.completeOrders');
         Route::get('/products', [ProductController::class, 'products'])->name('customer.products');
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/orders', [CustomerController::class, 'orders'])->name('customer.orders');

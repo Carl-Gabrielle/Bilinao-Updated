@@ -4,6 +4,7 @@
     use Inertia\Inertia;
 
     use App\Models\Shipping;
+    use Illuminate\Http\Request;
 use App\Http\Resources\ShippingResource;
     use App\Http\Requests\StoreShippingRequest;
     use App\Http\Requests\UpdateShippingRequest;
@@ -14,12 +15,14 @@ use App\Http\Resources\ShippingResource;
          * Display a listing of the resource.
          */
         public function index()
-        {
-            $shipping = Shipping::all();
-            return Inertia('Admin/Ship/Shipping',[
-            'shipping' => ShippingResource::collection($shipping),
-            ]);
-        }
+    {
+        $shipping = Shipping::all();
+        return inertia('Admin/Ship/Shipping', [
+            'shipping' => [
+                'data' => $shipping
+            ]
+        ]);
+    }
 
         /**
          * Show the form for creating a new resource.
@@ -48,11 +51,18 @@ use App\Http\Resources\ShippingResource;
         /**
          * Show the form for editing the specified resource.
          */
-        public function edit(Shipping $shipping)
-{
+//         public function edit(Shipping $shipping)
+// {
     
-    return Inertia('Admin/Ship/ShippingUpdate', [
-        'shipping' => $shipping, // Directly pass $shipping to see if data is valid
+//     return Inertia('Admin/Ship/ShippingUpdate', [
+//         'shipping' => $shipping, 
+//     ]);
+// }
+public function edit($id)
+{
+    $shipping = Shipping::findOrFail($id);
+    return inertia('Admin/Ship/ShippingUpdate', [
+        'shipping' => $shipping
     ]);
 }
 
@@ -61,23 +71,22 @@ use App\Http\Resources\ShippingResource;
         /**
          * Update the specified resource in storage.
          */
-        public function update(UpdateShippingRequest $request, Shipping $shipping)
-{
-    
-    $data = $request->validated();
+    public function update(Request $request, $id)
+    {
+        $request->validate([
+            'weight_min' => 'required|numeric',
+            'weight_max' => 'required|numeric',
+            'luzon' => 'required|numeric',
+            'visayas' => 'required|numeric',
+            'mindanao' => 'required|numeric',
+            'island' => 'required|numeric',
+        ]);
 
-    $shipping->update([
-        'weight_min' => $data('weightMin'),
-        'weight_max' => $data('weightMax'),
-        'luzon' => $data('luzon'),
-        'manila' => $data('manila'),
-        'visayas' => $data('visayas'),
-        'mindanao' => $data('mindanao'),
-        'island' => $data('island'),
-    ]);
+        $shipping = Shipping::findOrFail($id);
+        $shipping->update($request->all());
 
-    return redirect()->route('shipping.index')->with('success', 'Shipping rates updated successfully');
-}
+        return redirect()->route('shipping.index')->with('success', 'Shipping rates updated successfully!');
+    }
         /**
          * Remove the specified resource from storage.
          */

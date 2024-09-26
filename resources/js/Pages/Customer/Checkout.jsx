@@ -2,8 +2,10 @@ import React, { useState, useEffect } from "react";
 import CustomerContainer from "@/Components/CustomerContainer";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { FaPesoSign } from "react-icons/fa6";
+import { HiOutlineCheckCircle } from "react-icons/hi";
+import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
 import Banner from "@/Components/Banner";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
 import axios from "axios";
 import Label from "@/Components/Label";
@@ -116,11 +118,7 @@ export default function Checkout({ auth, carts }) {
                                 value={billingDetails.phone}
                                 onChange={handleInputChange}
                             />
-                            <BillingInput
-                                label="Shipping Address"
-                                value={billingDetails.address}
-                                onChange={handleInputChange}
-                            />
+
                             <hr />
                             <h2 className="text-md font-semibold text-gray-700">
                                 <h1>Billing Details</h1>
@@ -275,7 +273,7 @@ export default function Checkout({ auth, carts }) {
                                 </label>
                             </div>
                         </div>
-                        <div className="grid grid-rows-2 gap-8">
+                        <div className="grid grid-rows-2   gap-10 xl:gap-20">
                             {/* Order Summary */}
                             <div className="w-full lg:w-96 lg:h-72 bg-slate-50 rounded-3xl shadow-lg">
                                 <div className="bg-gray-800 text-white rounded-t-3xl px-6 py-4">
@@ -359,15 +357,55 @@ export default function Checkout({ auth, carts }) {
                                     </div>
                                 </div>
                                 <div className="p-6 bg-slate-50 border-t border rounded-b-3xl">
-                                    <button className="w-full bg-amber-500 text-white rounded-full tracking-wide px-8 py-4">
-                                        Place Order
-                                    </button>
+                                    <Link
+                                        href={route("customer.completeOrders")}
+                                    >
+                                        <button className="w-full bg-amber-500 text-white rounded-full tracking-wide px-8 py-4">
+                                            Place Order
+                                        </button>
+                                    </Link>
                                 </div>
                             </div>
-                            <div className="w-full  lg:mt-4">
-                                <div className="bg-slate-50 p-6 lg:w-96 lg:h-72    rounded-3xl space-y-4 h-72 overflow-y-auto">
+                            <div className="w-full  lg:mt-10">
+                                <div className="bg-slate-50 p-6 lg:w-96 lg:h-72 rounded-3xl space-y-4 h-72 overflow-y-auto">
                                     <div className="text-md font-semibold text-gray-700">
                                         <h1>How would you like to pay?</h1>
+                                    </div>
+
+                                    <div className="space-y-4 mt-4">
+                                        {/* GCash Payment Option */}
+                                        <label className="flex items-center space-x-4 p-2  border rounded-xl  cursor-pointer hover:bg-slate-100 transition">
+                                            <input
+                                                type="radio"
+                                                name="payment"
+                                                className="hidden"
+                                            />
+                                            <div className="w-10 h-10 bg-blue-500 flex items-center justify-center rounded-full">
+                                                <FaGooglePay className="text-white text-2xl" />{" "}
+                                                {/* Placeholder for GCash Icon */}
+                                            </div>
+                                            <div className="flex-1 text-slate-700 font-medium text-sm">
+                                                GCash
+                                            </div>
+                                            <HiOutlineCheckCircle className="text-gray-300 text-xl" />
+                                        </label>
+
+                                        {/* PayMaya Payment Option */}
+                                        <label className="flex items-center space-x-4 p-2  border rounded-xl  cursor-pointer  hover:bg-slate-100  transition">
+                                            <input
+                                                type="radio"
+                                                name="payment"
+                                                className="hidden"
+                                            />
+                                            <div className="w-10 h-10 bg-green-500 flex items-center justify-center rounded-full">
+                                                <FaCcPaypal className="text-white text-2xl" />{" "}
+                                                {/* Placeholder for PayMaya Icon */}
+                                            </div>
+                                            <div className="flex-1 text-slate-700 font-medium text-sm">
+                                                PayMaya
+                                            </div>
+                                            <HiOutlineCheckCircle className="text-gray-300 text-xl" />
+                                        </label>
                                     </div>
                                 </div>
                             </div>
