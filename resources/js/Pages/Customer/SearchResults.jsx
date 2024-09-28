@@ -12,7 +12,7 @@ const SearchResults = ({ products, auth, query }) => {
             <CustomerLayout user={auth.user}>
                 <Head title="Search Product" />
                 <div className="min-h-screen pt-20 pb-1">
-                    <Banner title="Search Results" />
+                    <Banner title="Shop Your Results" />
                     <CustomerContainer>
                         <div className="flex items-center space-x-3">
                             <hr className="w-28 border  border-slate-500 mb-6" />

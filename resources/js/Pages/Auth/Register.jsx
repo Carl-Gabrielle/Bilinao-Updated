@@ -11,6 +11,8 @@ export default function Register() {
         name: "",
         email: "",
         password: "",
+        phone_number: "",
+        address: "",
         password_confirmation: "",
     });
 
@@ -25,7 +27,7 @@ export default function Register() {
     return (
         <GuestLayout>
             <Head title="Register" />
-            <div className=" rounded-t-3xl xl:rounded-r-3xl shadow-inner sm:rounded-none scroll max-w-4xl overflow-y-hidden lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-slate-50 ">
+            <div className=" rounded-t-3xl xl:rounded-r-3xl shadow-inner sm:rounded-none scroll max-w-4xl overflow-y-auto lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-slate-50 ">
                 <h1 id="text" className="text-2xl font-bold text-gray-800 mb-2">
                     Welcome to Bili-Nao!👋
                 </h1>
@@ -71,6 +73,41 @@ export default function Register() {
                         />
 
                         <InputError message={errors.email} className="mt-2" />
+                    </div>
+                    <div className="mt-4">
+                        <InputLabel htmlFor="phone" value="Phone number" />
+                        <TextInput
+                            id="phone_number"
+                            type="number"
+                            name="phone_number"
+                            value={data.phone_number}
+                            className="mt-1 block w-full"
+                            autoComplete="username"
+                            onChange={(e) =>
+                                setData("phone_number", e.target.value)
+                            }
+                            required
+                        />
+
+                        <InputError
+                            message={errors.phone_number}
+                            className="mt-2"
+                        />
+                    </div>
+                    <div className="mt-4">
+                        <InputLabel htmlFor="address" value="Address" />
+                        <TextInput
+                            id="address"
+                            type="text"
+                            name="address"
+                            value={data.address}
+                            className="mt-1 block w-full"
+                            autoComplete="username"
+                            onChange={(e) => setData("address", e.target.value)}
+                            required
+                        />
+
+                        <InputError message={errors.address} className="mt-2" />
                     </div>
 
                     <div className="mt-4">

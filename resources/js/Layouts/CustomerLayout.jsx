@@ -211,7 +211,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                                 {" "}
                                                 Hi,{" "}
                                                 <span className="font-semibold">
-                                                    {user.name}
+                                                    {user.name.split(" ")[0]}
                                                 </span>{" "}
                                             </span>
                                             <svg

@@ -1,7 +1,8 @@
 import React, { useState } from "react";
 import CustomerContainer from "@/Components/CustomerContainer";
 import CustomerLayout from "@/Layouts/CustomerLayout";
-import { HiMiniArrowLongRight } from "react-icons/hi2";
+import { MdOutlineAddShoppingCart } from "react-icons/md";
+import { HiMiniArrowLongLeft, HiMiniArrowLongRight } from "react-icons/hi2";
 import emptyImg from "../Illustrations/empty.png";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Banner from "@/Components/Banner";
@@ -130,7 +131,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                     </p>
                                                 </div>
                                                 <div className="flex-1 text-center text-xs">
-                                                    <div className="flex items-center justify-center space-x-2 sm:space-x-8 bg-slate-100 py-1 sm:py-2 sm:px-3 px-1 rounded-full">
+                                                    <div className="flex items-center justify-center space-x-2 sm:space-x-8 bg-slate-300 py-1 sm:py-2 sm:px-3 px-1 rounded-full">
                                                         <button
                                                             onClick={() =>
                                                                 handleDecrement(
@@ -181,15 +182,24 @@ export default function Carts({ auth, carts, cartCount }) {
                                     })}
                                 </div>
                             ) : (
-                                <div className="my-5 flex flex-col items-center justify-between text-xs text-medium ">
+                                <div className="my-5 flex flex-col items-center justify-between text-sm text-medium ">
                                     <div className="flex flex-col items-center gap-2 justify-center">
-                                        <p>No items in the cart</p>
+                                        <h1 className="text-md font-medium text-slate-900  tracking-wide">
+                                            Your cart is empty
+                                        </h1>
+                                        <h1 className="text-xs text-slate-600 ">
+                                            Looks like you haven't added any
+                                            products to your cart yet.
+                                        </h1>
+                                        <div className="bg-slate-300 p-4 rounded-full">
+                                            <MdOutlineAddShoppingCart className="size-8 text-slate-700 " />
+                                        </div>
                                     </div>
-                                    <div className="flex items-center justify-center pt-10">
+                                    <div className="flex items-center justify-center pt-5 w-full">
                                         <Link href={route("customer.products")}>
-                                            <button className="text-xs sm:self-start self-center px-8 py-3 rounded-full text-white font-semibold flex items-center bg-slate-800">
+                                            <button className="text-xs sm:self-start self-center px-8 py-4  rounded-full text-white font-semibold flex items-center bg-slate-800">
+                                                <HiMiniArrowLongLeft className="mr-2" />
                                                 Continue Shopping{" "}
-                                                <HiMiniArrowLongRight className="ml-2" />
                                             </button>
                                         </Link>
                                     </div>

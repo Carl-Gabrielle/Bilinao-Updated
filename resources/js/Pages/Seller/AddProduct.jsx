@@ -22,9 +22,9 @@ const SellerDashboard = ({ categories }) => {
         price: "",
         stock: "",
         category_id: "",
+        weight: "",
         images: [],
     });
-    console.log(data.name);
     const handleImageChange = (e) => {
         const newImages = Array.from(e.target.files).map((file) => ({
             url: URL.createObjectURL(file),
@@ -50,6 +50,7 @@ const SellerDashboard = ({ categories }) => {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        console.log(data);
         post(route("products.store"), {
             onSuccess: () => {
                 reset();
@@ -268,8 +269,8 @@ const SellerDashboard = ({ categories }) => {
                                 )}
                             </div>
 
-                            <div className=" bg-slate-50 h-auto px-6 py-4 rounded-3xl w-full ">
-                                <SectionHeader text="Category Selection" />
+                            <div className=" bg-slate-50 h-96 px-6 py-4 rounded-3xl w-full ">
+                                <SectionHeader text="Select Category & Weight" />
                                 <div className="mb-4">
                                     <label className="flex items-center text-sm font-medium text-gray-700 ">
                                         <LuAsterisk className="ml-2 text-red-500" />
@@ -284,15 +285,19 @@ const SellerDashboard = ({ categories }) => {
                                                 e.target.value
                                             )
                                         }
-                                        className="focus:outline-none focus:ring-0 border  focus:border-lime-600 focus:border hover:border-gray-900   py-3 px-4 w-full rounded-md  border-gray-500 bg-transparent"
+                                        className=" focus:outline-none focus:ring-0 border  focus:border-lime-600 focus:border hover:border-gray-900   py-3 px-4 w-full rounded-md  border-gray-500 bg-transparent"
                                     >
-                                        <option value="">
+                                        <option
+                                            value=""
+                                            className="bg-slate-50"
+                                        >
                                             Select category
                                         </option>
                                         {categories.map((category) => (
                                             <option
                                                 key={category.id}
                                                 value={category.id}
+                                                className="bg-slate-50 0"
                                             >
                                                 {category.name}
                                             </option>
@@ -305,14 +310,29 @@ const SellerDashboard = ({ categories }) => {
                                     )}
                                     <Label text="Select a category for your product" />
                                 </div>
-                                {/* <div className="mb-4">
+                                <div className="mb-4">
                                     <label className="flex items-center text-sm font-medium text-gray-700 ">
                                         <LuAsterisk className="ml-2 text-red-500" />
                                         Type the Weight
                                     </label>
-                                    <SellerInput></SellerInput>
+                                    <SellerInput
+                                        required
+                                        type="number"
+                                        value={data.weight}
+                                        onChange={(e) =>
+                                            setData("weight", e.target.value)
+                                        }
+                                        className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
+                                        placeholder="Enter Weight (g)"
+                                    />
+
+                                    {errors.weight && (
+                                        <span className="text-red-500 text-sm">
+                                            {errors.weight}
+                                        </span>
+                                    )}
                                     <Label text="Input the weight for your product" />
-                                </div> */}
+                                </div>
                             </div>
                         </div>
                     </form>

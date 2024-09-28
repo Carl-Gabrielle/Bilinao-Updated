@@ -9,7 +9,7 @@ export default function NavLink({
     return (
         <Link
             {...props}
-            className={`w-full  font-medium inline-flex items-center px-4 text-nowrap py-2 text-sm  transition-all duration-300 ease-in-out rounded-lg ${
+            className={`w-full  font-medium inline-flex items-center justify-between  px-4 text-nowrap py-2 text-sm  transition-all duration-300 rounded-lg ease-in-out  ${
                 active
                     ? "text-white  bg-slate-800"
                     : "text-slate-900 hover:bg-gray-100"

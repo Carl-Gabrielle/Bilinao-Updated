@@ -5,7 +5,6 @@
 
     use App\Models\Shipping;
     use Illuminate\Http\Request;
-use App\Http\Resources\ShippingResource;
     use App\Http\Requests\StoreShippingRequest;
     use App\Http\Requests\UpdateShippingRequest;
 
@@ -48,16 +47,6 @@ use App\Http\Resources\ShippingResource;
             //
         }
 
-        /**
-         * Show the form for editing the specified resource.
-         */
-//         public function edit(Shipping $shipping)
-// {
-    
-//     return Inertia('Admin/Ship/ShippingUpdate', [
-//         'shipping' => $shipping, 
-//     ]);
-// }
 public function edit($id)
 {
     $shipping = Shipping::findOrFail($id);

@@ -215,6 +215,7 @@ export default function ProductDetails({
 
                                     {product.stock > 0 ? (
                                         <Link
+                                            preserveScroll
                                             href={route("cart.store")}
                                             method="post"
                                             data={{
@@ -342,7 +343,7 @@ export default function ProductDetails({
                                             <span className="text-xs text-slate-800 font-semibold">
                                                 {user.name}
                                             </span>
-                                            <span className="text-xs bg-slate-700 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
+                                            <span className="text-xs w-32 bg-slate-700 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
                                                 Verified Purchase
                                             </span>
                                         </div>
@@ -482,6 +483,7 @@ export default function ProductDetails({
                                                 </div>
                                                 {relatedProduct.stock > 0 ? (
                                                     <Link
+                                                        preserveScroll
                                                         href={route(
                                                             "cart.store"
                                                         )}

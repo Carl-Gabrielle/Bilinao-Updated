@@ -1,8 +1,13 @@
 import React, { useState } from "react";
 import { Link } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
+import { AiOutlineCheckCircle } from "react-icons/ai";
+import { LuTruck } from "react-icons/lu";
+import { FaHourglassHalf } from "react-icons/fa";
+import { MdOutlinePendingActions } from "react-icons/md";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { MdOutlineDashboard } from "react-icons/md";
+import { HiOutlineClipboardList } from "react-icons/hi";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
 import Logo from "../Pages/Illustrations/LOGO.png";
@@ -13,7 +18,17 @@ import { HiMenu, HiOutlineX, HiChevronDown } from "react-icons/hi";
 const SellerLayout = ({ user, children }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
-    const [isManageProductsOpen, setIsManageProductsOpen] = useState(false);
+    const [isManageOrdersOpen, setIsManageOrdersOpen] = useState(true);
+    const [isManageProductsOpen, setIsManageProductsOpen] = useState(true);
+    const handleManageOrdersClick = () => {
+        setIsManageOrdersOpen(!isManageOrdersOpen);
+    };
+
+    const handleOrderLinkClick = () => {
+        if (isManageOrdersOpen) {
+            setIsManageOrdersOpen(true);
+        }
+    };
 
     const handleManageProductsClick = () => {
         setIsManageProductsOpen(!isManageProductsOpen);
@@ -21,7 +36,7 @@ const SellerLayout = ({ user, children }) => {
 
     const handleNavLinkClick = () => {
         if (isManageProductsOpen) {
-            setIsManageProductsOpen(false);
+            setIsManageProductsOpen(true);
         }
     };
     const toggleDropdown = () => setShowDropdown((prev) => !prev);
@@ -31,25 +46,26 @@ const SellerLayout = ({ user, children }) => {
         <>
             {/* <div className='h-16 bg-white/30 border-b border-white/30 backdrop-blur-md shadow-lg z-20 w-full fixed'>
    </div> */}
-
             <div className="min-h-screen flex flex-col sm:flex-row bg-slate-300">
                 <aside
-                    className={`fixed inset-y-0 left-0 w-72 z-20  bg-white bg-opacity-55 backdrop-blur-lg transform ${
-                        sidebarOpen ? "translate-x-0" : "-translate-x-full"
+                    className={`fixed inset-y-0 left-0 w-72 z-20  bg-slate-50 bg-opacity-55 backdrop-blur-lg transform ${
+                        sidebarOpen
+                            ? "translate-x-0 "
+                            : "-translate-x-full overflow-auto scroll-bar "
                     } transition-transform duration-300 ease-in-out sm:translate-x-0 z-40`}
                 >
-                    <div className="flex flex-col h-full">
+                    <div className="flex flex-col h-auto ">
                         <div className="flex items-center justify-between h-16 px-4 ">
                             <Link
                                 href={route("seller.dashboard")}
                                 className="flex items-center p-4 "
                             >
                                 <div className="flex items-center space-x-4">
-                                    <img
+                                    {/* <img
                                         src={Logo}
                                         alt="Bilinao Logo"
                                         className="size-10 "
-                                    />
+                                    /> */}
                                     <span className="text-2xl font-extrabold text-lime-700 uppercase tracking-tight">
                                         Bilinao
                                     </span>
@@ -99,26 +115,172 @@ const SellerLayout = ({ user, children }) => {
                                     }`}
                                 />
                             </NavLink>
-                            {/* Orders Link */}
-                            {/* <NavLink onClick={handleNavLinkClick}>
-                                <div className="flex items-center space-x-3">
-                                    <MdOutlineDashboard
-                                        className={`size-4 ${
-                                            route().current("seller.dashboard")
-                                                ? "text-slate-800"
-                                                : "text-slate-800"
+
+                            {/* Manage Orders */}
+                            <div className="relative">
+                                <button
+                                    onClick={handleManageOrdersClick}
+                                    className="flex items-center justify-between px-4 py-2 mb-2 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100 w-full text-left"
+                                >
+                                    <span className="flex items-center space-x-3">
+                                        {" "}
+                                        <HiOutlineClipboardList className="size-4 mr-2" />
+                                        Manage Orders
+                                    </span>
+                                    <MdOutlineKeyboardArrowRight
+                                        className={`size-5  text-slate-800 text-sm font-medium ${
+                                            isManageOrdersOpen
+                                                ? "rotate-90"
+                                                : ""
                                         }`}
                                     />
-                                    <span>Manage Orders </span>
-                                </div>
-                                <MdOutlineKeyboardArrowRight
-                                    className={`size-5 ${
-                                        route().current("seller.dashboard")
-                                            ? "text-slate-800"
-                                            : "text-slate-800"
-                                    }`}
-                                />
-                            </NavLink> */}
+                                </button>
+                                {isManageOrdersOpen && (
+                                    <div className="ml-4  space-y-2 ">
+                                        <NavLink
+                                            href={route("seller.pendingOrders")}
+                                            active={route().current(
+                                                "seller.pendingOrders"
+                                            )}
+                                            onClick={handleOrderLinkClick}
+                                        >
+                                            <div className="flex items-center space-x-3">
+                                                <MdOutlinePendingActions
+                                                    className={`size-4 ${
+                                                        route().current(
+                                                            "seller.pendingOrders"
+                                                        )
+                                                            ? "text-slate-50"
+                                                            : "text-slate-800"
+                                                    }`}
+                                                />
+                                                <span>Pending Orders</span>
+                                            </div>
+                                            <MdOutlineKeyboardArrowRight
+                                                className={`size-5 ${
+                                                    route().current(
+                                                        "seller.pendingOrders"
+                                                    )
+                                                        ? "text-slate-50"
+                                                        : "text-slate-800"
+                                                }`}
+                                            />
+                                        </NavLink>
+
+                                        <NavLink
+                                            href={route("seller.processOrders")}
+                                            active={route().current(
+                                                "seller.processOrders"
+                                            )}
+                                            onClick={handleOrderLinkClick}
+                                            className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${
+                                                route().current(
+                                                    "seller.processOrders"
+                                                )
+                                                    ? "bg-gray-800 text-slate-800"
+                                                    : "hover:bg-gray-100"
+                                            }`}
+                                        >
+                                            <div className="flex items-center space-x-3">
+                                                <FaHourglassHalf
+                                                    className={`size-4 ${
+                                                        route().current(
+                                                            "seller.processOrders"
+                                                        )
+                                                            ? "text-slate-50"
+                                                            : "text-slate-800"
+                                                    }`}
+                                                />
+                                                <span>On Process Orders</span>
+                                            </div>
+                                            <MdOutlineKeyboardArrowRight
+                                                className={`size-5 ${
+                                                    route().current(
+                                                        "seller.processOrders"
+                                                    )
+                                                        ? "text-slate-50"
+                                                        : "text-slate-800"
+                                                }`}
+                                            />
+                                        </NavLink>
+                                        <NavLink
+                                            href={route("seller.shippedOrders")}
+                                            active={route().current(
+                                                "seller.shippedOrders"
+                                            )}
+                                            onClick={handleOrderLinkClick}
+                                            className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${
+                                                route().current(
+                                                    "seller.shippedOrders"
+                                                )
+                                                    ? "bg-gray-800 text-slate-800"
+                                                    : "hover:bg-gray-100"
+                                            }`}
+                                        >
+                                            <div className="flex items-center space-x-3">
+                                                <LuTruck
+                                                    className={`size-4 ${
+                                                        route().current(
+                                                            "seller.shippedOrders"
+                                                        )
+                                                            ? "text-slate-50"
+                                                            : "text-slate-800"
+                                                    }`}
+                                                />
+                                                <span>Shipped Orders</span>
+                                            </div>
+                                            <MdOutlineKeyboardArrowRight
+                                                className={`size-5 ${
+                                                    route().current(
+                                                        "seller.shippedOrders"
+                                                    )
+                                                        ? "text-slate-50"
+                                                        : "text-slate-800"
+                                                }`}
+                                            />
+                                        </NavLink>
+                                        <NavLink
+                                            href={route(
+                                                "seller.completedOrders"
+                                            )}
+                                            active={route().current(
+                                                "seller.completedOrders"
+                                            )}
+                                            onClick={handleOrderLinkClick}
+                                            className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${
+                                                route().current(
+                                                    "seller.completedOrders"
+                                                )
+                                                    ? "bg-gray-800 text-slate-800"
+                                                    : "hover:bg-gray-100"
+                                            }`}
+                                        >
+                                            <div className="flex items-center space-x-3">
+                                                <AiOutlineCheckCircle
+                                                    className={`size-4 ${
+                                                        route().current(
+                                                            "seller.completedOrders"
+                                                        )
+                                                            ? "text-slate-50"
+                                                            : "text-slate-800"
+                                                    }`}
+                                                />
+                                                <span>Completed Orders</span>
+                                            </div>
+                                            <MdOutlineKeyboardArrowRight
+                                                className={`size-5 ${
+                                                    route().current(
+                                                        "seller.completedOrderss"
+                                                    )
+                                                        ? "text-slate-50"
+                                                        : "text-slate-800"
+                                                }`}
+                                            />
+                                        </NavLink>
+                                    </div>
+                                )}
+                            </div>
+
                             {/* Manage Products */}
                             <div className="relative">
                                 <button
@@ -138,7 +300,6 @@ const SellerLayout = ({ user, children }) => {
                                         }`}
                                     />
                                 </button>
-
                                 {isManageProductsOpen && (
                                     <div className="ml-4  space-y-2 ">
                                         <NavLink

@@ -9,13 +9,12 @@ import { Head, Link } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
 import axios from "axios";
 import Label from "@/Components/Label";
+import ReadOnly from "@/Components/ReadOnly";
 
 export default function Checkout({ auth, carts }) {
     const { user } = auth;
 
     const [billingDetails, setBillingDetails] = useState({
-        name: user.name || "",
-        phone: user.phone || "",
         address: user.address || "",
     });
 
@@ -87,6 +86,12 @@ export default function Checkout({ auth, carts }) {
     };
 
     const [cartItems, setCartItems] = useState(carts);
+    const calculateTotal = () => {
+        return cartItems.reduce(
+            (acc, cart) => acc + cart.product.price * cart.quantity,
+            0
+        );
+    };
 
     return (
         <CustomerLayout user={auth.user}>
@@ -103,24 +108,16 @@ export default function Checkout({ auth, carts }) {
                     <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 ">
                         {/* Billing Information */}
                         <div className="col-span-2 space-y-6 bg-slate-50 p-8 rounded-3xl shadow-lg">
-                            <h2 className="text-md font-semibold text-gray-700">
+                            <h2 className="text-md font-semibold ">
                                 <h1>Contact and Shipping Information</h1>
                             </h2>
-                            <input
-                                label="Full Name"
-                                value={billingDetails.name}
-                                readOnly
-                                className="border-0 border-b w-full px-4 py-3 text-gray-800 bg-transparent focus:outline-none focus:border-slate-800 transition-all duration-300 ease-in-out cursor-not-allowed border-gray-300 hover:border-gray-600"
-                            />
-
-                            <BillingInput
+                            <ReadOnly label="Full Name" value={user.name} />
+                            <ReadOnly
                                 label="Phone Number"
-                                value={billingDetails.phone}
-                                onChange={handleInputChange}
+                                value={user.phone_number}
                             />
-
                             <hr />
-                            <h2 className="text-md font-semibold text-gray-700">
+                            <h2 className="text-md font-semibold ">
                                 <h1>Billing Details</h1>
                             </h2>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
@@ -134,7 +131,7 @@ export default function Checkout({ auth, carts }) {
                                         onChange={(e) =>
                                             setSelectedRegion(e.target.value)
                                         }
-                                        className=" text-sm custom-dropdown text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="scroll-bar text-sm custom-dropdown text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                     >
                                         <option
                                             value=""
@@ -146,7 +143,7 @@ export default function Checkout({ auth, carts }) {
                                             <option
                                                 key={region.code}
                                                 value={region.code}
-                                                className="bg-slate-100 text-md"
+                                                className="bg-slate-100 text-md "
                                             >
                                                 {region.name}
                                             </option>
@@ -163,7 +160,7 @@ export default function Checkout({ auth, carts }) {
                                         onChange={(e) =>
                                             setSelectedProvince(e.target.value)
                                         }
-                                        className="text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                     >
                                         <option
                                             value=""
@@ -185,7 +182,6 @@ export default function Checkout({ auth, carts }) {
                             </div>
                             <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
                                 {/* City/Municipality Dropdown */}
-
                                 <div>
                                     <label className="block text-gray-700 text-xs font-medium mb-1">
                                         City/Municipality
@@ -197,7 +193,7 @@ export default function Checkout({ auth, carts }) {
                                                 e.target.value
                                             )
                                         }
-                                        className="text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                     >
                                         <option
                                             value=""
@@ -220,9 +216,7 @@ export default function Checkout({ auth, carts }) {
                                         )}
                                     </select>
                                 </div>
-
                                 {/* Barangay Dropdown */}
-
                                 <div>
                                     <label className="block text-gray-700 text-xs font-medium mb-1">
                                         Barangay
@@ -232,7 +226,7 @@ export default function Checkout({ auth, carts }) {
                                         onChange={(e) =>
                                             setSelectedBarangay(e.target.value)
                                         }
-                                        className="text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                     >
                                         <option
                                             value=""
@@ -253,7 +247,7 @@ export default function Checkout({ auth, carts }) {
                                 </div>
                             </div>
                             <hr />
-                            <h2 className="text-md font-semibold text-gray-700">
+                            <h2 className="text-md font-semibold ">
                                 <h1>Nearby Landmark</h1>
                             </h2>
                             {/* Landmark Text Area */}
@@ -298,10 +292,10 @@ export default function Checkout({ auth, carts }) {
                                                                 cart.product
                                                                     .name
                                                             }
-                                                            className="sm:size-20 size-10 object-cover rounded"
+                                                            className="sm:size-16 size-10 object-cover rounded"
                                                         />
-                                                        <div className="absolute -top-3 flex  text-slate-100 items-center justify-center -right-3   size-6 bg-slate-700 rounded-full">
-                                                            <span className="  ">
+                                                        <div className="absolute -top-3 flex  text-slate-100 items-center justify-center -right-3   size-5 bg-slate-700 rounded-full">
+                                                            <span className="text-xs  ">
                                                                 {" "}
                                                                 {cart.quantity}
                                                             </span>
@@ -336,7 +330,13 @@ export default function Checkout({ auth, carts }) {
                                         <span>
                                             {" "}
                                             <FaPesoSign className="inline-block" />
-                                            150
+                                            {calculateTotal().toLocaleString(
+                                                undefined,
+                                                {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2,
+                                                }
+                                            )}
                                         </span>
                                     </div>
                                     <div className="flex justify-between text-sm border-b pb-4">
@@ -389,7 +389,6 @@ export default function Checkout({ auth, carts }) {
                                             </div>
                                             <HiOutlineCheckCircle className="text-gray-300 text-xl" />
                                         </label>
-
                                         {/* PayMaya Payment Option */}
                                         <label className="flex items-center space-x-4 p-2  border rounded-xl  cursor-pointer  hover:bg-slate-100  transition">
                                             <input

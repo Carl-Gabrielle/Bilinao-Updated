@@ -1,4 +1,4 @@
-const BillingInput = ({ label, value, onChange }) => {
+const ReadOnly = ({ label, value, onChange }) => {
     return (
         <div>
             <label
@@ -9,13 +9,13 @@ const BillingInput = ({ label, value, onChange }) => {
             </label>
             <input
                 id={label}
-                type="number"
+                type="text"
+                readOnly
                 className="w-full block border-0 border-slate-50 px-4 py-3 bg-slate-200 text-slate-600 text-sm rounded focus:ring-0  placeholder-slate-400  p-1"
                 value={value}
-                onChange={onChange}
             />
         </div>
     );
 };
 
-export default BillingInput;
+export default ReadOnly;

@@ -70,7 +70,7 @@ class CustomerController extends Controller
      */
     public function edit()
     {
-        
+        return Inertia::render('Customer/ProfileEdit');
     }
     
 

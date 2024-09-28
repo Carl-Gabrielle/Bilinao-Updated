@@ -40,7 +40,6 @@ export default function ShowProduct({ success }) {
             });
         }
     };
-
     return (
         <SellerLayout user={user}>
             <Head title="Show Products" />
@@ -68,7 +67,7 @@ export default function ShowProduct({ success }) {
                         </Link>
                     </div>
                     {products.data.length > 0 ? (
-                        <div className="overflow-x-auto">
+                        <div className="overflow-x-auto scroll-bar">
                             <table className="min-w-full bg-white bg-opacity-65 backdrop-blur-lg rounded-lg ">
                                 <thead className="bg-gray-100 border-b border-gray-200 text-xs uppercase">
                                     <tr>
@@ -89,6 +88,9 @@ export default function ShowProduct({ success }) {
                                         </th>
                                         <th className="py-3 px-6 text-left text-gray-600 font-medium">
                                             Category
+                                        </th>
+                                        <th className="py-3 px-6 text-left text-gray-600 font-medium whitespace-nowrap">
+                                            Weight (g)
                                         </th>
                                         <th className="py-3 px-6 text-left text-gray-600 font-medium">
                                             Actions
@@ -130,7 +132,6 @@ export default function ShowProduct({ success }) {
                                                     {product.description}
                                                 </div>
                                             </td>
-
                                             <td className="py-4 px-6 text-gray-800 font-bold flex items-center">
                                                 <FaPesoSign className="mr-1" />
                                                 {product.price}
@@ -141,6 +142,12 @@ export default function ShowProduct({ success }) {
                                             <td className="py-4 px-6 text-gray-800">
                                                 {product.category?.name ||
                                                     "N/A"}
+                                            </td>
+                                            <td className="py-4 px-6 text-gray-800">
+                                                {product.weight}
+                                                <span className="ml-1">
+                                                    (g)
+                                                </span>
                                             </td>
                                             <td className="py-10 px-6 text-center flex items-center justify-center">
                                                 <Link
@@ -164,7 +171,10 @@ export default function ShowProduct({ success }) {
                                     ))}
                                 </tbody>
                             </table>
-                            <Pagination links={products.links} />
+                            <Pagination
+                                links={products.links}
+                                className="mb-10"
+                            />
                         </div>
                     ) : (
                         <p className="text-gray-600">No products found.</p>

@@ -13,6 +13,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSellerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\SellerDashboardController;
+use App\Http\Controllers\SellerOrderController;
 use App\Http\Controllers\ShippingController;
 
 Route::middleware('guest')->group(function () {
@@ -31,6 +32,10 @@ Route::middleware('auth:seller')->group(function () {
     Route::get('seller/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('seller/profile', [SellerDashboardController::class, 'profile'])->name('seller.profile');
     Route::resource('products', ProductController::class);
+    Route::get('/pendingOrders', [SellerOrderController::class, 'pendingOrders'])->name('seller.pendingOrders');
+    Route::get('/processOrders', [SellerOrderController::class, 'processOrders'])->name('seller.processOrders');
+    Route::get('/shippedOrders', [SellerOrderController::class, 'shippedOrders'])->name('seller.shippedOrders');
+    Route::get('/completedOrders', [SellerOrderController::class, 'completedOrders'])->name('seller.completedOrders');
 });
 
 Route::inertia('/sellerLogin', 'SellerLogin')->name('seller.login');
@@ -70,6 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
         Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
         Route::post('/buyNow', [CartController::class, 'buyNow'])->name('cart.buyNow');
+        
     });
 });
 

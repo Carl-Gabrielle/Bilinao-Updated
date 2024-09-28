@@ -158,6 +158,7 @@ export default function CategoryProducts({
                                                         </div>
                                                         {product.stock > 0 ? (
                                                             <Link
+                                                                preserveScroll
                                                                 href={route(
                                                                     "cart.store"
                                                                 )}

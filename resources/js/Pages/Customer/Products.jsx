@@ -185,6 +185,7 @@ export default function Products({ products, auth, success, category }) {
                                             </div>
                                             {product.stock > 0 ? (
                                                 <Link
+                                                    preserveScroll
                                                     href={route("cart.store")}
                                                     method="post"
                                                     data={{

@@ -28,9 +28,6 @@ background: #888;
 border-radius: 3px; 
 }
 
-.scroll-bar,body::-webkit-scrollbar-thumb:hover {
-background: #555; 
-}
 
 .scroll-bar::-webkit-scrollbar {
 width: 6px; 
