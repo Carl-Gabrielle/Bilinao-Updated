@@ -2,6 +2,7 @@ import { useState } from "react";
 import ApplicationLogo from "@/Components/ApplicationLogo";
 import { MdNotificationsNone } from "react-icons/md";
 import { FaRegUser } from "react-icons/fa";
+import { FaRegHeart } from "react-icons/fa";
 import { MdOutlineEmail } from "react-icons/md";
 import { FaFacebook, FaInstagram, FaTwitter, FaYoutube } from "react-icons/fa";
 import { GrCart } from "react-icons/gr";
@@ -123,26 +124,14 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             </div>
                         </div>
                         {/* Search and Icons */}
-                        <div className="flex items-center space-x-6">
+                        <div className="flex items-center space-x-4">
                             <SearchProduct />
-                            <div className="relative flex items-center ">
-                                {/* Cart Icon */}
-                                <Link
-                                    href={route("customer.carts")}
-                                    className="relative flex items-center text-slate-900 cursor-pointer hover:text-slate-50  hover:bg-slate-800  px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
-                                >
-                                    <GrCart className="size-5  font-extrabold    " />
-                                    {cartCount > 0 && (
-                                        <span className="absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-slate-800 rounded-full">
-                                            {cartCount}
-                                        </span>
-                                    )}
-                                </Link>
+                            <div className="relative flex items-center space-x-2 ">
                                 <Dropdown>
                                     <Dropdown.Trigger>
-                                        <div className="relative ml-2 flex items-center  text-slate-900 cursor-pointer hover:text-slate-50  hover:bg-slate-800 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out">
+                                        <div className="relative ml-2 flex items-center  text-slate-900 cursor-pointer  px-2 py-2 hover:text-slate-50  hover:bg-slate-800 rounded-full transition-colors duration-300 ease-in-out">
                                             <MdNotificationsNone className="size-5 " />
-                                            <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-bold text-white bg-slate-800 rounded-full">
+                                            <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-white bg-slate-800 rounded-full">
                                                 8
                                             </span>
                                         </div>
@@ -197,6 +186,29 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         </div>
                                     </Dropdown.Content>
                                 </Dropdown>
+                                {/* Cart Icon */}
+                                <Link
+                                    href={route("customer.carts")}
+                                    className="relative flex items-center text-slate-900 cursor-pointer   px-2 py-2 hover:text-slate-50  hover:bg-slate-800 rounded-full transition-colors duration-300 ease-in-out"
+                                >
+                                    <GrCart className="size-5    " />
+                                    {cartCount > 0 && (
+                                        <span className="absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-slate-50 bg-slate-800 rounded-full">
+                                            {cartCount}
+                                        </span>
+                                    )}
+                                </Link>
+                                {/* Wishlist */}
+                                {/* Cart Icon */}
+                                <Link
+                                    // href={route("customer.carts")}
+                                    className="relative flex items-center text-slate-900 cursor-pointer    px-2 py-2 hover:text-slate-50  hover:bg-slate-800 rounded-full transition-colors duration-300 ease-in-out"
+                                >
+                                    <FaRegHeart className="size-5" />
+                                    <span className=" absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-slate-50 bg-slate-800 rounded-full">
+                                        2
+                                    </span>
+                                </Link>
                             </div>
                             {/* Profile Dropdown */}
                             <div className="hidden sm:flex items-center space-x-4 border-l border-slate-400">

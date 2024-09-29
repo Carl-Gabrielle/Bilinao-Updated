@@ -32,7 +32,7 @@ const SellerDashboard = ({ productCount }) => {
                 </h1>
                 <hr className="mt-4 border-slate-500" />
                 <div className="grid grid-cols-2 lg:grid-cols-2 mt-5 gap-10">
-                    <div className="bg-slate-200 w-full rounded-3xl p-5">
+                    <div className="bg-slate-200 w-full rounded-3xl p-3 shadow-lg">
                         <div className="bg-slate-50 p-5 rounded-3xl">
                             <h1>
                                 Hi,
@@ -46,7 +46,7 @@ const SellerDashboard = ({ productCount }) => {
                             </h1>
                         </div>
                     </div>
-                    <div className="bg-slate-200 w-full rounded-3xl p-5 shadow-lg">
+                    <div className="bg-slate-200 w-full rounded-3xl p-3 shadow-lg">
                         <div className="bg-slate-50 p-5 rounded-3xl flex items-center justify-between ">
                             <h1 className=" font-semibold  ">Total Products</h1>
                             <span className="text-2xl font-semibold size-14   flex items-center justify-center">
@@ -54,6 +54,24 @@ const SellerDashboard = ({ productCount }) => {
                             </span>
                         </div>
                     </div>
+                </div>
+                <div className="grid grid-cols-2 lg:grid-cols-2 mt-5 gap-10">
+                    <div className="bg-slate-200 w-full rounded-3xl p-3 shadow-lg">
+                        <div className="bg-slate-50 p-5 rounded-3xl flex items-center justify-between ">
+                            <h1 className=" font-semibold  ">Total Orders</h1>
+                            <span className="text-2xl font-semibold size-14   flex items-center justify-center">
+                                {productCount}
+                            </span>
+                        </div>
+                    </div>
+                    {/* <div className="bg-slate-200 w-full rounded-3xl p-5 shadow-lg">
+                        <div className="bg-slate-50 p-5 rounded-3xl flex items-center justify-between ">
+                            <h1 className=" font-semibold  ">Total Products</h1>
+                            <span className="text-2xl font-semibold size-14   flex items-center justify-center">
+                                {productCount}
+                            </span>
+                        </div>
+                    </div> */}
                 </div>
             </div>
         </SellerLayout>

@@ -5,8 +5,8 @@ use App\Models\Product;
 use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\CategoryResource;
-use DB;
 use Inertia\Inertia;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 use App\Models\ProductImage;
@@ -62,6 +62,7 @@ class ProductController extends Controller
         $products = $query->paginate(8);
 
         return Inertia::render('Customer/CategoryProducts', [
+            'success' => session('success'),
             'products' => $products,
             'category' => $category->name,
             'sort' => $sortOption,

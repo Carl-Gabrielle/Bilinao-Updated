@@ -360,7 +360,7 @@ export default function Checkout({ auth, carts }) {
                                     <Link
                                         href={route("customer.completeOrders")}
                                     >
-                                        <button className="w-full bg-amber-500 text-white rounded-full tracking-wide px-8 py-4">
+                                        <button className="w-full bg-amber-500 text-slate-50 rounded-full tracking-wide px-8 py-4">
                                             Place Order
                                         </button>
                                     </Link>

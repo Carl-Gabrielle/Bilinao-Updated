@@ -198,7 +198,7 @@ export default function Products({ products, auth, success, category }) {
                                                     </div>
                                                 </Link>
                                             ) : (
-                                                <div className="bg-slate-100 text-xs  cursor-not-allowed  w-full sm:w-1/2  px-2 sm:py-2 py-1  rounded-full text-gray-600 text-center">
+                                                <div className="bg-slate-100 text-xs  cursor-not-allowed  w-full sm:w-1/2  px-2 sm:py-2 py-1  rounded-full text-slate-600 text-center">
                                                     Out of Stock
                                                 </div>
                                             )}
@@ -206,7 +206,6 @@ export default function Products({ products, auth, success, category }) {
                                     </Link>
                                 ))}
                             </div>
-
                             <Pagination links={products.links} />
                         </div>
                     </div>

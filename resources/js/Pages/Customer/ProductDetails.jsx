@@ -1,10 +1,14 @@
 import React, { useState, useEffect } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
-import { MdOutlineKeyboardArrowDown } from "react-icons/md";
+import { FaRegCheckSquare } from "react-icons/fa";
+import {
+    MdOutlineKeyboardArrowDown,
+    MdOutlineRemoveShoppingCart,
+} from "react-icons/md";
 import { FaStar, FaRegHeart, FaStarHalfAlt } from "react-icons/fa";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
-import { FaPesoSign, FaRegStar } from "react-icons/fa6";
+import { FaPesoSign, FaRegStar, FaLink } from "react-icons/fa6";
 import { LuShoppingCart } from "react-icons/lu";
 import { GrCart } from "react-icons/gr";
 import ProfileImg from "../Illustrations/profile.jpeg";
@@ -111,12 +115,12 @@ export default function ProductDetails({
                             </button>
                         </Link>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div className="mb-4 overflow-hidden h-96">
+                            <div className="mb-4 overflow-hidden h-96 bg-slate-50 bg-opacity-50 backdrop-blur-md  shadow-md rounded-3xl flex items-center justify-center">
                                 {selectedImage ? (
                                     <img
                                         src={`/storage/${selectedImage}`}
                                         alt={product.name}
-                                        className="w-full h-96 object-cover rounded-3xl"
+                                        className="size-80 object-cover rounded-md "
                                     />
                                 ) : (
                                     <p className="text-center text-gray-600 text-lg">
@@ -136,18 +140,20 @@ export default function ProductDetails({
                                 </p>
 
                                 {product.stock > 0 ? (
-                                    <p className="text-slate-800 text-sm mb-5 font-medium">
-                                        <span className="bg-green-500 text-white px-3 py-1 rounded-md shadow-md">
-                                            In Stock:
+                                    <span className="text-slate-800 text-sm mb-5 font-medium">
+                                        <span className="text-emerald-100 bg-emerald-600 rounded-full px-3 py-1  shadow-inner">
+                                            <FaRegCheckSquare className="inline-block mr-2" />
+                                            In Stock
                                         </span>{" "}
                                         {product.stock} products
-                                    </p>
+                                    </span>
                                 ) : (
-                                    <p className="text-slate-800 text-xs mb-5 font-medium">
-                                        <span className="bg-red-50 text-red-600 px-3 py-1 rounded-md shadow-md">
-                                            Out of Stock:
+                                    <p className="text-slate-800 text-sm mb-5 font-medium">
+                                        <span className="text-red-100 bg-red-600 px-3 py-1 rounded-full shadow-inner">
+                                            <MdOutlineRemoveShoppingCart className="inline-block mr-2" />
+                                            Out of Stock
                                         </span>{" "}
-                                        {product.stock} products
+                                        {product.stock} product
                                     </p>
                                 )}
                                 <div className="flex items-center text-slate-800 font-bold text-xl mb-4">
@@ -186,51 +192,58 @@ export default function ProductDetails({
                                         </Link>
                                     </div>
                                 </div>
-
-                                <div className="border-slate-500 border shadow-md text-slate-800 px-3 py-2 rounded-full flex items-center justify-between">
-                                    <button
-                                        onClick={handleDecrease}
-                                        className="text-sm bg-slate-800 text-white size-6 flex items-center justify-center rounded-full"
-                                    >
-                                        -
-                                    </button>
-                                    <span className="px-7">{quantity}</span>
-                                    <button
-                                        onClick={handleIncrease}
-                                        className="text-sm bg-slate-800 text-white size-6 flex items-center justify-center rounded-full"
-                                    >
-                                        +
-                                    </button>
-                                </div>
-
+                                {product.stock > 0 && (
+                                    <div className="flex items-center  space-x-4  w-full   ">
+                                        <div className=" bg-slate-50 bg-opacity-50 backdrop-blur-md shadow-md text-slate-800 px-3 py-2 rounded-full flex items-center justify-between">
+                                            <button
+                                                onClick={handleDecrease}
+                                                className="text-sm bg-slate-800 text-white size-6 flex items-center justify-center rounded-full"
+                                            >
+                                                -
+                                            </button>
+                                            <span className="px-7">
+                                                {quantity}
+                                            </span>
+                                            <button
+                                                onClick={handleIncrease}
+                                                className="text-sm bg-slate-800 text-white size-6 flex items-center justify-center rounded-full"
+                                            >
+                                                +
+                                            </button>
+                                        </div>
+                                        <Link>
+                                            <div className="border border-slate-500  p-2 rounded-full shadow-md">
+                                                <FaRegHeart />
+                                            </div>
+                                        </Link>
+                                        <div className="border border-slate-500  p-2 rounded-full shadow-md">
+                                            <FaLink />
+                                        </div>
+                                    </div>
+                                )}
                                 <div className="py-4 w-full flex flex-col sm:flex-row gap-4">
                                     {product.stock > 0 && (
-                                        <button
-                                            onClick={handleBuyNow}
-                                            className="  sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-slate-800 transition-all duration-200 bg-slate-50 rounded-full shadow lg:mt-0 "
-                                        >
-                                            Buy Now
-                                        </button>
-                                    )}
-
-                                    {product.stock > 0 ? (
-                                        <Link
-                                            preserveScroll
-                                            href={route("cart.store")}
-                                            method="post"
-                                            data={{
-                                                product_id: product.id,
-                                                quantity: quantity,
-                                            }}
-                                        >
-                                            <button className=" sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-white transition-all duration-200 bg-slate-800 rounded-full shadow lg:mt-0">
-                                                Add to Cart
+                                        <>
+                                            <button
+                                                onClick={handleBuyNow}
+                                                className="  sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-slate-800  border border-slate-500 shadow-md rounded-full  lg:mt-0 "
+                                            >
+                                                Buy Now
                                             </button>
-                                        </Link>
-                                    ) : (
-                                        <div className="flex items-center cursor-not-allowed justify-center sm:w-52 w-full gap-4 px-4 py-3 mt-3 text-xs font-medium bg-red-50 text-red-600 rounded-full shadow-md lg:mt-0">
-                                            <span>Out of Stock</span>
-                                        </div>
+                                            <Link
+                                                preserveScroll
+                                                href={route("cart.store")}
+                                                method="post"
+                                                data={{
+                                                    product_id: product.id,
+                                                    quantity: quantity,
+                                                }}
+                                            >
+                                                <button className=" sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-white  bg-slate-800 rounded-full shadow-inner lg:mt-0">
+                                                    Add to Cart
+                                                </button>
+                                            </Link>
+                                        </>
                                     )}
                                 </div>
                             </div>
@@ -343,7 +356,7 @@ export default function ProductDetails({
                                             <span className="text-xs text-slate-800 font-semibold">
                                                 {user.name}
                                             </span>
-                                            <span className="text-xs w-32 bg-slate-700 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
+                                            <span className="text-xs w-32 bg-slate-600 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
                                                 Verified Purchase
                                             </span>
                                         </div>

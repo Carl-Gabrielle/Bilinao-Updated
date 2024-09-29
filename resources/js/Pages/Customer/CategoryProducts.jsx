@@ -105,7 +105,6 @@ export default function CategoryProducts({
                             </div>
                         </div>
                     )}
-
                     <CustomerContainer>
                         {/* FILTER BAR */}
                         <FilterBar

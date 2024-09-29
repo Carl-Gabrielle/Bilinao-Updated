@@ -217,7 +217,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                 <div className="pt-5 px-6">
                                     <div className="flex justify-between items-start mb-4">
                                         <p>Subtotal</p>
-                                        <p className=" font-semibold">
+                                        <p>
                                             &#8369;{" "}
                                             {calculateTotal().toLocaleString(
                                                 undefined,
