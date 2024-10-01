@@ -43,24 +43,7 @@ export default function ProductDetails({
     const [selectedImage, setSelectedImage] = useState(
         product.images?.[0]?.image_path || ""
     );
-    const handleBuyNow = () => {
-        axios
-            .post(route("cart.buyNow"), {
-                product_id: product.id,
-                quantity: quantity,
-            })
-            .then((response) => {
-                if (response.data.redirect) {
-                    Inertia.visit(response.data.redirect);
-                }
-            })
-            .catch((error) => {
-                console.error(
-                    "There was an error adding the product to the cart:",
-                    error
-                );
-            });
-    };
+
     const [isVisible, setIsVisible] = useState(true);
     useEffect(() => {
         if (success) {
@@ -224,12 +207,19 @@ export default function ProductDetails({
                                 <div className="py-4 w-full flex flex-col sm:flex-row gap-4">
                                     {product.stock > 0 && (
                                         <>
-                                            <button
-                                                onClick={handleBuyNow}
-                                                className="  sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-slate-800  border border-slate-500 shadow-md rounded-full  lg:mt-0 "
+                                            <Link
+                                                preserveScroll
+                                                href={route("cart.buyNow")}
+                                                method="post"
+                                                data={{
+                                                    product_id: product.id,
+                                                    quantity: quantity,
+                                                }}
                                             >
-                                                Buy Now
-                                            </button>
+                                                <button className="  sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-slate-800  border border-slate-500 shadow-md rounded-full  lg:mt-0 ">
+                                                    Buy Now
+                                                </button>
+                                            </Link>
                                             <Link
                                                 preserveScroll
                                                 href={route("cart.store")}

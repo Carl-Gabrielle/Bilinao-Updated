@@ -11,7 +11,7 @@ import axios from "axios";
 import Label from "@/Components/Label";
 import ReadOnly from "@/Components/ReadOnly";
 
-export default function Checkout({ auth, carts }) {
+export default function Checkout({ auth, product }) {
     const { user } = auth;
 
     const [billingDetails, setBillingDetails] = useState({
@@ -85,10 +85,12 @@ export default function Checkout({ auth, carts }) {
         });
     };
 
-    const [cartItems, setCartItems] = useState(carts);
+    const [cartItems, setCartItems] = useState([product]); // Store the single product instead of multiple carts
+
+    // Calculate total price based on product price and quantity
     const calculateTotal = () => {
         return cartItems.reduce(
-            (acc, cart) => acc + cart.product.price * cart.quantity,
+            (acc, item) => acc + item.price * item.quantity,
             0
         );
     };
@@ -277,58 +279,42 @@ export default function Checkout({ auth, carts }) {
                                 </div>
                                 <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto scroll-bar">
                                     <h1 className="font-medium">Your Order</h1>
-
-                                    {cartItems.map((cart) => {
-                                        return (
-                                            <>
-                                                <div className="flex">
-                                                    <div
-                                                        key={cart.id}
-                                                        className="relative border"
-                                                    >
-                                                        <img
-                                                            src={`/storage/${cart.product.images[0].image_path}`}
-                                                            alt={
-                                                                cart.product
-                                                                    .name
-                                                            }
-                                                            className="sm:size-16 size-10 object-cover rounded"
-                                                        />
-                                                        <div className="absolute -top-3 flex  text-slate-100 items-center justify-center -right-3   size-5 bg-slate-700 rounded-full">
-                                                            <span className="text-xs  ">
-                                                                {" "}
-                                                                {cart.quantity}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-1 ml-4 text-xs text-slate-800 ">
-                                                        <h3 className="font-semibold">
-                                                            {cart.product.name}
-                                                        </h3>
-                                                        <p className="flex items-center">
-                                                            <FaPesoSign className="inline-block mr-1" />
-                                                            {Number(
-                                                                cart.product
-                                                                    .price
-                                                            ).toLocaleString(
-                                                                "en-US",
-                                                                {
-                                                                    minimumFractionDigits: 2,
-                                                                    maximumFractionDigits: 2,
-                                                                }
-                                                            )}
-                                                        </p>
-                                                    </div>
+                                    {cartItems.map((cart) => (
+                                        <div key={cart.id} className="flex">
+                                            <div className="relative border">
+                                                <img
+                                                    src={`/storage/${cart.images[0].image_path}`}
+                                                    alt={cart.name}
+                                                    className="sm:size-16 size-10 object-cover rounded"
+                                                />
+                                                <div className="absolute -top-3 flex text-slate-100 items-center justify-center -right-3 size-5 bg-slate-700 rounded-full">
+                                                    <span className="text-xs">
+                                                        {cart.quantity}
+                                                    </span>
                                                 </div>
-                                            </>
-                                        );
-                                    })}
+                                            </div>
+                                            <div className="flex-1 ml-4 text-xs text-slate-800">
+                                                <h3 className="font-semibold">
+                                                    {cart.name}
+                                                </h3>
+                                                <p className="flex items-center">
+                                                    <FaPesoSign className="inline-block mr-1" />
+                                                    {Number(
+                                                        cart.price
+                                                    ).toLocaleString("en-US", {
+                                                        minimumFractionDigits: 2,
+                                                        maximumFractionDigits: 2,
+                                                    })}
+                                                </p>
+                                            </div>
+                                        </div>
+                                    ))}
+
                                     <div className="flex justify-between text-sm border-t pt-4">
                                         <span className="font-semibold">
                                             Subtotal
                                         </span>
                                         <span>
-                                            {" "}
                                             <FaPesoSign className="inline-block" />
                                             {calculateTotal().toLocaleString(
                                                 undefined,
@@ -339,20 +325,25 @@ export default function Checkout({ auth, carts }) {
                                             )}
                                         </span>
                                     </div>
+
                                     <div className="flex justify-between text-sm border-b pb-4">
                                         <span>Shipping</span>
                                         <span>
-                                            {" "}
                                             <FaPesoSign className="inline-block" />
                                             80
                                         </span>
                                     </div>
+
                                     <div className="flex justify-between text-lg font-bold">
                                         <span>Total</span>
                                         <span>
-                                            {" "}
                                             <FaPesoSign className="inline-block" />
-                                            230
+                                            {calculateTotal() +
+                                                (80) // Adding shipping to total
+                                                    .toLocaleString(undefined, {
+                                                        minimumFractionDigits: 2,
+                                                        maximumFractionDigits: 2,
+                                                    })}
                                         </span>
                                     </div>
                                 </div>

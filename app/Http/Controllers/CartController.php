@@ -48,38 +48,52 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function buyNow(Request $request)
+    // {
+    //     // Validate the incoming request data
+    //     $validatedData = $request->validate([
+    //         'product_id' => 'required|exists:products,id',
+    //         'quantity' => 'required|integer|min:1',
+    //     ]);
+    
+    //     // Get the authenticated user
+    //     $user = Auth::user();
+    //     $product_id = $validatedData['product_id'];
+    //     $quantity = $validatedData['quantity'];
+    
+    //     // Find the product and get its details
+    //     $product = Product::with('images')->find($product_id); // Assuming the product has images relation
+    
+    //     // Redirect to the checkout page with the product details
+    //     return Inertia::render('Customer/Checkout', [
+    //         'product' => $product,
+    //         'quantity' => $quantity, // Pass the quantity for reference on the checkout page
+    //     ]);
+    // }
     public function buyNow(Request $request)
 {
-    $validatedData = $request->validate([
-        'product_id' => 'required|exists:products,id',
-        'quantity' => 'required|integer|min:1',
-    ]);
+    $productId = $request->input('product_id');
+    $quantity = $request->input('quantity');
 
-    $user = Auth::user();
-    $product_id = $validatedData['product_id'];
-    $quantity = $validatedData['quantity'];
-
-    // Add to cart
-    $existingCart = Cart::where('user_id', $user->id)
-                        ->where('product_id', $product_id)
-                        ->first();
-
-    if ($existingCart) {
-        $existingCart->quantity += $quantity;
-        $existingCart->save();
-    } else {
-        Cart::create([
-            'user_id' => $user->id,
-            'product_id' => $product_id,
-            'quantity' => $quantity,
-        ]);
+    $product = Product::with('images')->find($productId);
+    
+    if (!$product) {
+        return response()->json(['message' => 'Product not found'], 404);
     }
 
-    return response()->json([
-        'message' => 'Product added to cart successfully!',
-        'redirect' => route('customer.carts')
+    $productDetails = [
+        'name' => $product->name,
+        'price' => $product->price,
+        'images' => $product->images, 
+        'quantity' => $quantity,
+    ];
+
+    return Inertia::render('Customer/Checkout', [
+        'product' => $productDetails,
     ]);
 }
+
+    
     public function store(Request $request)
     {
         $validatedData = $request->validate([
