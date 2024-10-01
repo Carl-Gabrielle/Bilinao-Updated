@@ -5,7 +5,7 @@ import { FaPesoSign } from "react-icons/fa6";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
 import Banner from "@/Components/Banner";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
 import axios from "axios";
 import Label from "@/Components/Label";
@@ -13,6 +13,9 @@ import ReadOnly from "@/Components/ReadOnly";
 
 export default function Checkout({ auth, product }) {
     const { user } = auth;
+    const { shipping_data } = usePage().props;
+    console.log('shipping data', shipping_data)
+    console.log('current product data', product)
 
     const [billingDetails, setBillingDetails] = useState({
         address: user.address || "",
@@ -95,22 +98,27 @@ export default function Checkout({ auth, product }) {
         );
     };
 
+    const total = (total_amount, shipping_fee) => {
+        const sum = total_amount + shipping_fee;
+        return parseFloat(sum.toFixed(2))
+    }
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
-            <div className="min-h-screen  pt-20 pb-1 ">
+            <div className="min-h-screen pt-20 pb-1 ">
                 <Banner title="Shopping Cart" suffix="/Checkout" />
                 <CustomerContainer>
                     <div className="flex items-center space-x-3">
-                        <hr className="w-28 border border-slate-800 mb-6" />
-                        <h1 className="font-bold text-3xl mb-6 text-slate-800 uppercase tracking-widest">
+                        <hr className="mb-6 border w-28 border-slate-800" />
+                        <h1 className="mb-6 text-3xl font-bold tracking-widest uppercase text-slate-800">
                             Product Checkout
                         </h1>
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 ">
+                    <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 ">
                         {/* Billing Information */}
-                        <div className="col-span-2 space-y-6 bg-slate-50 p-8 rounded-3xl shadow-lg">
-                            <h2 className="text-md font-semibold ">
+                        <div className="col-span-2 p-8 space-y-6 shadow-lg bg-slate-50 rounded-3xl">
+                            <h2 className="font-semibold text-md ">
                                 <h1>Contact and Shipping Information</h1>
                             </h2>
                             <ReadOnly label="Full Name" value={user.name} />
@@ -119,13 +127,13 @@ export default function Checkout({ auth, product }) {
                                 value={user.phone_number}
                             />
                             <hr />
-                            <h2 className="text-md font-semibold ">
+                            <h2 className="font-semibold text-md ">
                                 <h1>Billing Details</h1>
                             </h2>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                 {/* Region Dropdown */}
                                 <div>
-                                    <label className="block text-gray-700 text-xs font-medium mb-1">
+                                    <label className="block mb-1 text-xs font-medium text-gray-700">
                                         Region
                                     </label>
                                     <select
@@ -133,7 +141,7 @@ export default function Checkout({ auth, product }) {
                                         onChange={(e) =>
                                             setSelectedRegion(e.target.value)
                                         }
-                                        className="scroll-bar text-sm custom-dropdown text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar custom-dropdown text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -154,7 +162,7 @@ export default function Checkout({ auth, product }) {
                                 </div>
                                 {/* Province Dropdown */}
                                 <div>
-                                    <label className="block text-gray-700 text-xs font-medium mb-1">
+                                    <label className="block mb-1 text-xs font-medium text-gray-700">
                                         Province
                                     </label>
                                     <select
@@ -162,7 +170,7 @@ export default function Checkout({ auth, product }) {
                                         onChange={(e) =>
                                             setSelectedProvince(e.target.value)
                                         }
-                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -182,10 +190,10 @@ export default function Checkout({ auth, product }) {
                                     </select>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                 {/* City/Municipality Dropdown */}
                                 <div>
-                                    <label className="block text-gray-700 text-xs font-medium mb-1">
+                                    <label className="block mb-1 text-xs font-medium text-gray-700">
                                         City/Municipality
                                     </label>
                                     <select
@@ -195,7 +203,7 @@ export default function Checkout({ auth, product }) {
                                                 e.target.value
                                             )
                                         }
-                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -220,7 +228,7 @@ export default function Checkout({ auth, product }) {
                                 </div>
                                 {/* Barangay Dropdown */}
                                 <div>
-                                    <label className="block text-gray-700 text-xs font-medium mb-1">
+                                    <label className="block mb-1 text-xs font-medium text-gray-700">
                                         Barangay
                                     </label>
                                     <select
@@ -228,7 +236,7 @@ export default function Checkout({ auth, product }) {
                                         onChange={(e) =>
                                             setSelectedBarangay(e.target.value)
                                         }
-                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -249,12 +257,12 @@ export default function Checkout({ auth, product }) {
                                 </div>
                             </div>
                             <hr />
-                            <h2 className="text-md font-semibold ">
+                            <h2 className="font-semibold text-md ">
                                 <h1>Nearby Landmark</h1>
                             </h2>
                             {/* Landmark Text Area */}
                             <div>
-                                <label className="block text-gray-700 text-xs font-medium mb-1">
+                                <label className="block mb-1 text-xs font-medium text-gray-700">
                                     Landmark
                                 </label>
                                 <textarea
@@ -262,22 +270,22 @@ export default function Checkout({ auth, product }) {
                                     value={billingDetails.landmark}
                                     onChange={handleInputChange}
                                     placeholder="ex. Alabama St. in front of  John Doe Shop."
-                                    className="placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent h-32"
+                                    className="w-full h-32 px-4 py-3 bg-transparent border border-gray-500 rounded-md placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                 />
-                                <label className="text-gray-700 text-xs font-medium">
+                                <label className="text-xs font-medium text-gray-700">
                                     Please enter a landmark near your home
                                 </label>
                             </div>
                         </div>
-                        <div className="grid grid-rows-2   gap-10 xl:gap-20">
+                        <div className="grid grid-rows-2 gap-10 xl:gap-20">
                             {/* Order Summary */}
-                            <div className="w-full lg:w-96 lg:h-72 bg-slate-50 rounded-3xl shadow-lg">
-                                <div className="bg-gray-800 text-white rounded-t-3xl px-6 py-4">
-                                    <h3 className="uppercase text-xs tracking-wider">
+                            <div className="w-full shadow-lg lg:w-96 lg:h-72 bg-slate-50 rounded-3xl">
+                                <div className="px-6 py-4 text-white bg-gray-800 rounded-t-3xl">
+                                    <h3 className="text-xs tracking-wider uppercase">
                                         Order Summary
                                     </h3>
                                 </div>
-                                <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto scroll-bar">
+                                <div className="p-6 space-y-4 overflow-y-auto bg-slate-50 h-72 scroll-bar">
                                     <h1 className="font-medium">Your Order</h1>
                                     {cartItems.map((cart) => (
                                         <div key={cart.id} className="flex">
@@ -285,9 +293,9 @@ export default function Checkout({ auth, product }) {
                                                 <img
                                                     src={`/storage/${cart.images[0].image_path}`}
                                                     alt={cart.name}
-                                                    className="sm:size-16 size-10 object-cover rounded"
+                                                    className="object-cover rounded sm:size-16 size-10"
                                                 />
-                                                <div className="absolute -top-3 flex text-slate-100 items-center justify-center -right-3 size-5 bg-slate-700 rounded-full">
+                                                <div className="absolute flex items-center justify-center rounded-full -top-3 text-slate-100 -right-3 size-5 bg-slate-700">
                                                     <span className="text-xs">
                                                         {cart.quantity}
                                                     </span>
@@ -306,11 +314,17 @@ export default function Checkout({ auth, product }) {
                                                         maximumFractionDigits: 2,
                                                     })}
                                                 </p>
+                                                <p className="flex items-center">
+                                                    <FaPesoSign className="inline-block mr-1" />
+                                                    {cart.price} x {cart.quantity} =
+                                                    <FaPesoSign className="inline-block mx-1" />
+                                                    {calculateTotal()}
+                                                </p>
                                             </div>
                                         </div>
                                     ))}
 
-                                    <div className="flex justify-between text-sm border-t pt-4">
+                                    <div className="flex justify-between pt-4 text-sm border-t">
                                         <span className="font-semibold">
                                             Subtotal
                                         </span>
@@ -326,7 +340,7 @@ export default function Checkout({ auth, product }) {
                                         </span>
                                     </div>
 
-                                    <div className="flex justify-between text-sm border-b pb-4">
+                                    <div className="flex justify-between pb-4 text-sm border-b">
                                         <span>Shipping</span>
                                         <span>
                                             <FaPesoSign className="inline-block" />
@@ -338,63 +352,67 @@ export default function Checkout({ auth, product }) {
                                         <span>Total</span>
                                         <span>
                                             <FaPesoSign className="inline-block" />
-                                            {calculateTotal() +
-                                                (80) // Adding shipping to total
-                                                    .toLocaleString(undefined, {
-                                                        minimumFractionDigits: 2,
-                                                        maximumFractionDigits: 2,
-                                                    })}
+                                            {/* {calculateTotal() +
+                                                (80).toLocaleString(undefined, {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2,
+                                                })} */}
+                                            {total(calculateTotal(), 80)
+                                                .toLocaleString(undefined, {
+                                                    minimumFractionDigits: 2,
+                                                    maximumFractionDigits: 2
+                                                })}
                                         </span>
                                     </div>
                                 </div>
-                                <div className="p-6 bg-slate-50 border-t border rounded-b-3xl">
-                                    <Link
+                                <div className="p-6 border border-t bg-slate-50 rounded-b-3xl">
+                                    <Link disabled
                                         href={route("customer.completeOrders")}
                                     >
-                                        <button className="w-full bg-amber-500 text-slate-50 rounded-full tracking-wide px-8 py-4">
+                                        <button className="w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50">
                                             Place Order
                                         </button>
                                     </Link>
                                 </div>
                             </div>
-                            <div className="w-full  lg:mt-10">
-                                <div className="bg-slate-50 p-6 lg:w-96 lg:h-72 rounded-3xl space-y-4 h-72 overflow-y-auto">
-                                    <div className="text-md font-semibold text-gray-700">
+                            <div className="w-full lg:mt-10">
+                                <div className="p-6 space-y-4 overflow-y-auto bg-slate-50 lg:w-96 lg:h-72 rounded-3xl h-72">
+                                    <div className="font-semibold text-gray-700 text-md">
                                         <h1>How would you like to pay?</h1>
                                     </div>
 
-                                    <div className="space-y-4 mt-4">
+                                    <div className="mt-4 space-y-4">
                                         {/* GCash Payment Option */}
-                                        <label className="flex items-center space-x-4 p-2  border rounded-xl  cursor-pointer hover:bg-slate-100 transition">
+                                        <label className="flex items-center p-2 space-x-4 transition border cursor-pointer rounded-xl hover:bg-slate-100">
                                             <input
                                                 type="radio"
                                                 name="payment"
                                                 className="hidden"
                                             />
-                                            <div className="w-10 h-10 bg-blue-500 flex items-center justify-center rounded-full">
-                                                <FaGooglePay className="text-white text-2xl" />{" "}
+                                            <div className="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full">
+                                                <FaGooglePay className="text-2xl text-white" />{" "}
                                                 {/* Placeholder for GCash Icon */}
                                             </div>
-                                            <div className="flex-1 text-slate-700 font-medium text-sm">
+                                            <div className="flex-1 text-sm font-medium text-slate-700">
                                                 GCash
                                             </div>
-                                            <HiOutlineCheckCircle className="text-gray-300 text-xl" />
+                                            <HiOutlineCheckCircle className="text-xl text-gray-300" />
                                         </label>
                                         {/* PayMaya Payment Option */}
-                                        <label className="flex items-center space-x-4 p-2  border rounded-xl  cursor-pointer  hover:bg-slate-100  transition">
+                                        <label className="flex items-center p-2 space-x-4 transition border cursor-pointer rounded-xl hover:bg-slate-100">
                                             <input
                                                 type="radio"
                                                 name="payment"
                                                 className="hidden"
                                             />
-                                            <div className="w-10 h-10 bg-green-500 flex items-center justify-center rounded-full">
-                                                <FaCcPaypal className="text-white text-2xl" />{" "}
+                                            <div className="flex items-center justify-center w-10 h-10 bg-green-500 rounded-full">
+                                                <FaCcPaypal className="text-2xl text-white" />{" "}
                                                 {/* Placeholder for PayMaya Icon */}
                                             </div>
-                                            <div className="flex-1 text-slate-700 font-medium text-sm">
+                                            <div className="flex-1 text-sm font-medium text-slate-700">
                                                 PayMaya
                                             </div>
-                                            <HiOutlineCheckCircle className="text-gray-300 text-xl" />
+                                            <HiOutlineCheckCircle className="text-xl text-gray-300" />
                                         </label>
                                     </div>
                                 </div>
