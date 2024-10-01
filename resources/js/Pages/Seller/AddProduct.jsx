@@ -234,7 +234,7 @@ const SellerDashboard = ({ categories }) => {
                                                 className="w-12 h-12 object-cover rounded-md mr-3"
                                             />
                                             <div className="flex-grow">
-                                                <h2 className="font-semibold text-sm text-gray-700">
+                                                <h2 className="font-semibold text-xs whitespace-pre-wrap text-gray-700">
                                                     {image.name}
                                                 </h2>
                                                 <p className="text-xs text-gray-500">
@@ -249,7 +249,7 @@ const SellerDashboard = ({ categories }) => {
                                                 onClick={() =>
                                                     handleRemoveImage(image)
                                                 }
-                                                className="text-gray-400 hover:bg-gray-100 px-1 py-1 rounded-full transition-colors duration-300 ease-in-out"
+                                                className="text-slate-400 hover:bg-slate-200 px-1 py-1 rounded-full transition-colors duration-300 ease-in-out"
                                             >
                                                 <IoClose size={18} />
                                             </button>

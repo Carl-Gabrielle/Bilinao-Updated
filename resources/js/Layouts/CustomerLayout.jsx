@@ -199,9 +199,8 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     )}
                                 </Link>
                                 {/* Wishlist */}
-                                {/* Cart Icon */}
                                 <Link
-                                    // href={route("customer.carts")}
+                                    href={route("customer.myWishlists")}
                                     className="relative flex items-center text-slate-900 cursor-pointer    px-2 py-2 hover:text-slate-50  hover:bg-slate-800 rounded-full transition-colors duration-300 ease-in-out"
                                 >
                                     <FaRegHeart className="size-5" />

@@ -1,5 +1,6 @@
 import React from "react";
 import CustomerLayout from "@/Layouts/CustomerLayout";
+import { CgSearchFound } from "react-icons/cg";
 import { FaPesoSign } from "react-icons/fa6";
 import { Head, Link } from "@inertiajs/react";
 import Banner from "@/Components/Banner";
@@ -16,9 +17,12 @@ const SearchResults = ({ products, auth, query }) => {
                     <CustomerContainer>
                         <div className="flex items-center space-x-3">
                             <hr className="w-28 border  border-slate-500 mb-6" />
-                            <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
-                                Search Results
-                            </h1>
+                            <div className="flex items-center space-x-2">
+                                <CgSearchFound className="mb-6 text-2xl text-slate-600" />
+                                <h1 className=" font-bold text text-2xl mb-6 uppercase tracking-widest">
+                                    Results Found for You
+                                </h1>
+                            </div>
                         </div>
                         <h1 className="text-2xl font-medium text-slate-900  tracking-wide mb-4">
                             Search Results for{" "}

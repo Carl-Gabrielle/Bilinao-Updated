@@ -12,6 +12,9 @@ class CustomerController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function myWishlists(){
+        return Inertia::render('Customer/Wishlists');
+    }
     public function completeOrders(){
         return Inertia::render('Customer/CompleteOrders');
     }

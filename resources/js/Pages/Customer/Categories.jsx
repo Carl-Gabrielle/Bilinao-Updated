@@ -1,6 +1,7 @@
 import React from "react";
 import { PiArrowRightBold } from "react-icons/pi";
 import { Head, Link } from "@inertiajs/react";
+import { GiMagnifyingGlass } from "react-icons/gi";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import Banner from "@/Components/Banner";
@@ -16,10 +17,13 @@ export default function Categories({ auth, categories }) {
                 <Banner title="Categories" />
                 <CustomerContainer className="mt-32">
                     <div className="flex items-center space-x-3">
-                        <hr className="w-28 border border-slate-800 mb-6" />
-                        <h1 className="font-bold text-3xl mb-6 text-slate-800 uppercase tracking-widest">
-                            Explore our Categories
-                        </h1>
+                        <hr className="w-28 border  border-slate-500 mb-6" />
+                        <div className="flex items-center space-x-2">
+                            <GiMagnifyingGlass className="mb-6 text-2xl text-slate-600" />
+                            <h1 className=" font-bold text text-2xl mb-6 uppercase tracking-widest">
+                                Discover Curated Collections for You
+                            </h1>
+                        </div>
                     </div>
                     <div className="grid md:grid-cols-1 lg:grid-cols-2 gap-10 mt-10">
                         {categoryData.length > 0 ? (

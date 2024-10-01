@@ -88,7 +88,7 @@ export default function Products({ products, auth, success, category }) {
                 <div className="max-w-6xl mx-auto px-6 sm:px-6 lg:px-8 pt-20 ">
                     <div className="flex items-center space-x-3">
                         <hr className="w-28 border border-slate-800 mb-6" />
-                        <h1 className="font-bold text-3xl mb-6 text-slate-800 uppercase tracking-widest">
+                        <h1 className="font-bold text-2xl mb-6 text-slate-800 uppercase tracking-widest">
                             Explore Our Products
                         </h1>
                     </div>

@@ -6,7 +6,6 @@ import { FaRegCheckCircle } from "react-icons/fa";
 import { FiBox } from "react-icons/fi";
 import { MdOutlinePendingActions } from "react-icons/md";
 import Banner from "@/Components/Banner";
-
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import CustomerContainer from "@/Components/CustomerContainer";
 import ToPay from "./Topay";

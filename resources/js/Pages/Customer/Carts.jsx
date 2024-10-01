@@ -67,7 +67,7 @@ export default function Carts({ auth, carts, cartCount }) {
                 <CustomerContainer className="mt-32 ">
                     <div className="flex items-center space-x-3">
                         <hr className="w-28 border border-slate-800 mb-6" />
-                        <h1 className="font-bold text-3xl mb-6 text-slate-800 uppercase tracking-widest">
+                        <h1 className="font-bold text-2xl mb-6 text-slate-800 uppercase tracking-widest">
                             Cart Lists
                         </h1>
                     </div>

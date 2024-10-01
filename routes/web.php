@@ -75,6 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
         Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
         Route::post('/buyNow', [CartController::class, 'buyNow'])->name('cart.buyNow');
+        Route::get('/myWishlists', [CustomerController::class,'myWishlists'])->name('customer.myWishlists');
         
     });
 });

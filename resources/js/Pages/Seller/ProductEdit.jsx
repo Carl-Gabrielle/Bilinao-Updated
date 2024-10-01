@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useState, useRef } from "react";
 import { Head, usePage, useForm, Link } from "@inertiajs/react";
 import { RxUpdate } from "react-icons/rx";
+import { GoUpload } from "react-icons/go";
 import { LuAsterisk } from "react-icons/lu";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { IoClose } from "react-icons/io5";
@@ -15,6 +16,7 @@ export default function ProductEdit() {
     const categories = props.categories;
     console.log(categories);
     console.log(product);
+    const fileInputRef = useRef(null);
     const { data, setData, post, processing, errors } = useForm({
         name: product.name || "",
         description: product.description || "",
@@ -65,7 +67,7 @@ export default function ProductEdit() {
             <div className="container px-4 py-6 mx-auto">
                 <Link
                     href={route("products.index")}
-                    className="flex items-center px-6 py-2 mb-5 font-semibold w-36 text-lime-600"
+                    className="flex items-center px-6 py-2 mb-5 font-semibold w-36 text-slate-800"
                 >
                     <MdOutlineKeyboardArrowLeft className="mr-2" /> Go Back
                 </Link>
@@ -78,7 +80,7 @@ export default function ProductEdit() {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex items-center px-6 py-3 text-sm font-semibold text-white rounded-md shadow-lg bg-primary"
+                                className="flex items-center px-6 py-3 text-sm font-semibold text-white rounded-md shadow-lg bg-slate-800"
                             >
                                 <RxUpdate className="mr-2" /> Update Product
                             </button>
@@ -192,6 +194,37 @@ export default function ProductEdit() {
                                 <div className="mb-4">
                                     <SectionHeader text="Product Images" />
                                     <div className="flex flex-wrap mt-4">
+                                        <div className="w-full border-slate-600 border-opacity-30 border-2 border-dashed rounded-md h-52 flex items-center justify-center relative">
+                                            <input
+                                                type="file"
+                                                id="product_images"
+                                                name="product_images"
+                                                accept="image/*"
+                                                className="hidden"
+                                                ref={fileInputRef}
+                                                onChange={handleImageUpload}
+                                                multiple
+                                            />
+                                            <label
+                                                htmlFor="product_images"
+                                                className="flex flex-col items-center cursor-pointer"
+                                            >
+                                                <div className="text-white bg-slate-800 p-2 rounded-md flex items-center justify-center">
+                                                    <GoUpload size={20} />
+                                                </div>
+                                                <h1 className="font-medium mt-3 text-gray-800 text-sm">
+                                                    Click to upload product
+                                                    images
+                                                </h1>
+                                                <Label text="Maximum file size 2MB" />
+                                            </label>
+                                        </div>
+                                        {errors.images && (
+                                            <span className="text-red-500 text-sm">
+                                                {errors.images}
+                                            </span>
+                                        )}
+                                        <Label text="Upload the images of your product" />
                                         {data.images.length > 0 ? (
                                             data.images.map((image, index) => (
                                                 <div
@@ -228,6 +261,7 @@ export default function ProductEdit() {
                                                 No images found.
                                             </p>
                                         )}
+
                                         {data.new_uploaded_images.map(
                                             (image, index) => (
                                                 <div
@@ -262,14 +296,6 @@ export default function ProductEdit() {
                                                 </div>
                                             )
                                         )}
-                                    </div>
-                                    <div className="mt-4">
-                                        <input
-                                            type="file"
-                                            multiple
-                                            onChange={handleImageUpload}
-                                            className="block w-full text-gray-700"
-                                        />
                                     </div>
                                 </div>
                             </div>
