@@ -227,17 +227,28 @@ export default function ProductDetails({
                                             <Link
                                                 preserveScroll
                                                 href={route("cart.buyNow")}
+<<<<<<< HEAD
                                                 method="POST"
+=======
+                                                method="post"
+>>>>>>> 2669f969f83ca7e392cc618288e4a46529d59097
                                                 data={{
                                                     product_id: product.id,
                                                     quantity: quantity,
                                                 }}
                                             >
+<<<<<<< HEAD
                                                 <button className="sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm text-slate-800 border border-slate-500 shadow-md rounded-full lg:mt-0">
                                                     Buy Now
                                                 </button>
                                             </Link>
 
+=======
+                                                <button className="  sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-slate-800  border border-slate-500 shadow-md rounded-full  lg:mt-0 ">
+                                                    Buy Now
+                                                </button>
+                                            </Link>
+>>>>>>> 2669f969f83ca7e392cc618288e4a46529d59097
                                             <Link
                                                 preserveScroll
                                                 href={route("cart.store")}

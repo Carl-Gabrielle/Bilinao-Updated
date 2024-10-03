@@ -48,6 +48,28 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
+    // public function buyNow(Request $request)
+    // {
+    //     // Validate the incoming request data
+    //     $validatedData = $request->validate([
+    //         'product_id' => 'required|exists:products,id',
+    //         'quantity' => 'required|integer|min:1',
+    //     ]);
+    
+    //     // Get the authenticated user
+    //     $user = Auth::user();
+    //     $product_id = $validatedData['product_id'];
+    //     $quantity = $validatedData['quantity'];
+    
+    //     // Find the product and get its details
+    //     $product = Product::with('images')->find($product_id); // Assuming the product has images relation
+    
+    //     // Redirect to the checkout page with the product details
+    //     return Inertia::render('Customer/Checkout', [
+    //         'product' => $product,
+    //         'quantity' => $quantity, // Pass the quantity for reference on the checkout page
+    //     ]);
+    // }
     public function buyNow(Request $request)
 {
     $productId = $request->input('product_id');
@@ -70,6 +92,8 @@ class CartController extends Controller
         'product' => $productDetails,
     ]);
 }
+
+    
     public function store(Request $request)
     {
         $validatedData = $request->validate([
