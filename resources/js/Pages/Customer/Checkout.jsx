@@ -5,7 +5,7 @@ import { FaPesoSign } from "react-icons/fa6";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
 import Banner from "@/Components/Banner";
-import { Head, Link, usePage } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
 import axios from "axios";
 import Label from "@/Components/Label";
@@ -151,13 +151,17 @@ export default function Checkout({ auth, product }) {
         return parseFloat(sum.toFixed(2))
     }
 
+    const { errors, post, data, setData } = useForm({
+        payment_method: 'Gcash',
+    });
 
+    const handlePaymentChange = (event) => {
+        setData('payment_method', event.target.value);
+    };
 
-    // function to get the shipping fee
-    // const getShippingFee = (weight, regionZone) => {
-
-    //     return;
-    // }
+    const handleCheckout = () => {
+        post(route('store.checkout'))
+    }
 
     return (
         <CustomerLayout user={auth.user}>
@@ -417,13 +421,13 @@ export default function Checkout({ auth, product }) {
                                     </div>
                                 </div>
                                 <div className="p-6 border border-t bg-slate-50 rounded-b-3xl">
-                                    <Link disabled
+                                    {/* <Link disabled
                                         href={route("customer.completeOrders")}
-                                    >
-                                        <button className="w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50">
-                                            Place Order
-                                        </button>
-                                    </Link>
+                                    > */}
+                                    <button onClick={() => handleCheckout()} className="w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50">
+                                        Place Order
+                                    </button>
+                                    {/* </Link> */}
                                 </div>
                             </div>
                             <div className="w-full lg:mt-10">
@@ -438,32 +442,33 @@ export default function Checkout({ auth, product }) {
                                             <input
                                                 type="radio"
                                                 name="payment"
+                                                value="Gcash"
                                                 className="hidden"
+                                                checked={data.payment_method === 'Gcash'}
+                                                onChange={handlePaymentChange}
                                             />
                                             <div className="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full">
-                                                <FaGooglePay className="text-2xl text-white" />{" "}
-                                                {/* Placeholder for GCash Icon */}
+                                                <FaGooglePay className="text-2xl text-white" />
                                             </div>
-                                            <div className="flex-1 text-sm font-medium text-slate-700">
-                                                GCash
-                                            </div>
-                                            <HiOutlineCheckCircle className="text-xl text-gray-300" />
+                                            <div className="flex-1 text-sm font-medium text-slate-700">GCash</div>
+                                            <HiOutlineCheckCircle className={`text-xl ${data.payment_method === 'Gcash' ? 'text-green-500' : 'text-gray-300'}`} />
                                         </label>
+
                                         {/* PayMaya Payment Option */}
                                         <label className="flex items-center p-2 space-x-4 transition border cursor-pointer rounded-xl hover:bg-slate-100">
                                             <input
                                                 type="radio"
                                                 name="payment"
+                                                value="PayMaya"
                                                 className="hidden"
+                                                checked={data.payment_method === 'PayMaya'}
+                                                onChange={handlePaymentChange}
                                             />
                                             <div className="flex items-center justify-center w-10 h-10 bg-green-500 rounded-full">
-                                                <FaCcPaypal className="text-2xl text-white" />{" "}
-                                                {/* Placeholder for PayMaya Icon */}
+                                                <FaCcPaypal className="text-2xl text-white" />
                                             </div>
-                                            <div className="flex-1 text-sm font-medium text-slate-700">
-                                                PayMaya
-                                            </div>
-                                            <HiOutlineCheckCircle className="text-xl text-gray-300" />
+                                            <div className="flex-1 text-sm font-medium text-slate-700">PayMaya</div>
+                                            <HiOutlineCheckCircle className={`text-xl ${data.payment_method === 'PayMaya' ? 'text-green-500' : 'text-gray-300'}`} />
                                         </label>
                                     </div>
                                 </div>

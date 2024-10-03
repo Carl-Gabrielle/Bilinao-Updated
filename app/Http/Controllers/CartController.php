@@ -98,6 +98,10 @@ class CartController extends Controller
         ]);
     }
 
+    public function storeCheckout(Request $request)
+    {
+        dd($request->all());
+    }
 
     public function store(Request $request)
     {
