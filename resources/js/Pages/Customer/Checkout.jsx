@@ -109,6 +109,38 @@ export default function Checkout({ auth, product }) {
             <div className="min-h-screen pt-20 pb-1 ">
                 <Banner title="Shopping Cart" suffix="/Checkout" />
                 <CustomerContainer>
+                    {/* shipping fee reference only */}
+                    <div className="overflow-x-auto">
+                        <table className="min-w-full border border-collapse border-gray-300 table-auto">
+                            <thead>
+                                <tr className="text-left bg-gray-100">
+                                    <th className="px-4 py-2 border border-gray-300">ID</th>
+                                    <th className="px-4 py-2 border border-gray-300">Weight Min (g)</th>
+                                    <th className="px-4 py-2 border border-gray-300">Weight Max (g)</th>
+                                    <th className="px-4 py-2 border border-gray-300">Luzon</th>
+                                    <th className="px-4 py-2 border border-gray-300">Visayas</th>
+                                    <th className="px-4 py-2 border border-gray-300">Mindanao</th>
+                                    <th className="px-4 py-2 border border-gray-300">Island</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {shipping_data.map((item) => (
+                                    <tr key={item.id} className="hover:bg-gray-50">
+                                        <td className="px-4 py-2 border border-gray-300">{item.id}</td>
+                                        <td className="px-4 py-2 border border-gray-300">{item.weight_min}g</td>
+                                        <td className="px-4 py-2 border border-gray-300">{item.weight_max}g</td>
+                                        <td className="px-4 py-2 border border-gray-300">{item.luzon} PHP</td>
+                                        <td className="px-4 py-2 border border-gray-300">{item.visayas} PHP</td>
+                                        <td className="px-4 py-2 border border-gray-300">{item.mindanao} PHP</td>
+                                        <td className="px-4 py-2 border border-gray-300">{item.island} PHP</td>
+                                    </tr>
+                                ))}
+                            </tbody>
+                        </table>
+                    </div>
+                    );
+
+
                     <div className="flex items-center space-x-3">
                         <hr className="mb-6 border w-28 border-slate-800" />
                         <h1 className="mb-6 text-3xl font-bold tracking-widest uppercase text-slate-800">
