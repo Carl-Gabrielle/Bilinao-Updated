@@ -14,8 +14,6 @@ import ReadOnly from "@/Components/ReadOnly";
 export default function Checkout({ auth, product }) {
     const { user } = auth;
     const { shipping_data } = usePage().props;
-    console.log('shipping data', shipping_data)
-    console.log('current product data', product)
 
     const [billingDetails, setBillingDetails] = useState({
         address: user.address || "",
@@ -39,8 +37,56 @@ export default function Checkout({ auth, product }) {
             .catch((err) => console.log("Error fetching regions:", err));
     }, []);
 
+    // Map region codes to corresponding regions (Luzon, Visayas, Mindanao, Island)
+    const regionMapping = {
+        // Luzon Regions
+        "0100000000": "luzon", // Region I (Ilocos Region)
+        "0200000000": "luzon", // Region II (Cagayan Valley)
+        "0300000000": "luzon", // Region III (Central Luzon)
+        "0400000000": "luzon", // Region IV-A (CALABARZON)
+        "0500000000": "luzon", // Region V (Bicol Region)
+        "1300000000": "luzon", // National Capital Region (NCR)
+        "1400000000": "luzon", // Cordillera Administrative Region (CAR)
+
+        // Island Regions
+        "1700000000": "island", // MIMAROPA Region
+
+        // Visayas Regions
+        "0600000000": "visayas", // Region VI (Western Visayas)
+        "0700000000": "visayas", // Region VII (Central Visayas)
+        "0800000000": "visayas", // Region VIII (Eastern Visayas)
+
+        // Mindanao Regions
+        "0900000000": "mindanao", // Region IX (Zamboanga Peninsula)
+        "1000000000": "mindanao", // Region X (Northern Mindanao)
+        "1100000000": "mindanao", // Region XI (Davao Region)
+        "1200000000": "mindanao", // Region XII (SOCCSKSARGEN)
+        "1600000000": "mindanao", // Region XIII (Caraga)
+        "1900000000": "mindanao"  // Bangsamoro Autonomous Region In Muslim Mindanao (BARMM)
+    };
+
+    const [shippingFee, setShippingFee] = useState(0);
+
+    const calculateShippingFee = (regionCode, weight) => {
+        const shippingRegion = regionMapping[regionCode];
+
+        // Find the corresponding weight range
+        const matchingRange = shipping_data.find(
+            (range) => weight >= range.weight_min && weight <= range.weight_max
+        );
+
+        if (matchingRange) {
+            setShippingFee(matchingRange[shippingRegion]);
+        } else {
+            setShippingFee(0); // If no range found, default to 0
+        }
+    };
+    // console.log('shipping data', shipping_data)
+    // console.log('current product data', product)
+    console.log('shippinh fee is ', shippingFee)
     useEffect(() => {
         if (selectedRegion) {
+            calculateShippingFee(selectedRegion, product.weight)
             axios
                 .get(
                     `https://psgc.cloud/api/regions/${selectedRegion}/provinces`
@@ -51,6 +97,8 @@ export default function Checkout({ auth, product }) {
             setProvinces([]);
         }
     }, [selectedRegion]);
+
+
 
     useEffect(() => {
         if (selectedProvince) {
@@ -103,6 +151,14 @@ export default function Checkout({ auth, product }) {
         return parseFloat(sum.toFixed(2))
     }
 
+
+
+    // function to get the shipping fee
+    // const getShippingFee = (weight, regionZone) => {
+
+    //     return;
+    // }
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
@@ -138,7 +194,7 @@ export default function Checkout({ auth, product }) {
                             </tbody>
                         </table>
                     </div>
-                    );
+
 
 
                     <div className="flex items-center space-x-3">
@@ -376,7 +432,7 @@ export default function Checkout({ auth, product }) {
                                         <span>Shipping</span>
                                         <span>
                                             <FaPesoSign className="inline-block" />
-                                            80
+                                            {shippingFee}
                                         </span>
                                     </div>
 
@@ -384,12 +440,7 @@ export default function Checkout({ auth, product }) {
                                         <span>Total</span>
                                         <span>
                                             <FaPesoSign className="inline-block" />
-                                            {/* {calculateTotal() +
-                                                (80).toLocaleString(undefined, {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                })} */}
-                                            {total(calculateTotal(), 80)
+                                            {total(calculateTotal(), shippingFee)
                                                 .toLocaleString(undefined, {
                                                     minimumFractionDigits: 2,
                                                     maximumFractionDigits: 2
