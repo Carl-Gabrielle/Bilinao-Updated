@@ -64,7 +64,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                             </h2>
                             <Link
                                 href={route("seller.create")}
-                                className="bg-[#548235] py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                                className="bg-slate-800 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
                             >
                                 <MdAdd className="mr-2 size-4" /> Add a New
                                 Seller
@@ -118,7 +118,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                                         "seller.edit",
                                                         user.id
                                                     )}
-                                                    className="border border-primary text-slate-800 px-3 py-2 rounded"
+                                                    className="border border-slate-800 text-slate-800 px-3 py-2 rounded"
                                                 >
                                                     <LiaEditSolid />
                                                 </Link>
@@ -127,7 +127,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                                         e.preventDefault();
                                                         openModal(user);
                                                     }}
-                                                    className="bg-primary text-white px-3 py-2 rounded"
+                                                    className="bg-slate-800 text-slate-50 px-3 py-2 rounded"
                                                 >
                                                     <RiDeleteBinLine />
                                                 </Link>

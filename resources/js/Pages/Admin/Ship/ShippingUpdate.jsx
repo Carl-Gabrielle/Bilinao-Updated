@@ -1,8 +1,9 @@
 import { useForm } from "@inertiajs/react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { MdUpdate } from "react-icons/md";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import DivContainer from "@/Components/DivContainer";
-import { Head } from "@inertiajs/react";
+import { Head, Link } from "@inertiajs/react";
 import AdminInput from "@/Components/AdminInput";
 
 export default function ShippingUpdate({ auth, shipping }) {
@@ -24,6 +25,13 @@ export default function ShippingUpdate({ auth, shipping }) {
         <AuthenticatedLayout user={auth.user}>
             <Head title="Update Shipping" />
             <DivContainer>
+                <Link
+                    href={route("shipping.index")}
+                    className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
+                >
+                    <MdOutlineKeyboardArrowLeft className="mr-2" />
+                    <span>Go Back</span>
+                </Link>
                 <div className="w-full h-auto">
                     <div className="bg-slate-50 bg-opacity-80 backdrop-blur-lg overflow-hidden shadow-sm rounded-3xl p-6">
                         <form onSubmit={handleSubmit}>

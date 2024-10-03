@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import { Inertia } from "@inertiajs/inertia";
 import axios from "axios";
 import { FaRegCheckSquare } from "react-icons/fa";
@@ -19,7 +19,7 @@ import { IoCheckmarkSharp } from "react-icons/io5";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import CustomerContainer from "@/Components/CustomerContainer";
 import Banner from "@/Components/Banner";
-
+import { applyFloatingAnimation } from "../Animations/gsap";
 export default function ProductDetails({
     product,
     auth,
@@ -43,24 +43,7 @@ export default function ProductDetails({
     const [selectedImage, setSelectedImage] = useState(
         product.images?.[0]?.image_path || ""
     );
-    const handleBuyNow = () => {
-        axios
-            .post(route("cart.buyNow"), {
-                product_id: product.id,
-                quantity: quantity,
-            })
-            .then((response) => {
-                if (response.data.redirect) {
-                    Inertia.visit(response.data.redirect);
-                }
-            })
-            .catch((error) => {
-                console.error(
-                    "There was an error adding the product to the cart:",
-                    error
-                );
-            });
-    };
+
     const [isVisible, setIsVisible] = useState(true);
     useEffect(() => {
         if (success) {
@@ -71,7 +54,13 @@ export default function ProductDetails({
             return () => clearTimeout(timer);
         }
     }, [success]);
+    const imageRef = useRef(null);
 
+    useEffect(() => {
+        if (imageRef.current) {
+            applyFloatingAnimation(imageRef.current);
+        }
+    }, [selectedImage]);
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen pt-20 pb-1">
@@ -115,12 +104,13 @@ export default function ProductDetails({
                             </button>
                         </Link>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div className="mb-4 overflow-hidden h-96 bg-slate-50 bg-opacity-50 backdrop-blur-md  shadow-md rounded-3xl flex items-center justify-center">
+                            <div className="mb-4 overflow-hidden h-96 bg-slate-50 bg-opacity-50 backdrop-blur-md shadow-md rounded-3xl flex items-center justify-center">
                                 {selectedImage ? (
                                     <img
+                                        ref={imageRef}
                                         src={`/storage/${selectedImage}`}
-                                        alt={product.name}
-                                        className="size-80 object-cover rounded-md "
+                                        alt={product?.name}
+                                        className="size-80 object-cover rounded-md"
                                     />
                                 ) : (
                                     <p className="text-center text-gray-600 text-lg">
@@ -211,11 +201,21 @@ export default function ProductDetails({
                                                 +
                                             </button>
                                         </div>
-                                        <Link>
-                                            <div className="border border-slate-500  p-2 rounded-full shadow-md">
+                                        <Link
+                                            preserveScroll
+                                            href={route(
+                                                "customer.storeWishlists"
+                                            )}
+                                            method="post"
+                                            data={{
+                                                product_id: product.id,
+                                            }}
+                                        >
+                                            <div className="border border-slate-500 p-2 rounded-full shadow-md">
                                                 <FaRegHeart />
                                             </div>
                                         </Link>
+
                                         <div className="border border-slate-500  p-2 rounded-full shadow-md">
                                             <FaLink />
                                         </div>
@@ -224,12 +224,20 @@ export default function ProductDetails({
                                 <div className="py-4 w-full flex flex-col sm:flex-row gap-4">
                                     {product.stock > 0 && (
                                         <>
-                                            <button
-                                                onClick={handleBuyNow}
-                                                className="  sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-slate-800  border border-slate-500 shadow-md rounded-full  lg:mt-0 "
+                                            <Link
+                                                preserveScroll
+                                                href={route("cart.buyNow")}
+                                                method="POST"
+                                                data={{
+                                                    product_id: product.id,
+                                                    quantity: quantity,
+                                                }}
                                             >
-                                                Buy Now
-                                            </button>
+                                                <button className="sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm text-slate-800 border border-slate-500 shadow-md rounded-full lg:mt-0">
+                                                    Buy Now
+                                                </button>
+                                            </Link>
+
                                             <Link
                                                 preserveScroll
                                                 href={route("cart.store")}

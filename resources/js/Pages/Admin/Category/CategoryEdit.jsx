@@ -56,7 +56,7 @@ export default function Edit({ auth, category }) {
                             </h1>
                             <button
                                 type="submit"
-                                className="flex items-center px-4 py-2 bg-primary  text-white text-sm font-medium rounded-md transition-all duration-200"
+                                className="flex items-center px-4 py-2 bg-slate-800  text-white text-sm font-medium rounded-md transition-all duration-200"
                                 disabled={processing}
                             >
                                 <RxUpdate className="mr-2" /> Update Category

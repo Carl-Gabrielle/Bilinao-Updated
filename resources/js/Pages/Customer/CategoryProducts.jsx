@@ -127,9 +127,21 @@ export default function CategoryProducts({
                                         >
                                             <div className="bg-gray-200 rounded-3xl relative mb-7 h-72">
                                                 <div className="rounded-t-3xl rounded-b-2xl overflow-hidden flex flex-col">
-                                                    <div className="absolute right-4 top-4 px-2 py-2 rounded-full text-slate-800 bg-white bg-opacity-50 backdrop-blur-lg z-10">
-                                                        <FaRegHeart />
-                                                    </div>
+                                                    <Link
+                                                        preserveScroll
+                                                        href={route(
+                                                            "customer.storeWishlists"
+                                                        )}
+                                                        method="post"
+                                                        data={{
+                                                            product_id:
+                                                                product.id,
+                                                        }}
+                                                    >
+                                                        <div className="absolute right-4 top-4 px-2 py-2 rounded-full text-slate-800 bg-white bg-opacity-50 backdrop-blur-lg z-10">
+                                                            <FaRegHeart />
+                                                        </div>
+                                                    </Link>
                                                     {product.images.length >
                                                         0 && (
                                                         <img

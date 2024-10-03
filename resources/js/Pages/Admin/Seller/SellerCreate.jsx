@@ -40,7 +40,7 @@ export default function SellerCreate({ auth }) {
                 <DivContainer>
                     <Link
                         href={route("seller.index")}
-                        className="mb-5 flex items-center  text-sm   w-36 px-6 py-1 rounded-full font-semibold"
+                        className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
                     >
                         <MdOutlineKeyboardArrowLeft className="mr-2" />
                         <span>Go Back</span>
@@ -54,7 +54,7 @@ export default function SellerCreate({ auth }) {
                                 <button
                                     type="submit"
                                     disabled={processing}
-                                    className="bg-primary text-white font-bold px-4 py-2 rounded focus:outline-none focus:shadow-outline flex items-center"
+                                    className="bg-slate-800 text-white font-bold px-4 py-2 rounded focus:outline-none focus:shadow-outline flex items-center"
                                 >
                                     <IoCreateOutline className="mr-2" /> Create
                                     Seller

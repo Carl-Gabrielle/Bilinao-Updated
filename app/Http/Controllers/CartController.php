@@ -50,34 +50,24 @@ class CartController extends Controller
      */
     public function buyNow(Request $request)
 {
-    $validatedData = $request->validate([
-        'product_id' => 'required|exists:products,id',
-        'quantity' => 'required|integer|min:1',
-    ]);
+    $productId = $request->input('product_id');
+    $quantity = $request->input('quantity');
 
-    $user = Auth::user();
-    $product_id = $validatedData['product_id'];
-    $quantity = $validatedData['quantity'];
-
-    // Add to cart
-    $existingCart = Cart::where('user_id', $user->id)
-                        ->where('product_id', $product_id)
-                        ->first();
-
-    if ($existingCart) {
-        $existingCart->quantity += $quantity;
-        $existingCart->save();
-    } else {
-        Cart::create([
-            'user_id' => $user->id,
-            'product_id' => $product_id,
-            'quantity' => $quantity,
-        ]);
+    $product = Product::with('images')->find($productId);
+    
+    if (!$product) {
+        return response()->json(['message' => 'Product not found'], 404);
     }
 
-    return response()->json([
-        'message' => 'Product added to cart successfully!',
-        'redirect' => route('customer.carts')
+    $productDetails = [
+        'name' => $product->name,
+        'price' => $product->price,
+        'images' => $product->images, 
+        'quantity' => $quantity,
+    ];
+
+    return Inertia::render('Customer/Checkout', [
+        'product' => $productDetails,
     ]);
 }
     public function store(Request $request)
@@ -170,13 +160,6 @@ public function destroy($id)
     if ($cartItem) {
         $cartItem->delete();
     }
-
-    $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
-
-    return Inertia::render('Customer/Carts', [
-        'carts' => $carts,
-        'success' => 'Item removed from cart.',
-    ]);
+    return Inertia::render('Customer/Carts');
 }
-
 }

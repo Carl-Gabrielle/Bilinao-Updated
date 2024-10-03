@@ -11,9 +11,23 @@ import axios from "axios";
 import Label from "@/Components/Label";
 import ReadOnly from "@/Components/ReadOnly";
 
-export default function Checkout({ auth, carts }) {
+export default function Checkout({ auth, carts, product }) {
     const { user } = auth;
+    const [cartItems, setCartItems] = useState(carts || []);
+    const [productItems, setProductItems] = useState(product ? [product] : []);
 
+    const calculateTotal = () => {
+        const items = cartItems.length > 0 ? cartItems : productItems;
+        return items.reduce(
+            (acc, item) =>
+                acc + item.product?.price * item.quantity ||
+                item.price * item.quantity,
+            0
+        );
+    };
+
+    // Render based on whether it's from cart or product
+    const itemsToRender = cartItems.length > 0 ? cartItems : productItems;
     const [billingDetails, setBillingDetails] = useState({
         address: user.address || "",
     });
@@ -83,14 +97,6 @@ export default function Checkout({ auth, carts }) {
             ...billingDetails,
             [id]: value,
         });
-    };
-
-    const [cartItems, setCartItems] = useState(carts);
-    const calculateTotal = () => {
-        return cartItems.reduce(
-            (acc, cart) => acc + cart.product.price * cart.quantity,
-            0
-        );
     };
 
     return (
@@ -278,51 +284,61 @@ export default function Checkout({ auth, carts }) {
                                 <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto scroll-bar">
                                     <h1 className="font-medium">Your Order</h1>
 
-                                    {cartItems.map((cart) => {
-                                        return (
-                                            <>
-                                                <div className="flex">
-                                                    <div
-                                                        key={cart.id}
-                                                        className="relative border"
-                                                    >
-                                                        <img
-                                                            src={`/storage/${cart.product.images[0].image_path}`}
-                                                            alt={
-                                                                cart.product
-                                                                    .name
-                                                            }
-                                                            className="sm:size-16 size-10 object-cover rounded"
-                                                        />
-                                                        <div className="absolute -top-3 flex  text-slate-100 items-center justify-center -right-3   size-5 bg-slate-700 rounded-full">
-                                                            <span className="text-xs  ">
-                                                                {" "}
-                                                                {cart.quantity}
-                                                            </span>
-                                                        </div>
-                                                    </div>
-                                                    <div className="flex-1 ml-4 text-xs text-slate-800 ">
-                                                        <h3 className="font-semibold">
-                                                            {cart.product.name}
-                                                        </h3>
-                                                        <p className="flex items-center">
-                                                            <FaPesoSign className="inline-block mr-1" />
-                                                            {Number(
-                                                                cart.product
-                                                                    .price
-                                                            ).toLocaleString(
-                                                                "en-US",
-                                                                {
-                                                                    minimumFractionDigits: 2,
-                                                                    maximumFractionDigits: 2,
-                                                                }
-                                                            )}
-                                                        </p>
+                                    <div>
+                                        {itemsToRender.map((item) => (
+                                            <div
+                                                key={item.id}
+                                                className="flex mt-3"
+                                            >
+                                                <div className="relative">
+                                                    <img
+                                                        src={`/storage/${
+                                                            item.product
+                                                                ? item.product
+                                                                      .images[0]
+                                                                      .image_path
+                                                                : item.images[0]
+                                                                      .image_path
+                                                        }`}
+                                                        alt={
+                                                            item.product
+                                                                ? item.product
+                                                                      .name
+                                                                : item.name
+                                                        }
+                                                        className="sm:size-16 size-10 object-cover rounded"
+                                                    />
+                                                    <div className="absolute -top-3 flex text-slate-100 items-center justify-center -right-3 size-5 bg-slate-700 rounded-full">
+                                                        <span className="text-xs">
+                                                            {item.quantity}
+                                                        </span>
                                                     </div>
                                                 </div>
-                                            </>
-                                        );
-                                    })}
+                                                <div className="flex-1 ml-4 text-xs text-slate-800">
+                                                    <h3 className="font-semibold">
+                                                        {item.product
+                                                            ? item.product.name
+                                                            : item.name}
+                                                    </h3>
+                                                    <p className="flex items-center">
+                                                        <FaPesoSign className="inline-block mr-1" />
+                                                        {Number(
+                                                            item.product
+                                                                ? item.product
+                                                                      .price
+                                                                : item.price
+                                                        ).toLocaleString(
+                                                            "en-US",
+                                                            {
+                                                                minimumFractionDigits: 2,
+                                                                maximumFractionDigits: 2,
+                                                            }
+                                                        )}
+                                                    </p>
+                                                </div>
+                                            </div>
+                                        ))}
+                                    </div>
                                     <div className="flex justify-between text-sm border-t pt-4">
                                         <span className="font-semibold">
                                             Subtotal

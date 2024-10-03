@@ -6,6 +6,7 @@ import { RxHamburgerMenu } from "react-icons/rx";
 import Logo from "../Pages/Illustrations/LOGO.png";
 import { FaRegUser } from "react-icons/fa";
 import { LuLogOut } from "react-icons/lu";
+import { IoIosArrowDown } from "react-icons/io";
 import { IoHomeOutline } from "react-icons/io5";
 import { BiCategory } from "react-icons/bi";
 import { MdMenuOpen } from "react-icons/md";
@@ -25,9 +26,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
             {/* NAVBAR */}
             <div className="h-14 bg-slate-50 bg-opacity-80  backdrop-blur-lg  z-10  fixed top-0 w-full flex items-center justify-between px-6">
                 <img src={Logo} className="w-24" />
-                <div className="max-w-4xl mx-auto px-6 w-full flex justify-between items-center">
+                <div className="max-w-6xl mx-auto px-6 w-full flex justify-between items-center">
                     <div className="flex items-center">
-                        <div className="ml-5">
+                        <div className="sm:ml-20 ml-0">
                             <button
                                 onClick={toggleSidebar}
                                 className="text-gray-600 focus:outline-none hover:bg-gray-100 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out"
@@ -36,16 +37,18 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             </button>
                         </div>
                     </div>
-                    <div>
-                        <Link href={route("profile.edit")}>
-                            <h1 className="text-sm">
-                                Hi,
-                                <span className="font-semibold">
-                                    {user.name}
-                                </span>{" "}
-                            </h1>
-                        </Link>
+                    {/* <Link href={route("profile.edit")}> */}
+                    <div className=" px-2 py-1 rounded-md  hover:bg-slate-200 transition-colors duration-300 ease-in-out flex items-center cursor-pointer">
+                        <div className="border size-6   mr-2 bg-slate-800 rounded-full" />
+                        <h1 className="text-sm font-medium hidden sm:block">
+                            Hi,
+                            <span className="ml-1 font-semibold ">
+                                {user.name}
+                            </span>{" "}
+                        </h1>
+                        <IoIosArrowDown className="ml-1" />
                     </div>
+                    {/* </Link> */}
                 </div>
             </div>
 

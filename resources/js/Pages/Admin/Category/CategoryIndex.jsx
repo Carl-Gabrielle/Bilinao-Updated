@@ -61,7 +61,7 @@ export default function Index({ auth, category, success, categoryCount }) {
                             </h2>
                             <Link
                                 href={route("category.create")}
-                                className="bg-primary py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                                className="bg-slate-800 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
                             >
                                 <MdAdd className="mr-2 size-4" /> Add New
                                 Category
@@ -77,7 +77,7 @@ export default function Index({ auth, category, success, categoryCount }) {
                                     <>
                                         <li
                                             key={item.id}
-                                            className=" p-2 rounded-lg text-xs  border bg-slate-50 bg-opacity-80  backdrop-blur-lg  "
+                                            className=" p-2 rounded-lg text-xs  border border-slate-300  "
                                         >
                                             <div className="flex items-center space-x-4">
                                                 <img
@@ -95,7 +95,7 @@ export default function Index({ auth, category, success, categoryCount }) {
                                                         "category.edit",
                                                         item.id
                                                     )}
-                                                    className="border border-[#548235] text-slate-800 px-3 py-2 rounded"
+                                                    className="border border-slate-800 text-slate-800 px-3 py-2 rounded"
                                                 >
                                                     <LiaEditSolid />
                                                 </Link>
@@ -104,7 +104,7 @@ export default function Index({ auth, category, success, categoryCount }) {
                                                         e.preventDefault();
                                                         openModal(item);
                                                     }}
-                                                    className="bg-primary text-white px-3 py-2 rounded"
+                                                    className="bg-slate-800 text-slate-50 px-3 py-2 rounded"
                                                 >
                                                     <RiDeleteBinLine />
                                                 </Link>

@@ -15,6 +15,7 @@ use App\Http\Controllers\CartController;
 use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\SellerOrderController;
 use App\Http\Controllers\ShippingController;
+use App\Http\Controllers\WishlistsController;
 
 Route::middleware('guest')->group(function () {
     Route::get('seller/login', [AuthenticatedSellerController::class, 'create'])
@@ -75,8 +76,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
         Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
         Route::post('/buyNow', [CartController::class, 'buyNow'])->name('cart.buyNow');
-        Route::get('/myWishlists', [CustomerController::class,'myWishlists'])->name('customer.myWishlists');
-        
+        Route::get('/myWishlists', [WishlistsController::class,'myWishlists'])->name('customer.myWishlists');
+        Route::post('/wishlists', [WishlistsController::class, 'storeWishlists'])->name('customer.storeWishlists');
     });
 });
 

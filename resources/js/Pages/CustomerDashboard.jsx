@@ -1,14 +1,22 @@
-import React from "react";
 import { PiArrowRightBold } from "react-icons/pi";
+import React, { useState, useEffect, useRef } from "react";
 import BgImage from "./Illustrations/bg_frame.png";
 import { Head, Link } from "@inertiajs/react";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
 import CustomerLayout from "@/Layouts/CustomerLayout";
+import { applyFloatingText } from "../Pages/Animations/gsap";
 import Footer from "@/Components/Footer";
 import CustomerContainer from "@/Components/CustomerContainer";
 export default function CustomerDashboard({ auth, category, products }) {
     const categoryData = category?.data ?? [];
     const productData = products?.data ?? [];
+    const textRef = useRef(null);
+
+    useEffect(() => {
+        if (textRef.current) {
+            applyFloatingText(textRef.current);
+        }
+    });
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen  ">
@@ -18,7 +26,10 @@ export default function CustomerDashboard({ auth, category, products }) {
                         <div className="min-h-[650px] pt-24 relative sm:min-h-[630px] flex justify-center items-center ">
                             <div className="px-8">
                                 <div className="flex flex-col justify-center gap-4 text-center sm:text-left px-6 py-6 rounded-3xl w-full order-2 sm:order-1">
-                                    <p className="animated-text sm:w-2/3 w-full text-4xl tracking-wide text-slate-900 sm:text-6xl lg:text-7xl font-extrabold">
+                                    <p
+                                        ref={textRef}
+                                        className="animated-text   sm:w-2/3 w-full text-4xl tracking-wide text-slate-900 sm:text-6xl lg:text-7xl font-extrabold"
+                                    >
                                         Embrace Local Artistry
                                     </p>
                                     <p className="title sm:w-2/3 w-full text-2xl tracking-tight bg-clip-text text-transparent sm:text-3xl lg:text-5xl bg-gradient-to-r from-indigo-400 to-cyan-400">

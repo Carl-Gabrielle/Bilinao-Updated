@@ -9,16 +9,63 @@ import DivContainer from "@/Components/DivContainer";
 export default function AdminDashboard({ auth }) {
     const { user } = auth;
 
+    const getGreeting = () => {
+        const hour = new Date().getHours();
+        const greetings = [
+            { range: [5, 12], message: "Good Morning" },
+            { range: [12, 17], message: "Good Afternoon" },
+            { range: [17, 21], message: "Good Evening" },
+            { range: [21, 24], message: "Good Night" },
+            { range: [0, 5], message: "Good Night" },
+        ];
+
+        return greetings.find(
+            (greeting) => hour >= greeting.range[0] && hour < greeting.range[1]
+        ).message;
+    };
+    const greeting = getGreeting();
     return (
         <AuthenticatedLayout user={auth.user}>
             <Head title="Dashboard" />
             <div className="min-h-screen  ">
                 <DivContainer>
+                    <h1 className="text-xl tracking-wider">
+                        {greeting},{" "}
+                        <span className="font-semibold">{user.name}</span>
+                    </h1>
+                    <hr className="mt-4 border-gray-400 mb-5" />
                     <div className="w-full h-screen   ">
-                        <div className="w-full h-32 px-6 py-6 bg-white rounded-3xl">
-                            <h1>
-                                Hi, <span>{user.name}</span>
-                            </h1>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                            <div className="w-full h-32 px-6 py-6 bg-slate-50 bg-opacity-80 backdrop-blur-lg  rounded-3xl shadow-md">
+                                <h1 className="text-md font-medium hidden sm:block">
+                                    Hi
+                                    <span className="ml-1 font-semibold ">
+                                        {user.name},
+                                    </span>{" "}
+                                </h1>
+                                <h1 className="font-medium text-md">
+                                    Welcome Back!
+                                </h1>
+                            </div>
+                            <div className="w-full h-32 px-6 py-6 bg-slate-50 bg-opacity-80 backdrop-blur-lg  rounded-3xl shadow-md">
+                                <h1 className="font-medium text-md">
+                                    Registered Sellers
+                                </h1>
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
+                            <div className="w-full h-32 px-6 py-6  bg-slate-50 bg-opacity-80 backdrop-blur-lg  rounded-3xl shadow-md">
+                                <h1 className="font-medium text-md">
+                                    Registered Customers
+                                </h1>
+                            </div>
+                            <div className="w-full h-32 px-6 py-6  bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-md">
+                                {/* Total Sales Revenue */}
+                                {/* Daily/Weekly/Monthly Sales Trends:  */}
+                                <h1 className="font-medium text-md">
+                                    Sales Metrics{" "}
+                                </h1>
+                            </div>
                         </div>
                     </div>
                 </DivContainer>
