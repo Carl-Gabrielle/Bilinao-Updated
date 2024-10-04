@@ -1,7 +1,13 @@
 import React from "react";
-import { Head, usePage } from "@inertiajs/react";
+import { Head, usePage, Link } from "@inertiajs/react";
 import SellerLayout from "@/Layouts/SellerLayout";
-
+import { CiStar } from "react-icons/ci";
+import { CiCalendar } from "react-icons/ci";
+import { LiaEditSolid } from "react-icons/lia";
+import { MdOutlineMailOutline } from "react-icons/md";
+import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
+import { GrMapLocation } from "react-icons/gr";
+import { IoStorefrontOutline } from "react-icons/io5";
 export default function SellerProfile() {
     const { auth } = usePage().props;
     const user = auth?.user;
@@ -11,27 +17,94 @@ export default function SellerProfile() {
             <SellerLayout user={user}>
                 <Head title="Seller Profile" />
                 <div className="container mx-auto px-4 py-8">
-                    <div className="bg-white shadow-lg rounded-3xl overflow-hidden">
-                        {/* Cover Image */}
-                        <div className="bg-primary h-32"></div>
-                        <div className="relative -mt-16 flex justify-center">
-                            {/* Profile Image */}
-                            <img
-                                src={
-                                    user.profile_photo_url ||
-                                    "/images/default-profile.png"
-                                }
-                                alt="Profile"
-                                className="w-32 h-32 rounded-full border-4 border-white shadow-md"
-                            />
+                    <div className="bg-white shadow-lg rounded-3xl overflow-hidden backdrop-blur-lg relative">
+                        {/* Cover Image Section */}
+                        <div className="h-64 w-full bg-slate-800 flex items-center justify-center relative overflow-hidden">
+                            {/* Main Title */}
+                            <h2 className="text-center text-3xl md:text-4xl lg:text-5xl text-slate-100 font-bold z-10 tracking-wide">
+                                Seller Profile
+                            </h2>
+
+                            {/* Star Icon Decorations */}
+                            <CiStar className="hidden sm:block absolute top-16 left-28 text-white size-7 opacity-20" />
+                            <CiStar className="hidden sm:block absolute top-20 left-60 text-white size-7 opacity-20" />
+                            <CiStar className="hidden sm:block absolute top-16 right-28 text-white size-7 opacity-20" />
+                            <CiStar className="hidden sm:block absolute top-20 right-60 text-white size-7 opacity-20" />
+
+                            {/* Decorative Circles */}
+                            <div className="absolute w-56 h-56 rounded-full border-2 border-white opacity-20 right-0 sm:-right-10 -top-10"></div>
+                            <div className="absolute w-56 h-56 rounded-full border-2 border-white opacity-20 -bottom-10 -left-10"></div>
+
+                            {/* Subtle Background Text */}
+                            <h2 className="absolute top-10 text-center text-4xl md:text-5xl text-banner  lg:text-7xl text-slate-100 font-medium opacity-5 transform translate-y-3 blur-xs tracking-widest">
+                                Seller Profile
+                            </h2>
                         </div>
-                        <div className="text-center mt-4 py-4">
-                            <h1 className="text-2xl font-bold text-gray-800">
-                                {user.name}
-                            </h1>
-                            <p className="text-gray-500">{user.email}</p>
+
+                        {/* Profile Info Section */}
+                        <div className="flex items-center px-8 py-10 w-full flex-col sm:flex-row">
+                            {/* Profile Image */}
+                            <div className="relative sm:mr-6">
+                                <img
+                                    src={
+                                        user.profile_photo_url ||
+                                        "/images/default-profile.png"
+                                    }
+                                    alt="Profile"
+                                    className="w-36 h-36 rounded-full object-cover border-4 border-slate-200 shadow-lg"
+                                />
+                            </div>
+
+                            {/* Profile Details */}
+                            <div className="flex flex-col sm:flex-row justify-between w-full mt-4 sm:mt-0 items-center">
+                                <div className="space-y-2 text-slate-800">
+                                    <h1 className="text-2xl font-semibold flex items-center">
+                                        <IoStorefrontOutline className="mr-2 text-slate-800" />
+                                        {user.name}
+                                    </h1>
+
+                                    <p className="text-gray-500 text-sm flex items-center">
+                                        <GrMapLocation className="mr-2 text-gray-500" />
+                                        {user.address}
+                                    </p>
+
+                                    <p className="text-gray-500 text-sm flex items-center">
+                                        <HiOutlineDevicePhoneMobile className="mr-2 text-gray-500" />
+                                        {user.contact_number}
+                                    </p>
+
+                                    <p className="text-gray-500 text-sm flex items-center">
+                                        <MdOutlineMailOutline className="mr-2 text-gray-500" />
+                                        {user.email}
+                                    </p>
+
+                                    <p className="text-gray-500 text-sm flex items-center">
+                                        <CiCalendar className="mr-2 text-gray-500" />
+                                        <span className="mr-2">Joined: </span>
+                                        {new Date(user.created_at)
+                                            .toLocaleDateString("en-US", {
+                                                year: "numeric",
+                                                month: "short",
+                                                day: "numeric",
+                                            })
+                                            .replace(
+                                                /(\w+)\s(\d+),\s*(\d+)/,
+                                                "$1. $2, $3"
+                                            )}
+                                    </p>
+                                </div>
+
+                                {/* Edit Profile Button */}
+                                <Link className="mt-6 sm:mt-0 sm:ml-6">
+                                    <button className="px-5 py-3 text-sm font-semibold rounded-md bg-slate-800  text-slate-100 flex items-center">
+                                        <LiaEditSolid className="mr-2" />
+                                        Edit Profile
+                                    </button>
+                                </Link>
+                            </div>
                         </div>
                     </div>
+
                     <div className="mt-8 space-y-6">
                         <div className="bg-white shadow-md rounded-xl p-6">
                             <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
@@ -42,31 +115,6 @@ export default function SellerProfile() {
                                 all details about the seller, their offerings,
                                 and more information.
                             </p>
-                        </div>
-                        <div className="bg-white shadow-md rounded-xl p-6">
-                            <h3 className="text-xl font-semibold text-gray-800 border-b pb-2">
-                                Contact Information
-                            </h3>
-                            <div className="space-y-2 mt-4">
-                                <p className="text-gray-600">
-                                    <span className="font-semibold">
-                                        Email:
-                                    </span>{" "}
-                                    {user.email}
-                                </p>
-                                <p className="text-gray-600">
-                                    <span className="font-semibold">
-                                        Phone:
-                                    </span>{" "}
-                                    {user.contact_number || "Not provided"}
-                                </p>
-                                <p className="text-gray-600">
-                                    <span className="font-semibold">
-                                        Username:
-                                    </span>{" "}
-                                    {user.username || "Not provided"}
-                                </p>
-                            </div>
                         </div>
                     </div>
                 </div>

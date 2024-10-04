@@ -75,8 +75,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::delete('/cart/{id}', [CartController::class, 'destroy'])->name('cart.destroy');
         Route::get('/checkout', [CartController::class, 'checkout'])->name('cart.checkout');
         Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
-        Route::post('/buyNow', [CartController::class, 'buyNow'])->name('cart.buyNow');
+        Route::get('/checkout-preview', [CartController::class, 'checkoutPreview'])->name('show.checkout');
         Route::get('/myWishlists', [WishlistsController::class,'myWishlists'])->name('customer.myWishlists');
+        Route::post('/checkout', [CartController::class, 'storeCheckout'])->name('store.checkout');
         Route::post('/wishlists', [WishlistsController::class, 'storeWishlists'])->name('customer.storeWishlists');
     });
 });
