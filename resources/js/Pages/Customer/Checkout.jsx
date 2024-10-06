@@ -437,16 +437,12 @@ export default function Checkout({ auth, product }) {
                                     </div>
                                 </div>
                                 <div className="p-6 border border-t bg-slate-50 rounded-b-3xl">
-                                    {/* <Link disabled
-                                        href={route("customer.completeOrders")}
-                                    > */}
                                     <button
                                         onClick={() => handleCheckout()}
                                         className="w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50"
                                     >
                                         Place Order
                                     </button>
-                                    {/* </Link> */}
                                 </div>
                             </div>
                             <div className="w-full lg:mt-10">
@@ -454,7 +450,6 @@ export default function Checkout({ auth, product }) {
                                     <div className="font-semibold text-gray-700 text-md">
                                         <h1>How would you like to pay?</h1>
                                     </div>
-
                                     <div className="mt-4 space-y-4">
                                         {/* GCash Payment Option */}
                                         <label
@@ -486,7 +481,6 @@ export default function Checkout({ auth, product }) {
                                                 }`}
                                             />
                                         </label>
-
                                         {/* PayMaya Payment Option */}
                                         <label
                                             className={`flex items-center p-2 space-x-4 transition border cursor-pointer rounded-xl hover:bg-slate-100 ${paymayaBgClass}`}
