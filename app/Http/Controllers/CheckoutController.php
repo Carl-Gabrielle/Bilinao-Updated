@@ -5,7 +5,7 @@ namespace App\Http\Controllers;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
-use DB;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 
 class CheckoutController extends Controller
@@ -19,7 +19,6 @@ class CheckoutController extends Controller
 
         try {
             DB::beginTransaction();
-
             // Create order
             $order = Order::create([
                 "user_id" => Auth()->id(),
@@ -35,11 +34,9 @@ class CheckoutController extends Controller
                 'transaction_id' => 'testing transac id',
                 'order_number' => 'order_number testing only to be  generated'
             ]);
-
             // Loop through products and create order items
             foreach ($request->products as $item) {
                 $product = Product::find((int) $item['product_id']);
-
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $product->id,
@@ -50,7 +47,6 @@ class CheckoutController extends Controller
                     'total_price' => $product->price * (int) $item['qty'],
                 ]);
             }
-
             // Commit the transaction
             DB::commit();
 

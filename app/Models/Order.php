@@ -13,6 +13,7 @@ class Order extends Model
         'email',
         'phone',
         'shipping_address',
+        'landmark',
         'remarks',
         'amount',
         'shipping_fee',

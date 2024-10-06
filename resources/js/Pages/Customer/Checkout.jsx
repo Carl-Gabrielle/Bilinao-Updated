@@ -4,6 +4,7 @@ import CustomerLayout from "@/Layouts/CustomerLayout";
 import { FaPesoSign } from "react-icons/fa6";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
+import PaymentOption from "@/Components/Paymentoption";
 import Banner from "@/Components/Banner";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
@@ -67,33 +68,34 @@ export default function Checkout({ auth, product }) {
     const [products, setProducts] = useState([]);
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        const product_id = urlParams.get('product_id');
-        const qty = urlParams.get('quantity');
+        const product_id = urlParams.get("product_id");
+        const qty = urlParams.get("quantity");
 
         setProducts([{ product_id, qty }]);
     }, []);
 
     const { errors, post, data, setData } = useForm({
         payment_method: "Gcash",
-        shipping_address: '',
-        shipping_fee: '',
-        amount: '',
+        shipping_address: "",
+        shipping_fee: "",
+        amount: "",
         name: user.name,
         phone_no: user.phone_number,
-        landmark: '',
-        products: []
+        landmark: "",
+        products: [],
     });
 
     useEffect(() => {
         if (products.length > 0) {
-            setData('products', products.map((item) => ({
-                product_id: item.product_id,
-                qty: item.qty,
-            })));
+            setData(
+                "products",
+                products.map((item) => ({
+                    product_id: item.product_id,
+                    qty: item.qty,
+                }))
+            );
         }
     }, [products]);
-
-
 
     const [shippingFee, setShippingFee] = useState(0);
 
@@ -107,7 +109,7 @@ export default function Checkout({ auth, product }) {
 
         if (matchingRange) {
             setShippingFee(matchingRange[shippingRegion]);
-            setData('shipping_fee', shippingFee)
+            setData("shipping_fee", shippingFee);
         } else {
             setShippingFee(0); // If no range found, default to 0
         }
@@ -163,7 +165,6 @@ export default function Checkout({ auth, product }) {
     };
 
     const [cartItems, setCartItems] = useState([product]); // Store the single product instead of multiple carts
-
     // Calculate total price based on product price and quantity
     const calculateTotal = () => {
         return cartItems.reduce(
@@ -171,31 +172,44 @@ export default function Checkout({ auth, product }) {
             0
         );
     };
-    const [formattedTotal, setFormattedTotal] = useState(0);
+
+    // State to hold the formatted total for display
+    const [formattedTotal, setFormattedTotal] = useState("0.00");
+    // State to hold the raw total for submission
+    const [totalAmount, setTotalAmount] = useState(0);
+
+    // Function to calculate total including shipping fee
     const total = (total_amount, shipping_fee) => {
         const sum = total_amount + shipping_fee;
         return parseFloat(sum.toFixed(2));
     };
+
+    // Function to calculate and set formatted total
     const calculateAndSetFormattedTotal = () => {
         const productTotal = calculateTotal();
         const totalAmount = total(productTotal, shippingFee);
 
+        // Set the raw total amount for submission
+        setTotalAmount(totalAmount);
+
+        // Format for display purposes
         const formatted = totalAmount.toLocaleString(undefined, {
             minimumFractionDigits: 2,
-            maximumFractionDigits: 2
+            maximumFractionDigits: 2,
         });
 
         setFormattedTotal(formatted);
-    }
+    };
 
+    // Recalculate when shipping fee changes
     useEffect(() => {
         calculateAndSetFormattedTotal();
     }, [shippingFee]);
 
-
+    // Set data for backend submission using the raw total
     useEffect(() => {
-        setData('amount', formattedTotal);
-    }, [formattedTotal])
+        setData("amount", totalAmount);
+    }, [totalAmount]);
 
     const [shippingAddress, setShippingAddress] = useState("");
     const [region, setRegion] = useState();
@@ -212,7 +226,6 @@ export default function Checkout({ auth, product }) {
         setData("payment_method", event.target.value);
     };
 
-
     const handleCheckout = () => {
         post(route("store.checkout", data));
     };
@@ -227,8 +240,9 @@ export default function Checkout({ auth, product }) {
             : "";
 
     useEffect(() => {
-        setData('shipping_fee', shippingFee)
-    }, [shippingFee])
+        setData("shipping_fee", shippingFee);
+    }, [shippingFee]);
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
@@ -265,10 +279,15 @@ export default function Checkout({ auth, product }) {
                                     <select
                                         value={selectedRegion}
                                         onChange={(e) => {
-                                            setSelectedRegion(e.target.value)
-                                            setRegion(regions.find(region => region.code === e.target.value)?.name)
-                                        }
-                                        }
+                                            setSelectedRegion(e.target.value);
+                                            setRegion(
+                                                regions.find(
+                                                    (region) =>
+                                                        region.code ===
+                                                        e.target.value
+                                                )?.name
+                                            );
+                                        }}
                                         className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar custom-dropdown text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
@@ -296,8 +315,14 @@ export default function Checkout({ auth, product }) {
                                     <select
                                         value={selectedProvince}
                                         onChange={(e) => {
-                                            setSelectedProvince(e.target.value)
-                                            setProvince(provinces.find(province => province.code === e.target.value)?.name)
+                                            setSelectedProvince(e.target.value);
+                                            setProvince(
+                                                provinces.find(
+                                                    (province) =>
+                                                        province.code ===
+                                                        e.target.value
+                                                )?.name
+                                            );
                                         }}
                                         className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
@@ -328,10 +353,17 @@ export default function Checkout({ auth, product }) {
                                     <select
                                         value={selectedCityMunicipality}
                                         onChange={(e) => {
-                                            setSelectedCityMunicipality(e.target.value)
-                                            setCity(citiesMunicipalities.find(city => city.code === e.target.value)?.name)
-                                        }
-                                        }
+                                            setSelectedCityMunicipality(
+                                                e.target.value
+                                            );
+                                            setCity(
+                                                citiesMunicipalities.find(
+                                                    (city) =>
+                                                        city.code ===
+                                                        e.target.value
+                                                )?.name
+                                            );
+                                        }}
                                         className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
@@ -363,10 +395,15 @@ export default function Checkout({ auth, product }) {
                                     <select
                                         value={selectedBarangay}
                                         onChange={(e) => {
-                                            setSelectedBarangay(e.target.value)
-                                            setBarangay(barangays.find(brgy => brgy.code === e.target.value)?.name)
-                                        }
-                                        }
+                                            setSelectedBarangay(e.target.value);
+                                            setBarangay(
+                                                barangays.find(
+                                                    (brgy) =>
+                                                        brgy.code ===
+                                                        e.target.value
+                                                )?.name
+                                            );
+                                        }}
                                         className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
@@ -399,7 +436,9 @@ export default function Checkout({ auth, product }) {
                                 <textarea
                                     id="landmark"
                                     value={billingDetails.landmark}
-                                    onChange={e => setData('landmark', e.target.value)}
+                                    onChange={(e) =>
+                                        setData("landmark", e.target.value)
+                                    }
                                     placeholder="ex. Alabama St. in front of  John Doe Shop."
                                     className="w-full h-32 px-4 py-3 bg-transparent border border-gray-500 rounded-md placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                 />
@@ -492,24 +531,24 @@ export default function Checkout({ auth, product }) {
                                         <span>Total</span>
                                         <span>
                                             <FaPesoSign className="inline-block" />
-                                            {/* {total(
-                                                calculateTotal(),
-                                                shippingFee
-                                            ).toLocaleString(undefined, {
-                                                minimumFractionDigits: 2,
-                                                maximumFractionDigits: 2,
-                                            })} */}
-                                            {
-                                                formattedTotal
-                                            }
+
+                                            {formattedTotal}
                                         </span>
                                     </div>
                                 </div>
                                 <div className="p-6 border border-t bg-slate-50 rounded-b-3xl">
                                     <button
-                                        disabled={data.landmark === '' || data.shipping_address == ' '}
+                                        disabled={
+                                            data.landmark === "" ||
+                                            data.shipping_address == " "
+                                        }
                                         onClick={() => handleCheckout()}
-                                        className={`w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50 ${data.landmark === '' || data.shipping_address == ' ' ? 'cursor-not-allowed' : 'hover:bg-amber-600 duration-200'}`}
+                                        className={`w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50 ${
+                                            data.landmark === "" ||
+                                            data.shipping_address == " "
+                                                ? "cursor-not-allowed"
+                                                : "hover:bg-amber-600 duration-200"
+                                        }`}
                                     >
                                         Place Order
                                     </button>
@@ -522,70 +561,46 @@ export default function Checkout({ auth, product }) {
                                     </div>
                                     <div className="mt-4 space-y-4">
                                         {/* GCash Payment Option */}
-                                        <label
-                                            className={`flex items-center p-2 space-x-4 transition border cursor-pointer rounded-xl hover:bg-slate-100 ${gcashBgClass}`}
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="payment"
-                                                value="Gcash"
-                                                className="hidden"
-                                                checked={
-                                                    data.payment_method ===
-                                                    "Gcash"
-                                                }
-                                                onChange={handlePaymentChange}
-                                            />
-                                            <div className="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full">
-                                                <FaGooglePay className="text-2xl text-white" />
-                                            </div>
-                                            <div className="flex-1 text-sm font-medium text-slate-700">
-                                                GCash
-                                            </div>
-                                            <HiOutlineCheckCircle
-                                                className={`text-xl ${data.payment_method ===
-                                                    "Gcash"
-                                                    ? "text-blue-500"
-                                                    : "text-gray-300"
-                                                    }`}
-                                            />
-                                        </label>
+                                        <PaymentOption
+                                            name="GCash"
+                                            value="Gcash"
+                                            icon={{
+                                                component: (
+                                                    <FaGooglePay className="text-2xl text-white" />
+                                                ),
+                                                bgColor: "bg-blue-500",
+                                                textColor: "text-blue-500",
+                                            }}
+                                            bgClass={gcashBgClass}
+                                            paymentMethod={data.payment_method}
+                                            onPaymentChange={
+                                                handlePaymentChange
+                                            }
+                                        />
                                         {/* PayMaya Payment Option */}
-                                        <label
-                                            className={`flex items-center p-2 space-x-4 transition border cursor-pointer rounded-xl hover:bg-slate-100 ${paymayaBgClass}`}
-                                        >
-                                            <input
-                                                type="radio"
-                                                name="payment"
-                                                value="PayMaya"
-                                                className="hidden"
-                                                checked={
-                                                    data.payment_method ===
-                                                    "PayMaya"
-                                                }
-                                                onChange={handlePaymentChange}
-                                            />
-                                            <div className="flex items-center justify-center w-10 h-10 bg-green-500 rounded-full">
-                                                <FaCcPaypal className="text-2xl text-white" />
-                                            </div>
-                                            <div className="flex-1 text-sm font-medium text-slate-700">
-                                                PayMaya
-                                            </div>
-                                            <HiOutlineCheckCircle
-                                                className={`text-xl ${data.payment_method ===
-                                                    "PayMaya"
-                                                    ? "text-green-500"
-                                                    : "text-gray-300"
-                                                    }`}
-                                            />
-                                        </label>
+                                        <PaymentOption
+                                            name="PayMaya"
+                                            value="PayMaya"
+                                            icon={{
+                                                component: (
+                                                    <FaCcPaypal className="text-2xl text-white" />
+                                                ),
+                                                bgColor: "bg-green-500",
+                                                textColor: "text-green-500",
+                                            }}
+                                            bgClass={paymayaBgClass}
+                                            paymentMethod={data.payment_method}
+                                            onPaymentChange={
+                                                handlePaymentChange
+                                            }
+                                        />
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
                 </CustomerContainer>
-            </div >
-        </CustomerLayout >
+            </div>
+        </CustomerLayout>
     );
 }
