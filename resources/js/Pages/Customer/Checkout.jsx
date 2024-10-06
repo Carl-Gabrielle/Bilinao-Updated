@@ -29,7 +29,6 @@ export default function Checkout({ auth, product }) {
     const [selectedCityMunicipality, setSelectedCityMunicipality] =
         useState("");
     const [selectedBarangay, setSelectedBarangay] = useState("");
-
     useEffect(() => {
         axios
             .get("https://psgc.cloud/api/regions")
@@ -65,6 +64,37 @@ export default function Checkout({ auth, product }) {
         1900000000: "mindanao", // Bangsamoro Autonomous Region In Muslim Mindanao (BARMM)
     };
 
+    const [products, setProducts] = useState([]);
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const product_id = urlParams.get('product_id');
+        const qty = urlParams.get('quantity');
+
+        setProducts([{ product_id, qty }]);
+    }, []);
+
+    const { errors, post, data, setData } = useForm({
+        payment_method: "Gcash",
+        shipping_address: '',
+        shipping_fee: '',
+        amount: '',
+        name: user.name,
+        phone_no: user.phone_number,
+        landmark: '',
+        products: []
+    });
+
+    useEffect(() => {
+        if (products.length > 0) {
+            setData('products', products.map((item) => ({
+                product_id: item.product_id,
+                qty: item.qty,
+            })));
+        }
+    }, [products]);
+
+
+
     const [shippingFee, setShippingFee] = useState(0);
 
     const calculateShippingFee = (regionCode, weight) => {
@@ -77,13 +107,11 @@ export default function Checkout({ auth, product }) {
 
         if (matchingRange) {
             setShippingFee(matchingRange[shippingRegion]);
+            setData('shipping_fee', shippingFee)
         } else {
             setShippingFee(0); // If no range found, default to 0
         }
     };
-    // console.log('shipping data', shipping_data)
-    // console.log('current product data', product)
-    console.log("shippinh fee is ", shippingFee);
     useEffect(() => {
         if (selectedRegion) {
             calculateShippingFee(selectedRegion, product.weight);
@@ -143,23 +171,52 @@ export default function Checkout({ auth, product }) {
             0
         );
     };
-
+    const [formattedTotal, setFormattedTotal] = useState(0);
     const total = (total_amount, shipping_fee) => {
         const sum = total_amount + shipping_fee;
         return parseFloat(sum.toFixed(2));
     };
+    const calculateAndSetFormattedTotal = () => {
+        const productTotal = calculateTotal();
+        const totalAmount = total(productTotal, shippingFee);
 
-    const { errors, post, data, setData } = useForm({
-        payment_method: "Gcash",
-    });
+        const formatted = totalAmount.toLocaleString(undefined, {
+            minimumFractionDigits: 2,
+            maximumFractionDigits: 2
+        });
+
+        setFormattedTotal(formatted);
+    }
+
+    useEffect(() => {
+        calculateAndSetFormattedTotal();
+    }, [shippingFee]);
+
+
+    useEffect(() => {
+        setData('amount', formattedTotal);
+    }, [formattedTotal])
+
+    const [shippingAddress, setShippingAddress] = useState("");
+    const [region, setRegion] = useState();
+    const [province, setProvince] = useState();
+    const [city, setCity] = useState();
+    const [barangay, setBarangay] = useState();
+
+    useEffect(() => {
+        setShippingAddress(`${region}, ${province}, ${city}, ${barangay}`);
+        setData("shipping_address", shippingAddress);
+    }, [region, province, city, barangay]);
 
     const handlePaymentChange = (event) => {
         setData("payment_method", event.target.value);
     };
 
+
     const handleCheckout = () => {
-        post(route("store.checkout"));
+        post(route("store.checkout", data));
     };
+
     const gcashBgClass =
         data.payment_method === "Gcash"
             ? "bg-blue-100 border-0 hover:bg-blue-100"
@@ -168,6 +225,10 @@ export default function Checkout({ auth, product }) {
         data.payment_method === "PayMaya"
             ? "bg-green-100 hover:bg-green-100  border-0"
             : "";
+
+    useEffect(() => {
+        setData('shipping_fee', shippingFee)
+    }, [shippingFee])
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
@@ -203,8 +264,10 @@ export default function Checkout({ auth, product }) {
                                     </label>
                                     <select
                                         value={selectedRegion}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setSelectedRegion(e.target.value)
+                                            setRegion(regions.find(region => region.code === e.target.value)?.name)
+                                        }
                                         }
                                         className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar custom-dropdown text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
@@ -232,9 +295,10 @@ export default function Checkout({ auth, product }) {
                                     </label>
                                     <select
                                         value={selectedProvince}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setSelectedProvince(e.target.value)
-                                        }
+                                            setProvince(provinces.find(province => province.code === e.target.value)?.name)
+                                        }}
                                         className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
@@ -263,10 +327,10 @@ export default function Checkout({ auth, product }) {
                                     </label>
                                     <select
                                         value={selectedCityMunicipality}
-                                        onChange={(e) =>
-                                            setSelectedCityMunicipality(
-                                                e.target.value
-                                            )
+                                        onChange={(e) => {
+                                            setSelectedCityMunicipality(e.target.value)
+                                            setCity(citiesMunicipalities.find(city => city.code === e.target.value)?.name)
+                                        }
                                         }
                                         className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
@@ -298,8 +362,10 @@ export default function Checkout({ auth, product }) {
                                     </label>
                                     <select
                                         value={selectedBarangay}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setSelectedBarangay(e.target.value)
+                                            setBarangay(barangays.find(brgy => brgy.code === e.target.value)?.name)
+                                        }
                                         }
                                         className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
@@ -333,7 +399,7 @@ export default function Checkout({ auth, product }) {
                                 <textarea
                                     id="landmark"
                                     value={billingDetails.landmark}
-                                    onChange={handleInputChange}
+                                    onChange={e => setData('landmark', e.target.value)}
                                     placeholder="ex. Alabama St. in front of  John Doe Shop."
                                     className="w-full h-32 px-4 py-3 bg-transparent border border-gray-500 rounded-md placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                 />
@@ -426,20 +492,24 @@ export default function Checkout({ auth, product }) {
                                         <span>Total</span>
                                         <span>
                                             <FaPesoSign className="inline-block" />
-                                            {total(
+                                            {/* {total(
                                                 calculateTotal(),
                                                 shippingFee
                                             ).toLocaleString(undefined, {
                                                 minimumFractionDigits: 2,
                                                 maximumFractionDigits: 2,
-                                            })}
+                                            })} */}
+                                            {
+                                                formattedTotal
+                                            }
                                         </span>
                                     </div>
                                 </div>
                                 <div className="p-6 border border-t bg-slate-50 rounded-b-3xl">
                                     <button
+                                        disabled={data.landmark === '' || data.shipping_address == ' '}
                                         onClick={() => handleCheckout()}
-                                        className="w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50"
+                                        className={`w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50 ${data.landmark === '' || data.shipping_address == ' ' ? 'cursor-not-allowed' : 'hover:bg-amber-600 duration-200'}`}
                                     >
                                         Place Order
                                     </button>
@@ -473,12 +543,11 @@ export default function Checkout({ auth, product }) {
                                                 GCash
                                             </div>
                                             <HiOutlineCheckCircle
-                                                className={`text-xl ${
-                                                    data.payment_method ===
+                                                className={`text-xl ${data.payment_method ===
                                                     "Gcash"
-                                                        ? "text-blue-500"
-                                                        : "text-gray-300"
-                                                }`}
+                                                    ? "text-blue-500"
+                                                    : "text-gray-300"
+                                                    }`}
                                             />
                                         </label>
                                         {/* PayMaya Payment Option */}
@@ -503,12 +572,11 @@ export default function Checkout({ auth, product }) {
                                                 PayMaya
                                             </div>
                                             <HiOutlineCheckCircle
-                                                className={`text-xl ${
-                                                    data.payment_method ===
+                                                className={`text-xl ${data.payment_method ===
                                                     "PayMaya"
-                                                        ? "text-green-500"
-                                                        : "text-gray-300"
-                                                }`}
+                                                    ? "text-green-500"
+                                                    : "text-gray-300"
+                                                    }`}
                                             />
                                         </label>
                                     </div>
@@ -517,7 +585,7 @@ export default function Checkout({ auth, product }) {
                         </div>
                     </div>
                 </CustomerContainer>
-            </div>
-        </CustomerLayout>
+            </div >
+        </CustomerLayout >
     );
 }

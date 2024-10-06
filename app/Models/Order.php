@@ -22,4 +22,9 @@ class Order extends Model
         'payment_src_id',
     ];
     use HasFactory;
+
+    public function orderItems()
+    {
+        return $this->hasMany(OrderItem::class, 'order_id');
+    }
 }
