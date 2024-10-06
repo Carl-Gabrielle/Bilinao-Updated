@@ -21,4 +21,9 @@ class OrderItem extends Model
         'delivered_date'
     ];
     use HasFactory;
+
+    public function order()
+    {
+        return $this->belongsTo(Order::class, 'order_id');
+    }
 }
