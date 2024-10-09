@@ -49,28 +49,7 @@ class CartController extends Controller
     /**
      * Store a newly created resource in storage.
      */
-    // public function buyNow(Request $request)
-    // {
-    //     // Validate the incoming request data
-    //     $validatedData = $request->validate([
-    //         'product_id' => 'required|exists:products,id',
-    //         'quantity' => 'required|integer|min:1',
-    //     ]);
-
-    //     // Get the authenticated user
-    //     $user = Auth::user();
-    //     $product_id = $validatedData['product_id'];
-    //     $quantity = $validatedData['quantity'];
-
-    //     // Find the product and get its details
-    //     $product = Product::with('images')->find($product_id); // Assuming the product has images relation
-
-    //     // Redirect to the checkout page with the product details
-    //     return Inertia::render('Customer/Checkout', [
-    //         'product' => $product,
-    //         'quantity' => $quantity, // Pass the quantity for reference on the checkout page
-    //     ]);
-    // }
+ 
     public function checkoutPreview(Request $request)
     {
         $shippingData = Shipping::all();
@@ -91,7 +70,7 @@ class CartController extends Controller
             'weight' => $product->weight
         ];
 
-        return Inertia::render('Customer/Checkout', [
+        return Inertia::render('Customer/CheckoutTest', [
             'product' => $productDetails,
             'shipping_data' => $shippingData,
         ]);
@@ -109,7 +88,7 @@ class CartController extends Controller
             'quantity' => 'required|integer|min:1',
         ]);
 
-        $user = auth()->user();
+        $user = Auth::user();
         $product_id = $validatedData['product_id'];
         $product = Product::find($product_id);
         $quantity = $validatedData['quantity'];
@@ -137,7 +116,7 @@ class CartController extends Controller
             'quantity' => 'required|integer|min:1',
         ]);
 
-        $user = auth()->user();
+        $user = Auth::user();
         $quantity = $validatedData['quantity'];
 
         $cart = Cart::where('user_id', $user->id)

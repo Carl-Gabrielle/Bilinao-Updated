@@ -18,9 +18,7 @@ class CustomerController extends Controller
     public function completeOrders(){
         return Inertia::render('Customer/CompleteOrders');
     }
-    public  function orders(){
-        return Inertia::render('Customer/Orders');
-    }
+    
     public function index()
     {
         $query = Category::query();

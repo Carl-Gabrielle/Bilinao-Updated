@@ -3,7 +3,7 @@ import React from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import logo from "../Illustrations/LOGO.png";
 
-const Received = () => {
+export default function Received() {
     return (
         <div className="px-1">
             {/* <h2 className="text-md font-semibold text-slate-800">
@@ -79,6 +79,4 @@ const Received = () => {
             </div>
         </div>
     );
-};
-
-export default Received;
+}

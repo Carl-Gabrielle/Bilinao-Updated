@@ -6,6 +6,7 @@ import {
     MdOutlineKeyboardArrowDown,
     MdOutlineRemoveShoppingCart,
 } from "react-icons/md";
+import ProductLink from "@/Components/ProductLink";
 import { FaStar, FaRegHeart, FaStarHalfAlt } from "react-icons/fa";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
 import { FaPesoSign, FaRegStar, FaLink } from "react-icons/fa6";
@@ -54,6 +55,7 @@ export default function ProductDetails({
             return () => clearTimeout(timer);
         }
     }, [success]);
+
     const imageRef = useRef(null);
 
     useEffect(() => {
@@ -215,10 +217,10 @@ export default function ProductDetails({
                                                 <FaRegHeart />
                                             </div>
                                         </Link>
-
-                                        <div className="border border-slate-500  p-2 rounded-full shadow-md">
-                                            <FaLink />
-                                        </div>
+                                        <ProductLink
+                                            productId={product.id}
+                                            success={success}
+                                        />
                                     </div>
                                 )}
                                 <div className="py-4 w-full flex flex-col sm:flex-row gap-4">

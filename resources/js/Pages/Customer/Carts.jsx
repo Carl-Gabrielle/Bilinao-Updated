@@ -260,3 +260,5 @@ export default function Carts({ auth, carts, cartCount }) {
         </CustomerLayout>
     );
 }
+{
+}

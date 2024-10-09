@@ -19,8 +19,8 @@ return new class extends Migration {
             $table->string('product_name');
             $table->string('type');
             $table->string('qty');
-            $table->float('price', 2);
-            $table->float('total_price', 2);
+            $table->decimal('price', 10,2);
+            $table->decimal('total_price', 10,2);
             $table->timestamp('processing_date')->nullable();
             $table->timestamp('picked_date')->nullable();
             $table->timestamp('shipped_date')->nullable();

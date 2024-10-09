@@ -22,6 +22,9 @@ class SellerOrderController extends Controller
     public function completedOrders (){
         return Inertia::render('Seller/CompletedOrders');
     }
+    public function orderDetails (){
+        return Inertia::render('Seller/OrderDetails');
+    }
     public function index()
     {
         //

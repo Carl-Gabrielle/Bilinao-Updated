@@ -4,7 +4,7 @@ import CustomerLayout from "@/Layouts/CustomerLayout";
 import { FaPesoSign } from "react-icons/fa6";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
-import PaymentOption from "@/Components/Paymentoption";
+import PaymentOption from "@/Components/PaymentOption";
 import Banner from "@/Components/Banner";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
@@ -531,7 +531,6 @@ export default function Checkout({ auth, product }) {
                                         <span>Total</span>
                                         <span>
                                             <FaPesoSign className="inline-block" />
-
                                             {formattedTotal}
                                         </span>
                                     </div>

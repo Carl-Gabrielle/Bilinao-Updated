@@ -65,7 +65,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     </div>
                 </div>
             </div>
-            <nav className=" bg-slate-300 bg-opacity-60 backdrop-blur-lg  fixed w-full z-30 mt-10 shadow-md  border-b border-slate-400">
+            <nav className="  bg-slate-100 bg-opacity-40 backdrop-blur-lg shadow-md     fixed w-full z-30 mt-10 ">
                 <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
                     <div className="flex justify-between h-16 items-center ">
                         {/* Logo Section */}
@@ -87,7 +87,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             </Link>
                             <Link
                                 href="/customer"
-                                className="shrink-0 block sm:block  md:hidden bg-slate-800 px-3 py-2 rounded-md text-slate-100"
+                                className="shrink-0 block sm:block  md:hidden bg-primary px-3 py-2 rounded-md text-slate-100"
                             >
                                 <span>BN</span>
                             </Link>
@@ -129,9 +129,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <div className="relative flex items-center space-x-2 ">
                                 <Dropdown>
                                     <Dropdown.Trigger>
-                                        <div className="relative ml-2 flex items-center  text-slate-900 cursor-pointer  px-2 py-2 hover:text-slate-50  hover:bg-slate-800 rounded-full transition-colors duration-300 ease-in-out">
+                                        <div className="relative ml-2 flex items-center  text-slate-900 cursor-pointer  px-2 py-2 hover:text-slate-50  hover:bg-primary rounded-full transition-colors duration-300 ease-in-out">
                                             <MdNotificationsNone className="size-5 " />
-                                            <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-white bg-slate-800 rounded-full">
+                                            <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-white bg-primary rounded-full">
                                                 8
                                             </span>
                                         </div>
@@ -141,7 +141,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             <h1 className="text-md font-semibold text-slate">
                                                 Notifications
                                             </h1>
-                                            <div className="bg-slate-800 text-white px-3 rounded-md py-1">
+                                            <div className="bg-primary text-white px-3 rounded-md py-1">
                                                 <span>3 new</span>
                                             </div>
                                         </div>
@@ -189,11 +189,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 {/* Cart Icon */}
                                 <Link
                                     href={route("customer.carts")}
-                                    className="relative flex items-center text-slate-900 cursor-pointer   px-2 py-2 hover:text-slate-50  hover:bg-slate-800 rounded-full transition-colors duration-300 ease-in-out"
+                                    className="relative flex items-center text-slate-900 cursor-pointer   px-2 py-2 hover:text-slate-50  hover:bg-primary rounded-full transition-colors duration-300 ease-in-out"
                                 >
                                     <GrCart className="size-5    " />
                                     {cartCount > 0 && (
-                                        <span className="absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-slate-50 bg-slate-800 rounded-full">
+                                        <span className="absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-slate-50 bg-primary rounded-full">
                                             {cartCount}
                                         </span>
                                     )}
@@ -201,11 +201,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 {/* Wishlist */}
                                 <Link
                                     href={route("customer.myWishlists")}
-                                    className="relative flex items-center text-slate-900 cursor-pointer    px-2 py-2 hover:text-slate-50  hover:bg-slate-800 rounded-full transition-colors duration-300 ease-in-out"
+                                    className="relative flex items-center text-slate-900 cursor-pointer    px-2 py-2 hover:text-slate-50  hover:bg-primary rounded-full transition-colors duration-300 ease-in-out"
                                 >
                                     <FaRegHeart className="size-5" />
                                     {wishlistCount > 0 && (
-                                        <span className=" absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-slate-50 bg-slate-800 rounded-full">
+                                        <span className=" absolute left-6 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-slate-50 bg-primary rounded-full">
                                             {wishlistCount}
                                         </span>
                                     )}
@@ -217,7 +217,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     <Dropdown.Trigger>
                                         <button
                                             type="button"
-                                            className="ml-2 flex items-center justify-center px-3 py-2  text-xs whitespace-nowrap font-medium rounded-md text-slate-900 bg-slate-200 hover:bg-slate-50  focus:outline-none transition-colors duration-150 ease-in-out "
+                                            className="ml-2 flex items-center justify-center px-3 py-2  text-xs whitespace-nowrap font-medium rounded-md text-slate-900 border border-slate-500 focus:outline-none transition-colors duration-150 ease-in-out "
                                         >
                                             <FaRegUser className="mr-2" />
                                             <span>
@@ -269,7 +269,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             href={route("logout")}
                                             method="post"
                                             as="button"
-                                            className="bg-slate-800 text-white flex items-center  justify-center rounded-md "
+                                            className="bg-primary text-white flex items-center  justify-center rounded-md "
                                         >
                                             Log Out
                                         </Dropdown.Link>

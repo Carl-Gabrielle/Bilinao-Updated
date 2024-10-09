@@ -16,7 +16,7 @@ export default {
                 sans: ["Figtree", ...defaultTheme.fontFamily.sans],
             },
             colors: {
-                primary: "#548235",
+                primary: "#1F2937",
                 secondary: "#E4F2D0",
             },
             backdropBlur: {

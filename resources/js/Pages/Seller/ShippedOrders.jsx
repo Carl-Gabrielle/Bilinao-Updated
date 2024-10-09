@@ -13,7 +13,7 @@ export default function ShippedOrders({ auth }) {
                 <div className="px-7 py-8 ">
                     <div className="w-full ">
                         <h1 className="text-xl  font-semibold text-gray-800 mb-0">
-                            Shipped out Orders
+                            Shipped Orders
                         </h1>
                         <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg ">
                             <table className="min-w-full">
@@ -55,8 +55,11 @@ export default function ShippedOrders({ auth }) {
                                             </span>
                                         </td>
                                         <td className="py-4 px-6 text-slate-800">
-                                            <Link>
-                                                {" "}
+                                            <Link
+                                                href={route(
+                                                    "seller.OrderDetails"
+                                                )}
+                                            >
                                                 <button className="px-4 py-1 flex items-center  bg-slate-800 text-slate-50 rounded-md">
                                                     <AiOutlineEye className="mr-2" />
                                                     <span>View</span>

@@ -83,7 +83,6 @@ class CategoryController extends Controller
         return to_route('category.index')
         ->with('success',"Project  \"$category->name\" Updated Successfully");
     }
-
     /**
      * Remove the specified resource from storage.
      */

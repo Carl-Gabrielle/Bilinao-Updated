@@ -1,16 +1,13 @@
 import React, { useState } from "react";
 import { Head } from "@inertiajs/react";
-import { LuTruck } from "react-icons/lu";
-import { TbCurrencyPeso } from "react-icons/tb";
-import { FaRegCheckCircle } from "react-icons/fa";
-import { FiBox } from "react-icons/fi";
-import { MdOutlinePendingActions } from "react-icons/md";
 import Banner from "@/Components/Banner";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import CustomerContainer from "@/Components/CustomerContainer";
-import ToPay from "./Topay";
+import OrderStatus from "./OrderStatus";
+import ToPay from "./ToPay";
 import ToShip from "./ToShip";
 import Pending from "./Pending";
+import ToReceive from "./ToReceive";
 import Received from "./Received";
 
 const Orders = ({ auth }) => {
@@ -28,10 +25,12 @@ const Orders = ({ auth }) => {
                 return <ToPay />;
             case "To Ship":
                 return <ToShip />;
+            case "To Receive":
+                return <ToReceive />;
             case "Received":
                 return <Received />;
             default:
-                return <ToPay />;
+                return <Pending />;
         }
     };
 
@@ -51,58 +50,37 @@ const Orders = ({ auth }) => {
                     <div className="grid grid-cols-2 md:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
                         <OrderStatus
                             title="Pending"
-                            icon={<MdOutlinePendingActions size={16} />}
                             isActive={activeStatus === "Pending"}
                             onClick={() => handleStatusClick("Pending")}
                         />
                         <OrderStatus
                             title="To Pay"
-                            icon={<TbCurrencyPeso size={16} />}
                             isActive={activeStatus === "To Pay"}
                             onClick={() => handleStatusClick("To Pay")}
                         />
                         <OrderStatus
                             title="To Ship"
-                            icon={<LuTruck size={16} />}
                             isActive={activeStatus === "To Ship"}
                             onClick={() => handleStatusClick("To Ship")}
                         />
                         <OrderStatus
-                            title="To  Receive"
-                            icon={<FiBox size={16} />}
+                            title="To Receive"
                             isActive={activeStatus === "To Receive"}
                             onClick={() => handleStatusClick("To Receive")}
                         />
                         <OrderStatus
                             title="Received"
-                            icon={<FaRegCheckCircle size={16} />}
                             isActive={activeStatus === "Received"}
                             onClick={() => handleStatusClick("Received")}
                         />
                     </div>
 
-                    <div className="bg-slate-50  bg-opacity-65 backdrop-blur-lg p-6 rounded-lg shadow-md text-slate-900">
+                    <div className="bg-slate-50 bg-opacity-65 backdrop-blur-lg p-6 rounded-lg shadow-md text-slate-900">
                         {renderOrderDetails()}
                     </div>
                 </CustomerContainer>
             </div>
         </CustomerLayout>
-    );
-};
-
-const OrderStatus = ({ title, icon, isActive, onClick }) => {
-    return (
-        <div
-            className={`flex  justify-center items-center text-center  p-3 rounded-md cursor-pointer transition-colors duration-300 ${
-                isActive
-                    ? "bg-slate-800 text-white"
-                    : "bg-slate-50  bg-opacity-60 backdrop-blur-lg hover:bg-slate-100"
-            }`}
-            onClick={onClick}
-        >
-            <span className="mr-1"> {icon}</span>
-            <span className="mt-1 text-xs font-medium">{title}</span>
-        </div>
     );
 };
 

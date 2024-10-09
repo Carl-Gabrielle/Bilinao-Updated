@@ -24,7 +24,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
     return (
         <div className="min-h-screen bg-slate-300">
             {/* NAVBAR */}
-            <div className="h-14 bg-slate-50 bg-opacity-80  backdrop-blur-lg  z-10  fixed top-0 w-full flex items-center justify-between px-6">
+            <div className="h-14 bg-slate-50 bg-opacity-30 backdrop-blur-md shadow-md    z-10  fixed top-0 w-full flex items-center justify-between px-6">
                 <img src={Logo} className="w-24" />
                 <div className="max-w-6xl mx-auto px-6 w-full flex justify-between items-center">
                     <div className="flex items-center">

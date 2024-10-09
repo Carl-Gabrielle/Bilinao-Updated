@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\OrderItem;
 use App\Models\Product;
@@ -16,14 +16,14 @@ class CheckoutController extends Controller
             "shipping_address" => "required",
             "landmark" => "required",
         ]);
-
+        
         try {
             DB::beginTransaction();
             // Create order
             $order = Order::create([
-                "user_id" => Auth()->id(),
+                "user_id" => Auth::id(),
                 "name" => $request->name,
-                'email' => Auth()->user()->email,
+                'email' => Auth::user()->email,
                 'remarks' => 'pending',
                 'phone' => $request->phone_no,
                 'shipping_address' => $request->shipping_address,
@@ -49,14 +49,12 @@ class CheckoutController extends Controller
             }
             // Commit the transaction
             DB::commit();
-
             return redirect()->route('customer.completeOrders');
-
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
+            Log::error('Checkout Error: ' . $e->getMessage());
             return back()->with("error", $e->getMessage());
         }
     }
-
 }

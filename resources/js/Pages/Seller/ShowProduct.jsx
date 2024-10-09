@@ -177,7 +177,11 @@ export default function ShowProduct({ success }) {
                             />
                         </div>
                     ) : (
-                        <p className="text-gray-600">No products found.</p>
+                        <p className="text-gray-600 text-sm text-center">
+                            {" "}
+                            No products found. Start showcasing your amazing
+                            creations by adding your first product!🚀
+                        </p>
                     )}
                 </div>
             </div>

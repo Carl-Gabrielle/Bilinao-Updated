@@ -3,7 +3,7 @@ import React from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import logo from "../Illustrations/LOGO.png";
 
-const ToShip = () => {
+export default function ToShip() {
     return (
         <div className="px-1">
             {/* <h2 className="text-md font-semibold text-slate-800">
@@ -73,8 +73,8 @@ const ToShip = () => {
                             <button className="px-3 py-1 border border-slate-400 rounded-md text-sm font-medium">
                                 Cancel Order
                             </button>
-                            <button className="px-3 py-1  rounded-md text-slate-800 bg-slate-500 bg-opacity-30 backdrop-blur-md  text-sm font-medium">
-                                Complete Payment
+                            <button className="px-3 py-1  rounded-md text-slate-100 bg-slate-800   text-sm font-medium">
+                                Track Order
                             </button>
                         </div>
                     </div>
@@ -82,6 +82,4 @@ const ToShip = () => {
             </div>
         </div>
     );
-};
-
-export default ToShip;
+}

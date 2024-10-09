@@ -13,21 +13,21 @@ export default function CompletedOrder({ auth }) {
             <Head title="Order Completed " />
             <div className="min-h-screen  pt-20 pb-1  ">
                 <Banner title="Order Completed" />
-                <CustomerContainer className="mt-32  ">
+                <CustomerContainer>
                     <h1>FRONTEND SAMPLE </h1>
-                    <div className="flex items-center justify-center flex-col relative py-10">
+                    <div className="flex items-center justify-center flex-col ">
                         <div className="w-72 relative flex flex-col items-center mb-5">
                             <img
                                 src={successImg}
                                 alt="Success Image"
-                                className="size-16 animate-bounce"
+                                className="size-16 "
                             />
-                            <TbArrowCurveRight className="absolute bottom-0 left-20 rotate-45 size-5 text-slate-800" />
-                            <TbArrowCurveRight className="absolute top-5 right-20 -rotate-90 size-5 text-slate-800" />
-                            <FaStar className="absolute top-5 right-10 -rotate-90 size-5 text-slate-800" />
-                            <FaStar className="absolute top-5 left-10 -rotate-45 size-5 text-slate-800" />
+                            <TbArrowCurveRight className="absolute bottom-0 left-20 rotate-45 size-5 text-primary" />
+                            <TbArrowCurveRight className="absolute top-5 right-20 -rotate-90 size-5 text-primary" />
+                            <FaStar className="absolute top-5 right-10 -rotate-90 size-5 text-primary" />
+                            <FaStar className="absolute top-5 left-10 -rotate-45 size-5 text-primary" />
                         </div>
-                        <h1 className="font-bold text-2xl mb-6 text-slate-800 tracking-widest text-center">
+                        <h1 className="font-bold text-2xl mb-6 text-primary tracking-widest text-center">
                             Thank you, for your purchase!
                         </h1>
                         <p className="text-sm tracking-wide text-center">
@@ -36,36 +36,44 @@ export default function CompletedOrder({ auth }) {
                         <p className="text-sm tracking-wide text-center">
                             Here are the details
                         </p>
-
                         <div className="mt-10 w-full px-4 sm:px-10 md:px-20 lg:px-40 xl:px-60">
-                            <div className="bg-slate-800 rounded-t-2xl p-4">
+                            <div className="bg-slate-800 rounded-t-2xl p-4 flex items-center justify-between text-sm px-6">
                                 <span className="text-slate-50">
-                                    Order Summary
+                                    Order Details
+                                </span>
+                                <span className="text-slate-50">
+                                    Order #1132
                                 </span>
                             </div>
-                            <div className="bg-slate-50 bg-opacity-60 backdrop-blur-lg text-sm rounded-b-2xl">
-                                <div className="pt-5 px-6">
-                                    <div className="flex justify-between items-start mb-4">
-                                        <p>Order Number</p>
-                                        <p>#orderId</p>
+                            <div className="bg-white bg-opacity-70 backdrop-blur-lg text-sm rounded-b-xl shadow-md">
+                                <div className="py-5 px-6">
+                                    <div className="flex justify-between items-start text-base font-semibold text-gray-800">
+                                        <p>Contact Information</p>
+                                        <p>Payment Method</p>
                                     </div>
-                                    <div className="flex justify-between items-start mb-4">
-                                        <p>Date</p>
-                                        <p>Oct. 21, 2024</p>
+                                    <div className="flex justify-between items-start mb-4 text-gray-500 text-sm">
+                                        <p>09661345617</p>
+                                        <p className="text-right">
+                                            GCash (OP) -{" "}
+                                            <span className="font-semibold text-gray-700">
+                                                &#8369;954
+                                            </span>
+                                        </p>
                                     </div>
-                                    <div className="flex justify-between items-start mb-4">
-                                        <p>Items Purchased</p>
-                                        <p>2 Total items</p>
+                                    <div className="flex justify-between items-start text-base font-semibold text-gray-800">
+                                        <p>Billing Details</p>
+                                        <p>Landmark</p>
                                     </div>
-                                </div>
-                                <div className="flex justify-between items-start mb-4 bg-slate-300 px-6 py-2">
-                                    <p>Total</p>
-                                    <p>&#8369; 450</p>
-                                </div>
-                                <div className="px-6 py-2 pb-4">
-                                    <button className="py-2 w-full flex items-center justify-center rounded-full text-slate-50 font-semibold bg-slate-800">
-                                        View Order Details
-                                    </button>
+                                    <div className="flex justify-between items-start text-gray-500 text-sm">
+                                        <p className="flex-1">
+                                            Region 1, Pangasinan, City of
+                                            Alaminos, Poblacion
+                                        </p>
+                                        <p className="flex-1 text-right break-words">
+                                            Near 7/11 Nepo Mall, at the corner
+                                            of a street near the marketplace...
+                                        </p>
+                                    </div>
                                 </div>
                             </div>
                         </div>

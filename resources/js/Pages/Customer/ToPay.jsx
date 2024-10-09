@@ -2,7 +2,7 @@
 import React from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import logo from "../Illustrations/LOGO.png";
-const ToPay = () => {
+export default function ToPay() {
     return (
         <div className="px-1">
             {/* <h2 className="text-md font-semibold text-slate-800">
@@ -81,6 +81,4 @@ const ToPay = () => {
             </div>
         </div>
     );
-};
-
-export default ToPay;
+}
