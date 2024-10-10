@@ -50,7 +50,7 @@ export default function ShippedOrders({ auth }) {
                                             <FaPesoSign className="mr-2" />1
                                         </td>
                                         <td className="py-4 px-6 text-slate-800">
-                                            <span className="bg-blue-200 text-blue-600 text-medium px-4 py-1 rounded-full">
+                                            <span className="bg-blue-200  text-blue-800 text-medium font-semibold px-2 py-0.5 rounded-md">
                                                 shipped out
                                             </span>
                                         </td>

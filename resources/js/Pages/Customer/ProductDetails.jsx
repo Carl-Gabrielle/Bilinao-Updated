@@ -63,6 +63,18 @@ export default function ProductDetails({
             applyFloatingAnimation(imageRef.current);
         }
     }, [selectedImage]);
+    const [actionType, setActionType] = useState(null); // Tracks 'cart' or 'wishlist'
+
+    // Function to handle adding to cart
+    const handleAddToCart = async (productId) => {
+        setActionType("cart");
+    };
+
+    // Function to handle adding to wishlist
+    const handleAddToWishlist = async (productId) => {
+        setActionType("wishlist");
+    };
+
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen pt-20 pb-1">
@@ -74,27 +86,37 @@ export default function ProductDetails({
                 />
                 <main>
                     {isVisible && success && (
-                        <div id="toast" className="fixed bottom-0  z-50 w-full">
-                            <div className="bg-slate-700 bg-opacity-60 backdrop-blur-lg px-6 py-5  shadow-inner flex flex-col gap-3 sm:flex-row items-center justify-between space-x-3 rounded-t-3xl">
-                                <div className="flex items-center space-x-4 bg-slate-100  bg-opacity-80 backdrop-blur-lg  py-2 px-4 rounded-md ">
-                                    <div className="sm:size-6  size-4 bg-green-500 flex items-center justify-center rounded-full">
-                                        <IoCheckmarkSharp className="text-slate-100  " />
+                        <div id="toast" className="fixed bottom-0 z-50 w-full">
+                            <div className="bg-slate-700 bg-opacity-60 backdrop-blur-lg px-6 py-5 shadow-inner flex flex-col gap-3 sm:flex-row items-center justify-between space-x-3 rounded-t-3xl">
+                                <div className="flex items-center space-x-4 bg-slate-100 bg-opacity-80 backdrop-blur-lg py-2 px-4 rounded-md">
+                                    <div className="sm:size-6 size-4 bg-green-500 flex items-center justify-center rounded-full">
+                                        <IoCheckmarkSharp className="text-slate-100" />
                                     </div>
-                                    <span className="sm:text-sm text-xs font-medium  ">
+                                    <span className="sm:text-sm text-xs font-medium">
                                         <span>{success}</span>
                                     </span>
                                 </div>
                                 <div>
-                                    <Link href={route("customer.carts")}>
-                                        <button className="bg-slate-100 text-sm   bg-opacity-80 backdrop-blur-lg flex items-center   font-medium  px-6  py-2 rounded-full">
-                                            View Cart
-                                            <HiMiniArrowLongRight className=" ml-2" />
+                                    {/* Conditionally rendering the button based on actionType */}
+                                    <Link
+                                        href={route(
+                                            actionType === "cart"
+                                                ? "customer.carts"
+                                                : "customer.myWishlists"
+                                        )}
+                                    >
+                                        <button className="bg-slate-100 text-sm bg-opacity-80 backdrop-blur-lg flex items-center font-medium px-6 py-2 rounded-full">
+                                            {actionType === "cart"
+                                                ? "View Cart"
+                                                : "View Wishlists"}
+                                            <HiMiniArrowLongRight className="ml-2" />
                                         </button>
                                     </Link>
                                 </div>
                             </div>
                         </div>
                     )}
+
                     <CustomerContainer>
                         <Link
                             href={route("customer.products")}
@@ -212,6 +234,9 @@ export default function ProductDetails({
                                             data={{
                                                 product_id: product.id,
                                             }}
+                                            onClick={() =>
+                                                handleAddToWishlist(product.id)
+                                            }
                                         >
                                             <div className="border border-slate-500 p-2 rounded-full shadow-md">
                                                 <FaRegHeart />
@@ -248,6 +273,9 @@ export default function ProductDetails({
                                                     product_id: product.id,
                                                     quantity: quantity,
                                                 }}
+                                                onClick={() =>
+                                                    handleAddToCart(product.id)
+                                                }
                                             >
                                                 <button className=" sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-white  bg-slate-800 rounded-full shadow-inner lg:mt-0">
                                                     Add to Cart
@@ -516,6 +544,11 @@ export default function ProductDetails({
                                                                 relatedProduct.id,
                                                             quantity: 1,
                                                         }}
+                                                        onClick={() =>
+                                                            handleAddToCart(
+                                                                product.id
+                                                            )
+                                                        }
                                                     >
                                                         <div className="bg-slate-800 px-3 py-3 rounded-full text-white">
                                                             <GrCart size={15} />

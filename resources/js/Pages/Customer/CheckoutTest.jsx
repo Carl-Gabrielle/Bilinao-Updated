@@ -384,7 +384,6 @@ export default function Checkout({ auth, carts }) {
                                                 }`}
                                             />
                                         </label>
-
                                         {/* PayMaya Payment Option */}
                                         <label
                                             className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${

@@ -62,7 +62,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
         Route::get('/customerProfile', [CustomerController::class, 'profile'])->name('customer.customerProfile');
-        Route::get('/customer/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/products', [ProductController::class, 'products'])->name('products.list');
         Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
@@ -89,6 +88,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/myWishlists', [WishlistsController::class, 'myWishlists'])->name('customer.myWishlists');
         Route::post('/checkout', [CheckoutController::class, 'store'])->name('store.checkout');
         Route::post('/wishlists', [WishlistsController::class, 'storeWishlists'])->name('customer.storeWishlists');
+        Route::delete('/wishItem/{id}', [WishlistsController::class, 'destroy'])->name('wishItem.destroy');
     });
 });
 

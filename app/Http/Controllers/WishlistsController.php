@@ -34,4 +34,19 @@ class WishlistsController extends Controller
             ]);
         return redirect()->back()->with('success', "  {$product->name} has been added to your  favorites!");
     }
+    public function destroy($id)
+    {
+        $wishItem = Wishlists::where('id', $id)->where('user_id', Auth::id())->first();
+
+        if ($wishItem) {
+            $wishItem->delete();
+        }
+
+        $wishlists =Wishlists::with('product.images')->where('user_id', Auth::id())->get();
+
+        return Inertia::render('Customer/Wishlists', [
+            'wishlists' => $wishlists,
+            'success' => 'Item removed from cart.',
+        ]);
+    }
 }

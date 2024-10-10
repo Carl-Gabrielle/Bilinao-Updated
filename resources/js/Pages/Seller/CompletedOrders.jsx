@@ -50,7 +50,7 @@ export default function CompletedOrders({ auth }) {
                                             <FaPesoSign className="mr-2" />1
                                         </td>
                                         <td className="py-4 px-6 text-slate-800">
-                                            <span className="bg-green-200 text-green-600 text-medium px-4 py-1 rounded-full">
+                                            <span className="bg-green-200  text-green-800 text-medium font-semibold px-2 py-0.5 rounded-md">
                                                 completed
                                             </span>
                                         </td>

@@ -191,8 +191,8 @@ export default function Carts({ auth, carts, cartCount }) {
                                             Looks like you haven't added any
                                             products to your cart yet.
                                         </h1>
-                                        <div className="bg-slate-300 p-4 rounded-full">
-                                            <MdOutlineAddShoppingCart className="size-8 text-slate-700 " />
+                                        <div className="bg-slate-300 p-3 rounded-full">
+                                            <MdOutlineAddShoppingCart className="size-6 text-slate-700 " />
                                         </div>
                                     </div>
                                     <div className="flex items-center justify-center pt-5 w-full">
