@@ -37,7 +37,6 @@ export default function Wishlists({ auth, wishlists, product }) {
                             </h1>
                             <hr className="flex-grow border border-slate-800" />
                         </div>
-
                         <div className="p-6 shadow-lg rounded-2xl bg-slate-50 bg-opacity-60 backdrop-blur-lg">
                             {wishlistsItems.length > 0 ? (
                                 wishlistsItems.map((wishlists) => (
@@ -45,11 +44,18 @@ export default function Wishlists({ auth, wishlists, product }) {
                                         key={wishlists.id}
                                         className="flex items-center border border-slate-400 p-2 rounded-lg  "
                                     >
-                                        <img
-                                            src={`/storage/${wishlists.product.images[0].image_path}`}
-                                            alt={wishlists.product.name}
-                                            className="size-16 object-cover rounded-md"
-                                        />
+                                        <Link
+                                            href={route(
+                                                "product.show",
+                                                wishlists.product.id
+                                            )}
+                                        >
+                                            <img
+                                                src={`/storage/${wishlists.product.images[0].image_path}`}
+                                                alt={wishlists.product.name}
+                                                className="size-16 object-cover rounded-md"
+                                            />
+                                        </Link>
                                         <div className="flex-1 ml-4 text-sm text-slate-800">
                                             <h3 className="font-semibold text-md">
                                                 {wishlists.product.name}
@@ -64,6 +70,7 @@ export default function Wishlists({ auth, wishlists, product }) {
                                                 })}
                                             </p>
                                         </div>
+
                                         <div className="flex items-center justify-center gap-4">
                                             {wishlists.product && (
                                                 <Link
@@ -76,7 +83,7 @@ export default function Wishlists({ auth, wishlists, product }) {
                                                                 .id,
                                                         quantity: 1,
                                                     }}
-                                                    className=" p-2 rounded-md bg-slate-300 transition-colors duration-200"
+                                                    className=" p-2 rounded-full bg-slate-300 transition-colors duration-200"
                                                 >
                                                     <MdOutlineAddShoppingCart className="text-slate-800 size-4" />
                                                 </Link>

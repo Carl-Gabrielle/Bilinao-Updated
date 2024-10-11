@@ -23,6 +23,8 @@ class SellerResource extends JsonResource
             'contact_number' => $this->contact_number,
             'email' => $this->email,
             'username' => $this->username,
+            'image_path' =>$this->image_path ? 
+            Storage::url($this->image_path) : '',
         ];
     }
 }

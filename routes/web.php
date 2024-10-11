@@ -34,6 +34,8 @@ Route::middleware('auth:seller')->group(function () {
     Route::get('seller/products', [ProductController::class, 'showProductsBySeller'])->name('seller.products.index');
     Route::get('seller/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('seller/profile', [SellerDashboardController::class, 'profile'])->name('seller.profile');
+    Route::get('seller/profileEdit', [SellerDashboardController::class, 'profileEdit'])->name('seller.profileEdit');
+    Route::put('seller/storeProfile', [SellerDashboardController::class, 'update'])->name('seller.storeProfile');
     Route::resource('products', ProductController::class);
     Route::get('/pendingOrders', [SellerOrderController::class, 'pendingOrders'])->name('seller.pendingOrders');
     Route::get('/processOrders', [SellerOrderController::class, 'processOrders'])->name('seller.processOrders');
@@ -62,6 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
         Route::get('/customerProfile', [CustomerController::class, 'profile'])->name('customer.customerProfile');
+        Route::get('/review', [CustomerController::class, 'review'])->name('customer.review');
         Route::get('/products', [ProductController::class, 'products'])->name('products.list');
         Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');

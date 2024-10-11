@@ -1,17 +1,11 @@
-// ToShip.jsx
 import React from "react";
 import { FaPesoSign } from "react-icons/fa6";
 import logo from "../Illustrations/LOGO.png";
+import { Link } from "@inertiajs/react";
 
 export default function Received() {
     return (
         <div className="px-1">
-            {/* <h2 className="text-md font-semibold text-slate-800">
-                Orders To Ship
-            </h2>
-            <p className="text-sm text-slate-600">
-                No orders to ship at this moment.
-            </p> */}
             <div>
                 <div className="flex items-center space-x-3">
                     <h2 className="text-md flex font-semibold text-slate-800">
@@ -70,9 +64,11 @@ export default function Received() {
                             </span>
                         </div>
                         <div className="pt-5 space-x-3 flex items-center justify-end">
-                            <button className="px-3 py-1  rounded-md text-slate-50 bg-slate-800  text-sm font-medium">
-                                Rate Product
-                            </button>
+                            <Link href={route("customer.review")}>
+                                <button className="px-3 py-1  rounded-md text-slate-50 bg-slate-800  text-sm font-medium">
+                                    Review
+                                </button>
+                            </Link>
                         </div>
                     </div>
                 </div>

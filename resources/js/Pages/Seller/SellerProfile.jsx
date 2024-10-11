@@ -46,15 +46,10 @@ export default function SellerProfile() {
                             {/* Profile Image */}
                             <div className="relative sm:mr-6">
                                 <img
-                                    src={
-                                        user.profile_photo_url ||
-                                        "/images/default-profile.png"
-                                    }
                                     alt="Profile"
                                     className="w-36 h-36 rounded-full object-cover border-4 border-slate-200 shadow-lg"
                                 />
                             </div>
-
                             {/* Profile Details */}
                             <div className="flex flex-col sm:flex-row justify-between w-full mt-4 sm:mt-0 items-center">
                                 <div className="space-y-2 text-slate-800">
@@ -62,7 +57,6 @@ export default function SellerProfile() {
                                         <IoStorefrontOutline className="mr-2 text-slate-800" />
                                         {user.name}
                                     </h1>
-
                                     <p className="text-gray-500 text-sm flex items-center">
                                         <GrMapLocation className="mr-2 text-gray-500" />
                                         {user.address}
@@ -95,7 +89,10 @@ export default function SellerProfile() {
                                 </div>
 
                                 {/* Edit Profile Button */}
-                                <Link className="mt-6 sm:mt-0 sm:ml-6">
+                                <Link
+                                    href={route("seller.profileEdit")}
+                                    className="mt-6 sm:mt-0 sm:ml-6"
+                                >
                                     <button className="px-5 py-3 text-sm font-semibold rounded-md bg-slate-800  text-slate-100 flex items-center">
                                         <LiaEditSolid className="mr-2" />
                                         Edit Profile

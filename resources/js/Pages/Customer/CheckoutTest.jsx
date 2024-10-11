@@ -48,7 +48,6 @@ export default function Checkout({ auth, carts }) {
             setProvinces([]);
         }
     }, [selectedRegion]);
-
     useEffect(() => {
         if (selectedProvince) {
             axios

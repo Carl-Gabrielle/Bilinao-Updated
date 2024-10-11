@@ -24,14 +24,6 @@ class CartController extends Controller
         ]);
     }
 
-    public function checkout()
-    {
-        $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
-        return Inertia::render('Customer/Checkout', [
-            'carts' => $carts,
-        ]);
-    }
-
 
     public function index()
     {

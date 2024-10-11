@@ -24,6 +24,7 @@ class UpdateSellerRequest extends FormRequest
     return [
         'name' => 'required|string|max:255',
         'address' => 'required|string|max:255',
+        'image' => ['nullable', 'image'],
         'contact_number' => [
             'required',
             'string',

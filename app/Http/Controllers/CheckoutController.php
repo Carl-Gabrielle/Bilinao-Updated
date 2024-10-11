@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\OrderItem;
@@ -19,6 +20,7 @@ class CheckoutController extends Controller
         
         try {
             DB::beginTransaction();
+            
             // Create order
             $order = Order::create([
                 "user_id" => Auth::id(),
@@ -32,11 +34,19 @@ class CheckoutController extends Controller
                 'payment' => $request->payment_method,
                 'amount' => $request->amount,
                 'transaction_id' => 'testing transac id',
-                'order_number' => 'order_number testing only to be  generated'
+                'order_number' => 'order_number testing only to be generated'
             ]);
+
             // Loop through products and create order items
             foreach ($request->products as $item) {
                 $product = Product::find((int) $item['product_id']);
+                
+                // Check if stock is available
+                if ($product->stock < (int) $item['qty']) {
+                    throw new \Exception("Not enough stock for product: {$product->name}");
+                }
+
+                // Create order item
                 OrderItem::create([
                     'order_id' => $order->id,
                     'product_id' => $product->id,
@@ -46,13 +56,18 @@ class CheckoutController extends Controller
                     'qty' => $item['qty'],
                     'total_price' => $product->price * (int) $item['qty'],
                 ]);
+
+                // Decrement product stock
+                $product->stock -= (int) $item['qty'];
+                $product->save();
             }
+
             // Commit the transaction
             DB::commit();
-            return redirect()->route('customer.completeOrders');
+
+            return redirect()->route('customer.completeOrders')->with('success', 'Order placed successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
-            dd($e->getMessage());
             Log::error('Checkout Error: ' . $e->getMessage());
             return back()->with("error", $e->getMessage());
         }

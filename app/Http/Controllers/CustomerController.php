@@ -43,6 +43,10 @@ class CustomerController extends Controller
     {
     return Inertia::render('Customer/ProfileIndex');
     }
+    public function review()
+    {
+    return Inertia::render('Customer/Review');
+    }
     /**
      * Show the form for creating a new resource.
      */

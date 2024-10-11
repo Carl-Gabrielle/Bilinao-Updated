@@ -30,11 +30,18 @@ export default function ProductDetails({
 }) {
     const { user } = auth;
     const [quantity, setQuantity] = useState(1);
+    const [showPopup, setShowPopup] = useState(false);
 
     const handleIncrease = () => {
-        setQuantity(quantity + 1);
+        if (quantity < product.stock) {
+            setQuantity(quantity + 1);
+        } else {
+            setShowPopup(true);
+            setTimeout(() => {
+                setShowPopup(false);
+            }, 5000);
+        }
     };
-
     const handleDecrease = () => {
         if (quantity > 1) {
             setQuantity(quantity - 1);
@@ -225,6 +232,13 @@ export default function ProductDetails({
                                                 +
                                             </button>
                                         </div>
+                                        {/* Popup Notification */}
+                                        {showPopup && (
+                                            <div className="z-10 fixed  bottom-5 right-5 bg-red-100 font-semibold text-red-800  px-2 py-0.5 text-md rounded-lg shadow-lg transition-opacity">
+                                                You can't add more than{" "}
+                                                {product.stock} items in stock.
+                                            </div>
+                                        )}
                                         <Link
                                             preserveScroll
                                             href={route(
@@ -264,7 +278,6 @@ export default function ProductDetails({
                                                     Buy Now
                                                 </button>
                                             </Link>
-
                                             <Link
                                                 preserveScroll
                                                 href={route("cart.store")}
@@ -286,7 +299,6 @@ export default function ProductDetails({
                                 </div>
                             </div>
                         </div>
-
                         {product.images?.length > 0 && (
                             <div className="flex overflow-x-auto space-x-4">
                                 {product.images.map((image) => (
