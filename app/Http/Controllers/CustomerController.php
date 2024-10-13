@@ -5,13 +5,51 @@ use App\Models\User;
 use App\Http\Resources\CategoryResource;
 use App\Models\Product;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Inertia\Inertia;
 use App\Models\Category;
+use App\Models\Notifications;
 class CustomerController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
+    public function notifications()
+    {
+        $notifications = Notifications::where('user_id', Auth::user()->id)
+            ->orderBy('updated_at', 'desc') // Order by updated_at descending
+            ->get();
+    
+        return Inertia::render('Customer/Notifications', [
+            'auth' => Auth::user(),
+            'notifications' => $notifications, 
+        ]);
+    }
+    
+    public function markAsRead($id)
+    {
+        $notification = Notifications::find($id);
+        
+        if ($notification) {
+            $notification->update(['status' => 'read']);
+            
+            // Fetch updated notifications ordered by updated_at
+            $notifications = Notifications::where('user_id', Auth::user()->id)
+                ->orderBy('updated_at', 'desc') // Maintain the same order
+                ->get();
+            
+            return Inertia::render('Customer/Notifications', [
+                'auth' => Auth::user(),
+                'notifications' => $notifications, // Send the updated list
+            ]);
+        }
+    
+        return response()->json(['success' => false], 404);
+    }
+    
+    
+
+
     public function myWishlists(){
         return Inertia::render('Customer/Wishlists');
     }

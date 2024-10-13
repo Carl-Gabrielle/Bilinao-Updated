@@ -5,7 +5,7 @@ import { FaPesoSign } from "react-icons/fa6";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
 import Banner from "@/Components/Banner";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
 import axios from "axios";
 import Label from "@/Components/Label";
@@ -28,6 +28,28 @@ export default function Checkout({ auth, carts }) {
     const [selectedCityMunicipality, setSelectedCityMunicipality] =
         useState("");
     const [selectedBarangay, setSelectedBarangay] = useState("");
+    const { product } = usePage().props;
+    const { shipping_data } = usePage().props;
+
+    const regionMapping = {
+        "0100000000": "luzon",
+        "0200000000": "luzon",
+        "0300000000": "luzon",
+        "0400000000": "luzon",
+        "0500000000": "luzon",
+        1400000000: "luzon",
+        1700000000: "island",
+        "0600000000": "visayas",
+        "0700000000": "visayas",
+        "0800000000": "visayas",
+        "0900000000": "mindanao",
+        1000000000: "mindanao",
+        1100000000: "mindanao",
+        1200000000: "mindanao",
+        1600000000: "mindanao",
+        1900000000: "mindanao",
+    };
+
     // API FOR GETTING THE USER ADDRESS
     useEffect(() => {
         axios
@@ -38,6 +60,7 @@ export default function Checkout({ auth, carts }) {
 
     useEffect(() => {
         if (selectedRegion) {
+            calculateShippingFee(selectedRegion, product.weight);
             axios
                 .get(
                     `https://psgc.cloud/api/regions/${selectedRegion}/provinces`
@@ -48,6 +71,7 @@ export default function Checkout({ auth, carts }) {
             setProvinces([]);
         }
     }, [selectedRegion]);
+
     useEffect(() => {
         if (selectedProvince) {
             axios
@@ -76,20 +100,77 @@ export default function Checkout({ auth, carts }) {
         }
     }, [selectedCityMunicipality]);
 
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        setBillingDetails({
-            ...billingDetails,
-            [id]: value,
-        });
-    };
+    const [productData, setProductData] = useState({ product_id: "", qty: "" });
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const product_id = urlParams.get("product_id");
+        const qty = urlParams.get("quantity");
 
-    // State to track the selected payment method
-    const [selectedPaymentMethod, setSelectedPaymentMethod] = useState("");
+        setProductData({ product_id, qty });
+    }, []);
+
+    const { data, errors, setData, post, processing } = useForm({
+        payment_method: "Gcash",
+        name: user.name,
+        shipping_address: "",
+        phone_no: user.phone_number,
+        product_price: parseFloat(product.price),
+        product_weight: product.weight,
+        purchasing_qty: parseInt(product.quantity),
+        landmark: "",
+        shipping_fee: 0,
+        subtotal: parseFloat(product.price) * parseInt(product.quantity),
+        total_amount: 0,
+        is_from_cart: false,
+        products: [],
+    });
+
+    useEffect(() => {
+        const total = data.subtotal + data.shipping_fee;
+        setData((prevData) => ({
+            ...prevData,
+            total_amount: total,
+        }));
+    }, [data.shipping_fee]);
+
+    useEffect(() => {
+        if (productData.product_id && productData.qty) {
+            setData("products", [productData]);
+        }
+    }, [productData]);
+
+    const handleCheckoutButton = (e) => {
+        e.preventDefault();
+        post(route("store.checkout"));
+    };
 
     const handlePaymentChange = (method) => {
-        setSelectedPaymentMethod(method);
+        setData("payment_method", method);
     };
+
+    const calculateShippingFee = (regionCode, weight) => {
+        const shippingRegion = regionMapping[regionCode];
+        const matchingRange = shipping_data.find(
+            (range) => weight >= range.weight_min && weight <= range.weight_max
+        );
+        if (matchingRange) {
+            setData("shipping_fee", matchingRange[shippingRegion]);
+        } else {
+            setData("shipping_fee", 0);
+        }
+    };
+
+    const [region, setRegion] = useState();
+    const [province, setProvince] = useState();
+    const [city, setCity] = useState();
+    const [barangay, setBarangay] = useState();
+
+    useEffect(() => {
+        const address =
+            region + ", " + province + ", " + city + ", " + barangay;
+        setData("shipping_address", address);
+    }, [barangay]);
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
@@ -125,9 +206,16 @@ export default function Checkout({ auth, carts }) {
                                     </label>
                                     <select
                                         value={selectedRegion}
-                                        onChange={(e) =>
-                                            setSelectedRegion(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                            setSelectedRegion(e.target.value);
+                                            setRegion(
+                                                regions.find(
+                                                    (region) =>
+                                                        region.code ===
+                                                        e.target.value
+                                                )?.name
+                                            );
+                                        }}
                                         className="scroll-bar text-sm custom-dropdown text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                     >
                                         <option
@@ -154,9 +242,16 @@ export default function Checkout({ auth, carts }) {
                                     </label>
                                     <select
                                         value={selectedProvince}
-                                        onChange={(e) =>
-                                            setSelectedProvince(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                            setSelectedProvince(e.target.value);
+                                            setProvince(
+                                                provinces.find(
+                                                    (province) =>
+                                                        province.code ===
+                                                        e.target.value
+                                                )?.name
+                                            );
+                                        }}
                                         className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                     >
                                         <option
@@ -185,11 +280,18 @@ export default function Checkout({ auth, carts }) {
                                     </label>
                                     <select
                                         value={selectedCityMunicipality}
-                                        onChange={(e) =>
+                                        onChange={(e) => {
                                             setSelectedCityMunicipality(
                                                 e.target.value
-                                            )
-                                        }
+                                            );
+                                            setCity(
+                                                citiesMunicipalities.find(
+                                                    (city) =>
+                                                        city.code ===
+                                                        e.target.value
+                                                )?.name
+                                            );
+                                        }}
                                         className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                     >
                                         <option
@@ -220,9 +322,16 @@ export default function Checkout({ auth, carts }) {
                                     </label>
                                     <select
                                         value={selectedBarangay}
-                                        onChange={(e) =>
-                                            setSelectedBarangay(e.target.value)
-                                        }
+                                        onChange={(e) => {
+                                            setSelectedBarangay(e.target.value);
+                                            setBarangay(
+                                                barangays.find(
+                                                    (brgy) =>
+                                                        brgy.code ===
+                                                        e.target.value
+                                                )?.name
+                                            );
+                                        }}
                                         className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                     >
                                         <option
@@ -254,8 +363,9 @@ export default function Checkout({ auth, carts }) {
                                 </label>
                                 <textarea
                                     id="landmark"
-                                    value={billingDetails.landmark}
-                                    onChange={handleInputChange}
+                                    onChange={(e) =>
+                                        setData("landmark", e.target.value)
+                                    }
                                     placeholder="ex. Alabama St. in front of  John Doe Shop."
                                     className="placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent h-32"
                                 />
@@ -274,7 +384,6 @@ export default function Checkout({ auth, carts }) {
                                 </div>
                                 <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto scroll-bar">
                                     <h1 className="font-medium">Your Order</h1>
-
                                     <div className="flex">
                                         <div className="relative ">
                                             <img
@@ -295,16 +404,41 @@ export default function Checkout({ auth, carts }) {
                                             </h3>
                                             <p className="flex items-center">
                                                 <FaPesoSign className="inline-block mr-1" />{" "}
-                                                {/* Increased margin */}
-                                                235
+                                                {new Intl.NumberFormat(
+                                                    "en-us",
+                                                    {
+                                                        style: "decimal",
+                                                        minimumFractionDigits: 2,
+                                                    }
+                                                ).format(product.price)}
                                             </p>
-                                            <p className="flex items-center  ">
-                                                <FaPesoSign className="inline-block mr-1 " />{" "}
-                                                {/* Increased margin */}
-                                                235 x<span>3 = </span>
-                                                <FaPesoSign className="inline-block mx-1" />{" "}
-                                                {/* Added margin on both sides */}
-                                                1235
+                                            <p className="flex items-center">
+                                                <FaPesoSign className="inline-block mr-1" />
+                                                {/* Product Price */}
+                                                {new Intl.NumberFormat(
+                                                    "en-US",
+                                                    {
+                                                        style: "decimal",
+                                                        minimumFractionDigits: 2,
+                                                    }
+                                                ).format(product.price)}
+
+                                                {/* Add space between the price and "x" */}
+                                                <span className="mx-1">x</span>
+
+                                                <span>
+                                                    {data.purchasing_qty}
+                                                </span>
+                                                <span className="mx-1">=</span>
+
+                                                <FaPesoSign className="inline-block mx-1" />
+                                                {new Intl.NumberFormat(
+                                                    "en-US",
+                                                    {
+                                                        style: "decimal",
+                                                        minimumFractionDigits: 2,
+                                                    }
+                                                ).format(data.subtotal)}
                                             </p>
                                         </div>
                                     </div>
@@ -315,7 +449,10 @@ export default function Checkout({ auth, carts }) {
                                         <span>
                                             {" "}
                                             <FaPesoSign className="inline-block" />
-                                            345
+                                            {new Intl.NumberFormat("en-US", {
+                                                style: "decimal",
+                                                minimumFractionDigits: 2,
+                                            }).format(data.subtotal)}
                                         </span>
                                     </div>
                                     <div className="flex justify-between text-sm border-b pb-4">
@@ -323,7 +460,7 @@ export default function Checkout({ auth, carts }) {
                                         <span>
                                             {" "}
                                             <FaPesoSign className="inline-block" />
-                                            80
+                                            {data.shipping_fee}
                                         </span>
                                     </div>
                                     <div className="flex justify-between text-lg font-bold">
@@ -331,18 +468,40 @@ export default function Checkout({ auth, carts }) {
                                         <span>
                                             {" "}
                                             <FaPesoSign className="inline-block" />
-                                            230
+                                            {new Intl.NumberFormat("en-US", {
+                                                style: "decimal",
+                                                minimumFractionDigits: 2,
+                                            }).format(data.total_amount)}
                                         </span>
                                     </div>
                                 </div>
                                 <div className="p-6 bg-slate-50 border-t border rounded-b-3xl">
-                                    <Link
-                                        href={route("customer.completeOrders")}
+                                    <button
+                                        disabled={
+                                            region == null ||
+                                            province == null ||
+                                            city == null ||
+                                            barangay == null ||
+                                            data.landmark == null
+                                        }
+                                        onClick={handleCheckoutButton}
+                                        className={`w-full bg-amber-500 text-slate-50 rounded-full tracking-wide px-8 py-4
+                                        ${
+                                            region == null ||
+                                            province == null ||
+                                            city == null ||
+                                            barangay == null ||
+                                            landmark == null
+                                                ? "cursor-not-allowed"
+                                                : " hover:bg-amber-600 duration-200 ease-in-out"
+                                        }`}
                                     >
-                                        <button className="w-full bg-amber-500 text-slate-50 rounded-full tracking-wide px-8 py-4">
-                                            Place Order
-                                        </button>
-                                    </Link>
+                                        {[
+                                            processing
+                                                ? "Placing order..."
+                                                : "Place Order",
+                                        ]}
+                                    </button>
                                 </div>
                             </div>
                             <div className="w-full  lg:mt-10">
@@ -354,8 +513,7 @@ export default function Checkout({ auth, carts }) {
                                         {/* GCash Payment Option */}
                                         <label
                                             className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
-                                                selectedPaymentMethod ===
-                                                "GCash"
+                                                data.payment_method === "GCash"
                                                     ? "bg-blue-100 border-0 hover:bg-blue-100"
                                                     : "hover:bg-slate-100"
                                             }`}
@@ -376,7 +534,7 @@ export default function Checkout({ auth, carts }) {
                                             </div>
                                             <HiOutlineCheckCircle
                                                 className={`text-gray-300 text-xl ${
-                                                    selectedPaymentMethod ===
+                                                    data.payment_method ===
                                                     "GCash"
                                                         ? "text-blue-700"
                                                         : "text-gray-300"
@@ -386,7 +544,7 @@ export default function Checkout({ auth, carts }) {
                                         {/* PayMaya Payment Option */}
                                         <label
                                             className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
-                                                selectedPaymentMethod ===
+                                                data.payment_method ===
                                                 "PayMaya"
                                                     ? "bg-green-100 border-0 hover:bg-green-100"
                                                     : "hover:bg-slate-100"
@@ -408,7 +566,7 @@ export default function Checkout({ auth, carts }) {
                                             </div>
                                             <HiOutlineCheckCircle
                                                 className={`text-gray-300 text-xl ${
-                                                    selectedPaymentMethod ===
+                                                    data.payment_method ===
                                                     "PayMaya"
                                                         ? "text-green-700"
                                                         : "text-gray-300"

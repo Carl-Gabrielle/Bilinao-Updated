@@ -18,6 +18,25 @@ import CustomerLink from "@/Components/CustomerLink";
 export default function AuthenticatedLayout({ user, header, children }) {
     const { cartCount } = usePage().props;
     const { wishlistCount } = usePage().props;
+    const { notificationCount } = usePage().props;
+    const [localNotificationCount, setLocalNotificationCount] =
+        useState(notificationCount);
+    const handleNotificationClick = (notificationId) => {
+        // Make an Inertia request to mark the notification as read
+        Inertia.patch(
+            `/notifications/${notificationId}/read`,
+            {},
+            {
+                onSuccess: (page) => {
+                    // Update local notification count
+                    setLocalNotificationCount((prev) => prev - 1);
+                },
+                onError: (error) => {
+                    console.error("Error marking notification as read:", error);
+                },
+            }
+        );
+    };
     const [showingNavigationDropdown, setShowingNavigationDropdown] =
         useState(false);
     return (
@@ -127,22 +146,28 @@ export default function AuthenticatedLayout({ user, header, children }) {
                         <div className="flex items-center space-x-4">
                             <SearchProduct />
                             <div className="relative flex items-center space-x-2 ">
-                                <Dropdown>
-                                    <Dropdown.Trigger>
-                                        <div className="relative ml-2 flex items-center  text-slate-900 cursor-pointer  px-2 py-2 hover:text-slate-50  hover:bg-primary rounded-full transition-colors duration-300 ease-in-out">
-                                            <MdNotificationsNone className="size-5 " />
-                                            <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-white bg-primary rounded-full">
-                                                8
+                                {/* <Dropdown> */}
+                                {/* <Dropdown.Trigger> */}
+                                <Link href={route("customer.notifications")}>
+                                    <div className="relative ml-2 flex items-center  text-slate-900 cursor-pointer  px-2 py-2 hover:text-slate-50  hover:bg-primary rounded-full transition-colors duration-300 ease-in-out">
+                                        <MdNotificationsNone className="size-5 " />
+                                        <span className="absolute left-5 -top-1 -right-5 inline-flex items-center justify-center size-5 text-xs font-semibold text-white bg-primary rounded-full">
+                                            <span>
+                                                {localNotificationCount}
                                             </span>
-                                        </div>
-                                    </Dropdown.Trigger>
-                                    <Dropdown.Content>
+                                        </span>
+                                    </div>
+                                </Link>
+                                {/* </Dropdown.Trigger> */}
+                                {/* <Dropdown.Content>
                                         <div className="px-2 py-2 flex items-center justify-between">
                                             <h1 className="text-md font-semibold text-slate">
                                                 Notifications
                                             </h1>
                                             <div className="bg-primary text-white px-3 rounded-md py-1">
-                                                <span>3 new</span>
+                                                <span>
+                                                    {notificationCount} new
+                                                </span>
                                             </div>
                                         </div>
                                         <ul className="mt-2 divide-y divide-gray-200">
@@ -184,8 +209,8 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                                 View all notifications
                                             </a>
                                         </div>
-                                    </Dropdown.Content>
-                                </Dropdown>
+                                    </Dropdown.Content> */}
+                                {/* </Dropdown> */}
                                 {/* Cart Icon */}
                                 <Link
                                     href={route("customer.carts")}

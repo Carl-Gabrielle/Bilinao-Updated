@@ -64,13 +64,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
         Route::get('/customerProfile', [CustomerController::class, 'profile'])->name('customer.customerProfile');
+        Route::get('/customerNotifications', [CustomerController::class, 'notifications'])->name('customer.notifications');
+        Route::patch('/notifications/{id}/read', [CustomerController::class, 'markAsRead'])->name('notifications.markAsRead');
         Route::get('/review', [CustomerController::class, 'review'])->name('customer.review');
         Route::get('/products', [ProductController::class, 'products'])->name('products.list');
         Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
         Route::get('/about', [CustomerController::class, 'about'])->name('customer.about');
         Route::get('/categories', [CustomerController::class, 'categories'])->name('customer.categories');
-        Route::get('/completeOrders', [CustomerController::class, 'completeOrders'])->name('customer.completeOrders');
+        Route::get('/completeOrders', [CheckoutController::class, 'completeOrders'])->name('customer.completeOrders');
         Route::get('/products', [ProductController::class, 'products'])->name('customer.products');
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         // CUSTOMER  ORDERS  ROUTE 

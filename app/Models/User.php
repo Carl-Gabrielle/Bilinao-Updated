@@ -56,5 +56,9 @@ class User extends Authenticatable
         {
             return $this->role === 'user';
         }
+        public function notifications()
+        {
+            return $this->hasMany(Notifications::class);
+        }
 
 }

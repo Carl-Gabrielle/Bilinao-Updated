@@ -15,7 +15,7 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('user_id');
             $table->string('message');
-            $table->string('link');
+            $table->string('link')->nullable();
             $table->string('status');
             $table->timestamps();
         });
