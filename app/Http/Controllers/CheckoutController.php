@@ -33,8 +33,6 @@ class CheckoutController extends Controller
             'orderItems' => $orderItems, 
         ]);
     }
-    
-    
     public function store(Request $request)
     {
         $request->validate([
@@ -44,7 +42,6 @@ class CheckoutController extends Controller
 
         try {
             DB::beginTransaction();
-
             // Create order
             $order = Order::create([
                 "user_id" => Auth::id(),
@@ -60,7 +57,6 @@ class CheckoutController extends Controller
                 'transaction_id' => 'testing transac id',
                 'order_number' => 'order_number testing only to be generated'
             ]);
-
             // Loop through products and create order items
             if ($request->products == null) {
                 dd('no product found');

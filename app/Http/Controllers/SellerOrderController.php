@@ -1,20 +1,58 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
 use Inertia\Inertia;
-
+use App\Models\Order;
+use App\Models\Seller;
 class SellerOrderController extends Controller
 {
     /**
      * Display a listing of the resource.
      */
-    public function pendingOrders (){
-        return Inertia::render('Seller/PendingOrders');
+    public function pendingOrders()
+    {
+        $sellerId = Auth::id(); 
+    
+        // Get the pending orders for the seller's products
+        $pendingOrders = Order::where('remarks', 'pending')
+            ->whereHas('orderItems', function ($query) use ($sellerId) {
+                $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                    $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+                });
+            })
+            ->with(['orderItems' => function ($query) use ($sellerId) {
+                $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                    $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+                });
+            }])
+            ->get();
+    
+        return Inertia::render('Seller/PendingOrders', [
+            'pendingOrders' => $pendingOrders,
+            // 'auth' => auth()->user(),
+        ]);
     }
+    
+    
     public function processOrders (){
-        return Inertia::render('Seller/ProcessOrders');
+        $sellerId = Auth::id(); 
+        $processOrders = Order::where('remarks', 'OnProcess')
+        ->whereHas('orderItems', function ($query) use ($sellerId) {
+            $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+            });
+        })
+        ->with(['orderItems' => function ($query) use ($sellerId) {
+            $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+            });
+        }])
+        ->get();
+        return Inertia::render('Seller/ProcessOrders', [
+            'processOrders' => $processOrders,
+        ]);
     }
     public function shippedOrders (){
         return Inertia::render('Seller/ShippedOrders');

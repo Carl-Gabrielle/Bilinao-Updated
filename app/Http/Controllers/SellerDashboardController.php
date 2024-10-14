@@ -84,5 +84,13 @@ class SellerDashboardController extends Controller
 
     return to_route('seller.index')->with('success', "Seller \"$seller->name\" Was Deleted");
 }
+public function logout(Request $request)
+{
+    Auth::guard('seller')->logout(); // Logs out the seller
 
+    $request->session()->invalidate(); // Invalidate the session
+    $request->session()->regenerateToken(); // Regenerate the CSRF token
+
+    return redirect()->route('seller.login'); // Redirect to seller login or other page
+}
 }

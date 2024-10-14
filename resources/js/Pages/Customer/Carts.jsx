@@ -244,7 +244,10 @@ export default function Carts({ auth, carts, cartCount }) {
                                 </div>
                                 {cartItems.length > 0 && (
                                     <div className="mt-auto p-6">
-                                        <Link href={route("cart.checkout")}>
+                                        <Link
+                                            href={route("show.checkout")}
+                                            method="get"
+                                        >
                                             <button className="w-full flex items-center justify-center rounded-full text-white font-semibold px-8 py-4 bg-slate-800">
                                                 Proceed To Checkout{" "}
                                                 <HiMiniArrowLongRight className="ml-2" />

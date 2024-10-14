@@ -44,13 +44,13 @@ class AuthenticatedSellerController extends Controller
     /**
      * Destroy an authenticated session.
      */
-    public function destroy(Request $request): RedirectResponse
+    public function logout(Request $request)
     {
-        Auth::guard('seller')->logout();
+        Auth::guard('seller')->logout(); 
 
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect('/');
+        return redirect()->route('seller.login'); // Redirect to seller login or other page
     }
 }

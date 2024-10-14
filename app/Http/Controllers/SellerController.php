@@ -99,4 +99,5 @@
             return to_route('seller.index')
             ->with('success', "Seller \"$seller\" Was Deleted");
         }
+  
     }

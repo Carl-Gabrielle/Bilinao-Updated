@@ -15,6 +15,7 @@ import { BsBasket } from "react-icons/bs";
 import { IoMdAdd } from "react-icons/io";
 import { FaListAlt, FaSignOutAlt, FaRegUser } from "react-icons/fa";
 import { HiMenu, HiOutlineX, HiChevronDown } from "react-icons/hi";
+
 const SellerLayout = ({ user, children }) => {
     const [showDropdown, setShowDropdown] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
@@ -414,8 +415,8 @@ const SellerLayout = ({ user, children }) => {
                                 />
                             </NavLink>
                             <NavLink
-                                href={route("logout")}
-                                active={route().current("logout")}
+                                href={route("seller.logout")}
+                                active={route().current("seller.logout")}
                                 onClick={handleNavLinkClick}
                                 method="post"
                                 as="button"
@@ -428,7 +429,7 @@ const SellerLayout = ({ user, children }) => {
                                 <div className="flex items-center space-x-3">
                                     <MdLogout
                                         className={`size-4 ${
-                                            route().current("logout")
+                                            route().current("seller.logout")
                                                 ? "text-slate-800"
                                                 : "text-red-600"
                                         }`}
@@ -439,7 +440,7 @@ const SellerLayout = ({ user, children }) => {
                                 </div>
                                 <MdOutlineKeyboardArrowRight
                                     className={`size-5 ${
-                                        route().current("logout")
+                                        route().current("seller.logout")
                                             ? "text-slate-800"
                                             : "text-red-600"
                                     }`}

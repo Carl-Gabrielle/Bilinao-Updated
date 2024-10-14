@@ -42,11 +42,11 @@ const SellerLogin = () => {
                     <div className="w-48">
                         <Link href="/">
                             <button
-                                className="mb-5 px-6 py-2 bg-white shadow-md bg-opacity-70 backdrop-blur-lg rounded-full font-bold flex items-center"
+                                className="mb-5 px-6 py-1 bg-white shadow-md bg-opacity-70 backdrop-blur-lg rounded-full font-semibold flex items-center"
                                 style={{ cursor: "pointer" }}
                             >
                                 <MdOutlineKeyboardArrowLeft className="mr-2" />{" "}
-                                Go back Home
+                                Go back
                             </button>
                         </Link>
                     </div>

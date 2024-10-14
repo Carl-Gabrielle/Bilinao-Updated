@@ -34,6 +34,7 @@ class Product extends Model
         return $this->hasMany(ProductImage::class);
         
     }
+    
     // public function shipping()
     // {
     //     return $this->belongsTo(Shipping::class);

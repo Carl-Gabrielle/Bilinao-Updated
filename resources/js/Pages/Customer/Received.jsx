@@ -11,7 +11,7 @@ export default function Received() {
                     <h2 className="text-md flex font-semibold text-slate-800">
                         Delivered Orders
                     </h2>
-                    <span className="px-3 py-1 text-slate-800 bg-slate-500 bg-opacity-30 backdrop-blur-md  text-sm font-medium rounded-md">
+                    <span className="px-3 py-1 text-green-800 bg-green-500 bg-opacity-30 backdrop-blur-md  text-sm font-medium rounded-md">
                         1
                     </span>
                 </div>
