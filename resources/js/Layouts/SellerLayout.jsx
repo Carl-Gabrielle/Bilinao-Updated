@@ -45,8 +45,6 @@ const SellerLayout = ({ user, children }) => {
 
     return (
         <>
-            {/* <div className='h-16 bg-white/30 border-b border-white/30 backdrop-blur-md shadow-lg z-20 w-full fixed'>
-   </div> */}
             <div className="min-h-screen flex flex-col sm:flex-row bg-slate-300">
                 <aside
                     className={`fixed inset-y-0 left-0 w-72 z-20  bg-slate-50 bg-opacity-55 backdrop-blur-lg transform ${
@@ -61,15 +59,12 @@ const SellerLayout = ({ user, children }) => {
                                 href={route("seller.dashboard")}
                                 className="flex items-center p-4 "
                             >
-                                <div className="flex items-center space-x-4">
-                                    {/* <img
+                                <div className="flex items-center justify-center space-x-4">
+                                    <img
                                         src={Logo}
                                         alt="Bilinao Logo"
-                                        className="size-10 "
-                                    /> */}
-                                    <span className="text-2xl font-extrabold text-lime-700 uppercase tracking-tight">
-                                        Bilinao
-                                    </span>
+                                        className="w-1/2"
+                                    />
                                 </div>
                             </Link>
                             <button
@@ -86,7 +81,6 @@ const SellerLayout = ({ user, children }) => {
                                     Bilinao
                                 </h3>
                             </div>
-
                             {/* Dashboard Link */}
                             <NavLink
                                 href={route("seller.dashboard")}
@@ -116,7 +110,6 @@ const SellerLayout = ({ user, children }) => {
                                     }`}
                                 />
                             </NavLink>
-
                             {/* Manage Orders */}
                             <div className="relative">
                                 <button

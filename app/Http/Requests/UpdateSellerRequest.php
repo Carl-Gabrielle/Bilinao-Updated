@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Requests;
-
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Foundation\Http\FormRequest;
 
 class UpdateSellerRequest extends FormRequest
@@ -31,7 +31,7 @@ class UpdateSellerRequest extends FormRequest
             'max:15',
             'regex:/^(?:\+63|0)\d{10}$/'
         ],
-        'email' => 'required|string|email|max:255|unique:sellers,email,' . $this->route('seller')->id,
+        'email' => 'required|string|email|max:255|unique:sellers,email,' . Auth::id(), // Use authenticated user's ID
     ];
 }
 

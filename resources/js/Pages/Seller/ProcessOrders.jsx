@@ -52,7 +52,7 @@ export default function PendingOrder({ auth = {}, processOrders = [] }) {
                                                     {order.name}
                                                 </td>
                                                 <td className="py-4 px-6 text-slate-800 flex items-center">
-                                                    <FaPesoSign className="mr-2" />
+                                                    <FaPesoSign className="mr-1" />
                                                     {order.amount}
                                                 </td>
                                                 <td className="py-4 px-6 text-slate-800">

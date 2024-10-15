@@ -25,21 +25,18 @@ const PublicProfile = ({ seller, products, auth }) => {
                                     {/* Profile Image */}
                                     <img
                                         src={
-                                            seller.profile_photo_url ||
+                                            seller.image_path ||
                                             "/images/default-profile.png"
                                         }
                                         alt="Profile"
-                                        className="w-32 h-32 rounded-full border-4 border-white shadow-md"
+                                        className="w-32 h-32 object-cover rounded-full border-4 border-white shadow-md"
                                     />
                                 </div>
                                 <div className="text-center mt-4 py-4">
                                     <h1 className="text-2xl font-bold text-gray-800">
                                         {seller.name}
                                     </h1>
-                                    <p className="text-gray-500">
-                                        {seller.username ||
-                                            "No username provided"}
-                                    </p>
+
                                     <p className="text-md text-slate-800">
                                         {seller.email}
                                     </p>

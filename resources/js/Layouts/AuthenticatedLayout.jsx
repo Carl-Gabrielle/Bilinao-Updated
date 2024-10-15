@@ -54,14 +54,14 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
             {/* Sidebar */}
             <div
-                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-slate-50 bg-opacity-80 backdrop-blur-lg    rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
-                    isSidebarOpen ? "w-64 px-6" : "w-28 px-4"
+                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-slate-200    rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
+                    isSidebarOpen ? "w-64 p-4" : "w-28 p-3"
                 }`}
             >
-                <div className="flex flex-col justify-between h-full">
+                <div className="flex flex-col justify-between h-full bg-slate-50 rounded-xl p-3">
                     <div className="mt-6">
                         {isSidebarOpen && (
-                            <span className="uppercase text-gray-400 tracking-wide text-sm font-normal ">
+                            <span className="text-gray-600 text-sm font-normal uppercase tracking-wider ">
                                 Bilinao
                             </span>
                         )}
@@ -73,7 +73,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             >
                                 <div className="flex items-center space-x-5">
                                     {!isSidebarOpen && (
-                                        <div className="ml-3 ">
+                                        <div className="ml-1.5 ">
                                             <IoHomeOutline
                                                 className={`w-5 h-5 ${
                                                     route().current("dashboard")
@@ -113,7 +113,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             >
                                 <div className="flex items-center space-x-5">
                                     {!isSidebarOpen && (
-                                        <div className="ml-3 ">
+                                        <div className="ml-1.5 ">
                                             <BiCategory
                                                 className={`w-5 h-5 ${
                                                     route().current(
@@ -158,7 +158,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             >
                                 <div className="flex items-center space-x-5">
                                     {!isSidebarOpen && (
-                                        <div className="ml-3 ">
+                                        <div className="ml-1.5 ">
                                             <FaRegUser
                                                 className={`w-5 h-5 ${
                                                     route().current(
@@ -202,7 +202,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             >
                                 <div className="flex items-center space-x-5">
                                     {!isSidebarOpen && (
-                                        <div className="ml-3 ">
+                                        <div className="ml-1.5 ">
                                             <LiaShippingFastSolid
                                                 className={`w-5 h-5 ${
                                                     route().current(
@@ -251,7 +251,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                         >
                             <div className="flex items-center space-x-5">
                                 {!isSidebarOpen && (
-                                    <div className="ml-3">
+                                    <div className="ml-1.5">
                                         <LuLogOut
                                             className={`w-5 h-5 ${
                                                 route().current("logout")

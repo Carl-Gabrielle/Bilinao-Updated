@@ -6,22 +6,32 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateSellerRequest;
 use Inertia\Inertia;
 use App\Models\Product;
+use App\Models\Order;
 use App\Http\Resources\SellerResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
 class SellerDashboardController extends Controller
 {
-    public function dashboard()
-    {
+    public function dashboard() {
         $sellerId = Auth::id();
         
+        // Count products belonging to the seller
         $productCount = Product::where('seller_id', $sellerId)->count();
     
+        // Count orders that contain items associated with the seller's products
+        $orderCount = Order::whereHas('orderItems', function ($query) use ($sellerId) {
+            $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+            });
+        })->count();
+        
         return Inertia::render('SellerDashboard', [
             'productCount' => $productCount,
+            'orderCount' => $orderCount,
         ]);
     }
+    
     public function  profile(){
         return Inertia::render('Seller/SellerProfile');
     }
@@ -41,25 +51,25 @@ class SellerDashboardController extends Controller
         $products = $seller->products()->with('images')->get();
     
         return Inertia::render('Seller/PublicProfile', [
-            'seller' => $seller,
-            'products' => $products
+            'seller' => new SellerResource($seller),
+            'products' => $products,
         ]);
     }
-    public function update(UpdateSellerRequest $request, Seller $seller)
+    
+    public function update(UpdateSellerRequest $request)
     {
+        $seller = Auth::user();
+    
         $data = $request->validated();
     
-        // Check if a profile picture has been uploaded
         if ($request->hasFile('profile_picture')) {
-            // Store the new image and delete the old one if it exists
             $imagePath = $request->file('profile_picture')->store('profile_pictures', 'public');
-    
-            // If the seller has an old image, delete it
-            if ($seller->profile_picture) {
-                Storage::disk('public')->delete($seller->profile_picture);
+            
+            if ($seller->image_path) {
+                Storage::disk('public')->delete($seller->image_path);
             }
     
-            $data['profile_picture'] = $imagePath;
+            $data['image_path'] = $imagePath; 
         }
     
         // Update seller's information
@@ -68,11 +78,15 @@ class SellerDashboardController extends Controller
             'address' => $data['address'],
             'contact_number' => $data['contact_number'],
             'email' => $data['email'],
-            'profile_picture' => $data['profile_picture'] ?? $seller->profile_picture,
+            'image_path' => $data['image_path'] ?? $seller->image_path,
         ]);
-    
         return redirect()->route('seller.profile')->with('success', 'Seller updated successfully.');
     }
+    
+    
+    
+    
+
     public function destroy(Seller $seller)
 {
     // Delete the seller record and profile picture if exists

@@ -8,6 +8,8 @@ import { HiOutlineUserGroup } from "react-icons/hi";
 import { MdProductionQuantityLimits } from "react-icons/md";
 import CustomerContainer from "@/Components/CustomerContainer";
 import DivContainer from "@/Components/DivContainer";
+import WelcomeImg from ".//Illustrations/welcomeImg.png";
+import DashboardCard from "../Components/DashboardCard";
 export default function AdminDashboard({ auth, sellerCount, customerCount }) {
     const { user } = auth;
 
@@ -38,18 +40,25 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                     <hr className="mt-4 border-gray-400 mb-5" />
                     <div className="w-full h-screen   ">
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
-                            <div className="w-full h-32 px-6 py-6 bg-slate-50 bg-opacity-80 backdrop-blur-lg  rounded-3xl shadow-md">
-                                <h1 className="text-md font-medium hidden sm:block">
-                                    Hi
-                                    <span className="ml-1 font-semibold ">
-                                        {user.name},
-                                    </span>{" "}
-                                </h1>
-                                <h1 className="font-medium text-md">
-                                    Welcome Back!
-                                </h1>
-                            </div>
-                            <div className="w-full h-32 px-6 py-6 bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-lg flex items-center justify-between">
+                            <DashboardCard>
+                                <div>
+                                    <h1 className="text-md font-medium hidden sm:block">
+                                        Hi
+                                        <span className="ml-1 font-semibold ">
+                                            {user.name},
+                                        </span>{" "}
+                                    </h1>
+                                    <h1 className=" text-sm">
+                                        Welcome Back to Admin Panel!
+                                    </h1>
+                                </div>
+                                <img
+                                    className="size-16 object-cover"
+                                    src={WelcomeImg}
+                                    alt="Welcome Img."
+                                />
+                            </DashboardCard>
+                            <DashboardCard>
                                 <div>
                                     <h1 className="font-medium text-md">
                                         Registered Sellers
@@ -61,10 +70,10 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                                 <div className="bg-blue-100 text-blue-500 p-4 rounded-full">
                                     <HiOutlineShoppingBag className="size-6" />
                                 </div>
-                            </div>
+                            </DashboardCard>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-                            <div className="w-full h-32 px-6 py-6 bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-lg flex items-center justify-between">
+                            <DashboardCard>
                                 <div>
                                     <h1 className="font-medium text-md">
                                         Registered Customers
@@ -76,14 +85,14 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                                 <div className="bg-green-100 text-green-500 p-4 rounded-full">
                                     <HiOutlineUserGroup className="size-6" />
                                 </div>
-                            </div>
-                            <div className="w-full h-32 px-6 py-6  bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-md">
+                            </DashboardCard>
+                            <DashboardCard>
                                 {/* Total Sales Revenue */}
                                 {/* Daily/Weekly/Monthly Sales Trends:  */}
                                 <h1 className="font-medium text-md">
                                     Sales Metrics{" "}
                                 </h1>
-                            </div>
+                            </DashboardCard>
                         </div>
                     </div>
                 </DivContainer>

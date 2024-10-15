@@ -79,7 +79,6 @@ const SellerDashboard = ({ categories }) => {
                                 Publish Product
                             </button>
                         </div>
-
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
                             <div className="w-full col-span-2 bg-slate-50  px-6 py-4 rounded-3xl">
                                 <div className="mb-4">
@@ -137,8 +136,8 @@ const SellerDashboard = ({ categories }) => {
                                 </div>
                             </div>
                             <div className=" bg-slate-50  h-96 px-6 py-4 rounded-3xl  w-full">
-                                <SectionHeader text="Pricing & Stock" />
                                 <div className="mb-4">
+                                    <SectionHeader text="Pricing & Stock" />
                                     <label className="text-sm font-medium text-gray-700 flex items-center">
                                         <LuAsterisk className="ml-2 text-red-500" />
                                         Price
@@ -268,7 +267,6 @@ const SellerDashboard = ({ categories }) => {
                                     </div>
                                 )}
                             </div>
-
                             <div className=" bg-slate-50 h-96 px-6 py-4 rounded-3xl w-full ">
                                 <SectionHeader text="Select Category & Weight" />
                                 <div className="mb-4">
@@ -289,7 +287,7 @@ const SellerDashboard = ({ categories }) => {
                                     >
                                         <option
                                             value=""
-                                            className="bg-slate-50"
+                                            className="bg-slate-100"
                                         >
                                             Select category
                                         </option>
@@ -297,7 +295,7 @@ const SellerDashboard = ({ categories }) => {
                                             <option
                                                 key={category.id}
                                                 value={category.id}
-                                                className="bg-slate-50 0"
+                                                className="bg-slate-100  "
                                             >
                                                 {category.name}
                                             </option>
@@ -325,7 +323,6 @@ const SellerDashboard = ({ categories }) => {
                                         className="mt-1 block w-full border-gray-300 rounded-md shadow-sm"
                                         placeholder="Enter Weight (g)"
                                     />
-
                                     {errors.weight && (
                                         <span className="text-red-500 text-sm">
                                             {errors.weight}

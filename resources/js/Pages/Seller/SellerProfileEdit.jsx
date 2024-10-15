@@ -128,17 +128,13 @@ export default function SellerProfileEdit({ seller }) {
                             )}
                         </div>
 
-                        {progress && (
-                            <progress value={progress.percentage} max="100">
-                                {progress.percentage}%
-                            </progress>
-                        )}
-
                         <button
                             type="submit"
                             className="px-5 py-3 bg-slate-800 text-white rounded-md"
                         >
-                            Save Changes
+                            {processing
+                                ? "Updating Profile..."
+                                : "Update Profile"}
                         </button>
                     </form>
                 </div>

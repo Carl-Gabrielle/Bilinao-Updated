@@ -2,8 +2,9 @@ import React from "react";
 import { Head } from "@inertiajs/react";
 import SellerLayout from "@/Layouts/SellerLayout";
 import { usePage } from "@inertiajs/react";
-
-const SellerDashboard = ({ productCount }) => {
+import WelcomeImg from ".//Illustrations/welcomeImg.png";
+import DashboardCard from "@/Components/DashboardCard";
+const SellerDashboard = ({ productCount, orderCount }) => {
     const { props } = usePage();
     const user = props.auth.user;
     const getGreeting = () => {
@@ -32,8 +33,8 @@ const SellerDashboard = ({ productCount }) => {
                 </h1>
                 <hr className="mt-4 border-slate-500" />
                 <div className="grid grid-cols-2 lg:grid-cols-2 mt-5 gap-10">
-                    <div className="bg-slate-200 w-full rounded-3xl p-3 shadow-lg">
-                        <div className="bg-slate-50 p-5 rounded-3xl">
+                    <DashboardCard>
+                        <div>
                             <h1>
                                 Hi,
                                 <span className="font-semibold">
@@ -45,25 +46,26 @@ const SellerDashboard = ({ productCount }) => {
                                 Welcome Back to Seller Center!
                             </h1>
                         </div>
-                    </div>
-                    <div className="bg-slate-200 w-full rounded-3xl p-3 shadow-lg">
-                        <div className="bg-slate-50 p-5 rounded-3xl flex items-center justify-between ">
-                            <h1 className=" font-semibold  ">Total Products</h1>
-                            <span className="text-2xl font-semibold size-14   flex items-center justify-center">
-                                {productCount}
-                            </span>
-                        </div>
-                    </div>
+                        <img
+                            className="size-16 object-cover"
+                            src={WelcomeImg}
+                            alt="Welcome Img."
+                        />
+                    </DashboardCard>
+                    <DashboardCard>
+                        <h1 className=" font-semibold  ">Total Products</h1>
+                        <span className="text-2xl font-semibold size-14   flex items-center justify-center">
+                            {productCount}
+                        </span>
+                    </DashboardCard>
                 </div>
                 <div className="grid grid-cols-2 lg:grid-cols-2 mt-5 gap-10">
-                    <div className="bg-slate-200 w-full rounded-3xl p-3 shadow-lg">
-                        <div className="bg-slate-50 p-5 rounded-3xl flex items-center justify-between ">
-                            <h1 className=" font-semibold  ">Total Orders</h1>
-                            <span className="text-2xl font-semibold size-14   flex items-center justify-center">
-                                {productCount}
-                            </span>
-                        </div>
-                    </div>
+                    <DashboardCard>
+                        <h1 className=" font-semibold  ">Total Orders</h1>
+                        <span className="text-2xl font-semibold size-14   flex items-center justify-center">
+                            {orderCount}
+                        </span>
+                    </DashboardCard>
                     {/* <div className="bg-slate-200 w-full rounded-3xl p-5 shadow-lg">
                         <div className="bg-slate-50 p-5 rounded-3xl flex items-center justify-between ">
                             <h1 className=" font-semibold  ">Total Products</h1>

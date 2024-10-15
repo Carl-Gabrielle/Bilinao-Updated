@@ -8,6 +8,7 @@ import { MdOutlineMailOutline } from "react-icons/md";
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import { GrMapLocation } from "react-icons/gr";
 import { IoStorefrontOutline } from "react-icons/io5";
+
 export default function SellerProfile() {
     const { auth } = usePage().props;
     const user = auth?.user;
@@ -19,7 +20,7 @@ export default function SellerProfile() {
                 <div className="container mx-auto px-4 py-8">
                     <div className="bg-white shadow-lg rounded-3xl overflow-hidden backdrop-blur-lg relative">
                         {/* Cover Image Section */}
-                        <div className="h-64 w-full bg-slate-800 flex items-center justify-center relative overflow-hidden">
+                        <div className="h-60 w-full bg-slate-800 flex items-center justify-center relative overflow-hidden">
                             {/* Main Title */}
                             <h2 className="text-center text-3xl md:text-4xl lg:text-5xl text-slate-100 font-bold z-10 tracking-wide">
                                 Seller Profile
@@ -36,18 +37,22 @@ export default function SellerProfile() {
                             <div className="absolute w-56 h-56 rounded-full border-2 border-white opacity-20 -bottom-10 -left-10"></div>
 
                             {/* Subtle Background Text */}
-                            <h2 className="absolute top-10 text-center text-4xl md:text-5xl text-banner  lg:text-7xl text-slate-100 font-medium opacity-5 transform translate-y-3 blur-xs tracking-widest">
+                            <h2 className="absolute top-10 text-center text-4xl md:text-5xl text-banner lg:text-7xl text-slate-100 font-medium opacity-5 transform translate-y-3 blur-xs tracking-widest">
                                 Seller Profile
                             </h2>
                         </div>
-
                         {/* Profile Info Section */}
-                        <div className="flex items-center px-8 py-10 w-full flex-col sm:flex-row">
+                        <div className="flex items-center px-8 py-7 w-full flex-col sm:flex-row">
                             {/* Profile Image */}
-                            <div className="relative sm:mr-6">
+                            <div className="relative sm:mr-6  w-44">
                                 <img
                                     alt="Profile"
-                                    className="w-36 h-36 rounded-full object-cover border-4 border-slate-200 shadow-lg"
+                                    src={
+                                        user.image_path
+                                            ? `/storage/${user.image_path}`
+                                            : "/path/to/default/profile/picture.jpg"
+                                    }
+                                    className="w-36 h-36 rounded-full object-cover border-4 border-slate-300 shadow-lg"
                                 />
                             </div>
                             {/* Profile Details */}
@@ -93,7 +98,7 @@ export default function SellerProfile() {
                                     href={route("seller.profileEdit")}
                                     className="mt-6 sm:mt-0 sm:ml-6"
                                 >
-                                    <button className="px-5 py-3 text-sm font-semibold rounded-md bg-slate-800  text-slate-100 flex items-center">
+                                    <button className="px-5 py-3 text-sm font-semibold rounded-md bg-slate-800 text-slate-100 flex items-center">
                                         <LiaEditSolid className="mr-2" />
                                         Edit Profile
                                     </button>
