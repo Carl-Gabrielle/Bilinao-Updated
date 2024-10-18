@@ -41,7 +41,6 @@ export default function OrderDetails({ auth }) {
         shipping: 10.0,
         total: 139.27,
     };
-
     return (
         <SellerLayout user={user}>
             <Head title="Order Details" />
@@ -50,7 +49,6 @@ export default function OrderDetails({ auth }) {
                     <h1 className="text-2xl font-semibold text-gray-800 mb-6">
                         Order Details
                     </h1>
-
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Shipping Information */}
                         <div className="bg-slate-50 shadow-sm rounded-lg p-6 h-auto">
@@ -76,7 +74,6 @@ export default function OrderDetails({ auth }) {
                                 />
                             </div>
                         </div>
-
                         {/* Order Information */}
                         <div className="bg-white shadow-sm rounded-lg p-6 ">
                             <h2 className="text-md font-semibold text-yellow-500 mb-4">

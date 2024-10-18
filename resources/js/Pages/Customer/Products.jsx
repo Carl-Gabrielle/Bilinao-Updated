@@ -116,7 +116,7 @@ export default function Products({ products, auth, success, category }) {
                     </div>
                 )}
                 <CustomerContainer>
-                    <div className="flex flex-col lg:flex-row ">
+                    <div className="flex flex-col lg:flex-row gap-8 ">
                         {/* Category Filter */}
                         <div className="flex-1">
                             <div className="p-6 w-64 bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-2xl shadow-md transition-all duration-300">
@@ -133,7 +133,9 @@ export default function Products({ products, auth, success, category }) {
                                                     name="category"
                                                 />
                                                 <div className="size-4 mr-2 rounded-full border-2 border-slate-500 bg-slate-50 peer-checked:bg-slate-800 peer-checked:border-transparent"></div>
-                                                <span>{category.name}</span>
+                                                <span className="whitespace-nowrap">
+                                                    {category.name}
+                                                </span>
                                             </label>
                                         </div>
                                     ))

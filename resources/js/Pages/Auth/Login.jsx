@@ -120,7 +120,8 @@ export default function Login({ status, canResetPassword }) {
                             </div>
                         )}
                         <PrimaryButton disabled={processing}>
-                            <MdLogin className="mr-2 " /> Log in
+                            {processing ? "Logging in..." : "Log in"}
+                            <MdLogin className="ml-2" />
                         </PrimaryButton>
                     </form>
                     {status && (

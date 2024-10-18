@@ -25,7 +25,6 @@ export default function SellerProfile() {
                             <h2 className="text-center text-3xl md:text-4xl lg:text-5xl text-slate-100 font-bold z-10 tracking-wide">
                                 Seller Profile
                             </h2>
-
                             {/* Star Icon Decorations */}
                             <CiStar className="hidden sm:block absolute top-16 left-28 text-white size-7 opacity-20" />
                             <CiStar className="hidden sm:block absolute top-20 left-60 text-white size-7 opacity-20" />
@@ -58,7 +57,7 @@ export default function SellerProfile() {
                             {/* Profile Details */}
                             <div className="flex flex-col sm:flex-row justify-between w-full mt-4 sm:mt-0 items-center">
                                 <div className="space-y-2 text-slate-800">
-                                    <h1 className="text-2xl font-semibold flex items-center">
+                                    <h1 className="text-xl font-medium flex items-center">
                                         <IoStorefrontOutline className="mr-2 text-slate-800" />
                                         {user.name}
                                     </h1>

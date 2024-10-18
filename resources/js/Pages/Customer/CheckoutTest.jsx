@@ -11,7 +11,7 @@ import axios from "axios";
 import Label from "@/Components/Label";
 import ReadOnly from "@/Components/ReadOnly";
 
-export default function Checkout({ auth, carts }) {
+export default function Checkout({ auth }) {
     const { user } = auth;
 
     const [billingDetails, setBillingDetails] = useState({
@@ -99,7 +99,6 @@ export default function Checkout({ auth, carts }) {
             setBarangays([]);
         }
     }, [selectedCityMunicipality]);
-
     const [productData, setProductData] = useState({ product_id: "", qty: "" });
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);

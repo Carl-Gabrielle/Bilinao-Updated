@@ -17,30 +17,20 @@ class CartController extends Controller
      */
     public function carts()
     {
-        $carts = Cart::with('product.images')->where('user_id', Auth::id())->get();
-
+        $carts = Cart::with('product.images', 'product.seller') // Load seller relationship
+            ->where('user_id', Auth::id())
+            ->get();
+    
         return Inertia::render('Customer/Carts', [
             'carts' => $carts,
         ]);
     }
+    
 
 
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
+ public function orderSelection (){
+    return Inertia::render('Customer/OrderSelection');
+ }
  
     public function checkoutPreview(Request $request)
     {

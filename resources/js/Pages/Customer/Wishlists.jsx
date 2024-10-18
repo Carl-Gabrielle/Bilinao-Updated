@@ -37,12 +37,12 @@ export default function Wishlists({ auth, wishlists, product }) {
                             </h1>
                             <hr className="flex-grow border border-slate-800" />
                         </div>
-                        <div className="p-6 shadow-lg rounded-2xl bg-slate-50 bg-opacity-60 backdrop-blur-lg">
+                        <div className="p-6 shadow-lg rounded-2xl bg-slate-50 bg-opacity-60 backdrop-blur-lg ">
                             {wishlistsItems.length > 0 ? (
                                 wishlistsItems.map((wishlists) => (
                                     <div
                                         key={wishlists.id}
-                                        className="flex items-center border border-slate-400 p-2 rounded-lg  "
+                                        className="flex items-center border border-slate-400 p-2 rounded-lg mt-3 "
                                     >
                                         <Link
                                             href={route(

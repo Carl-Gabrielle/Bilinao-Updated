@@ -1,7 +1,6 @@
 <?php
 
 namespace App\Http\Controllers;
-
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\Notifications; 
@@ -76,20 +75,26 @@ class CheckoutController extends Controller
                     ]);
                 }
             }
+                  // Create a notification
+        Notifications::create([
+            'user_id' => Auth::id(),
+            'message' => 'Your order has been placed successfully!',
+            'link' => 'customer.orders', 
+            'status' => 'unread', 
+        ]);
             // Commit the transaction
             DB::commit();
-             // Create a notification
-        Notifications::create([
-                'user_id' => Auth::id(),
-                'message' => 'Your order has been placed successfully!',
-                'link' => 'customer.orders', 
-                'status' => 'unread', 
-            ]);
             return redirect()->route('customer.completeOrders')->with('success', 'Order placed successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());
             return back()->with("error", $e->getMessage());
         }
+    }
+    public function success(){
+
+    }
+    public function failed(){
+
     }
 }

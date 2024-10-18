@@ -3,6 +3,8 @@ import CustomerContainer from "@/Components/CustomerContainer";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
 import { HiMiniArrowLongLeft, HiMiniArrowLongRight } from "react-icons/hi2";
+import { MdKeyboardArrowRight } from "react-icons/md";
+import { IoStorefrontOutline } from "react-icons/io5";
 import emptyImg from "../Illustrations/empty.png";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Banner from "@/Components/Banner";
@@ -10,10 +12,11 @@ import { FaPesoSign } from "react-icons/fa6";
 import { Head, Link } from "@inertiajs/react";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
+import CustomCheckbox from "@/Components/CustomCheckbox";
 
 export default function Carts({ auth, carts, cartCount }) {
     const [cartItems, setCartItems] = useState(carts);
-
+    const [checkedItemIds, setCheckedItemIds] = useState([]);
     const updateQuantity = async (id, quantity) => {
         try {
             await axios.put(route("cart.update", id), { quantity });
@@ -31,6 +34,10 @@ export default function Carts({ auth, carts, cartCount }) {
         try {
             await axios.delete(route("cart.destroy", id));
             setCartItems(cartItems.filter((cart) => cart.id !== id));
+            // Clear checked item if deleted
+            if (checkedItemId === id) {
+                setCheckedItemId(null);
+            }
         } catch (error) {
             console.error("Error removing item from the cart!", error);
         }
@@ -52,17 +59,21 @@ export default function Carts({ auth, carts, cartCount }) {
         }
     };
 
-    const calculateTotal = () => {
-        return cartItems.reduce(
-            (acc, cart) => acc + cart.product.price * cart.quantity,
-            0
-        );
+    // MANAGING SELECTED ITEMS
+    const handleChange = (id) => {
+        if (checkedItemIds.includes(id)) {
+            // If item is already checked, uncheck it
+            setCheckedItemIds(checkedItemIds.filter((itemId) => itemId !== id));
+        } else {
+            // If item is not checked, add it to the checked list
+            setCheckedItemIds([...checkedItemIds, id]);
+        }
     };
 
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Carts" />
-            <div className="min-h-screen  pt-20 pb-1">
+            <div className="min-h-screen pt-20 pb-1">
                 <Banner title="Shopping Cart" />
                 <CustomerContainer className="mt-32 ">
                     <div className="flex items-center space-x-3">
@@ -78,12 +89,12 @@ export default function Carts({ auth, carts, cartCount }) {
                         </span>
                     </h1>
                     <div className="py-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
-                        <div className="col-span-2 shadow-lg rounded-2xl bg-slate-50  bg-opacity-60 backdrop-blur-lg   ">
-                            <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0  space-x-14 bg-slate-800 text-white rounded-t-2xl">
-                                <span className="uppercase  flex-1 text-center">
+                        <div className="col-span-2 shadow-lg rounded-2xl bg-slate-50 bg-opacity-60 backdrop-blur-lg">
+                            <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0 space-x-14 bg-slate-800 text-white rounded-t-2xl">
+                                <span className="uppercase flex-1 text-center">
                                     Product
                                 </span>
-                                <span className="uppercase  flex-1 text-center">
+                                <span className="uppercase flex-1 text-center">
                                     Quantity
                                 </span>
                                 <span className="uppercase flex-1 text-center">
@@ -96,87 +107,120 @@ export default function Carts({ auth, carts, cartCount }) {
                                         const subtotal =
                                             cart.product.price * cart.quantity;
                                         return (
-                                            <div
-                                                key={cart.id}
-                                                className="flex items-center border border-slate-400 p-2 rounded-lg mt-2"
-                                            >
+                                            <div key={cart.id}>
                                                 <Link
                                                     href={route(
-                                                        "product.show",
-                                                        cart.product.id
+                                                        "seller.public.profile",
+                                                        {
+                                                            seller: cart.product
+                                                                .seller.id,
+                                                        }
                                                     )}
-                                                    className="flex-shrink-0"
                                                 >
-                                                    <img
-                                                        src={`/storage/${cart.product.images[0].image_path}`}
-                                                        alt={cart.product.name}
-                                                        className="sm:size-20 size-10 object-cover rounded"
-                                                    />
+                                                    <span className="text-xs flex items-center text-slate-700 font-medium hover:text-slate-900 hover:underline hover:underline-offset-2 transition-colors duration-200 ease-in-out">
+                                                        <IoStorefrontOutline className="mr-2" />
+                                                        {
+                                                            cart.product.seller
+                                                                .name
+                                                        }
+                                                        <MdKeyboardArrowRight />
+                                                    </span>
                                                 </Link>
-                                                <div className="flex-1 ml-4 text-xs text-slate-800 ">
-                                                    <h3 className="font-semibold">
-                                                        {cart.product.name}
-                                                    </h3>
-                                                    <p className="flex items-center">
-                                                        <FaPesoSign />
-                                                        {Number(
-                                                            cart.product.price
-                                                        ).toLocaleString(
-                                                            "en-US",
-                                                            {
-                                                                minimumFractionDigits: 2,
-                                                                maximumFractionDigits: 2,
-                                                            }
+                                                <div className="flex items-center border border-slate-400 p-2 rounded-lg mt-2">
+                                                    <CustomCheckbox
+                                                        isChecked={checkedItemIds.includes(
+                                                            cart.id
                                                         )}
-                                                    </p>
-                                                </div>
-                                                <div className="flex-1 text-center text-xs">
-                                                    <div className="flex items-center justify-center space-x-2 sm:space-x-8 bg-slate-300 py-1 sm:py-2 sm:px-3 px-1 rounded-full">
-                                                        <button
-                                                            onClick={() =>
-                                                                handleDecrement(
-                                                                    cart.id
-                                                                )
+                                                        onChange={() =>
+                                                            handleChange(
+                                                                cart.id
+                                                            )
+                                                        }
+                                                    />
+                                                    <Link
+                                                        href={route(
+                                                            "product.show",
+                                                            cart.product.id
+                                                        )}
+                                                        className="flex-shrink-0"
+                                                    >
+                                                        <img
+                                                            src={`/storage/${cart.product.images[0].image_path}`}
+                                                            alt={
+                                                                cart.product
+                                                                    .name
                                                             }
-                                                            className="sm:size-7 size-4 bg-slate-800 text-white flex items-center justify-center rounded-full"
-                                                        >
-                                                            -
-                                                        </button>
-                                                        <p className="text-slate-800">
-                                                            {cart.quantity}
+                                                            className="sm:size-16 size-10 object-cover rounded"
+                                                        />
+                                                    </Link>
+                                                    <div className="flex-1 ml-4 text-xs text-slate-800 ">
+                                                        <h3 className="font-semibold">
+                                                            {cart.product.name}
+                                                        </h3>
+                                                        <p className="flex items-center">
+                                                            <FaPesoSign />
+                                                            {Number(
+                                                                cart.product
+                                                                    .price
+                                                            ).toLocaleString(
+                                                                "en-US",
+                                                                {
+                                                                    minimumFractionDigits: 2,
+                                                                    maximumFractionDigits: 2,
+                                                                }
+                                                            )}
                                                         </p>
-                                                        <button
-                                                            onClick={() =>
-                                                                handleIncrement(
-                                                                    cart.id
-                                                                )
-                                                            }
-                                                            className="sm:size-7 size-4 bg-slate-800 text-white flex items-center justify-center rounded-full"
-                                                        >
-                                                            +
-                                                        </button>
                                                     </div>
+                                                    <div className="flex-1 text-center text-xs">
+                                                        <div className="flex items-center justify-center space-x-2 sm:space-x-8 bg-slate-300 py-1 sm:py-2 sm:px-3 px-1 rounded-full">
+                                                            <button
+                                                                onClick={() =>
+                                                                    handleDecrement(
+                                                                        cart.id
+                                                                    )
+                                                                }
+                                                                className="sm:size-7 size-4 bg-slate-800 text-white flex items-center justify-center rounded-full"
+                                                            >
+                                                                -
+                                                            </button>
+                                                            <p className="text-slate-800">
+                                                                {cart.quantity}
+                                                            </p>
+                                                            <button
+                                                                onClick={() =>
+                                                                    handleIncrement(
+                                                                        cart.id
+                                                                    )
+                                                                }
+                                                                className="sm:size-7 size-4 bg-slate-800 text-white flex items-center justify-center rounded-full"
+                                                            >
+                                                                +
+                                                            </button>
+                                                        </div>
+                                                    </div>
+                                                    <div className="flex-1 text-right text-xs text-slate-800">
+                                                        <p className="flex items-center justify-end">
+                                                            <FaPesoSign />
+                                                            {subtotal.toLocaleString(
+                                                                undefined,
+                                                                {
+                                                                    minimumFractionDigits: 2,
+                                                                    maximumFractionDigits: 2,
+                                                                }
+                                                            )}
+                                                        </p>
+                                                    </div>
+                                                    <button
+                                                        onClick={() =>
+                                                            handleDelete(
+                                                                cart.id
+                                                            )
+                                                        }
+                                                        className="sm:ml-4 ml-2 hover:bg-slate-200 sm:px-2 sm:py-2 px-1 py-1  rounded-full transition-colors duration-300 ease-in-out border border-slate-400"
+                                                    >
+                                                        <IoClose />
+                                                    </button>
                                                 </div>
-                                                <div className="flex-1 text-right text-xs text-slate-800">
-                                                    <p className="flex items-center justify-end">
-                                                        <FaPesoSign />
-                                                        {subtotal.toLocaleString(
-                                                            undefined,
-                                                            {
-                                                                minimumFractionDigits: 2,
-                                                                maximumFractionDigits: 2,
-                                                            }
-                                                        )}
-                                                    </p>
-                                                </div>
-                                                <button
-                                                    onClick={() =>
-                                                        handleDelete(cart.id)
-                                                    }
-                                                    className="sm:ml-4 ml-2 hover:bg-slate-200 px-2 py-2 rounded-full transition-colors duration-300 ease-in-out border border-slate-400"
-                                                >
-                                                    <IoClose />
-                                                </button>
                                             </div>
                                         );
                                     })}
@@ -210,36 +254,20 @@ export default function Carts({ auth, carts, cartCount }) {
                         <div className="w-full lg:w-96 rounded-2xl flex flex-col min-h-full">
                             <div className="py-4 px-6 bg-slate-800 text-white rounded-t-2xl">
                                 <span className="uppercase text-xs flex-1">
-                                    Order Summary
+                                    Order Summary (FRONTEND ONLY)
                                 </span>
                             </div>
                             <div className="bg-slate-50  bg-opacity-60 backdrop-blur-lg   text-sm shadow-lg rounded-b-2xl h-72 flex flex-col">
                                 <div className="pt-5 px-6">
                                     <div className="flex justify-between items-start mb-4">
                                         <p>Subtotal</p>
-                                        <p>
-                                            &#8369;{" "}
-                                            {calculateTotal().toLocaleString(
-                                                undefined,
-                                                {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }
-                                            )}
-                                        </p>
+                                        <p>&#8369; 10</p>
                                     </div>
                                 </div>
                                 <div className="px-6 flex justify-between items-start font-semibold bg-slate-300 py-2">
                                     <p className="uppercase">Total</p>
                                     <p className=" font-semibold">
-                                        &#8369;{" "}
-                                        {calculateTotal().toLocaleString(
-                                            undefined,
-                                            {
-                                                minimumFractionDigits: 2,
-                                                maximumFractionDigits: 2,
-                                            }
-                                        )}
+                                        &#8369; 325{" "}
                                     </p>
                                 </div>
                                 {cartItems.length > 0 && (
@@ -262,6 +290,4 @@ export default function Carts({ auth, carts, cartCount }) {
             </div>
         </CustomerLayout>
     );
-}
-{
 }

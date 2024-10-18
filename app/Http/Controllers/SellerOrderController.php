@@ -11,6 +11,9 @@ class SellerOrderController extends Controller
     /**
      * Display a listing of the resource.
      */
+    public function orderDetails (){
+        return Inertia::render('Seller/OrderDetails');
+    }
     public function pendingOrders()
     {
         $sellerId = Auth::id(); 
@@ -31,14 +34,13 @@ class SellerOrderController extends Controller
     
         return Inertia::render('Seller/PendingOrders', [
             'pendingOrders' => $pendingOrders,
-            // 'auth' => auth()->user(),
         ]);
     }
     
     
     public function processOrders (){
         $sellerId = Auth::id(); 
-        $processOrders = Order::where('remarks', 'OnProcess')
+        $processOrders = Order::where('remarks', 'on process')
         ->whereHas('orderItems', function ($query) use ($sellerId) {
             $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
                 $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
@@ -60,9 +62,7 @@ class SellerOrderController extends Controller
     public function completedOrders (){
         return Inertia::render('Seller/CompletedOrders');
     }
-    public function orderDetails (){
-        return Inertia::render('Seller/OrderDetails');
-    }
+  
     public function index()
     {
         //

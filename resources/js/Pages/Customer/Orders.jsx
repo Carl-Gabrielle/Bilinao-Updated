@@ -6,12 +6,11 @@ import CustomerContainer from "@/Components/CustomerContainer";
 import OrderStatus from "./OrderStatus";
 import ToPay from "./ToPay";
 import ToShip from "./ToShip";
-import Pending from "./Pending";
 import ToReceive from "./ToReceive";
 import Received from "./Received";
 
 const Orders = ({ auth }) => {
-    const [activeStatus, setActiveStatus] = useState("Pending");
+    const [activeStatus, setActiveStatus] = useState("To Pay");
 
     const handleStatusClick = (status) => {
         setActiveStatus(status);
@@ -19,8 +18,6 @@ const Orders = ({ auth }) => {
 
     const renderOrderDetails = () => {
         switch (activeStatus) {
-            case "Pending":
-                return <Pending />;
             case "To Pay":
                 return <ToPay />;
             case "To Ship":
@@ -47,12 +44,7 @@ const Orders = ({ auth }) => {
                             corresponding orders.
                         </p>
                     </div>
-                    <div className="grid grid-cols-2 md:grid-cols-3  lg:grid-cols-4 xl:grid-cols-5 gap-4 mb-8">
-                        <OrderStatus
-                            title="Pending"
-                            isActive={activeStatus === "Pending"}
-                            onClick={() => handleStatusClick("Pending")}
-                        />
+                    <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
                         <OrderStatus
                             title="To Pay"
                             isActive={activeStatus === "To Pay"}

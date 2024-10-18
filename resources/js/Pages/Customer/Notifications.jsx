@@ -54,7 +54,7 @@ export default function Notifications({ auth, notifications = [] }) {
                     <div className="w-full px-4 sm:px-10 md:px-20 lg:px-40 xl:px-60">
                         <div className="bg-slate-50 bg-opacity-60 backdrop-blur-lg rounded-3xl p-6 text-sm h-96 ">
                             <div className=" overflow-x-auto scroll-bar h-full px-6">
-                                <div className="px-2 py-2 flex items-center justify-between mb-2">
+                                <div className="px-2 py-2 flex items-center justify-between mb-2 ">
                                     <h1 className="text-lg text-primary font-semibold text-slate">
                                         Notifications
                                     </h1>

@@ -13,12 +13,12 @@ const PublicProfile = ({ seller, products, auth }) => {
         <>
             <Head title={`${seller.name}'s Profile`} />
             <CustomerLayout user={auth.user}>
-                <div className="min-h-screen bg-gray-100 pt-20 pb-12">
+                <div className="min-h-screen bg-slate-300 pt-20 pb-12">
                     <Banner title={`Seller ${seller.name}'s Profile`} />
                     <CustomerContainer>
                         <div className="container mx-auto px-4 py-8 pt-10">
                             {/* Profile Section */}
-                            <div className="bg-white shadow-lg rounded-3xl overflow-hidden">
+                            <div className="bg-slate-50 bg-opacity-60 backdrop-blur-lg shadow-lg rounded-3xl overflow-hidden">
                                 {/* Cover Image */}
                                 <div className="bg-lime-700 h-32 "></div>
                                 <div className="relative -mt-16 flex justify-center">
@@ -36,7 +36,6 @@ const PublicProfile = ({ seller, products, auth }) => {
                                     <h1 className="text-2xl font-bold text-gray-800">
                                         {seller.name}
                                     </h1>
-
                                     <p className="text-md text-slate-800">
                                         {seller.email}
                                     </p>
@@ -71,7 +70,7 @@ const PublicProfile = ({ seller, products, auth }) => {
 
                             {/* About Section */}
                             <div className="mt-8 space-y-6">
-                                <div className="bg-white shadow-md rounded-3xl p-6">
+                                <div className="bg-slate-50 bg-opacity-60 backdrop-blur-lg shadow-md rounded-3xl p-6">
                                     <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
                                         About
                                     </h2>
@@ -82,7 +81,7 @@ const PublicProfile = ({ seller, products, auth }) => {
                                 </div>
 
                                 {/* Contact Information Section */}
-                                <div className="bg-white shadow-md rounded-3xl p-6">
+                                <div className="bg-slate-50 bg-opacity-60 backdrop-blur-lg shadow-md rounded-3xl p-6">
                                     <h3 className="text-xl font-semibold text-gray-800 border-b pb-2">
                                         Contact Information
                                     </h3>
@@ -110,8 +109,8 @@ const PublicProfile = ({ seller, products, auth }) => {
                                 </div>
 
                                 {/* Seller's Products Section */}
-                                <div className="bg-white shadow-md rounded-3xl p-6">
-                                    <h3 className="text-xl font-semibold text-gray-800 border-b pb-2">
+                                <div className="bg-slate-50 bg-opacity-60 backdrop-blur-lg   shadow-md rounded-3xl p-6">
+                                    <h3 className="text-xl font-semibold text-gray-800 border-b border-slate-300 pb-2">
                                         Products by {seller.name}
                                     </h3>
                                     <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-4 mt-4">
@@ -124,7 +123,7 @@ const PublicProfile = ({ seller, products, auth }) => {
                                                         product.id
                                                     )}
                                                 >
-                                                    <div className="p-4 border rounded shadow-sm">
+                                                    <div className="p-4 border border-slate-300 rounded shadow-sm">
                                                         <Link
                                                             href={`/product/${product.id}`}
                                                         >

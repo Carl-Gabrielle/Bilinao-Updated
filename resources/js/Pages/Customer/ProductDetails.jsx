@@ -159,7 +159,6 @@ export default function ProductDetails({
                                 <p className="text-gray-600 text-sm leading-relaxed mb-4">
                                     {product.description}
                                 </p>
-
                                 {product.stock > 0 ? (
                                     <span className="text-slate-800 text-sm mb-5 font-medium">
                                         <span className="text-emerald-100 bg-emerald-600 rounded-full px-3 py-1  shadow-inner">
@@ -191,7 +190,6 @@ export default function ProductDetails({
                                         <FaStarHalfAlt className="text-sm" />
                                         <FaRegStar className="text-sm" />
                                     </div>
-
                                     <span className="text-gray-600 text-sm">
                                         140 reviews | 431 sold
                                     </span>

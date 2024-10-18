@@ -76,9 +76,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/completeOrders', [CheckoutController::class, 'completeOrders'])->name('customer.completeOrders');
         Route::get('/products', [ProductController::class, 'products'])->name('customer.products');
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
+        Route::get('/orderSelection', [CartController::class, 'orderSelection'])->name('customer.orderSelection');
         // CUSTOMER  ORDERS  ROUTE 
         Route::get('/orders', [CustomerOrderController::class, 'orders'])->name('customer.orders');
-        Route::get('/pending', [CustomerOrderController::class, 'pendingOrders'])->name('order.pending');
         Route::get('/toPay', [CustomerOrderController::class, 'toPayOrders'])->name('order.toPay');
         Route::get('/toShip', [CustomerOrderController::class, 'toShipOrders'])->name('order.toShip');
         Route::get('/toReceive', [CustomerOrderController::class, 'toReceiveOrders'])->name('order.toReceive');
@@ -95,6 +95,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::post('/checkout', [CheckoutController::class, 'store'])->name('store.checkout');
         Route::post('/wishlists', [WishlistsController::class, 'storeWishlists'])->name('customer.storeWishlists');
         Route::delete('/wishItem/{id}', [WishlistsController::class, 'destroy'])->name('wishItem.destroy');
+        Route::get('/payment/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');
+        Route::get('/payment/failed/{order}', [CheckoutController::class, 'failed'])->name('checkout.failed');
+
     });
 });
 

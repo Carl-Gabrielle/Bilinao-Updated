@@ -134,7 +134,10 @@ const SellerLogin = () => {
                                             className="w-full bg-slate-800 text-white py-3 rounded-full transition duration-300 flex items-center justify-center font-bold"
                                             disabled={processing}
                                         >
-                                            Log In <MdLogin className="ml-2" />
+                                            {processing
+                                                ? "Logging in..."
+                                                : "Log in"}
+                                            <MdLogin className="ml-2" />
                                         </button>
                                     </div>
                                 </form>

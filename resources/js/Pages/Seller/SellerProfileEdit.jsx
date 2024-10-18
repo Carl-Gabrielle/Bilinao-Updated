@@ -1,7 +1,8 @@
 import React from "react";
-import { Head, useForm } from "@inertiajs/react";
+import { Head, useForm, Link } from "@inertiajs/react";
 import SellerLayout from "@/Layouts/SellerLayout";
-
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import SellerInput from "@/Components/SellerInput";
 export default function SellerProfileEdit({ seller }) {
     const { data, setData, post, processing, errors, reset, progress } =
         useForm({
@@ -9,6 +10,7 @@ export default function SellerProfileEdit({ seller }) {
             address: seller.address || "",
             contact_number: seller.contact_number || "",
             email: seller.email || "",
+            image_path: seller.image_path || "",
             _method: "PUT",
         });
     function handleSubmit(e) {
@@ -28,15 +30,30 @@ export default function SellerProfileEdit({ seller }) {
         <SellerLayout user={seller}>
             <Head title="Edit Profile" />
             <div className="container mx-auto px-4 py-8">
-                <div className="bg-white shadow-lg rounded-3xl p-6">
+                <Link
+                    href={route("seller.profile")}
+                    className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
+                >
+                    <MdOutlineKeyboardArrowLeft className="mr-2" />
+                    <span>Go Back</span>
+                </Link>
+                <div className="bg-slate-100 shadow-lg rounded-3xl p-6">
                     <h2 className="text-3xl font-bold mb-6">Edit Profile</h2>
 
                     <form onSubmit={handleSubmit} encType="multipart/form-data">
                         <div className="mb-4">
+                            <img
+                                src={
+                                    seller.image_path ||
+                                    "/images/default-profile.png"
+                                }
+                                alt="Profile"
+                                className="w-32 h-32 object-cover rounded-full border-4 border-slate-300 shadow-md mb-4"
+                            />
                             <label className="block text-sm font-medium text-gray-700">
                                 Profile Picture
-                            </label>
-                            <input
+                            </label>{" "}
+                            <SellerInput
                                 type="file"
                                 onChange={(e) =>
                                     setData(
@@ -44,7 +61,6 @@ export default function SellerProfileEdit({ seller }) {
                                         e.target.files[0]
                                     )
                                 }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                             />
                             {errors.profile_picture && (
                                 <div className="text-red-600">
@@ -56,7 +72,7 @@ export default function SellerProfileEdit({ seller }) {
                             <label className="block text-sm font-medium text-gray-700">
                                 Name
                             </label>
-                            <input
+                            <SellerInput
                                 type="text"
                                 value={data.name}
                                 onChange={(e) =>
@@ -75,7 +91,7 @@ export default function SellerProfileEdit({ seller }) {
                             <label className="block text-sm font-medium text-gray-700">
                                 Address
                             </label>
-                            <input
+                            <SellerInput
                                 type="text"
                                 value={data.address}
                                 onChange={(e) =>
@@ -94,7 +110,7 @@ export default function SellerProfileEdit({ seller }) {
                             <label className="block text-sm font-medium text-gray-700">
                                 Contact Number
                             </label>
-                            <input
+                            <SellerInput
                                 type="text"
                                 value={data.contact_number}
                                 onChange={(e) =>
@@ -113,7 +129,7 @@ export default function SellerProfileEdit({ seller }) {
                             <label className="block text-sm font-medium text-gray-700">
                                 Email
                             </label>
-                            <input
+                            <SellerInput
                                 type="email"
                                 value={data.email}
                                 onChange={(e) =>
