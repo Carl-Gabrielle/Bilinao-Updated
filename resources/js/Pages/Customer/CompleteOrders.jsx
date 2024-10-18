@@ -85,7 +85,6 @@ export default function CompletedOrder({ auth, order, orderItems }) {
                                     {order?.landmark}
                                 </p>
                             </div>
-
                             {/* Display order items */}
                             <hr />
                             <div className="mt-6">

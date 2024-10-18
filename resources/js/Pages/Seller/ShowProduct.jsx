@@ -56,12 +56,12 @@ export default function ShowProduct({ success }) {
                 )}
                 <div className="px-10 bg-white bg-opacity-55 backdrop-blur-lg py-8 rounded-3xl">
                     <div className="flex items-center justify-between mb-8">
-                        <h1 className="font-semibold text-2xl text-gray-800 leading-tight">
+                        <h1 className="font-semibold sm:text-2xl text-md text-gray-800 leading-tight">
                             Your Products
                         </h1>
                         <Link
                             href={route("products.create")}
-                            className="bg-slate-800 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                            className="bg-slate-800 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center whitespace-nowrap"
                         >
                             <MdAdd className="mr-2 size-4" /> Add a New Product
                         </Link>
@@ -123,7 +123,7 @@ export default function ShowProduct({ success }) {
                                                 href={`/products/${product.id}/edit`}
                                                 className="hover:underline"
                                             >
-                                                <td className="py-4 px-6 text-gray-800 font-semibold">
+                                                <td className="py-4 px-6 text-gray-800 font-semibold whitespace-nowrap">
                                                     {product.name}
                                                 </td>
                                             </Link>
@@ -139,7 +139,7 @@ export default function ShowProduct({ success }) {
                                             <td className="py-4 px-6 text-gray-800 font-bold">
                                                 {product.stock}
                                             </td>
-                                            <td className="py-4 px-6 text-gray-800">
+                                            <td className="py-4 px-6 text-gray-800 whitespace-nowrap">
                                                 {product.category?.name ||
                                                     "N/A"}
                                             </td>

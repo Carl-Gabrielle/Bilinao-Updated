@@ -42,7 +42,7 @@ Route::middleware('auth:seller')->group(function () {
     Route::get('/processOrders', [SellerOrderController::class, 'processOrders'])->name('seller.processOrders');
     Route::get('/shippedOrders', [SellerOrderController::class, 'shippedOrders'])->name('seller.shippedOrders');
     Route::get('/completedOrders', [SellerOrderController::class, 'completedOrders'])->name('seller.completedOrders');
-    Route::get('/orderDetails', [SellerOrderController::class, 'orderDetails'])->name('seller.OrderDetails');
+    Route::get('/seller/order-details/{orderId}', [SellerOrderController::class, 'orderDetails'])->name('seller.OrderDetails');
 });
 
 Route::inertia('/sellerLogin', 'SellerLogin')->name('seller.login');

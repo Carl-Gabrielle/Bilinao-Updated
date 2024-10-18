@@ -59,7 +59,6 @@ export default function PendingOrder({ auth = {}, processOrders = [] }) {
                                                     <span className="bg-yellow-200 text-yellow-800 text-medium font-semibold px-2 py-0.5 rounded-md">
                                                         {order.remarks ||
                                                             "Unknown"}{" "}
-                                                        {/* Handle potential undefined status */}
                                                     </span>
                                                 </td>
                                                 <td className="py-4 px-6 text-slate-800">

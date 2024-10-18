@@ -1,46 +1,19 @@
 import SellerLayout from "@/Layouts/SellerLayout";
 import { FaPesoSign } from "react-icons/fa6";
-import { Head, usePage } from "@inertiajs/react";
+import { Head } from "@inertiajs/react";
 import SectionHeader from "@/Components/SectionHeader";
 import ReadOnly from "@/Components/ReadOnly";
 import SellerInput from "@/Components/SellerInput";
 
-export default function OrderDetails({ auth }) {
-    const { props } = usePage();
-    const user = props.auth.user;
+export default function OrderDetails({ auth, order, orderItems }) {
+    const { user } = auth;
+    // Calculate order total safely
+    const orderTotal =
+        orderItems.reduce(
+            (total, item) => total + (parseFloat(item.total_price) || 0),
+            0
+        ) + (parseFloat(order?.shipping_fee) || 0);
 
-    // FAKE PRODUCT DATA
-    const products = [
-        {
-            id: 1,
-            name: "Decorative Vase",
-            description: "Handmade ceramic vase",
-            price: 45.99,
-            quantity: 2,
-            imageUrl: "https://via.placeholder.com/150",
-        },
-        {
-            id: 2,
-            name: "Tie Dye Shirt",
-            description: "Colorful tie dye shirt made from organic cotton",
-            price: 29.99,
-            quantity: 1,
-            imageUrl: "https://via.placeholder.com/150",
-        },
-        {
-            id: 2,
-            name: "Tie Dye Shirt",
-            description: "Colorful tie dye shirt made from organic cotton",
-            price: 29.99,
-            quantity: 1,
-            imageUrl: "https://via.placeholder.com/150",
-        },
-    ];
-    // FAKE ORDER SUMMARY
-    const orderSummary = {
-        shipping: 10.0,
-        total: 139.27,
-    };
     return (
         <SellerLayout user={user}>
             <Head title="Order Details" />
@@ -51,54 +24,108 @@ export default function OrderDetails({ auth }) {
                     </h1>
                     <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
                         {/* Shipping Information */}
-                        <div className="bg-slate-50 shadow-sm rounded-lg p-6 h-auto">
-                            <h2 className="text-md font-semibold text-gray-700 mb-4">
-                                Shipping Information
-                            </h2>
+                        <div className="bg-slate-50 shadow-sm rounded-3xl p-6 h-auto">
+                            <div className="flex items-center justify-between mb-4">
+                                <h2 className="text-md font-semibold text-gray-700 ">
+                                    Shipping Information
+                                </h2>
+                                <span className="text-sm font-semibold text-gray-700">
+                                    Date:{" "}
+                                    {new Date(order.created_at)
+                                        .toLocaleDateString("en-US", {
+                                            year: "numeric",
+                                            month: "short",
+                                            day: "numeric",
+                                        })
+                                        .replace(
+                                            /(\w+)\s(\d+),\s*(\d+)/,
+                                            "$1. $2, $3"
+                                        )}
+                                </span>
+                            </div>
                             <div className="space-y-4">
                                 <ReadOnly
                                     label="Customer Name"
-                                    value={user.name}
+                                    value={order?.name}
                                 />
                                 <ReadOnly
                                     label="Phone Number"
-                                    value={user.contact_number}
+                                    value={order?.phone}
                                 />
                                 <ReadOnly
                                     label="Customer Address"
-                                    value={user.address}
+                                    value={order?.shipping_address}
                                 />
                                 <ReadOnly
                                     label="Landmark"
-                                    value={user.landmark}
+                                    value={order?.landmark}
                                 />
                             </div>
                         </div>
                         {/* Order Information */}
-                        <div className="bg-white shadow-sm rounded-lg p-6 ">
-                            <h2 className="text-md font-semibold text-yellow-500 mb-4">
-                                Order Status: On Process
+                        <div className="bg-white shadow-sm rounded-3xl  p-6">
+                            <h2 className="text-sm font-semibold text-slate-800 mb-4">
+                                Order Status:
+                                {order.remarks === "pending" && (
+                                    <span className="bg-red-200 text-red-800 text-medium font-semibold px-2 py-0.5 rounded-md">
+                                        {order.remarks || "Unknown"}
+                                    </span>
+                                )}
+                                {order.remarks === "on process" && (
+                                    <span className="bg-yellow-200 text-yellow-800 text-medium font-semibold px-2 py-0.5 rounded-md">
+                                        {order.remarks || "Unknown"}
+                                    </span>
+                                )}
+                                {order.remarks === "shipped" && (
+                                    <span className="bg-blue-200 text-blue-800 text-medium font-semibold px-2 py-0.5 rounded-md whitespace-nowrap">
+                                        shipped out
+                                    </span>
+                                )}
+                                {order.remarks === "completed" && (
+                                    <span className="bg-green-200 text-green-800 text-medium font-semibold px-2 py-0.5 rounded-md">
+                                        completed
+                                    </span>
+                                )}
+                                {![
+                                    "pending",
+                                    "on process",
+                                    "shipped",
+                                    "completed",
+                                ].includes(order.remarks) && (
+                                    <span className="bg-gray-200 text-gray-800 text-medium font-semibold px-2 py-0.5 rounded-md">
+                                        {order.remarks || "Unknown"}
+                                    </span>
+                                )}
                             </h2>
-                            {products.map((product) => (
+
+                            {orderItems.map((item) => (
                                 <div
-                                    key={product.id}
+                                    key={item.id}
                                     className="flex items-center space-x-6 mb-6"
                                 >
                                     <img
-                                        src={product.imageUrl}
-                                        alt="Product Image"
-                                        className="w-24 h-24 rounded-lg object-cover border border-gray-300"
+                                        src={`/storage/${item.product.images[0]?.image_path}`}
+                                        alt={item.product_name}
+                                        className="w-20 h-20 rounded-lg object-cover border border-gray-300"
                                     />
-                                    <div className="text-sm text-gray-700">
-                                        <h3 className="font-semibold">
-                                            {product.name}
+                                    <div className="text-sm text-gray-700 ">
+                                        <h3 className="font-semibold ">
+                                            {item.product_name}
                                         </h3>
                                         <span className="block">
-                                            Qty. {product.quantity}
+                                            Qty. {item.qty}
                                         </span>
                                         <span className="flex items-center">
                                             <FaPesoSign /> Price:{" "}
-                                            {product.price.toFixed(2)}
+                                            {parseFloat(item.price).toFixed(
+                                                2
+                                            ) || 0.0}
+                                        </span>
+                                        <span className="flex items-center">
+                                            <FaPesoSign /> Total:{" "}
+                                            {parseFloat(
+                                                item.total_price
+                                            ).toFixed(2) || 0.0}
                                         </span>
                                     </div>
                                 </div>
@@ -109,26 +136,31 @@ export default function OrderDetails({ auth }) {
                                         <span>Shipping Fee:</span>
                                         <span className="flex items-center">
                                             <FaPesoSign />{" "}
-                                            {orderSummary.shipping.toFixed(2)}
+                                            {parseFloat(
+                                                order?.shipping_fee || 0
+                                            ).toFixed(2)}
                                         </span>
                                     </div>
                                     <div className="flex justify-between mt-2 font-semibold text-gray-900">
                                         <span>Order Total:</span>
                                         <span className="flex items-center">
                                             <FaPesoSign />{" "}
-                                            {orderSummary.total.toFixed(2)}
+                                            {orderTotal.toFixed(2)}
                                         </span>
                                     </div>
                                 </div>
                             </div>
-                        </div>
-                    </div>
-                    <div className="flex justify-end mt-5">
-                        <div className=" w-full sm:w-1/2 flex flex-col sm:flex-row gap-4">
-                            <SellerInput className="w-full" />
-                            <button className="w-full sm:w-1/2 bg-slate-800 rounded-md text-slate-50 py-2 px-4">
-                                Shipped Out
-                            </button>
+                            <div className="flex items-center mt-5 ">
+                                <div className="flex flex-col sm:flex-row gap-4">
+                                    <SellerInput
+                                        className="w-full"
+                                        placeholder="Enter Shipping  Code"
+                                    />
+                                    <button className=" bg-slate-800 rounded-md text-slate-50  px-4 whitespace-nowrap">
+                                        Shipped Out
+                                    </button>
+                                </div>
+                            </div>
                         </div>
                     </div>
                 </div>

@@ -107,7 +107,10 @@ export default function Carts({ auth, carts, cartCount }) {
                                         const subtotal =
                                             cart.product.price * cart.quantity;
                                         return (
-                                            <div key={cart.id}>
+                                            <div
+                                                key={cart.id}
+                                                className=" border border-slate-400 p-2 rounded-lg mt-2"
+                                            >
                                                 <Link
                                                     href={route(
                                                         "seller.public.profile",
@@ -117,7 +120,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                         }
                                                     )}
                                                 >
-                                                    <span className="text-xs flex items-center text-slate-700 font-medium hover:text-slate-900 hover:underline hover:underline-offset-2 transition-colors duration-200 ease-in-out">
+                                                    <span className="text-xs inline-flex items-center text-slate-700 font-medium hover:text-slate-900 border bg-slate-300 shadow-inner px-2 py-0.5 rounded-full  transition-colors duration-200 ease-in-out">
                                                         <IoStorefrontOutline className="mr-2" />
                                                         {
                                                             cart.product.seller
@@ -126,7 +129,8 @@ export default function Carts({ auth, carts, cartCount }) {
                                                         <MdKeyboardArrowRight />
                                                     </span>
                                                 </Link>
-                                                <div className="flex items-center border border-slate-400 p-2 rounded-lg mt-2">
+
+                                                <div className="flex items-center mt-2">
                                                     <CustomCheckbox
                                                         isChecked={checkedItemIds.includes(
                                                             cart.id

@@ -50,16 +50,12 @@ export default function ShippedOrders({ auth }) {
                                             <FaPesoSign className="mr-2" />1
                                         </td>
                                         <td className="py-4 px-6 text-slate-800">
-                                            <span className="bg-blue-200  text-blue-800 text-medium font-semibold px-2 py-0.5 rounded-md">
+                                            <span className="bg-blue-200  text-blue-800 text-medium font-semibold px-2 py-0.5 rounded-md whitespace-nowrap">
                                                 shipped out
                                             </span>
                                         </td>
                                         <td className="py-4 px-6 text-slate-800">
-                                            <Link
-                                                href={route(
-                                                    "seller.OrderDetails"
-                                                )}
-                                            >
+                                            <Link href="">
                                                 <button className="px-4 py-1 flex items-center  bg-slate-800 text-slate-50 rounded-md">
                                                     <AiOutlineEye className="mr-2" />
                                                     <span>View</span>
