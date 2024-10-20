@@ -18,7 +18,8 @@ class OrderItem extends Model
         'processing_date',
         'picked_date',
         'shipped_date',
-        'delivered_date'
+        'delivered_date',
+        'shipping_fee_individual'
     ];
     use HasFactory;
 
