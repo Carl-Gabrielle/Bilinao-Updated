@@ -20,40 +20,44 @@ class CartController extends Controller
         $carts = Cart::with('product.images', 'product.seller') // Load seller relationship
             ->where('user_id', Auth::id())
             ->get();
-    
+
         return Inertia::render('Customer/Carts', [
             'carts' => $carts,
         ]);
     }
-    
 
 
- public function orderSelection (){
-    return Inertia::render('Customer/OrderSelection');
- }
- 
+
+    public function orderSelection()
+    {
+        return Inertia::render('Customer/OrderSelection');
+    }
+
     public function checkoutPreview(Request $request)
     {
         $shippingData = Shipping::all();
-        $productId = $request->input('product_id');
-        $quantity = $request->input('quantity');
+        $product = [];
+        // dd($request->all());
 
-        $product = Product::with('images')->find($productId);
+        foreach ($request->items as $item) {
+            // dd($item['product_id']);
+            $data = Product::with('images')->find($item['product_id']);
+            $product[] = [
+                'product' => $data,
+                'buying_quantity' => $item['quantity'],
+                'cart_id' => $item['cart_id'] ?? null,
+            ];
+
+        }
+
+        // dd($product);
 
         if (!$product) {
             return response()->json(['message' => 'Product not found'], 404);
         }
 
-        $productDetails = [
-            'name' => $product->name,
-            'price' => $product->price,
-            'images' => $product->images,
-            'quantity' => $quantity,
-            'weight' => $product->weight
-        ];
-
         return Inertia::render('Customer/CheckoutTest', [
-            'product' => $productDetails,
+            'product' => $product,
             'shipping_data' => $shippingData,
         ]);
     }

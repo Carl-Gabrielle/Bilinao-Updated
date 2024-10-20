@@ -9,7 +9,7 @@ import emptyImg from "../Illustrations/empty.png";
 import { RiDeleteBinLine } from "react-icons/ri";
 import Banner from "@/Components/Banner";
 import { FaPesoSign } from "react-icons/fa6";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import axios from "axios";
 import { IoClose } from "react-icons/io5";
 import CustomCheckbox from "@/Components/CustomCheckbox";
@@ -60,15 +60,23 @@ export default function Carts({ auth, carts, cartCount }) {
     };
 
     // MANAGING SELECTED ITEMS
-    const handleChange = (id) => {
-        if (checkedItemIds.includes(id)) {
-            // If item is already checked, uncheck it
-            setCheckedItemIds(checkedItemIds.filter((itemId) => itemId !== id));
+
+    const handleChange = (id, qty, cartId) => {
+        const isItemChecked = checkedItemIds.some(item => item.product_id === id);
+
+        if (isItemChecked) {
+            setCheckedItemIds(checkedItemIds.filter(item => item.product_id !== id));
         } else {
-            // If item is not checked, add it to the checked list
-            setCheckedItemIds([...checkedItemIds, id]);
+            setCheckedItemIds([...checkedItemIds, { product_id: id, quantity: qty, cart_id: cartId }]);
         }
     };
+
+
+    const handleCheckout = () => {
+
+        console.log('submitted', { items: checkedItemIds });
+        router.get(route("show.checkout", { items: checkedItemIds, from_cart: true }));
+    }
 
     return (
         <CustomerLayout user={auth.user}>
@@ -77,39 +85,39 @@ export default function Carts({ auth, carts, cartCount }) {
                 <Banner title="Shopping Cart" />
                 <CustomerContainer className="mt-32 ">
                     <div className="flex items-center space-x-3">
-                        <hr className="w-28 border border-slate-800 mb-6" />
-                        <h1 className="font-bold text-2xl mb-6 text-slate-800 uppercase tracking-widest">
+                        <hr className="mb-6 border w-28 border-slate-800" />
+                        <h1 className="mb-6 text-2xl font-bold tracking-widest uppercase text-slate-800">
                             Cart Lists
                         </h1>
                     </div>
-                    <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide">
+                    <h1 className="text-2xl font-medium tracking-wide uppercase text-slate-900">
                         Your Cart{" "}
-                        <span className="bg-slate-800 text-white px-4 rounded-md">
+                        <span className="px-4 text-white rounded-md bg-slate-800">
                             {cartCount}
                         </span>
                     </h1>
-                    <div className="py-10 grid grid-cols-1 lg:grid-cols-3 gap-10">
+                    <div className="grid grid-cols-1 gap-10 py-10 lg:grid-cols-3">
                         <div className="col-span-2 shadow-lg rounded-2xl bg-slate-50 bg-opacity-60 backdrop-blur-lg">
-                            <div className="text-xs flex items-center justify-between py-5 px-4 sm:px-0 space-x-14 bg-slate-800 text-white rounded-t-2xl">
-                                <span className="uppercase flex-1 text-center">
+                            <div className="flex items-center justify-between px-4 py-5 text-xs text-white sm:px-0 space-x-14 bg-slate-800 rounded-t-2xl">
+                                <span className="flex-1 text-center uppercase">
                                     Product
                                 </span>
-                                <span className="uppercase flex-1 text-center">
+                                <span className="flex-1 text-center uppercase">
                                     Quantity
                                 </span>
-                                <span className="uppercase flex-1 text-center">
+                                <span className="flex-1 text-center uppercase">
                                     Subtotal
                                 </span>
                             </div>
                             {cartItems.length > 0 ? (
-                                <div className="space-y-4 px-4 py-2">
+                                <div className="px-4 py-2 space-y-4">
                                     {cartItems.map((cart) => {
                                         const subtotal =
                                             cart.product.price * cart.quantity;
                                         return (
                                             <div
                                                 key={cart.id}
-                                                className=" border border-slate-400 p-2 rounded-lg mt-2"
+                                                className="p-2 mt-2 border rounded-lg border-slate-400"
                                             >
                                                 <Link
                                                     href={route(
@@ -132,11 +140,11 @@ export default function Carts({ auth, carts, cartCount }) {
 
                                                 <div className="flex items-center mt-2">
                                                     <CustomCheckbox
-                                                        isChecked={checkedItemIds.includes(
-                                                            cart.id
-                                                        )}
+                                                        isChecked={checkedItemIds.some(item => item.product_id === cart.product.id)}
                                                         onChange={() =>
                                                             handleChange(
+                                                                cart.product.id,
+                                                                cart.quantity,
                                                                 cart.id
                                                             )
                                                         }
@@ -154,7 +162,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                                 cart.product
                                                                     .name
                                                             }
-                                                            className="sm:size-16 size-10 object-cover rounded"
+                                                            className="object-cover rounded sm:size-16 size-10"
                                                         />
                                                     </Link>
                                                     <div className="flex-1 ml-4 text-xs text-slate-800 ">
@@ -175,15 +183,15 @@ export default function Carts({ auth, carts, cartCount }) {
                                                             )}
                                                         </p>
                                                     </div>
-                                                    <div className="flex-1 text-center text-xs">
-                                                        <div className="flex items-center justify-center space-x-2 sm:space-x-8 bg-slate-300 py-1 sm:py-2 sm:px-3 px-1 rounded-full">
+                                                    <div className="flex-1 text-xs text-center">
+                                                        <div className="flex items-center justify-center px-1 py-1 space-x-2 rounded-full sm:space-x-8 bg-slate-300 sm:py-2 sm:px-3">
                                                             <button
                                                                 onClick={() =>
                                                                     handleDecrement(
                                                                         cart.id
                                                                     )
                                                                 }
-                                                                className="sm:size-7 size-4 bg-slate-800 text-white flex items-center justify-center rounded-full"
+                                                                className="flex items-center justify-center text-white rounded-full sm:size-7 size-4 bg-slate-800"
                                                             >
                                                                 -
                                                             </button>
@@ -196,13 +204,13 @@ export default function Carts({ auth, carts, cartCount }) {
                                                                         cart.id
                                                                     )
                                                                 }
-                                                                className="sm:size-7 size-4 bg-slate-800 text-white flex items-center justify-center rounded-full"
+                                                                className="flex items-center justify-center text-white rounded-full sm:size-7 size-4 bg-slate-800"
                                                             >
                                                                 +
                                                             </button>
                                                         </div>
                                                     </div>
-                                                    <div className="flex-1 text-right text-xs text-slate-800">
+                                                    <div className="flex-1 text-xs text-right text-slate-800">
                                                         <p className="flex items-center justify-end">
                                                             <FaPesoSign />
                                                             {subtotal.toLocaleString(
@@ -220,7 +228,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                                 cart.id
                                                             )
                                                         }
-                                                        className="sm:ml-4 ml-2 hover:bg-slate-200 sm:px-2 sm:py-2 px-1 py-1  rounded-full transition-colors duration-300 ease-in-out border border-slate-400"
+                                                        className="px-1 py-1 ml-2 transition-colors duration-300 ease-in-out border rounded-full sm:ml-4 hover:bg-slate-200 sm:px-2 sm:py-2 border-slate-400"
                                                     >
                                                         <IoClose />
                                                     </button>
@@ -230,22 +238,22 @@ export default function Carts({ auth, carts, cartCount }) {
                                     })}
                                 </div>
                             ) : (
-                                <div className="my-5 flex flex-col items-center justify-between text-sm text-medium ">
-                                    <div className="flex flex-col items-center gap-2 justify-center">
-                                        <h1 className="text-md font-medium text-slate-900  tracking-wide">
+                                <div className="flex flex-col items-center justify-between my-5 text-sm text-medium ">
+                                    <div className="flex flex-col items-center justify-center gap-2">
+                                        <h1 className="font-medium tracking-wide text-md text-slate-900">
                                             Your cart is empty
                                         </h1>
                                         <h1 className="text-xs text-slate-600 ">
                                             Looks like you haven't added any
                                             products to your cart yet.
                                         </h1>
-                                        <div className="bg-slate-300 p-3 rounded-full">
+                                        <div className="p-3 rounded-full bg-slate-300">
                                             <MdOutlineAddShoppingCart className="size-6 text-slate-700 " />
                                         </div>
                                     </div>
-                                    <div className="flex items-center justify-center pt-5 w-full">
+                                    <div className="flex items-center justify-center w-full pt-5">
                                         <Link href={route("customer.products")}>
-                                            <button className="text-xs sm:self-start self-center px-8 py-4  rounded-full text-white font-semibold flex items-center bg-slate-800">
+                                            <button className="flex items-center self-center px-8 py-4 text-xs font-semibold text-white rounded-full sm:self-start bg-slate-800">
                                                 <HiMiniArrowLongLeft className="mr-2" />
                                                 Continue Shopping{" "}
                                             </button>
@@ -255,36 +263,33 @@ export default function Carts({ auth, carts, cartCount }) {
                             )}
                         </div>
                         {/* Order Summary */}
-                        <div className="w-full lg:w-96 rounded-2xl flex flex-col min-h-full">
-                            <div className="py-4 px-6 bg-slate-800 text-white rounded-t-2xl">
-                                <span className="uppercase text-xs flex-1">
+                        <div className="flex flex-col w-full min-h-full lg:w-96 rounded-2xl">
+                            <div className="px-6 py-4 text-white bg-slate-800 rounded-t-2xl">
+                                <span className="flex-1 text-xs uppercase">
                                     Order Summary (FRONTEND ONLY)
                                 </span>
                             </div>
-                            <div className="bg-slate-50  bg-opacity-60 backdrop-blur-lg   text-sm shadow-lg rounded-b-2xl h-72 flex flex-col">
-                                <div className="pt-5 px-6">
-                                    <div className="flex justify-between items-start mb-4">
+                            <div className="flex flex-col text-sm shadow-lg bg-slate-50 bg-opacity-60 backdrop-blur-lg rounded-b-2xl h-72">
+                                <div className="px-6 pt-5">
+                                    <div className="flex items-start justify-between mb-4">
                                         <p>Subtotal</p>
                                         <p>&#8369; 10</p>
                                     </div>
                                 </div>
-                                <div className="px-6 flex justify-between items-start font-semibold bg-slate-300 py-2">
+                                <div className="flex items-start justify-between px-6 py-2 font-semibold bg-slate-300">
                                     <p className="uppercase">Total</p>
-                                    <p className=" font-semibold">
+                                    <p className="font-semibold ">
                                         &#8369; 325{" "}
                                     </p>
                                 </div>
                                 {cartItems.length > 0 && (
-                                    <div className="mt-auto p-6">
-                                        <Link
-                                            href={route("show.checkout")}
-                                            method="get"
-                                        >
-                                            <button className="w-full flex items-center justify-center rounded-full text-white font-semibold px-8 py-4 bg-slate-800">
-                                                Proceed To Checkout{" "}
-                                                <HiMiniArrowLongRight className="ml-2" />
-                                            </button>
-                                        </Link>
+                                    <div className="p-6 mt-auto">
+
+                                        <button onClick={handleCheckout} className="flex items-center justify-center w-full px-8 py-4 font-semibold text-white rounded-full bg-slate-800">
+                                            Proceed To Checkout{" "}
+                                            <HiMiniArrowLongRight className="ml-2" />
+                                        </button>
+
                                     </div>
                                 )}
                             </div>

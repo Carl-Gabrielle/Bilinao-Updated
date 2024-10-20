@@ -17,7 +17,7 @@ export default function Checkout({ auth }) {
     const [billingDetails, setBillingDetails] = useState({
         address: user.address || "",
     });
-
+    const [shippingFees, setShippingFees] = useState([]);
     const [regions, setRegions] = useState([]);
     const [provinces, setProvinces] = useState([]);
     const [citiesMunicipalities, setCitiesMunicipalities] = useState([]);
@@ -58,9 +58,15 @@ export default function Checkout({ auth }) {
             .catch((err) => console.log("Error fetching regions:", err));
     }, []);
 
+
     useEffect(() => {
         if (selectedRegion) {
-            calculateShippingFee(selectedRegion, product.weight);
+            const fees = product.map(item => {
+                const totalWeight = item.buying_quantity * item.product.weight;
+                console.log('totalWeight', totalWeight);
+                return calculateShippingFee(selectedRegion, totalWeight);
+            });
+            setShippingFees(fees);
             axios
                 .get(
                     `https://psgc.cloud/api/regions/${selectedRegion}/provinces`
@@ -72,6 +78,24 @@ export default function Checkout({ auth }) {
         }
     }, [selectedRegion]);
 
+    useEffect(() => {
+        const totalFee = shippingFees.reduce((acc, fee) => acc + fee, 0);
+        setData(prevData => ({
+            ...prevData,
+            shipping_fee: totalFee,
+            initial_sf: shippingFees,
+            total_amount: data.subtotal + totalFee,
+            products: product.map((item, index) => ({
+                product_id: item.product.id,
+                qty: item.buying_quantity,
+                cart_id: item.cart_id ?? null,
+                shipping: shippingFees[index]
+            })),
+        }));
+
+    }, [shippingFees]);
+
+    console.log(product)
     useEffect(() => {
         if (selectedProvince) {
             axios
@@ -99,47 +123,41 @@ export default function Checkout({ auth }) {
             setBarangays([]);
         }
     }, [selectedCityMunicipality]);
-    const [productData, setProductData] = useState({ product_id: "", qty: "" });
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const product_id = urlParams.get("product_id");
-        const qty = urlParams.get("quantity");
 
-        setProductData({ product_id, qty });
-    }, []);
+
+    const subtotals = product.map(item => item.buying_quantity * item.product.price);
+    const totalSubtotal = subtotals.reduce((total, subtotal) => total + subtotal, 0);
+    const [status, setStatus] = useState();
 
     const { data, errors, setData, post, processing } = useForm({
         payment_method: "Gcash",
         name: user.name,
         shipping_address: "",
         phone_no: user.phone_number,
-        product_price: parseFloat(product.price),
-        product_weight: product.weight,
-        purchasing_qty: parseInt(product.quantity),
         landmark: "",
         shipping_fee: 0,
-        subtotal: parseFloat(product.price) * parseInt(product.quantity),
+        subtotal: totalSubtotal,
         total_amount: 0,
-        is_from_cart: false,
+        is_from_cart: status,
         products: [],
+        initial_sf: [],
     });
 
-    useEffect(() => {
-        const total = data.subtotal + data.shipping_fee;
-        setData((prevData) => ({
-            ...prevData,
-            total_amount: total,
-        }));
-    }, [data.shipping_fee]);
 
     useEffect(() => {
-        if (productData.product_id && productData.qty) {
-            setData("products", [productData]);
-        }
-    }, [productData]);
+        const urlParams = new URLSearchParams(window.location.search);
+        const isFromCart = urlParams.get("from_cart") || 'false'; // Check against the string '1'
+        setStatus(isFromCart); // Set the value
+    }, []);
+
+    useEffect(() => {
+        setData('is_from_cart', status)
+    }, [status]);
+
 
     const handleCheckoutButton = (e) => {
         e.preventDefault();
+        console.log('submitted data => ', data);
         post(route("store.checkout"));
     };
 
@@ -153,8 +171,9 @@ export default function Checkout({ auth }) {
             (range) => weight >= range.weight_min && weight <= range.weight_max
         );
         if (matchingRange) {
-            setData("shipping_fee", matchingRange[shippingRegion]);
+            return matchingRange[shippingRegion]
         } else {
+            alert('Shipping not found!')
             setData("shipping_fee", 0);
         }
     };
@@ -170,30 +189,28 @@ export default function Checkout({ auth }) {
         setData("shipping_address", address);
     }, [barangay]);
 
-    const [cartItems, setCartItems] = useState([product]); // Store the single product instead of multiple carts
     // Calculate total price based on product price and quantity
-    const calculateTotal = () => {
-        return cartItems.reduce(
-            (acc, item) => acc + item.price * item.quantity,
-            0
-        );
+    const calculateTotal = (price, qty) => {
+        const newSubtotal = price * qty;
+        return newSubtotal;
     };
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Checkout" />
-            <div className="min-h-screen  pt-20 pb-1 ">
+            <div className="min-h-screen pt-20 pb-1 ">
                 <Banner title="Shopping Cart" suffix="/Checkout" />
                 <CustomerContainer>
                     <div className="flex items-center space-x-3">
-                        <hr className="w-28 border border-slate-800 mb-6" />
-                        <h1 className="font-bold text-3xl mb-6 text-slate-800 uppercase tracking-widest">
+                        <hr className="mb-6 border w-28 border-slate-800" />
+                        <h1 className="mb-6 text-3xl font-bold tracking-widest uppercase text-slate-800">
                             Product Checkout
                         </h1>
                     </div>
-                    <div className="grid grid-cols-1 lg:grid-cols-3 gap-10 ">
+                    <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 ">
                         {/* Billing Information */}
-                        <div className="col-span-2 space-y-6 bg-slate-50 p-8 rounded-3xl shadow-lg">
-                            <h2 className="text-md font-semibold ">
+                        <div className="col-span-2 p-8 space-y-6 shadow-lg bg-slate-50 rounded-3xl">
+                            <h2 className="font-semibold text-md ">
                                 <h1>Contact and Shipping Information</h1>
                             </h2>
                             <ReadOnly label="Full Name" value={user.name} />
@@ -202,13 +219,13 @@ export default function Checkout({ auth }) {
                                 value={user.phone_number}
                             />
                             <hr />
-                            <h2 className="text-md font-semibold ">
+                            <h2 className="font-semibold text-md ">
                                 <h1>Billing Details</h1>
                             </h2>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                 {/* Region Dropdown */}
                                 <div>
-                                    <label className="block text-gray-700 text-xs font-medium mb-1">
+                                    <label className="block mb-1 text-xs font-medium text-gray-700">
                                         Region
                                     </label>
                                     <select
@@ -223,7 +240,7 @@ export default function Checkout({ auth }) {
                                                 )?.name
                                             );
                                         }}
-                                        className="scroll-bar text-sm custom-dropdown text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar custom-dropdown text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -244,7 +261,7 @@ export default function Checkout({ auth }) {
                                 </div>
                                 {/* Province Dropdown */}
                                 <div>
-                                    <label className="block text-gray-700 text-xs font-medium mb-1">
+                                    <label className="block mb-1 text-xs font-medium text-gray-700">
                                         Province
                                     </label>
                                     <select
@@ -259,7 +276,7 @@ export default function Checkout({ auth }) {
                                                 )?.name
                                             );
                                         }}
-                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -279,10 +296,10 @@ export default function Checkout({ auth }) {
                                     </select>
                                 </div>
                             </div>
-                            <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
+                            <div className="grid grid-cols-1 gap-4 lg:grid-cols-2">
                                 {/* City/Municipality Dropdown */}
                                 <div>
-                                    <label className="block text-gray-700 text-xs font-medium mb-1">
+                                    <label className="block mb-1 text-xs font-medium text-gray-700">
                                         City/Municipality
                                     </label>
                                     <select
@@ -299,7 +316,7 @@ export default function Checkout({ auth }) {
                                                 )?.name
                                             );
                                         }}
-                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -324,7 +341,7 @@ export default function Checkout({ auth }) {
                                 </div>
                                 {/* Barangay Dropdown */}
                                 <div>
-                                    <label className="block text-gray-700 text-xs font-medium mb-1">
+                                    <label className="block mb-1 text-xs font-medium text-gray-700">
                                         Barangay
                                     </label>
                                     <select
@@ -339,7 +356,7 @@ export default function Checkout({ auth }) {
                                                 )?.name
                                             );
                                         }}
-                                        className="scroll-bar text-sm text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -360,12 +377,12 @@ export default function Checkout({ auth }) {
                                 </div>
                             </div>
                             <hr />
-                            <h2 className="text-md font-semibold ">
+                            <h2 className="font-semibold text-md ">
                                 <h1>Nearby Landmark</h1>
                             </h2>
                             {/* Landmark Text Area */}
                             <div>
-                                <label className="block text-gray-700 text-xs font-medium mb-1">
+                                <label className="block mb-1 text-xs font-medium text-gray-700">
                                     Landmark
                                 </label>
                                 <textarea
@@ -374,45 +391,45 @@ export default function Checkout({ auth }) {
                                         setData("landmark", e.target.value)
                                     }
                                     placeholder="ex. Alabama St. in front of  John Doe Shop."
-                                    className="placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent h-32"
+                                    className="w-full h-32 px-4 py-3 bg-transparent border border-gray-500 rounded-md placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                 />
-                                <label className="text-gray-700 text-xs font-medium">
+                                <label className="text-xs font-medium text-gray-700">
                                     Please enter a landmark near your home
                                 </label>
                             </div>
                         </div>
-                        <div className="grid grid-rows-2   gap-10 xl:gap-20">
+                        <div className="grid grid-rows-2 gap-10 xl:gap-20">
                             {/* Order Summary */}
-                            <div className="w-full lg:w-96 lg:h-72 bg-slate-50 rounded-3xl shadow-lg">
-                                <div className="bg-gray-800 text-white rounded-t-3xl px-6 py-4">
-                                    <h3 className="uppercase text-xs tracking-wider">
+                            <div className="w-full shadow-lg lg:w-96 lg:h-72 bg-slate-50 rounded-3xl">
+                                <div className="px-6 py-4 text-white bg-gray-800 rounded-t-3xl">
+                                    <h3 className="text-xs tracking-wider uppercase">
                                         Order Summary
                                     </h3>
                                 </div>
-                                <div className="bg-slate-50 p-6 space-y-4 h-72 overflow-y-auto scroll-bar">
+                                <div className="p-6 space-y-4 overflow-y-auto bg-slate-50 h-72 scroll-bar">
                                     <h1 className="font-medium">Your Order</h1>
-                                    {cartItems.map((cart) => (
-                                        <div key={cart.id} className="flex">
+                                    {product.map((item) => (
+                                        <div key={item.id} className="flex">
                                             <div className="relative border">
                                                 <img
-                                                    src={`/storage/${cart.images[0].image_path}`}
-                                                    alt={cart.name}
+                                                    src={`/storage/${item.product.images[0].image_path}`}
+                                                    alt={item.product.name}
                                                     className="object-cover rounded sm:size-16 size-10"
                                                 />
                                                 <div className="absolute flex items-center justify-center rounded-full -top-3 text-slate-100 -right-3 size-5 bg-slate-700">
                                                     <span className="text-xs">
-                                                        {cart.quantity}
+                                                        {item.buying_quantity}
                                                     </span>
                                                 </div>
                                             </div>
                                             <div className="flex-1 ml-4 text-xs text-slate-800">
                                                 <h3 className="font-semibold">
-                                                    {cart.name}
+                                                    {item.product.name}
                                                 </h3>
                                                 <p className="flex items-center">
                                                     <FaPesoSign className="inline-block mr-1" />
                                                     {Number(
-                                                        cart.price
+                                                        item.product.price
                                                     ).toLocaleString("en-US", {
                                                         minimumFractionDigits: 2,
                                                         maximumFractionDigits: 2,
@@ -421,14 +438,14 @@ export default function Checkout({ auth }) {
                                                 <p className="flex items-center">
                                                     <FaPesoSign className="inline-block mr-1" />
                                                     {Number(
-                                                        cart.price
+                                                        item.product.price
                                                     ).toLocaleString("en-US", {
                                                         minimumFractionDigits: 2,
                                                         maximumFractionDigits: 2,
                                                     })}{" "}
-                                                    x {cart.quantity} =
+                                                    x {item.buying_quantity} =
                                                     <FaPesoSign className="inline-block mx-1" />
-                                                    {calculateTotal().toLocaleString(
+                                                    {calculateTotal(item.product.price, item.buying_quantity).toLocaleString(
                                                         undefined,
                                                         {
                                                             minimumFractionDigits: 2,
@@ -439,7 +456,7 @@ export default function Checkout({ auth }) {
                                             </div>
                                         </div>
                                     ))}
-                                    <div className="flex justify-between text-sm border-t pt-4">
+                                    <div className="flex justify-between pt-4 text-sm border-t">
                                         <span className="font-semibold">
                                             Subtotal
                                         </span>
@@ -452,7 +469,7 @@ export default function Checkout({ auth }) {
                                             }).format(data.subtotal)}
                                         </span>
                                     </div>
-                                    <div className="flex justify-between text-sm border-b pb-4">
+                                    <div className="flex justify-between pb-4 text-sm border-b">
                                         <span>Shipping</span>
                                         <span>
                                             {" "}
@@ -472,7 +489,7 @@ export default function Checkout({ auth }) {
                                         </span>
                                     </div>
                                 </div>
-                                <div className="p-6 bg-slate-50 border-t border rounded-b-3xl">
+                                <div className="p-6 border border-t bg-slate-50 rounded-b-3xl">
                                     <button
                                         disabled={
                                             region == null ||
@@ -483,15 +500,14 @@ export default function Checkout({ auth }) {
                                         }
                                         onClick={handleCheckoutButton}
                                         className={`w-full bg-amber-500 text-slate-50 rounded-full tracking-wide px-8 py-4
-                                        ${
-                                            region == null ||
-                                            province == null ||
-                                            city == null ||
-                                            barangay == null ||
-                                            landmark == null
+                                        ${region == null ||
+                                                province == null ||
+                                                city == null ||
+                                                barangay == null ||
+                                                landmark == null
                                                 ? "cursor-not-allowed"
                                                 : " hover:bg-amber-600 duration-200 ease-in-out"
-                                        }`}
+                                            }`}
                                     >
                                         {[
                                             processing
@@ -501,19 +517,18 @@ export default function Checkout({ auth }) {
                                     </button>
                                 </div>
                             </div>
-                            <div className="w-full  lg:mt-10">
-                                <div className="bg-slate-50 p-6 lg:w-96 lg:h-72 rounded-3xl space-y-4 h-72 overflow-y-auto">
-                                    <div className="text-md font-semibold text-gray-700">
+                            <div className="w-full lg:mt-10">
+                                <div className="p-6 space-y-4 overflow-y-auto bg-slate-50 lg:w-96 lg:h-72 rounded-3xl h-72">
+                                    <div className="font-semibold text-gray-700 text-md">
                                         <h1>How would you like to pay?</h1>
                                     </div>
-                                    <div className="space-y-4 mt-4">
+                                    <div className="mt-4 space-y-4">
                                         {/* GCash Payment Option */}
                                         <label
-                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
-                                                data.payment_method === "GCash"
-                                                    ? "bg-blue-100 border-0 hover:bg-blue-100"
-                                                    : "hover:bg-slate-100"
-                                            }`}
+                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method === "GCash"
+                                                ? "bg-blue-100 border-0 hover:bg-blue-100"
+                                                : "hover:bg-slate-100"
+                                                }`}
                                             onClick={() =>
                                                 handlePaymentChange("GCash")
                                             }
@@ -523,29 +538,27 @@ export default function Checkout({ auth }) {
                                                 name="payment"
                                                 className="hidden"
                                             />
-                                            <div className="w-10 h-10 bg-blue-500 flex items-center justify-center rounded-full">
-                                                <FaGooglePay className="text-white text-2xl" />
+                                            <div className="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full">
+                                                <FaGooglePay className="text-2xl text-white" />
                                             </div>
-                                            <div className="flex-1 text-slate-700 font-medium text-sm">
+                                            <div className="flex-1 text-sm font-medium text-slate-700">
                                                 GCash
                                             </div>
                                             <HiOutlineCheckCircle
-                                                className={`text-gray-300 text-xl ${
-                                                    data.payment_method ===
+                                                className={`text-gray-300 text-xl ${data.payment_method ===
                                                     "GCash"
-                                                        ? "text-blue-700"
-                                                        : "text-gray-300"
-                                                }`}
+                                                    ? "text-blue-700"
+                                                    : "text-gray-300"
+                                                    }`}
                                             />
                                         </label>
                                         {/* PayMaya Payment Option */}
                                         <label
-                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
-                                                data.payment_method ===
+                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method ===
                                                 "PayMaya"
-                                                    ? "bg-green-100 border-0 hover:bg-green-100"
-                                                    : "hover:bg-slate-100"
-                                            }`}
+                                                ? "bg-green-100 border-0 hover:bg-green-100"
+                                                : "hover:bg-slate-100"
+                                                }`}
                                             onClick={() =>
                                                 handlePaymentChange("PayMaya")
                                             }
@@ -555,19 +568,18 @@ export default function Checkout({ auth }) {
                                                 name="payment"
                                                 className="hidden"
                                             />
-                                            <div className="w-10 h-10 bg-green-500 flex items-center justify-center rounded-full">
-                                                <FaCcPaypal className="text-white text-2xl" />
+                                            <div className="flex items-center justify-center w-10 h-10 bg-green-500 rounded-full">
+                                                <FaCcPaypal className="text-2xl text-white" />
                                             </div>
-                                            <div className="flex-1 text-slate-700 font-medium text-sm">
+                                            <div className="flex-1 text-sm font-medium text-slate-700">
                                                 PayMaya
                                             </div>
                                             <HiOutlineCheckCircle
-                                                className={`text-gray-300 text-xl ${
-                                                    data.payment_method ===
+                                                className={`text-gray-300 text-xl ${data.payment_method ===
                                                     "PayMaya"
-                                                        ? "text-green-700"
-                                                        : "text-gray-300"
-                                                }`}
+                                                    ? "text-green-700"
+                                                    : "text-gray-300"
+                                                    }`}
                                             />
                                         </label>
                                     </div>
