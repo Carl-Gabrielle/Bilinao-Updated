@@ -15,7 +15,7 @@ import { GrCart } from "react-icons/gr";
 import ProfileImg from "../Illustrations/profile.jpeg";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { IoStorefrontOutline } from "react-icons/io5";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, router } from "@inertiajs/react";
 import { IoCheckmarkSharp } from "react-icons/io5";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import CustomerContainer from "@/Components/CustomerContainer";
@@ -82,6 +82,16 @@ export default function ProductDetails({
         setActionType("wishlist");
     };
 
+    const handleBuyNow = (e) => {
+        const item = {
+            product_id: product.id,
+            quantity: quantity,
+        };
+        console.log("submitted", { items: [item] });
+
+        router.get(route("show.checkout", { items: [item] }));
+    };
+
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen pt-20 pb-1">
@@ -94,12 +104,12 @@ export default function ProductDetails({
                 <main>
                     {isVisible && success && (
                         <div id="toast" className="fixed bottom-0 z-50 w-full">
-                            <div className="bg-slate-700 bg-opacity-60 backdrop-blur-lg px-6 py-5 shadow-inner flex flex-col gap-3 sm:flex-row items-center justify-between space-x-3 rounded-t-3xl">
-                                <div className="flex items-center space-x-4 bg-slate-100 bg-opacity-80 backdrop-blur-lg py-2 px-4 rounded-md">
-                                    <div className="sm:size-6 size-4 bg-green-500 flex items-center justify-center rounded-full">
+                            <div className="flex flex-col items-center justify-between gap-3 px-6 py-5 space-x-3 shadow-inner bg-slate-700 bg-opacity-60 backdrop-blur-lg sm:flex-row rounded-t-3xl">
+                                <div className="flex items-center px-4 py-2 space-x-4 rounded-md bg-slate-100 bg-opacity-80 backdrop-blur-lg">
+                                    <div className="flex items-center justify-center bg-green-500 rounded-full sm:size-6 size-4">
                                         <IoCheckmarkSharp className="text-slate-100" />
                                     </div>
-                                    <span className="sm:text-sm text-xs font-medium">
+                                    <span className="text-xs font-medium sm:text-sm">
                                         <span>{success}</span>
                                     </span>
                                 </div>
@@ -112,7 +122,7 @@ export default function ProductDetails({
                                                 : "customer.myWishlists"
                                         )}
                                     >
-                                        <button className="bg-slate-100 text-sm bg-opacity-80 backdrop-blur-lg flex items-center font-medium px-6 py-2 rounded-full">
+                                        <button className="flex items-center px-6 py-2 text-sm font-medium rounded-full bg-slate-100 bg-opacity-80 backdrop-blur-lg">
                                             {actionType === "cart"
                                                 ? "View Cart"
                                                 : "View Wishlists"}
@@ -129,60 +139,60 @@ export default function ProductDetails({
                             href={route("customer.products")}
                             className="w-1/2"
                         >
-                            <button className="mb-6 font-semibold text-slate-800 bg-slate-100 rounded-full px-4 py-2 text-sm shadow-lg">
-                                <MdOutlineKeyboardArrowLeft className="inline-block  " />
+                            <button className="px-4 py-2 mb-6 text-sm font-semibold rounded-full shadow-lg text-slate-800 bg-slate-100">
+                                <MdOutlineKeyboardArrowLeft className="inline-block " />
                                 Back to Product
                             </button>
                         </Link>
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-                            <div className="mb-4 overflow-hidden h-96 bg-slate-50 bg-opacity-50 backdrop-blur-md shadow-md rounded-3xl flex items-center justify-center">
+                        <div className="grid grid-cols-1 gap-8 lg:grid-cols-2">
+                            <div className="flex items-center justify-center mb-4 overflow-hidden bg-opacity-50 shadow-md h-96 bg-slate-50 backdrop-blur-md rounded-3xl">
                                 {selectedImage ? (
                                     <img
                                         ref={imageRef}
                                         src={`/storage/${selectedImage}`}
                                         alt={product?.name}
-                                        className="size-80 object-cover rounded-md"
+                                        className="object-cover rounded-md size-80"
                                     />
                                 ) : (
-                                    <p className="text-center text-gray-600 text-lg">
+                                    <p className="text-lg text-center text-gray-600">
                                         No Images Available
                                     </p>
                                 )}
                             </div>
-                            <div className="max-w-lg mx-auto flex flex-col items-start justify-center">
-                                <p className="mt-5 text-slate-800 text-xl font-medium mb-4">
+                            <div className="flex flex-col items-start justify-center max-w-lg mx-auto">
+                                <p className="mt-5 mb-4 text-xl font-medium text-slate-800">
                                     Category: {product.category.name}
                                 </p>
-                                <h1 className="text-2xl md:text-3xl lg:text-4xl font-bold font-Roboto text-gray-900 leading-tight mb-4">
+                                <h1 className="mb-4 text-2xl font-bold leading-tight text-gray-900 md:text-3xl lg:text-4xl font-Roboto">
                                     {product.name}
                                 </h1>
-                                <p className="text-gray-600 text-sm leading-relaxed mb-4">
+                                <p className="mb-4 text-sm leading-relaxed text-gray-600">
                                     {product.description}
                                 </p>
                                 {product.stock > 0 ? (
-                                    <span className="text-slate-800 text-sm mb-5 font-medium">
-                                        <span className="text-emerald-100 bg-emerald-600 rounded-full px-3 py-1  shadow-inner">
+                                    <span className="mb-5 text-sm font-medium text-slate-800">
+                                        <span className="px-3 py-1 rounded-full shadow-inner text-emerald-100 bg-emerald-600">
                                             <FaRegCheckSquare className="inline-block mr-2" />
                                             In Stock
                                         </span>{" "}
                                         {product.stock} products
                                     </span>
                                 ) : (
-                                    <p className="text-slate-800 text-sm mb-5 font-medium">
-                                        <span className="text-red-100 bg-red-600 px-3 py-1 rounded-full shadow-inner">
+                                    <p className="mb-5 text-sm font-medium text-slate-800">
+                                        <span className="px-3 py-1 text-red-100 bg-red-600 rounded-full shadow-inner">
                                             <MdOutlineRemoveShoppingCart className="inline-block mr-2" />
                                             Out of Stock
                                         </span>{" "}
                                         {product.stock} product
                                     </p>
                                 )}
-                                <div className="flex items-center text-slate-800 font-bold text-xl mb-4">
+                                <div className="flex items-center mb-4 text-xl font-bold text-slate-800">
                                     <FaPesoSign className="text-lg" />
                                     <span className="ml-1">
                                         {product.price}
                                     </span>
                                 </div>
-                                <div className="mb-6 flex items-center justify-between space-x-4">
+                                <div className="flex items-center justify-between mb-6 space-x-4">
                                     <div className="flex items-center space-x-1 text-yellow-500">
                                         <FaStar className="text-sm" />
                                         <FaStar className="text-sm" />
@@ -190,7 +200,7 @@ export default function ProductDetails({
                                         <FaStarHalfAlt className="text-sm" />
                                         <FaRegStar className="text-sm" />
                                     </div>
-                                    <span className="text-gray-600 text-sm">
+                                    <span className="text-sm text-gray-600">
                                         140 reviews | 431 sold
                                     </span>
                                     <div className="flex items-center space-x-1">
@@ -202,7 +212,7 @@ export default function ProductDetails({
                                                 }
                                             )}
                                         >
-                                            <p className="text-slate-800 flex items-center ">
+                                            <p className="flex items-center text-slate-800 ">
                                                 <IoStorefrontOutline className="mr-2" />
                                                 <span className="font-semibold">
                                                     {product.seller.name}
@@ -212,11 +222,11 @@ export default function ProductDetails({
                                     </div>
                                 </div>
                                 {product.stock > 0 && (
-                                    <div className="flex items-center  space-x-4  w-full   ">
-                                        <div className=" bg-slate-50 bg-opacity-50 backdrop-blur-md shadow-md text-slate-800 px-3 py-2 rounded-full flex items-center justify-between">
+                                    <div className="flex items-center w-full space-x-4 ">
+                                        <div className="flex items-center justify-between px-3 py-2 bg-opacity-50 rounded-full shadow-md bg-slate-50 backdrop-blur-md text-slate-800">
                                             <button
                                                 onClick={handleDecrease}
-                                                className="text-sm bg-slate-800 text-white size-6 flex items-center justify-center rounded-full"
+                                                className="flex items-center justify-center text-sm text-white rounded-full bg-slate-800 size-6"
                                             >
                                                 -
                                             </button>
@@ -225,7 +235,7 @@ export default function ProductDetails({
                                             </span>
                                             <button
                                                 onClick={handleIncrease}
-                                                className="text-sm bg-slate-800 text-white size-6 flex items-center justify-center rounded-full"
+                                                className="flex items-center justify-center text-sm text-white rounded-full bg-slate-800 size-6"
                                             >
                                                 +
                                             </button>
@@ -250,7 +260,7 @@ export default function ProductDetails({
                                                 handleAddToWishlist(product.id)
                                             }
                                         >
-                                            <div className="border border-slate-500 p-2 rounded-full shadow-md">
+                                            <div className="p-2 border rounded-full shadow-md border-slate-500">
                                                 <FaRegHeart />
                                             </div>
                                         </Link>
@@ -260,22 +270,16 @@ export default function ProductDetails({
                                         />
                                     </div>
                                 )}
-                                <div className="py-4 w-full flex flex-col sm:flex-row gap-4">
+                                <div className="flex flex-col w-full gap-4 py-4 sm:flex-row">
                                     {product.stock > 0 && (
                                         <>
-                                            <Link
-                                                preserveScroll
-                                                href={route("show.checkout")}
-                                                method="get"
-                                                data={{
-                                                    product_id: product.id,
-                                                    quantity: quantity,
-                                                }}
+                                            <button
+                                                onClick={handleBuyNow}
+                                                className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium border rounded-full shadow-md sm:w-52 text-slate-800 border-slate-500 lg:mt-0"
                                             >
-                                                <button className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium border rounded-full shadow-md sm:w-52 text-slate-800 border-slate-500 lg:mt-0">
-                                                    Buy Now
-                                                </button>
-                                            </Link>
+                                                Buy Now
+                                            </button>
+
                                             <Link
                                                 preserveScroll
                                                 href={route("cart.store")}
@@ -288,7 +292,7 @@ export default function ProductDetails({
                                                     handleAddToCart(product.id)
                                                 }
                                             >
-                                                <button className=" sm:w-52 w-full gap-4 px-4 py-3 mt-3 font-medium text-sm  text-white  bg-slate-800 rounded-full shadow-inner lg:mt-0">
+                                                <button className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium text-white rounded-full shadow-inner sm:w-52 bg-slate-800 lg:mt-0">
                                                     Add to Cart
                                                 </button>
                                             </Link>
@@ -298,7 +302,7 @@ export default function ProductDetails({
                             </div>
                         </div>
                         {product.images?.length > 0 && (
-                            <div className="flex overflow-x-auto space-x-4">
+                            <div className="flex space-x-4 overflow-x-auto">
                                 {product.images.map((image) => (
                                     <div
                                         key={image.id}
@@ -314,24 +318,24 @@ export default function ProductDetails({
                                         <img
                                             src={`/storage/${image.image_path}`}
                                             alt={product.name}
-                                            className="w-full h-full object-cover rounded-md"
+                                            className="object-cover w-full h-full rounded-md"
                                         />
                                     </div>
                                 ))}
                             </div>
                         )}
                         <div className="h-full">
-                            <h1 className="text-2xl font-medium text-slate-900 uppercase leading-relaxed tracking-wider mb-6 mt-16">
+                            <h1 className="mt-16 mb-6 text-2xl font-medium leading-relaxed tracking-wider uppercase text-slate-900">
                                 Product Ratings & Reviews
                             </h1>
-                            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+                            <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
                                 {/* Customer Reviews Section */}
-                                <div className="col-span-1 sm:border-r border-0 border-slate-400 pr-4 ">
+                                <div className="col-span-1 pr-4 border-0 sm:border-r border-slate-400 ">
                                     <h1 className="text-xl font-semibold text-slate-900">
                                         Customer Reviews
                                     </h1>
-                                    <div className="flex items-center space-x-3 mt-5">
-                                        <div className="flex text-lg items-center space-x-1 text-yellow-500">
+                                    <div className="flex items-center mt-5 space-x-3">
+                                        <div className="flex items-center space-x-1 text-lg text-yellow-500">
                                             <FaStar />
                                             <FaStar />
                                             <FaStar />
@@ -344,13 +348,13 @@ export default function ProductDetails({
                                     </div>
                                 </div>
                                 {/* Star Rating Distribution */}
-                                <div className="col-span-2 flex flex-col justify-center">
+                                <div className="flex flex-col justify-center col-span-2">
                                     {[5, 4, 3, 2, 1].map((star, index) => (
                                         <div
                                             key={index}
-                                            className="flex items-center justify-between space-x-2 my-1"
+                                            className="flex items-center justify-between my-1 space-x-2"
                                         >
-                                            <span className=" text-slate-800 text-sm  flex items-center ">
+                                            <span className="flex items-center text-sm text-slate-800">
                                                 <span className="mr-2">
                                                     {" "}
                                                     {star}
@@ -358,9 +362,9 @@ export default function ProductDetails({
                                                 star
                                             </span>
                                             {/* Progress Bar */}
-                                            <div className="w-full bg-slate-200 rounded-full h-3">
+                                            <div className="w-full h-3 rounded-full bg-slate-200">
                                                 <div
-                                                    className="bg-yellow-500 h-3 rounded-full"
+                                                    className="h-3 bg-yellow-500 rounded-full"
                                                     style={{
                                                         width: `${
                                                             (5 - star + 1) * 20
@@ -368,43 +372,43 @@ export default function ProductDetails({
                                                     }} // Example percentage
                                                 ></div>
                                             </div>
-                                            <span className="text-slate-800 text-sm">
+                                            <span className="text-sm text-slate-800">
                                                 {(5 - star + 1) * 20}%
                                             </span>{" "}
                                         </div>
                                     ))}
                                 </div>
                             </div>
-                            <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wider leading-relaxed mb-6 mt-10">
+                            <h1 className="mt-10 mb-6 text-2xl font-medium leading-relaxed tracking-wider uppercase text-slate-900">
                                 Customer Says
                             </h1>
-                            <div className="sm:text-sm mb-6 text-xs text-slate-800 flex items-center justify-between">
+                            <div className="flex items-center justify-between mb-6 text-xs sm:text-sm text-slate-800">
                                 <div>
                                     <span>Showing 1-5 of 160 results</span>
                                 </div>
                                 <div className="flex items-center space-x-3">
                                     <span>Sort By: </span>
-                                    <span className=" border border-slate-500  transition-colors duration-300 ease-in-out px-3 py-1 rounded-full cursor-pointer flex items-center ">
+                                    <span className="flex items-center px-3 py-1 transition-colors duration-300 ease-in-out border rounded-full cursor-pointer border-slate-500">
                                         Recent Reviews{" "}
                                         <MdOutlineKeyboardArrowDown className="ml-2" />
                                     </span>
                                 </div>
                             </div>
                             {/* CUSTOMER REVIEWS */}
-                            <div className="mt-4  bg-white bg-opacity-30 backdrop-blur-md  px-4 py-4 rounded-3xl">
+                            <div className="px-4 py-4 mt-4 bg-white bg-opacity-30 backdrop-blur-md rounded-3xl">
                                 <div className="flex items-center justify-between">
-                                    <div className="flex  items-center space-x-3">
+                                    <div className="flex items-center space-x-3">
                                         {/* CUSTOMER PROFILE */}
                                         <img
                                             src={ProfileImg}
                                             alt="CustomerProfile"
-                                            className="object-cover size-12 rounded-full border-2 border-slate-700 border-opacity-30 backdrop-blur-md"
+                                            className="object-cover border-2 rounded-full size-12 border-slate-700 border-opacity-30 backdrop-blur-md"
                                         />
                                         <div className="flex flex-col gap-1">
-                                            <span className="text-xs text-slate-800 font-semibold">
+                                            <span className="text-xs font-semibold text-slate-800">
                                                 {user.name}
                                             </span>
-                                            <span className="text-xs w-32 bg-slate-600 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
+                                            <span className="w-32 px-2 py-1 text-xs font-medium rounded-md bg-slate-600 bg-opacity-30 backdrop-blur-md text-slate-800 ">
                                                 Verified Purchase
                                             </span>
                                         </div>
@@ -414,7 +418,7 @@ export default function ProductDetails({
                                         <span className="text-xs text-slate-800 ">
                                             November 28,2024
                                         </span>
-                                        <div className="flex text-xs items-center space-x-1 text-yellow-500 mt-2">
+                                        <div className="flex items-center mt-2 space-x-1 text-xs text-yellow-500">
                                             <FaStar />
                                             <FaStar />
                                             <FaStar />
@@ -434,18 +438,18 @@ export default function ProductDetails({
                                 </div>
                                 <hr className="mt-2 border-slate-300" />
                                 <div className="flex items-center justify-between mt-2">
-                                    <div className="flex  items-center space-x-3">
+                                    <div className="flex items-center space-x-3">
                                         {/* CUSTOMER PROFILE */}
                                         <img
                                             src={ProfileImg}
                                             alt="CustomerProfile"
-                                            className="object-cover size-12 rounded-full border-2 border-slate-700 border-opacity-30 backdrop-blur-md"
+                                            className="object-cover border-2 rounded-full size-12 border-slate-700 border-opacity-30 backdrop-blur-md"
                                         />
                                         <div className="flex flex-col gap-1">
-                                            <span className="text-xs text-slate-800 font-semibold">
+                                            <span className="text-xs font-semibold text-slate-800">
                                                 John Legaspi
                                             </span>
-                                            <span className="text-xs bg-slate-700 bg-opacity-30 backdrop-blur-md py-1 px-2 rounded-md text-slate-800 font-medium ">
+                                            <span className="px-2 py-1 text-xs font-medium rounded-md bg-slate-700 bg-opacity-30 backdrop-blur-md text-slate-800 ">
                                                 Verified Purchase
                                             </span>
                                         </div>
@@ -455,7 +459,7 @@ export default function ProductDetails({
                                         <span className="text-xs text-slate-800 ">
                                             August 12,2024
                                         </span>
-                                        <div className="flex text-xs items-center space-x-1 text-yellow-500 mt-2">
+                                        <div className="flex items-center mt-2 space-x-1 text-xs text-yellow-500">
                                             <FaStar />
                                             <FaStar />
                                             <FaStar />
@@ -477,10 +481,10 @@ export default function ProductDetails({
                         </div>
                         {relatedProducts.length > 0 && (
                             <div className="mt-20">
-                                <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wide mb-6">
+                                <h1 className="mb-6 text-2xl font-medium tracking-wide uppercase text-slate-900">
                                     Related Products
                                 </h1>
-                                <div className="grid grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8 pb-10">
+                                <div className="grid grid-cols-2 gap-8 pb-10 lg:grid-cols-3 xl:grid-cols-4">
                                     {relatedProducts.map((relatedProduct) => (
                                         <Link
                                             key={relatedProduct.id}
@@ -489,7 +493,7 @@ export default function ProductDetails({
                                                 relatedProduct.id
                                             )}
                                         >
-                                            <div className="bg-slate-50 bg-opacity-30 backdrop-blur-md  rounded-2xl p-4 flex space-x-2 shadow-lg">
+                                            <div className="flex p-4 space-x-2 shadow-lg bg-slate-50 bg-opacity-30 backdrop-blur-md rounded-2xl">
                                                 {relatedProduct.images &&
                                                 relatedProduct.images.length >
                                                     0 ? (
@@ -498,14 +502,14 @@ export default function ProductDetails({
                                                         <img
                                                             src={`/storage/${relatedProduct.images[0].image_path}`}
                                                             alt={`${relatedProduct.name} image 1`}
-                                                            className="w-full h-48 object-cover mb-4 rounded-lg"
+                                                            className="object-cover w-full h-48 mb-4 rounded-lg"
                                                         />
                                                     ) : (
                                                         <>
                                                             <img
                                                                 src={`/storage/${relatedProduct.images[0].image_path}`}
                                                                 alt={`${relatedProduct.name} image 1`}
-                                                                className="w-1/2 h-48 object-cover mb-4 rounded-lg"
+                                                                className="object-cover w-1/2 h-48 mb-4 rounded-lg"
                                                             />
                                                             {relatedProduct
                                                                 .images.length >
@@ -513,20 +517,20 @@ export default function ProductDetails({
                                                                 <img
                                                                     src={`/storage/${relatedProduct.images[1].image_path}`}
                                                                     alt={`${relatedProduct.name} image 2`}
-                                                                    className="w-1/2 h-48 object-cover mb-4 rounded-lg"
+                                                                    className="object-cover w-1/2 h-48 mb-4 rounded-lg"
                                                                 />
                                                             )}
                                                         </>
                                                     )
                                                 ) : (
-                                                    <p className="text-center text-gray-600 text-lg">
+                                                    <p className="text-lg text-center text-gray-600">
                                                         No Images Available
                                                     </p>
                                                 )}
                                             </div>
-                                            <div className=" text-xs p-3 flex items-center justify-between">
+                                            <div className="flex items-center justify-between p-3 text-xs ">
                                                 <div>
-                                                    <h3 className="pb-1 text-md font-semibold">
+                                                    <h3 className="pb-1 font-semibold text-md">
                                                         {relatedProduct.name}
                                                     </h3>
                                                     <p className="text-sm">
@@ -560,12 +564,12 @@ export default function ProductDetails({
                                                             )
                                                         }
                                                     >
-                                                        <div className="bg-slate-800 px-3 py-3 rounded-full text-white">
+                                                        <div className="px-3 py-3 text-white rounded-full bg-slate-800">
                                                             <GrCart size={15} />
                                                         </div>
                                                     </Link>
                                                 ) : (
-                                                    <div className="bg-slate-100 text-xs  cursor-not-allowed  w-full sm:w-1/2  px-2 sm:py-2 py-1  rounded-full text-gray-600 text-center">
+                                                    <div className="w-full px-2 py-1 text-xs text-center text-gray-600 rounded-full cursor-not-allowed bg-slate-100 sm:w-1/2 sm:py-2">
                                                         Out of Stock
                                                     </div>
                                                 )}

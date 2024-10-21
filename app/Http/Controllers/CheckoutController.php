@@ -1,9 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Cart;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
-use App\Models\Notifications; 
+use App\Models\Notifications;
 use App\Models\OrderItem;
 use App\Models\Product;
 use Inertia\Inertia;
@@ -16,20 +17,20 @@ class CheckoutController extends Controller
     {
         // Fetch the latest order for the authenticated user
         $order = Order::where('user_id', Auth::id())
-                    ->with('orderItems') 
-                    ->latest()
-                    ->first();
-    
+            ->with('orderItems')
+            ->latest()
+            ->first();
+
         // If no order exists, redirect the user to the products page
         if (!$order) {
             return redirect()->route('customer.products')->with('error', 'No orders found, explore our products.');
         }
-    
+
         $orderItems = $order->orderItems;
-    
+
         return Inertia::render('Customer/CompleteOrders', [
-            'order' => $order, 
-            'orderItems' => $orderItems, 
+            'order' => $order,
+            'orderItems' => $orderItems,
         ]);
     }
     public function store(Request $request)
@@ -42,6 +43,8 @@ class CheckoutController extends Controller
         try {
             DB::beginTransaction();
             // Create order
+
+            // dd($request->all());
             $order = Order::create([
                 "user_id" => Auth::id(),
                 "name" => $request->name,
@@ -61,6 +64,7 @@ class CheckoutController extends Controller
                 dd('no product found');
             } else {
                 foreach ($request->products as $item) {
+
                     $product = Product::find((int) $item['product_id']);
 
                     // Create order item
@@ -71,17 +75,23 @@ class CheckoutController extends Controller
                         'type' => $product->category_id,
                         'price' => $product->price,
                         'qty' => $item['qty'],
-                        'total_price' => $product->price * (int) $item['qty'],
+                        'shipping_fee_individual' => $item['shipping'],
+                        'total_price' => $product->price * (int) $item['qty'] + $item['shipping'],
                     ]);
+
+                    if ($item['cart_id']) {
+                        $cart = Cart::find($item['cart_id']);
+                        $cart->delete();
+                    }
                 }
             }
-                  // Create a notification
-        Notifications::create([
-            'user_id' => Auth::id(),
-            'message' => 'Your order has been placed successfully!',
-            'link' => 'customer.orders', 
-            'status' => 'unread', 
-        ]);
+            // Create a notification
+            Notifications::create([
+                'user_id' => Auth::id(),
+                'message' => 'Your order has been placed successfully!',
+                'link' => 'customer.orders',
+                'status' => 'unread',
+            ]);
             // Commit the transaction
             DB::commit();
             return redirect()->route('customer.completeOrders')->with('success', 'Order placed successfully!');
@@ -91,10 +101,12 @@ class CheckoutController extends Controller
             return back()->with("error", $e->getMessage());
         }
     }
-    public function success(){
+    public function success()
+    {
 
     }
-    public function failed(){
+    public function failed()
+    {
 
     }
 }
