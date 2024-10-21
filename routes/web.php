@@ -73,7 +73,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
         Route::get('/about', [CustomerController::class, 'about'])->name('customer.about');
         Route::get('/categories', [CustomerController::class, 'categories'])->name('customer.categories');
-        Route::patch('/completeOrders', [CheckoutController::class, 'completeOrders'])->name('customer.completeOrders');
+        Route::get('/completeOrders', [CheckoutController::class, 'completeOrders'])->name('customer.completeOrders');
         Route::get('/products', [ProductController::class, 'products'])->name('customer.products');
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/orderSelection', [CartController::class, 'orderSelection'])->name('customer.orderSelection');
