@@ -24,7 +24,7 @@ Route::middleware('guest')->group(function () {
         ->name('seller.login');
     Route::post('seller/login', [AuthenticatedSellerController::class, 'store'])
         ->name('seller.authenticate');
-        Route::post('seller/logout', [AuthenticatedSellerController::class, 'logout'])->name('seller.logout');
+    Route::post('seller/logout', [AuthenticatedSellerController::class, 'logout'])->name('seller.logout');
 });
 
 // Public route for seller profile
@@ -73,11 +73,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');
         Route::get('/about', [CustomerController::class, 'about'])->name('customer.about');
         Route::get('/categories', [CustomerController::class, 'categories'])->name('customer.categories');
-        Route::get('/completeOrders', [CheckoutController::class, 'completeOrders'])->name('customer.completeOrders');
+        Route::patch('/completeOrders', [CheckoutController::class, 'completeOrders'])->name('customer.completeOrders');
         Route::get('/products', [ProductController::class, 'products'])->name('customer.products');
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/orderSelection', [CartController::class, 'orderSelection'])->name('customer.orderSelection');
-        // CUSTOMER  ORDERS  ROUTE 
+        // CUSTOMER  ORDERS  ROUTE
         Route::get('/orders', [CustomerOrderController::class, 'orders'])->name('customer.orders');
         Route::get('/toPay', [CustomerOrderController::class, 'toPayOrders'])->name('order.toPay');
         Route::get('/toShip', [CustomerOrderController::class, 'toShipOrders'])->name('order.toShip');

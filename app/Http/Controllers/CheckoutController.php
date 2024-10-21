@@ -10,24 +10,30 @@ use App\Models\Product;
 use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
+use Luigel\Paymongo\Facades\Paymongo;
+use Str;
 
 class CheckoutController extends Controller
 {
-    public function completeOrders()
+    public function completeOrders(Request $request)
     {
-        // Fetch the latest order for the authenticated user
-        $order = Order::where('user_id', Auth::id())
-            ->with('orderItems')
-            ->latest()
-            ->first();
 
+        $order = Order::where('user_id', Auth::id())
+            ->where('transaction_id', $request->transac_id)
+            ->firstOrFail();
+
+        $checkout = Paymongo::checkout()->find($order->payment_src_id);
+        if ($checkout->payments[0]['attributes']['status'] == 'paid') {
+            $order->update([
+                'remarks' => 'paid'
+            ]);
+        }
         // If no order exists, redirect the user to the products page
         if (!$order) {
             return redirect()->route('customer.products')->with('error', 'No orders found, explore our products.');
         }
 
         $orderItems = $order->orderItems;
-
         return Inertia::render('Customer/CompleteOrders', [
             'order' => $order,
             'orderItems' => $orderItems,
@@ -45,6 +51,7 @@ class CheckoutController extends Controller
             // Create order
 
             // dd($request->all());
+            $transac_id = 'Bilinao-' . uniqid();
             $order = Order::create([
                 "user_id" => Auth::id(),
                 "name" => $request->name,
@@ -56,9 +63,11 @@ class CheckoutController extends Controller
                 'landmark' => $request->landmark,
                 'payment' => $request->payment_method,
                 'amount' => $request->total_amount,
-                'transaction_id' => 'testing transac id',
-                'order_number' => 'order_number testing only to be generated'
+                'transaction_id' => $transac_id,
+                'order_number' => 'ORDER-' . strtoupper(Str::random(10))
             ]);
+
+            $line_items = [];
             // Loop through products and create order items
             if ($request->products == null) {
                 dd('no product found');
@@ -68,7 +77,7 @@ class CheckoutController extends Controller
                     $product = Product::find((int) $item['product_id']);
 
                     // Create order item
-                    OrderItem::create([
+                    $orderItem = OrderItem::create([
                         'order_id' => $order->id,
                         'product_id' => $product->id,
                         'product_name' => $product->name,
@@ -78,6 +87,15 @@ class CheckoutController extends Controller
                         'shipping_fee_individual' => $item['shipping'],
                         'total_price' => $product->price * (int) $item['qty'] + $item['shipping'],
                     ]);
+                    $amountInCentavos = (int) ($product->price * (int) $item['qty']) * 100;
+
+                    $line_items[] = [
+                        'name' => $product->name,
+                        'quantity' => (int) $item['qty'],
+                        'amount' => $amountInCentavos,
+                        'currency' => 'PHP',
+                        'description' => 'Buying product for order id ' . $product->name,
+                    ];
 
                     if ($item['cart_id']) {
                         $cart = Cart::find($item['cart_id']);
@@ -85,6 +103,14 @@ class CheckoutController extends Controller
                     }
                 }
             }
+            $line_items[] = [
+                'name' => 'Shipping Fee',
+                'quantity' => 1,
+                'amount' => (int) $request->shipping_fee * 100,
+                'currency' => 'PHP',
+                'description' => 'Total shipping fee for order',
+            ];
+            // dd($line_items);
             // Create a notification
             Notifications::create([
                 'user_id' => Auth::id(),
@@ -92,9 +118,35 @@ class CheckoutController extends Controller
                 'link' => 'customer.orders',
                 'status' => 'unread',
             ]);
-            // Commit the transaction
+            // dd($line_items);
+            $checkout = Paymongo::checkout()->create([
+                'cancel_url' => route('customer.orders'),
+                'billing' => [
+                    'name' => $request->name,
+                    'email' => Auth::user()->email,
+                    'phone' => $request->phone_no,
+                ],
+                'description' => $transac_id,
+                'line_items' => $line_items,
+                'payment_method_types' => [
+                    $request->payment_method,
+                ],
+                'success_url' => route('customer.completeOrders', ['transac_id' => $transac_id]),
+                'statement_descriptor' => 'Bilinao Inc.',
+                'metadata' => [
+                    'Key' => 'Value'
+                ]
+            ]);
+
+            $order->update([
+                'payment_src_id' => $checkout->id,
+                // 'remarks' => $gcashSource->status
+            ]);
+            // dd($checkout);
             DB::commit();
-            return redirect()->route('customer.completeOrders')->with('success', 'Order placed successfully!');
+
+            return Inertia::location($checkout->checkout_url);
+            // return Inertia::location($gcashSource->redirect['checkout_url']);
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());

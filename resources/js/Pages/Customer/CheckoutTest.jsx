@@ -31,6 +31,7 @@ export default function Checkout({ auth }) {
     const { product } = usePage().props;
     const { shipping_data } = usePage().props;
 
+
     const regionMapping = {
         "0100000000": "luzon",
         "0200000000": "luzon",
@@ -128,9 +129,11 @@ export default function Checkout({ auth }) {
     const subtotals = product.map(item => item.buying_quantity * item.product.price);
     const totalSubtotal = subtotals.reduce((total, subtotal) => total + subtotal, 0);
     const [status, setStatus] = useState();
+    const { url } = usePage();
+    console.log(url)
 
     const { data, errors, setData, post, processing } = useForm({
-        payment_method: "Gcash",
+        payment_method: "gcash",
         name: user.name,
         shipping_address: "",
         phone_no: user.phone_number,
@@ -141,6 +144,7 @@ export default function Checkout({ auth }) {
         is_from_cart: status,
         products: [],
         initial_sf: [],
+        failed_url: url
     });
 
 
@@ -530,7 +534,7 @@ export default function Checkout({ auth }) {
                                                 : "hover:bg-slate-100"
                                                 }`}
                                             onClick={() =>
-                                                handlePaymentChange("GCash")
+                                                handlePaymentChange("gcash")
                                             }
                                         >
                                             <input
@@ -546,7 +550,7 @@ export default function Checkout({ auth }) {
                                             </div>
                                             <HiOutlineCheckCircle
                                                 className={`text-gray-300 text-xl ${data.payment_method ===
-                                                    "GCash"
+                                                    "gcash"
                                                     ? "text-blue-700"
                                                     : "text-gray-300"
                                                     }`}
@@ -555,12 +559,12 @@ export default function Checkout({ auth }) {
                                         {/* PayMaya Payment Option */}
                                         <label
                                             className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method ===
-                                                "PayMaya"
+                                                "payMaya"
                                                 ? "bg-green-100 border-0 hover:bg-green-100"
                                                 : "hover:bg-slate-100"
                                                 }`}
                                             onClick={() =>
-                                                handlePaymentChange("PayMaya")
+                                                handlePaymentChange("paymaya")
                                             }
                                         >
                                             <input
@@ -576,7 +580,7 @@ export default function Checkout({ auth }) {
                                             </div>
                                             <HiOutlineCheckCircle
                                                 className={`text-gray-300 text-xl ${data.payment_method ===
-                                                    "PayMaya"
+                                                    "paymaya"
                                                     ? "text-green-700"
                                                     : "text-gray-300"
                                                     }`}
