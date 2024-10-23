@@ -5,12 +5,6 @@ import logo from "../Illustrations/LOGO.png";
 export default function ToPay() {
     return (
         <div className="px-1">
-            {/* <h2 className="text-md font-semibold text-slate-800">
-                Orders To Pay
-            </h2>
-            <p className="text-sm text-slate-600">
-                No orders to pay at this moment.
-            </p> */}
             <div>
                 <div className="flex items-center space-x-3">
                     <h2 className="text-md flex font-semibold text-slate-800">

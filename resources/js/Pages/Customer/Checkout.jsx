@@ -4,7 +4,6 @@ import CustomerLayout from "@/Layouts/CustomerLayout";
 import { FaPesoSign } from "react-icons/fa6";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
-import PaymentOption from "@/Components/PaymentOption";
 import Banner from "@/Components/Banner";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
@@ -12,14 +11,13 @@ import axios from "axios";
 import Label from "@/Components/Label";
 import ReadOnly from "@/Components/ReadOnly";
 
-export default function Checkout({ auth, product }) {
+export default function Checkout({ auth }) {
     const { user } = auth;
-    const { shipping_data } = usePage().props;
 
     const [billingDetails, setBillingDetails] = useState({
         address: user.address || "",
     });
-
+    const [shippingFees, setShippingFees] = useState([]);
     const [regions, setRegions] = useState([]);
     const [provinces, setProvinces] = useState([]);
     const [citiesMunicipalities, setCitiesMunicipalities] = useState([]);
@@ -30,6 +28,29 @@ export default function Checkout({ auth, product }) {
     const [selectedCityMunicipality, setSelectedCityMunicipality] =
         useState("");
     const [selectedBarangay, setSelectedBarangay] = useState("");
+    const { product } = usePage().props;
+    const { shipping_data } = usePage().props;
+
+    const regionMapping = {
+        "0100000000": "luzon",
+        "0200000000": "luzon",
+        "0300000000": "luzon",
+        "0400000000": "luzon",
+        "0500000000": "luzon",
+        1400000000: "luzon",
+        1700000000: "island",
+        "0600000000": "visayas",
+        "0700000000": "visayas",
+        "0800000000": "visayas",
+        "0900000000": "mindanao",
+        1000000000: "mindanao",
+        1100000000: "mindanao",
+        1200000000: "mindanao",
+        1600000000: "mindanao",
+        1900000000: "mindanao",
+    };
+
+    // API FOR GETTING THE USER ADDRESS
     useEffect(() => {
         axios
             .get("https://psgc.cloud/api/regions")
@@ -37,86 +58,14 @@ export default function Checkout({ auth, product }) {
             .catch((err) => console.log("Error fetching regions:", err));
     }, []);
 
-    // Map region codes to corresponding regions (Luzon, Visayas, Mindanao, Island)
-    const regionMapping = {
-        // Luzon Regions
-        "0100000000": "luzon", // Region I (Ilocos Region)
-        "0200000000": "luzon", // Region II (Cagayan Valley)
-        "0300000000": "luzon", // Region III (Central Luzon)
-        "0400000000": "luzon", // Region IV-A (CALABARZON)
-        "0500000000": "luzon", // Region V (Bicol Region)
-        1300000000: "luzon", // National Capital Region (NCR)
-        1400000000: "luzon", // Cordillera Administrative Region (CAR)
-
-        // Island Regions
-        1700000000: "island", // MIMAROPA Region
-
-        // Visayas Regions
-        "0600000000": "visayas", // Region VI (Western Visayas)
-        "0700000000": "visayas", // Region VII (Central Visayas)
-        "0800000000": "visayas", // Region VIII (Eastern Visayas)
-
-        // Mindanao Regions
-        "0900000000": "mindanao", // Region IX (Zamboanga Peninsula)
-        1000000000: "mindanao", // Region X (Northern Mindanao)
-        1100000000: "mindanao", // Region XI (Davao Region)
-        1200000000: "mindanao", // Region XII (SOCCSKSARGEN)
-        1600000000: "mindanao", // Region XIII (Caraga)
-        1900000000: "mindanao", // Bangsamoro Autonomous Region In Muslim Mindanao (BARMM)
-    };
-
-    const [products, setProducts] = useState([]);
-    useEffect(() => {
-        const urlParams = new URLSearchParams(window.location.search);
-        const product_id = urlParams.get("product_id");
-        const qty = urlParams.get("quantity");
-
-        setProducts([{ product_id, qty }]);
-    }, []);
-
-    const { errors, post, data, setData } = useForm({
-        payment_method: "Gcash",
-        shipping_address: "",
-        shipping_fee: "",
-        amount: "",
-        name: user.name,
-        phone_no: user.phone_number,
-        landmark: "",
-        products: [],
-    });
-
-    useEffect(() => {
-        if (products.length > 0) {
-            setData(
-                "products",
-                products.map((item) => ({
-                    product_id: item.product_id,
-                    qty: item.qty,
-                }))
-            );
-        }
-    }, [products]);
-
-    const [shippingFee, setShippingFee] = useState(0);
-
-    const calculateShippingFee = (regionCode, weight) => {
-        const shippingRegion = regionMapping[regionCode];
-
-        // Find the corresponding weight range
-        const matchingRange = shipping_data.find(
-            (range) => weight >= range.weight_min && weight <= range.weight_max
-        );
-
-        if (matchingRange) {
-            setShippingFee(matchingRange[shippingRegion]);
-            setData("shipping_fee", shippingFee);
-        } else {
-            setShippingFee(0); // If no range found, default to 0
-        }
-    };
     useEffect(() => {
         if (selectedRegion) {
-            calculateShippingFee(selectedRegion, product.weight);
+            const fees = product.map((item) => {
+                const totalWeight = item.buying_quantity * item.product.weight;
+                console.log("totalWeight", totalWeight);
+                return calculateShippingFee(selectedRegion, totalWeight);
+            });
+            setShippingFees(fees);
             axios
                 .get(
                     `https://psgc.cloud/api/regions/${selectedRegion}/provinces`
@@ -128,6 +77,23 @@ export default function Checkout({ auth, product }) {
         }
     }, [selectedRegion]);
 
+    useEffect(() => {
+        const totalFee = shippingFees.reduce((acc, fee) => acc + fee, 0);
+        setData((prevData) => ({
+            ...prevData,
+            shipping_fee: totalFee,
+            initial_sf: shippingFees,
+            total_amount: data.subtotal + totalFee,
+            products: product.map((item, index) => ({
+                product_id: item.product.id,
+                qty: item.buying_quantity,
+                cart_id: item.cart_id ?? null,
+                shipping: shippingFees[index],
+            })),
+        }));
+    }, [shippingFees]);
+
+    console.log(product);
     useEffect(() => {
         if (selectedProvince) {
             axios
@@ -156,92 +122,81 @@ export default function Checkout({ auth, product }) {
         }
     }, [selectedCityMunicipality]);
 
-    const handleInputChange = (e) => {
-        const { id, value } = e.target;
-        setBillingDetails({
-            ...billingDetails,
-            [id]: value,
-        });
+    const subtotals = product.map(
+        (item) => item.buying_quantity * item.product.price
+    );
+    const totalSubtotal = subtotals.reduce(
+        (total, subtotal) => total + subtotal,
+        0
+    );
+    const [status, setStatus] = useState();
+    const { url } = usePage();
+    console.log(url);
+
+    const { data, errors, setData, post, processing } = useForm({
+        payment_method: "gcash",
+        name: user.name,
+        shipping_address: "",
+        phone_no: user.phone_number,
+        landmark: "",
+        shipping_fee: 0,
+        subtotal: totalSubtotal,
+        total_amount: 0,
+        is_from_cart: status,
+        products: [],
+        initial_sf: [],
+        failed_url: url,
+    });
+    console.log(data);
+    useEffect(() => {
+        const urlParams = new URLSearchParams(window.location.search);
+        const isFromCart = urlParams.get("from_cart") || "false"; // Check against the string '1'
+        setStatus(isFromCart); // Set the value
+    }, []);
+
+    useEffect(() => {
+        setData("is_from_cart", status);
+    }, [status]);
+
+    const handleCheckoutButton = (e) => {
+        e.preventDefault();
+        console.log("submitted data => ", data);
+        post(route("store.checkout"));
     };
 
-    const [cartItems, setCartItems] = useState([product]); // Store the single product instead of multiple carts
-    // Calculate total price based on product price and quantity
-    const calculateTotal = () => {
-        return cartItems.reduce(
-            (acc, item) => acc + item.price * item.quantity,
-            0
+    const handlePaymentChange = (method) => {
+        setData("payment_method", method);
+    };
+
+    const calculateShippingFee = (regionCode, weight) => {
+        const shippingRegion = regionMapping[regionCode];
+        const matchingRange = shipping_data.find(
+            (range) => weight >= range.weight_min && weight <= range.weight_max
         );
+        if (matchingRange) {
+            return matchingRange[shippingRegion];
+        } else {
+            alert("Shipping not found!");
+            setData("shipping_fee", 0);
+        }
     };
 
-    // State to hold the formatted total for display
-    const [formattedTotal, setFormattedTotal] = useState("0.00");
-    // State to hold the raw total for submission
-    const [totalAmount, setTotalAmount] = useState(0);
-
-    // Function to calculate total including shipping fee
-    const total = (total_amount, shipping_fee) => {
-        const sum = total_amount + shipping_fee;
-        return parseFloat(sum.toFixed(2));
-    };
-
-    // Function to calculate and set formatted total
-    const calculateAndSetFormattedTotal = () => {
-        const productTotal = calculateTotal();
-        const totalAmount = total(productTotal, shippingFee);
-
-        // Set the raw total amount for submission
-        setTotalAmount(totalAmount);
-
-        // Format for display purposes
-        const formatted = totalAmount.toLocaleString(undefined, {
-            minimumFractionDigits: 2,
-            maximumFractionDigits: 2,
-        });
-
-        setFormattedTotal(formatted);
-    };
-
-    // Recalculate when shipping fee changes
-    useEffect(() => {
-        calculateAndSetFormattedTotal();
-    }, [shippingFee]);
-
-    // Set data for backend submission using the raw total
-    useEffect(() => {
-        setData("amount", totalAmount);
-    }, [totalAmount]);
-
-    const [shippingAddress, setShippingAddress] = useState("");
     const [region, setRegion] = useState();
     const [province, setProvince] = useState();
     const [city, setCity] = useState();
     const [barangay, setBarangay] = useState();
 
     useEffect(() => {
-        setShippingAddress(`${region}, ${province}, ${city}, ${barangay}`);
-        setData("shipping_address", shippingAddress);
-    }, [region, province, city, barangay]);
+        const address =
+            region + ", " + province + ", " + city + ", " + barangay;
+        setData("shipping_address", address);
+    }, [barangay]);
 
-    const handlePaymentChange = (event) => {
-        setData("payment_method", event.target.value);
+    // Calculate total price based on product price and quantity
+    const calculateTotal = (price, qty) => {
+        const newSubtotal = price * qty;
+        return newSubtotal;
     };
-
-    const handleCheckout = () => {
-        post(route("store.checkout", data));
-    };
-
-    const gcashBgClass =
-        data.payment_method === "Gcash"
-            ? "bg-blue-100 border-0 hover:bg-blue-100"
-            : "";
-    const paymayaBgClass =
-        data.payment_method === "PayMaya"
-            ? "bg-green-100 hover:bg-green-100  border-0"
-            : "";
-
-    useEffect(() => {
-        setData("shipping_fee", shippingFee);
-    }, [shippingFee]);
 
     return (
         <CustomerLayout user={auth.user}>
@@ -435,7 +390,6 @@ export default function Checkout({ auth, product }) {
                                 </label>
                                 <textarea
                                     id="landmark"
-                                    value={billingDetails.landmark}
                                     onChange={(e) =>
                                         setData("landmark", e.target.value)
                                     }
@@ -457,28 +411,28 @@ export default function Checkout({ auth, product }) {
                                 </div>
                                 <div className="p-6 space-y-4 overflow-y-auto bg-slate-50 h-72 scroll-bar">
                                     <h1 className="font-medium">Your Order</h1>
-                                    {cartItems.map((cart) => (
-                                        <div key={cart.id} className="flex">
+                                    {product.map((item) => (
+                                        <div key={item.id} className="flex">
                                             <div className="relative border">
                                                 <img
-                                                    src={`/storage/${cart.images[0].image_path}`}
-                                                    alt={cart.name}
+                                                    src={`/storage/${item.product.images[0].image_path}`}
+                                                    alt={item.product.name}
                                                     className="object-cover rounded sm:size-16 size-10"
                                                 />
                                                 <div className="absolute flex items-center justify-center rounded-full -top-3 text-slate-100 -right-3 size-5 bg-slate-700">
                                                     <span className="text-xs">
-                                                        {cart.quantity}
+                                                        {item.buying_quantity}
                                                     </span>
                                                 </div>
                                             </div>
                                             <div className="flex-1 ml-4 text-xs text-slate-800">
                                                 <h3 className="font-semibold">
-                                                    {cart.name}
+                                                    {item.product.name}
                                                 </h3>
                                                 <p className="flex items-center">
                                                     <FaPesoSign className="inline-block mr-1" />
                                                     {Number(
-                                                        cart.price
+                                                        item.product.price
                                                     ).toLocaleString("en-US", {
                                                         minimumFractionDigits: 2,
                                                         maximumFractionDigits: 2,
@@ -487,14 +441,17 @@ export default function Checkout({ auth, product }) {
                                                 <p className="flex items-center">
                                                     <FaPesoSign className="inline-block mr-1" />
                                                     {Number(
-                                                        cart.price
+                                                        item.product.price
                                                     ).toLocaleString("en-US", {
                                                         minimumFractionDigits: 2,
                                                         maximumFractionDigits: 2,
                                                     })}{" "}
-                                                    x {cart.quantity} =
+                                                    x {item.buying_quantity} =
                                                     <FaPesoSign className="inline-block mx-1" />
-                                                    {calculateTotal().toLocaleString(
+                                                    {calculateTotal(
+                                                        item.product.price,
+                                                        item.buying_quantity
+                                                    ).toLocaleString(
                                                         undefined,
                                                         {
                                                             minimumFractionDigits: 2,
@@ -510,46 +467,60 @@ export default function Checkout({ auth, product }) {
                                             Subtotal
                                         </span>
                                         <span>
+                                            {" "}
                                             <FaPesoSign className="inline-block" />
-                                            {calculateTotal().toLocaleString(
-                                                undefined,
-                                                {
-                                                    minimumFractionDigits: 2,
-                                                    maximumFractionDigits: 2,
-                                                }
-                                            )}
+                                            {new Intl.NumberFormat("en-US", {
+                                                style: "decimal",
+                                                minimumFractionDigits: 2,
+                                            }).format(data.subtotal)}
                                         </span>
                                     </div>
                                     <div className="flex justify-between pb-4 text-sm border-b">
                                         <span>Shipping</span>
                                         <span>
+                                            {" "}
                                             <FaPesoSign className="inline-block" />
-                                            {shippingFee}
+                                            {data.shipping_fee}
                                         </span>
                                     </div>
                                     <div className="flex justify-between text-lg font-bold">
                                         <span>Total</span>
                                         <span>
+                                            {" "}
                                             <FaPesoSign className="inline-block" />
-                                            {formattedTotal}
+                                            {new Intl.NumberFormat("en-US", {
+                                                style: "decimal",
+                                                minimumFractionDigits: 2,
+                                            }).format(data.total_amount)}
                                         </span>
                                     </div>
                                 </div>
                                 <div className="p-6 border border-t bg-slate-50 rounded-b-3xl">
                                     <button
                                         disabled={
-                                            data.landmark === "" ||
-                                            data.shipping_address == " "
+                                            region == null ||
+                                            province == null ||
+                                            city == null ||
+                                            barangay == null ||
+                                            data.landmark == null
                                         }
-                                        onClick={() => handleCheckout()}
-                                        className={`w-full px-8 py-4 tracking-wide rounded-full bg-amber-500 text-slate-50 ${
-                                            data.landmark === "" ||
-                                            data.shipping_address == " "
+                                        onClick={handleCheckoutButton}
+                                        className={`w-full bg-amber-500 text-slate-50 rounded-full tracking-wide px-8 py-4
+                                        ${
+                                            region == null ||
+                                            province == null ||
+                                            city == null ||
+                                            barangay == null ||
+                                            landmark == null
                                                 ? "cursor-not-allowed"
-                                                : "hover:bg-amber-600 duration-200"
+                                                : " hover:bg-amber-600 duration-200 ease-in-out"
                                         }`}
                                     >
-                                        Place Order
+                                        {[
+                                            processing
+                                                ? "Placing order..."
+                                                : "Place Order",
+                                        ]}
                                     </button>
                                 </div>
                             </div>
@@ -560,39 +531,68 @@ export default function Checkout({ auth, product }) {
                                     </div>
                                     <div className="mt-4 space-y-4">
                                         {/* GCash Payment Option */}
-                                        <PaymentOption
-                                            name="GCash"
-                                            value="Gcash"
-                                            icon={{
-                                                component: (
-                                                    <FaGooglePay className="text-2xl text-white" />
-                                                ),
-                                                bgColor: "bg-blue-500",
-                                                textColor: "text-blue-500",
-                                            }}
-                                            bgClass={gcashBgClass}
-                                            paymentMethod={data.payment_method}
-                                            onPaymentChange={
-                                                handlePaymentChange
+                                        <label
+                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
+                                                data.payment_method === "gcash"
+                                                    ? "bg-blue-100 border-0 hover:bg-blue-100"
+                                                    : "hover:bg-slate-100"
+                                            }`}
+                                            onClick={() =>
+                                                handlePaymentChange("gcash")
                                             }
-                                        />
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="payment"
+                                                className="hidden"
+                                            />
+                                            <div className="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full">
+                                                <FaGooglePay className="text-2xl text-white" />
+                                            </div>
+                                            <div className="flex-1 text-sm font-medium text-slate-700">
+                                                GCash
+                                            </div>
+                                            <HiOutlineCheckCircle
+                                                className={`text-gray-300 text-xl ${
+                                                    data.payment_method ===
+                                                    "gcash"
+                                                        ? "text-green-700"
+                                                        : "text-gray-300"
+                                                }`}
+                                            />
+                                        </label>
                                         {/* PayMaya Payment Option */}
-                                        <PaymentOption
-                                            name="PayMaya"
-                                            value="PayMaya"
-                                            icon={{
-                                                component: (
-                                                    <FaCcPaypal className="text-2xl text-white" />
-                                                ),
-                                                bgColor: "bg-green-500",
-                                                textColor: "text-green-500",
-                                            }}
-                                            bgClass={paymayaBgClass}
-                                            paymentMethod={data.payment_method}
-                                            onPaymentChange={
-                                                handlePaymentChange
+                                        <label
+                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
+                                                data.payment_method ===
+                                                "paymaya"
+                                                    ? "bg-green-100 border-0 hover:bg-green-100"
+                                                    : "hover:bg-slate-100"
+                                            }`}
+                                            onClick={() =>
+                                                handlePaymentChange("paymaya")
                                             }
-                                        />
+                                        >
+                                            <input
+                                                type="radio"
+                                                name="payment"
+                                                className="hidden"
+                                            />
+                                            <div className="flex items-center justify-center w-10 h-10 bg-green-500 rounded-full">
+                                                <FaCcPaypal className="text-2xl text-white" />
+                                            </div>
+                                            <div className="flex-1 text-sm font-medium text-slate-700">
+                                                PayMaya
+                                            </div>
+                                            <HiOutlineCheckCircle
+                                                className={`text-gray-300 text-xl ${
+                                                    data.payment_method ===
+                                                    "paymaya"
+                                                        ? "text-green-700"
+                                                        : "text-gray-300"
+                                                }`}
+                                            />
+                                        </label>
                                     </div>
                                 </div>
                             </div>

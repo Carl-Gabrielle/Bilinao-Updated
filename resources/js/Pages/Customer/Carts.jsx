@@ -62,21 +62,28 @@ export default function Carts({ auth, carts, cartCount }) {
     // MANAGING SELECTED ITEMS
 
     const handleChange = (id, qty, cartId) => {
-        const isItemChecked = checkedItemIds.some(item => item.product_id === id);
+        const isItemChecked = checkedItemIds.some(
+            (item) => item.product_id === id
+        );
 
         if (isItemChecked) {
-            setCheckedItemIds(checkedItemIds.filter(item => item.product_id !== id));
+            setCheckedItemIds(
+                checkedItemIds.filter((item) => item.product_id !== id)
+            );
         } else {
-            setCheckedItemIds([...checkedItemIds, { product_id: id, quantity: qty, cart_id: cartId }]);
+            setCheckedItemIds([
+                ...checkedItemIds,
+                { product_id: id, quantity: qty, cart_id: cartId },
+            ]);
         }
     };
 
-
     const handleCheckout = () => {
-
-        console.log('submitted', { items: checkedItemIds });
-        router.get(route("show.checkout", { items: checkedItemIds, from_cart: true }));
-    }
+        console.log("submitted", { items: checkedItemIds });
+        router.get(
+            route("show.checkout", { items: checkedItemIds, from_cart: true })
+        );
+    };
 
     return (
         <CustomerLayout user={auth.user}>
@@ -140,7 +147,11 @@ export default function Carts({ auth, carts, cartCount }) {
 
                                                 <div className="flex items-center mt-2">
                                                     <CustomCheckbox
-                                                        isChecked={checkedItemIds.some(item => item.product_id === cart.product.id)}
+                                                        isChecked={checkedItemIds.some(
+                                                            (item) =>
+                                                                item.product_id ===
+                                                                cart.product.id
+                                                        )}
                                                         onChange={() =>
                                                             handleChange(
                                                                 cart.product.id,
@@ -284,12 +295,22 @@ export default function Carts({ auth, carts, cartCount }) {
                                 </div>
                                 {cartItems.length > 0 && (
                                     <div className="p-6 mt-auto">
-
-                                        <button onClick={handleCheckout} className="flex items-center justify-center w-full px-8 py-4 font-semibold text-white rounded-full bg-slate-800">
-                                            Proceed To Checkout{" "}
+                                        <button
+                                            onClick={handleCheckout}
+                                            className={`flex items-center justify-center w-full px-8 py-4 font-semibold text-white rounded-full ${
+                                                checkedItemIds.length === 0
+                                                    ? "bg-slate-300 cursor-not-allowed"
+                                                    : "bg-slate-800"
+                                            }`}
+                                            disabled={
+                                                checkedItemIds.length === 0
+                                            }
+                                        >
+                                            {checkedItemIds.length === 0
+                                                ? "Please Select a Product"
+                                                : "Proceed To Checkout"}{" "}
                                             <HiMiniArrowLongRight className="ml-2" />
                                         </button>
-
                                     </div>
                                 )}
                             </div>

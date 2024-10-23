@@ -19,6 +19,7 @@ return new class extends Migration {
             $table->string('shipping_address');
             $table->string('landmark')->nullable();
             $table->string('remarks');
+            $table->string('tracking_code')->nullable();
             $table->decimal('amount', 10, 2); 
             $table->decimal('shipping_fee', 10, 2);
             $table->string('transaction_id');

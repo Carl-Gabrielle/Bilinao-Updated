@@ -38,7 +38,8 @@ Route::middleware('auth:seller')->group(function () {
     Route::get('seller/profileEdit', [SellerDashboardController::class, 'profileEdit'])->name('seller.profileEdit');
     Route::put('seller/storeProfile', [SellerDashboardController::class, 'update'])->name('seller.storeProfile');
     Route::resource('products', ProductController::class);
-    Route::get('/pendingOrders', [SellerOrderController::class, 'pendingOrders'])->name('seller.pendingOrders');
+    Route::get('/recentOrders', [SellerOrderController::class, 'recentOrders'])->name('seller.RecentOrders');
+    Route::post('/seller/proceed-order/{orderId}', [SellerOrderController::class, 'proceedOrder']);
     Route::get('/processOrders', [SellerOrderController::class, 'processOrders'])->name('seller.processOrders');
     Route::get('/shippedOrders', [SellerOrderController::class, 'shippedOrders'])->name('seller.shippedOrders');
     Route::get('/completedOrders', [SellerOrderController::class, 'completedOrders'])->name('seller.completedOrders');

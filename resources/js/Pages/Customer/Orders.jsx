@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { Head } from "@inertiajs/react";
 import Banner from "@/Components/Banner";
 import CustomerLayout from "@/Layouts/CustomerLayout";
@@ -10,10 +10,23 @@ import ToReceive from "./ToReceive";
 import Received from "./Received";
 
 const Orders = ({ auth }) => {
-    const [activeStatus, setActiveStatus] = useState("To Pay");
+    const [activeStatus, setActiveStatus] = useState(null);
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const storedStatus = localStorage.getItem("activeStatus");
+        if (storedStatus) {
+            setActiveStatus(storedStatus);
+        } else {
+            setActiveStatus("To Pay");
+        }
+        setLoading(false);
+    }, []);
 
     const handleStatusClick = (status) => {
         setActiveStatus(status);
+        // Store the active status in localStorage
+        localStorage.setItem("activeStatus", status);
     };
 
     const renderOrderDetails = () => {
@@ -31,6 +44,19 @@ const Orders = ({ auth }) => {
         }
     };
 
+    if (loading) {
+        // Show loading spinner or placeholder while loading
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="My Orders" />
+                <div className="min-h-screen pt-20 pb-1 flex justify-center items-center">
+                    <div className="spinner">Loading...</div>{" "}
+                    {/* Placeholder or spinner */}
+                </div>
+            </CustomerLayout>
+        );
+    }
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="My Orders" />
@@ -44,7 +70,7 @@ const Orders = ({ auth }) => {
                             corresponding orders.
                         </p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
                         <OrderStatus
                             title="To Pay"
                             isActive={activeStatus === "To Pay"}

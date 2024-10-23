@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Inertia\Inertia;
 use App\Models\Order;
 use App\Models\Seller;
+use App\Models\Notifications;
 class SellerOrderController extends Controller
 {
     /**
@@ -18,17 +19,34 @@ class SellerOrderController extends Controller
                     ->with(['orderItems.product.images']) 
                     ->first();
         if (!$order) {
-            return redirect()->route('seller.pendingOrders')->with('error', 'Order not found.');
+            return redirect()->route('seller.RecentOrders')->with('error', 'Order not found.');
         }
         return Inertia::render('Seller/OrderDetails', [
             'order' => $order,
             'orderItems' => $order->orderItems, 
         ]);
     } 
-    public function pendingOrders()
+    public function proceedOrder($orderId)
+    {
+        $order = Order::find($orderId);
+    
+        if (!$order) {
+            return redirect()->route('seller.RecentOrders')->with('error', 'Order not found.');
+        }
+        $order->remarks = 'on process';
+        $order->save();
+        Notifications::create([
+            'user_id' => $order->user_id, 
+            'message' => 'Your order is being processed!',
+            'link' => 'customer.orders', // Ensure this link points to the correct route
+            'status' => 'unread',
+        ]);
+        return redirect()->route('seller.RecentOrders')->with('success', 'Order has been moved to on process.');
+    }
+    public function recentOrders()
     {
         $sellerId = Auth::id(); 
-        $pendingOrders = Order::where('remarks', 'pending')
+        $recentOrders = Order::where('remarks', 'paid')
             ->whereHas('orderItems', function ($query) use ($sellerId) {
                 $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
                     $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
@@ -37,92 +55,60 @@ class SellerOrderController extends Controller
             ->with(['orderItems.product.images'])
             ->orderBy('updated_at', 'desc') 
             ->paginate(8); 
-    
-        // Get the first product from the most updated order
-        $firstProduct = $pendingOrders->isNotEmpty() ? $pendingOrders->first()->orderItems->first() : null;
-    
-        return Inertia::render('Seller/PendingOrders', [
-            'pendingOrders' => $pendingOrders,
-            'firstProduct' => $firstProduct, // Pass the first product to the view
-        ]);
-    }
-    
-    
-    public function processOrders (){
-        $sellerId = Auth::id(); 
-        $processOrders = Order::where('remarks', 'on process')
+        $firstProduct = $recentOrders->isNotEmpty() ? $recentOrders->first()->orderItems->first() : null;
+        $totalOrdersCount = Order::where('remarks', 'on process')
         ->whereHas('orderItems', function ($query) use ($sellerId) {
             $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
                 $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
             });
         })
-        ->with(['orderItems' => function ($query) use ($sellerId) {
+        ->count();
+        return Inertia::render('Seller/RecentOrders', [
+            'success' => session('success'),
+            'recentOrders' => $recentOrders,
+            'firstProduct' => $firstProduct, 
+            'totalOrdersCount' => $totalOrdersCount,
+        ]);
+    }
+    
+    
+    public function processOrders()
+    {
+        $sellerId = Auth::id(); 
+    
+        // Fetching process orders using the same approach as recentOrders
+        $processOrders = Order::where('remarks', 'on process')
+            ->whereHas('orderItems', function ($query) use ($sellerId) {
+                $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                    $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+                });
+            })
+            ->with(['orderItems.product.images'])
+            ->orderBy('updated_at', 'desc')
+            ->paginate(8); 
+    
+     
+        $firstProduct = $processOrders->isNotEmpty() ? $processOrders->first()->orderItems->first() : null;
+
+        $totalOrdersCount = Order::where('remarks', 'on process')
+        ->whereHas('orderItems', function ($query) use ($sellerId) {
             $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
                 $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
             });
-        }])
-        ->get();
+        })
+        ->count();
         return Inertia::render('Seller/ProcessOrders', [
-            'processOrders' => $processOrders,
+            'processOrders' => $processOrders, 
+            'firstProduct' => $firstProduct, 
+            'totalOrdersCount' => $totalOrdersCount,
         ]);
     }
+    
+    
     public function shippedOrders (){
         return Inertia::render('Seller/ShippedOrders');
     }
     public function completedOrders (){
         return Inertia::render('Seller/CompletedOrders');
-    }
-  
-    public function index()
-    {
-        //
-    }
-
-    /**
-     * Show the form for creating a new resource.
-     */
-    public function create()
-    {
-        //
-    }
-
-    /**
-     * Store a newly created resource in storage.
-     */
-    public function store(Request $request)
-    {
-        //
-    }
-
-    /**
-     * Display the specified resource.
-     */
-    public function show(string $id)
-    {
-        //
-    }
-
-    /**
-     * Show the form for editing the specified resource.
-     */
-    public function edit(string $id)
-    {
-        //
-    }
-
-    /**
-     * Update the specified resource in storage.
-     */
-    public function update(Request $request, string $id)
-    {
-        //
-    }
-
-    /**
-     * Remove the specified resource from storage.
-     */
-    public function destroy(string $id)
-    {
-        //
     }
 }

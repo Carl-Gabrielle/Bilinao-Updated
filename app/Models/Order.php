@@ -21,6 +21,7 @@ class Order extends Model
         'order_number',
         'payment',
         'payment_src_id',
+        'tracking_code'
     ];
     use HasFactory;
 

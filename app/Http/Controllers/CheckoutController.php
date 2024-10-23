@@ -11,7 +11,7 @@ use Inertia\Inertia;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Http\Request;
 use Luigel\Paymongo\Facades\Paymongo;
-use Str;
+use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
@@ -45,7 +45,6 @@ class CheckoutController extends Controller
             "shipping_address" => "required",
             "landmark" => "required",
         ]);
-
         try {
             DB::beginTransaction();
             // Create order
@@ -142,7 +141,13 @@ class CheckoutController extends Controller
                 'payment_src_id' => $checkout->id,
                 // 'remarks' => $gcashSource->status
             ]);
-            // dd($checkout);
+             // Decrement the stock for each product in the order items
+             
+        // foreach ($request->products as $item) {
+        //     $product = Product::find((int) $item['product_id']);
+        //     $product->decrement('stock', (int) $item['qty']);
+        // }
+        //     // dd($checkout);
             DB::commit();
 
             return Inertia::location($checkout->checkout_url);

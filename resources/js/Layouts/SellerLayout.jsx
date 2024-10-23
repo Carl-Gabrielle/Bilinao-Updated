@@ -132,9 +132,9 @@ const SellerLayout = ({ user, children }) => {
                                 {isManageOrdersOpen && (
                                     <div className="ml-4  space-y-2 ">
                                         <NavLink
-                                            href={route("seller.pendingOrders")}
+                                            href={route("seller.RecentOrders")}
                                             active={route().current(
-                                                "seller.pendingOrders"
+                                                "seller.RecentOrders"
                                             )}
                                             onClick={handleOrderLinkClick}
                                         >
@@ -142,18 +142,18 @@ const SellerLayout = ({ user, children }) => {
                                                 <MdOutlinePendingActions
                                                     className={`size-4 ${
                                                         route().current(
-                                                            "seller.pendingOrders"
+                                                            "seller.RecentOrders"
                                                         )
                                                             ? "text-slate-50"
                                                             : "text-slate-800"
                                                     }`}
                                                 />
-                                                <span>Pending Orders</span>
+                                                <span>Recent Orders</span>
                                             </div>
                                             <MdOutlineKeyboardArrowRight
                                                 className={`size-5 ${
                                                     route().current(
-                                                        "seller.pendingOrders"
+                                                        "seller.RecentOrders"
                                                     )
                                                         ? "text-slate-50"
                                                         : "text-slate-800"

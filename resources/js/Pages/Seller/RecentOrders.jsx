@@ -1,22 +1,52 @@
 import SellerLayout from "@/Layouts/SellerLayout";
 import { FaPesoSign } from "react-icons/fa6";
 import { AiOutlineEye } from "react-icons/ai";
-import { Head, Link, usePage } from "@inertiajs/react";
-import Pagination from "@/Components/Pagination"; // Import the Pagination component
+import { FaCheck } from "react-icons/fa6";
+import React, { useState, useEffect } from "react";
+import { Head, Link } from "@inertiajs/react";
+import Pagination from "@/Components/Pagination";
 
-export default function PendingOrder({ auth = {}, pendingOrders = {} }) {
-    // Accept pendingOrders as an object
+export default function RecentOrders({
+    auth = {},
+    recentOrders = {},
+    success,
+    totalOrdersCount = 0,
+}) {
+    // Accept recentOrders as an object
     const user = auth.user || {};
-
+    const [visibleSuccess, setVisibleSuccess] = useState(!!success);
+    useEffect(() => {
+        if (success) {
+            const timer = setTimeout(() => {
+                setVisibleSuccess(false);
+            }, 3000);
+            return () => clearTimeout(timer);
+        }
+    }, [success]);
     return (
         <SellerLayout user={user}>
-            <Head title="Pending Orders" />
+            <Head title="Recent Orders" />
+            {visibleSuccess && (
+                <div className="mt-3 bg-gray-50 py-3 px-5 rounded-lg mb-5 flex items-center justify-center w-1/2 ml-auto shadow-lg">
+                    <div className="bg-green-500 p-1 rounded-full flex items-center justify-center">
+                        {/* <FaCheck className="text-white text-lg" /> */}
+                    </div>
+                    <span className="ml-3 text-gray-700 font-medium">
+                        {success}
+                    </span>
+                </div>
+            )}
             <div className="container mx-auto px-4 py-6">
                 <div className="px-7 py-8">
                     <div className="w-full">
-                        <h1 className="text-xl font-semibold text-gray-800 mb-0">
-                            Pending Orders
-                        </h1>
+                        <div className="flex items-center space-x-4">
+                            <h1 className="text-xl font-semibold text-gray-800 mb-0">
+                                Recent Orders
+                            </h1>
+                            <span className="px-3 py-1 text-slate-50 bg-slate-800  text-sm font-medium rounded-md">
+                                {totalOrdersCount}
+                            </span>
+                        </div>
                         <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg">
                             <table className="min-w-full">
                                 <thead className="bg-slate-50 border-b border-gray-200 text-xs uppercase">
@@ -39,8 +69,8 @@ export default function PendingOrder({ auth = {}, pendingOrders = {} }) {
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {pendingOrders.data.length > 0 ? (
-                                        pendingOrders.data.map(
+                                    {recentOrders.data.length > 0 ? (
+                                        recentOrders.data.map(
                                             (order, index) => (
                                                 <tr
                                                     key={order.id}
@@ -48,12 +78,12 @@ export default function PendingOrder({ auth = {}, pendingOrders = {} }) {
                                                 >
                                                     <td className="py-4 px-6 text-slate-800">
                                                         <div className="truncate max-w-[150px]">
-                                                            {pendingOrders.current_page ===
+                                                            {recentOrders.current_page ===
                                                             1
                                                                 ? index + 1
-                                                                : (pendingOrders.current_page -
+                                                                : (recentOrders.current_page -
                                                                       1) *
-                                                                      pendingOrders.per_page +
+                                                                      recentOrders.per_page +
                                                                   index +
                                                                   1}
                                                         </div>
@@ -95,7 +125,7 @@ export default function PendingOrder({ auth = {}, pendingOrders = {} }) {
                                                 colSpan={5}
                                                 className="py-4 px-6 text-slate-800 text-center text-sm"
                                             >
-                                                No pending orders found.
+                                                No recent orders found.
                                             </td>
                                         </tr>
                                     )}
@@ -103,7 +133,7 @@ export default function PendingOrder({ auth = {}, pendingOrders = {} }) {
                             </table>
                         </div>
                         {/* Add the Pagination component below the table */}
-                        <Pagination links={pendingOrders.links} />
+                        <Pagination links={recentOrders.links} />
                     </div>
                 </div>
             </div>

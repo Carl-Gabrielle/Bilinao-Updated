@@ -31,7 +31,6 @@ export default function Checkout({ auth }) {
     const { product } = usePage().props;
     const { shipping_data } = usePage().props;
 
-
     const regionMapping = {
         "0100000000": "luzon",
         "0200000000": "luzon",
@@ -59,12 +58,11 @@ export default function Checkout({ auth }) {
             .catch((err) => console.log("Error fetching regions:", err));
     }, []);
 
-
     useEffect(() => {
         if (selectedRegion) {
-            const fees = product.map(item => {
+            const fees = product.map((item) => {
                 const totalWeight = item.buying_quantity * item.product.weight;
-                console.log('totalWeight', totalWeight);
+                console.log("totalWeight", totalWeight);
                 return calculateShippingFee(selectedRegion, totalWeight);
             });
             setShippingFees(fees);
@@ -81,7 +79,7 @@ export default function Checkout({ auth }) {
 
     useEffect(() => {
         const totalFee = shippingFees.reduce((acc, fee) => acc + fee, 0);
-        setData(prevData => ({
+        setData((prevData) => ({
             ...prevData,
             shipping_fee: totalFee,
             initial_sf: shippingFees,
@@ -90,13 +88,12 @@ export default function Checkout({ auth }) {
                 product_id: item.product.id,
                 qty: item.buying_quantity,
                 cart_id: item.cart_id ?? null,
-                shipping: shippingFees[index]
+                shipping: shippingFees[index],
             })),
         }));
-
     }, [shippingFees]);
 
-    console.log(product)
+    console.log(product);
     useEffect(() => {
         if (selectedProvince) {
             axios
@@ -125,12 +122,16 @@ export default function Checkout({ auth }) {
         }
     }, [selectedCityMunicipality]);
 
-
-    const subtotals = product.map(item => item.buying_quantity * item.product.price);
-    const totalSubtotal = subtotals.reduce((total, subtotal) => total + subtotal, 0);
+    const subtotals = product.map(
+        (item) => item.buying_quantity * item.product.price
+    );
+    const totalSubtotal = subtotals.reduce(
+        (total, subtotal) => total + subtotal,
+        0
+    );
     const [status, setStatus] = useState();
     const { url } = usePage();
-    console.log(url)
+    console.log(url);
 
     const { data, errors, setData, post, processing } = useForm({
         payment_method: "gcash",
@@ -144,24 +145,22 @@ export default function Checkout({ auth }) {
         is_from_cart: status,
         products: [],
         initial_sf: [],
-        failed_url: url
+        failed_url: url,
     });
-
-
+    console.log(data);
     useEffect(() => {
         const urlParams = new URLSearchParams(window.location.search);
-        const isFromCart = urlParams.get("from_cart") || 'false'; // Check against the string '1'
+        const isFromCart = urlParams.get("from_cart") || "false"; // Check against the string '1'
         setStatus(isFromCart); // Set the value
     }, []);
 
     useEffect(() => {
-        setData('is_from_cart', status)
+        setData("is_from_cart", status);
     }, [status]);
-
 
     const handleCheckoutButton = (e) => {
         e.preventDefault();
-        console.log('submitted data => ', data);
+        console.log("submitted data => ", data);
         post(route("store.checkout"));
     };
 
@@ -175,9 +174,9 @@ export default function Checkout({ auth }) {
             (range) => weight >= range.weight_min && weight <= range.weight_max
         );
         if (matchingRange) {
-            return matchingRange[shippingRegion]
+            return matchingRange[shippingRegion];
         } else {
-            alert('Shipping not found!')
+            alert("Shipping not found!");
             setData("shipping_fee", 0);
         }
     };
@@ -449,7 +448,10 @@ export default function Checkout({ auth }) {
                                                     })}{" "}
                                                     x {item.buying_quantity} =
                                                     <FaPesoSign className="inline-block mx-1" />
-                                                    {calculateTotal(item.product.price, item.buying_quantity).toLocaleString(
+                                                    {calculateTotal(
+                                                        item.product.price,
+                                                        item.buying_quantity
+                                                    ).toLocaleString(
                                                         undefined,
                                                         {
                                                             minimumFractionDigits: 2,
@@ -504,14 +506,15 @@ export default function Checkout({ auth }) {
                                         }
                                         onClick={handleCheckoutButton}
                                         className={`w-full bg-amber-500 text-slate-50 rounded-full tracking-wide px-8 py-4
-                                        ${region == null ||
-                                                province == null ||
-                                                city == null ||
-                                                barangay == null ||
-                                                landmark == null
+                                        ${
+                                            region == null ||
+                                            province == null ||
+                                            city == null ||
+                                            barangay == null ||
+                                            landmark == null
                                                 ? "cursor-not-allowed"
                                                 : " hover:bg-amber-600 duration-200 ease-in-out"
-                                            }`}
+                                        }`}
                                     >
                                         {[
                                             processing
@@ -529,10 +532,11 @@ export default function Checkout({ auth }) {
                                     <div className="mt-4 space-y-4">
                                         {/* GCash Payment Option */}
                                         <label
-                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method === "GCash"
-                                                ? "bg-blue-100 border-0 hover:bg-blue-100"
-                                                : "hover:bg-slate-100"
-                                                }`}
+                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
+                                                data.payment_method === "gcash"
+                                                    ? "bg-blue-100 border-0 hover:bg-blue-100"
+                                                    : "hover:bg-slate-100"
+                                            }`}
                                             onClick={() =>
                                                 handlePaymentChange("gcash")
                                             }
@@ -549,20 +553,22 @@ export default function Checkout({ auth }) {
                                                 GCash
                                             </div>
                                             <HiOutlineCheckCircle
-                                                className={`text-gray-300 text-xl ${data.payment_method ===
+                                                className={`text-gray-300 text-xl ${
+                                                    data.payment_method ===
                                                     "gcash"
-                                                    ? "text-blue-700"
-                                                    : "text-gray-300"
-                                                    }`}
+                                                        ? "text-green-700"
+                                                        : "text-gray-300"
+                                                }`}
                                             />
                                         </label>
                                         {/* PayMaya Payment Option */}
                                         <label
-                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method ===
-                                                "payMaya"
-                                                ? "bg-green-100 border-0 hover:bg-green-100"
-                                                : "hover:bg-slate-100"
-                                                }`}
+                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
+                                                data.payment_method ===
+                                                "paymaya"
+                                                    ? "bg-green-100 border-0 hover:bg-green-100"
+                                                    : "hover:bg-slate-100"
+                                            }`}
                                             onClick={() =>
                                                 handlePaymentChange("paymaya")
                                             }
@@ -579,11 +585,12 @@ export default function Checkout({ auth }) {
                                                 PayMaya
                                             </div>
                                             <HiOutlineCheckCircle
-                                                className={`text-gray-300 text-xl ${data.payment_method ===
+                                                className={`text-gray-300 text-xl ${
+                                                    data.payment_method ===
                                                     "paymaya"
-                                                    ? "text-green-700"
-                                                    : "text-gray-300"
-                                                    }`}
+                                                        ? "text-green-700"
+                                                        : "text-gray-300"
+                                                }`}
                                             />
                                         </label>
                                     </div>

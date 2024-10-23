@@ -56,7 +56,7 @@ class CartController extends Controller
             return response()->json(['message' => 'Product not found'], 404);
         }
 
-        return Inertia::render('Customer/CheckoutTest', [
+        return Inertia::render('Customer/Checkout', [
             'product' => $product,
             'shipping_data' => $shippingData,
         ]);
