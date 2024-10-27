@@ -3,15 +3,13 @@
 namespace App\Http\Controllers;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
-
+use App\Models\Order;
+use Illuminate\Support\Facades\Auth;
 class CustomerOrderController extends Controller
 {
     public  function orders(){
         return Inertia::render('Customer/Orders');
     }
-    public  function  pendingOrders(){
-        return Inertia::render('Customer/Pending');
-}
 public  function  toPayOrders(){
     return Inertia::render('Customer/ToPay');
 }

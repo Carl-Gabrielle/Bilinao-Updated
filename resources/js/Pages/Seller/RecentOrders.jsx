@@ -10,7 +10,6 @@ export default function RecentOrders({
     auth = {},
     recentOrders = {},
     success,
-    totalOrdersCount = 0,
 }) {
     // Accept recentOrders as an object
     const user = auth.user || {};
@@ -39,14 +38,9 @@ export default function RecentOrders({
             <div className="container mx-auto px-4 py-6">
                 <div className="px-7 py-8">
                     <div className="w-full">
-                        <div className="flex items-center space-x-4">
-                            <h1 className="text-xl font-semibold text-gray-800 mb-0">
-                                Recent Orders
-                            </h1>
-                            <span className="px-3 py-1 text-slate-50 bg-slate-800  text-sm font-medium rounded-md">
-                                {totalOrdersCount}
-                            </span>
-                        </div>
+                        <h1 className="text-xl font-semibold text-gray-800 mb-0">
+                            Recent Orders
+                        </h1>
                         <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg">
                             <table className="min-w-full">
                                 <thead className="bg-slate-50 border-b border-gray-200 text-xs uppercase">
@@ -79,13 +73,13 @@ export default function RecentOrders({
                                                     <td className="py-4 px-6 text-slate-800">
                                                         <div className="truncate max-w-[150px]">
                                                             {recentOrders.current_page ===
-                                                            1
+                                                                1
                                                                 ? index + 1
                                                                 : (recentOrders.current_page -
-                                                                      1) *
-                                                                      recentOrders.per_page +
-                                                                  index +
-                                                                  1}
+                                                                    1) *
+                                                                recentOrders.per_page +
+                                                                index +
+                                                                1}
                                                         </div>
                                                     </td>
                                                     <td className="py-4 px-6 text-slate-800">
@@ -97,8 +91,7 @@ export default function RecentOrders({
                                                     </td>
                                                     <td className="py-4 px-6 text-slate-800">
                                                         <span className="bg-red-200 text-red-800 text-medium font-semibold px-2 py-0.5 rounded-md">
-                                                            {order.remarks ||
-                                                                "Unknown"}
+                                                            pending
                                                         </span>
                                                     </td>
                                                     <td className="py-4 px-6 text-slate-800">

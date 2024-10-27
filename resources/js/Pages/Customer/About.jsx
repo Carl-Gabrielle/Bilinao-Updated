@@ -20,11 +20,9 @@ export default function About({ auth }) {
                             About Bilinao
                         </h1>
                     </div>
-
                     <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
                         Know Our Story
                     </h1>
-
                     <p className="text-md  leading-8 mx-auto tracking-wide">
                         Bili-Nao is dedicated to preserving and protecting the
                         revered practice of traditional crafts. Our main aim is
@@ -34,7 +32,6 @@ export default function About({ auth }) {
                         worldwide audience that values the skill and cultural
                         importance behind each handmade piece.
                     </p>
-
                     {/* bg-gradient-to-r from-blue-50 to-blue-100 */}
                     <div className="py-10 w-full h-auto mb-10 ">
                         <div className="grid grid-cols-1 md:grid-cols-2 sm:gap-20 gap-6 items-center">

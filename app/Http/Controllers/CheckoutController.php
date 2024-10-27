@@ -55,7 +55,7 @@ class CheckoutController extends Controller
                 "user_id" => Auth::id(),
                 "name" => $request->name,
                 'email' => Auth::user()->email,
-                'remarks' => 'pending',
+                'remarks' => 'to pay',
                 'phone' => $request->phone_no,
                 'shipping_address' => $request->shipping_address,
                 'shipping_fee' => $request->shipping_fee,

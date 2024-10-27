@@ -39,9 +39,13 @@ Route::middleware('auth:seller')->group(function () {
     Route::put('seller/storeProfile', [SellerDashboardController::class, 'update'])->name('seller.storeProfile');
     Route::resource('products', ProductController::class);
     Route::get('/recentOrders', [SellerOrderController::class, 'recentOrders'])->name('seller.RecentOrders');
-    Route::post('/seller/proceed-order/{orderId}', [SellerOrderController::class, 'proceedOrder']);
+    Route::post('/seller/proceedOrder/{orderId}', [SellerOrderController::class, 'proceedOrder']);
+    Route::post('/seller/pickedOrder/{orderId}', [SellerOrderController::class, 'pickedOrder']);
+    Route::post('/seller/arrivedOrder/{orderId}', [SellerOrderController::class, 'arrivedOrder']);
     Route::get('/processOrders', [SellerOrderController::class, 'processOrders'])->name('seller.processOrders');
+    Route::post('/seller/shippedOut/{orderId}', [SellerOrderController::class, 'shippedOut'])->name('seller.shippedOut');
     Route::get('/shippedOrders', [SellerOrderController::class, 'shippedOrders'])->name('seller.shippedOrders');
+    Route::get('/arrivedOrders', [SellerOrderController::class, 'arrivedOrders'])->name('seller.arrivedOrders');
     Route::get('/completedOrders', [SellerOrderController::class, 'completedOrders'])->name('seller.completedOrders');
     Route::get('/seller/order-details/{orderId}', [SellerOrderController::class, 'orderDetails'])->name('seller.OrderDetails');
 });

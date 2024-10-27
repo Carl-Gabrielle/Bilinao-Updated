@@ -18,7 +18,7 @@ return new class extends Migration {
             $table->string('phone');
             $table->string('shipping_address');
             $table->string('landmark')->nullable();
-            $table->string('remarks');
+            $table->enum('remarks',['to pay', 'paid','']);
             $table->string('tracking_code')->nullable();
             $table->decimal('amount', 10, 2); 
             $table->decimal('shipping_fee', 10, 2);
@@ -26,6 +26,7 @@ return new class extends Migration {
             $table->string('order_number');
             $table->string('payment')->nullable();
             $table->string('payment_src_id')->nullable();
+            $table->string('checkout_session_url')->nullable();
             $table->timestamps();
         });
     }

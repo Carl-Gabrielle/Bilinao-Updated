@@ -3,7 +3,7 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-
+use Carbon\Carbon;
 return new class extends Migration {
     /**
      * Run the migrations.
@@ -25,7 +25,8 @@ return new class extends Migration {
             $table->timestamp('processing_date')->nullable();
             $table->timestamp('picked_date')->nullable();
             $table->timestamp('shipped_date')->nullable();
-            $table->timestamp('delivered_date')->nullable();
+            $table->timestamp('arrived_date')->nullable();
+            $table->timestamp('received_date')->nullable();
             $table->timestamps();
         });
     }
