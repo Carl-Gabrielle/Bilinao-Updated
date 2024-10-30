@@ -9,12 +9,12 @@ export default function ShippedOrders({ auth = {},
     const user = props.auth.user;
     return (
         <SellerLayout user={user}>
-            <Head title="Shipped Orders" />
+            <Head title="To Ship Orders" />
             <div className="container mx-auto px-4 py-6">
                 <div className="px-7 py-8 ">
                     <div className="w-full ">
                         <h1 className="text-xl font-semibold text-gray-800 mb-0">
-                            Shipped Orders
+                            To Ship Orders
                         </h1>
                         <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg ">
                             <table className="min-w-full">
@@ -59,8 +59,7 @@ export default function ShippedOrders({ auth = {},
                                                 </td>
                                                 <td className="py-4 px-6 text-slate-800">
                                                     <span className="bg-blue-200  text-blue-800 text-medium font-semibold px-2 py-0.5 rounded-md whitespace-nowrap">
-                                                        {order.remarks ||
-                                                            "Unknown"}
+                                                        shipped out
                                                     </span>
                                                 </td>
                                                 <td className="py-4 px-6 text-slate-800">

@@ -107,15 +107,11 @@ export default function SellerProfile() {
                     </div>
 
                     <div className="mt-8 space-y-6">
-                        <div className="bg-white shadow-md rounded-xl p-6">
+                        <div className="bg-white shadow-md rounded-3xl p-6">
                             <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
-                                About
+                                Security
                             </h2>
-                            <p className="text-gray-600 mt-2">
-                                This is the seller's profile. Here you can find
-                                all details about the seller, their offerings,
-                                and more information.
-                            </p>
+
                         </div>
                     </div>
                 </div>

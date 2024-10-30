@@ -227,9 +227,8 @@ const SellerDashboard = ({ categories }) => {
                                         >
                                             <img
                                                 src={image.url}
-                                                alt={`Product Preview ${
-                                                    index + 1
-                                                }`}
+                                                alt={`Product Preview ${index + 1
+                                                    }`}
                                                 className="w-12 h-12 object-cover rounded-md mr-3"
                                             />
                                             <div className="flex-grow">

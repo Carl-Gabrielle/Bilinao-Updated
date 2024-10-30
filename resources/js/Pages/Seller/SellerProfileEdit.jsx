@@ -81,81 +81,81 @@ export default function SellerProfileEdit({ seller }) {
                                 </div>
                             )}
                         </div>
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700">
-                                Name
-                            </label>
-                            <SellerInput
-                                type="text"
-                                value={data.name}
-                                onChange={(e) =>
-                                    setData("name", e.target.value)
-                                }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                            />
-                            {errors.name && (
-                                <div className="text-red-600">
-                                    {errors.name}
-                                </div>
-                            )}
+                        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                            <div className="mb-4 ">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Name
+                                </label>
+                                <SellerInput
+                                    type="text"
+                                    value={data.name}
+                                    onChange={(e) =>
+                                        setData("name", e.target.value)
+                                    }
+                                />
+                                {errors.name && (
+                                    <div className="text-red-600">
+                                        {errors.name}
+                                    </div>
+                                )}
+                            </div>
+
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Address
+                                </label>
+                                <SellerInput
+                                    type="text"
+                                    value={data.address}
+                                    onChange={(e) =>
+                                        setData("address", e.target.value)
+                                    }
+                                />
+                                {errors.address && (
+                                    <div className="text-red-600">
+                                        {errors.address}
+                                    </div>
+                                )}
+                            </div>
+                        </div>
+                        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6 ">
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Contact Number
+                                </label>
+                                <SellerInput
+                                    type="text"
+                                    value={data.contact_number}
+                                    onChange={(e) =>
+                                        setData("contact_number", e.target.value)
+                                    }
+                                />
+                                {errors.contact_number && (
+                                    <div className="text-red-600">
+                                        {errors.contact_number}
+                                    </div>
+                                )}
+                            </div>
+                            <div className="mb-4">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Email
+                                </label>
+                                <SellerInput
+                                    type="email"
+                                    value={data.email}
+                                    onChange={(e) =>
+                                        setData("email", e.target.value)
+                                    }
+                                />
+                                {errors.email && (
+                                    <div className="text-red-600">
+                                        {errors.email}
+                                    </div>
+                                )}
+                            </div>
                         </div>
 
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700">
-                                Address
-                            </label>
-                            <SellerInput
-                                type="text"
-                                value={data.address}
-                                onChange={(e) =>
-                                    setData("address", e.target.value)
-                                }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                            />
-                            {errors.address && (
-                                <div className="text-red-600">
-                                    {errors.address}
-                                </div>
-                            )}
-                        </div>
 
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700">
-                                Contact Number
-                            </label>
-                            <SellerInput
-                                type="text"
-                                value={data.contact_number}
-                                onChange={(e) =>
-                                    setData("contact_number", e.target.value)
-                                }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                            />
-                            {errors.contact_number && (
-                                <div className="text-red-600">
-                                    {errors.contact_number}
-                                </div>
-                            )}
-                        </div>
-
-                        <div className="mb-4">
-                            <label className="block text-sm font-medium text-gray-700">
-                                Email
-                            </label>
-                            <SellerInput
-                                type="email"
-                                value={data.email}
-                                onChange={(e) =>
-                                    setData("email", e.target.value)
-                                }
-                                className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
-                            />
-                            {errors.email && (
-                                <div className="text-red-600">
-                                    {errors.email}
-                                </div>
-                            )}
-                        </div>
                     </form>
                 </div>
             </div>

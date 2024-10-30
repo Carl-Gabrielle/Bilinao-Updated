@@ -11,7 +11,6 @@ export default function OrderDetails({ auth, order, orderItems }) {
     const { data, setData, post, processing, errors, reset } = useForm({
         tracking_code: "",
     });
-
     const orderTotal =
         orderItems.reduce(
             (total, item) => total + (parseFloat(item.total_price) || 0),
@@ -88,27 +87,24 @@ export default function OrderDetails({ auth, order, orderItems }) {
                         <div className="bg-white shadow-sm rounded-3xl p-6">
                             <h2 className="text-base font-semibold text-slate-800 flex items-center space-x-2 mb-4">
                                 <span>Order Status:</span>
-                                {/* <span
-                                    className={`px-3 py-1 text-sm font-medium rounded-md
-        ${order.processing_date === null && "bg-red-100 text-red-600"}
-        ${order.processing_date !== null && "bg-yellow-100 text-yellow-600"}
-        ${order.remarks === "shipped" && "bg-blue-100 text-blue-600"}
-        ${order.remarks === "completed" && "bg-green-100 text-green-600"}
-        ${!["pending", "on process", "shipped", "completed"].includes(order.remarks) && "bg-gray-100 text-gray-600"}
-    `}
-                                >
-                                    {order.processing_date === null ? "pending" : "on process"}
-                                </span> */}
                                 <span
                                     className={`px-3 py-1 text-sm font-medium rounded-md
-        ${orderItems[0].processing_date === null ? "bg-red-200 text-red-800 text-medium font-semibold px-2 py-0.5 rounded-md" : "bg-yellow-200 text-yellow-800 text-medium font-semibold px-2 py-0.5 rounded-md"}
-    `}
+                                ${orderItems[0].arrived_date !== null
+                                            ? "bg-orange-200 text-orange-800 font-medium"
+                                            : orderItems[0].processing_date === null
+                                                ? "bg-red-200 text-red-800 font-semibold"
+                                                : "bg-purple-200 text-purple-800 font-semibold"
+                                        }`}
                                 >
-                                    {orderItems[0].processing_date === null ? "pending" : "on process"}
+                                    {orderItems[0].arrived_date !== null
+                                        ? "Out for Delivery"
+                                        : orderItems[0].processing_date === null
+                                            ? "pending"
+                                            : "arriving"
+                                    }
                                 </span>
 
                             </h2>
-
                             {orderItems.map((item) => (
                                 <div key={item.id} className="border p-2 rounded-md shadow-sm">
                                     <span className="text-[0.7em] text-slate-500">Order# {order.order_number}</span>
@@ -137,7 +133,6 @@ export default function OrderDetails({ auth, order, orderItems }) {
                                     </div>
                                 </div>
                             ))}
-
                             <div className="border-t border-gray-300 mt-4 pt-4">
                                 <div className="text-sm text-gray-700">
                                     <div className="flex justify-between mt-2 font-semibold text-gray-900">
@@ -149,7 +144,6 @@ export default function OrderDetails({ auth, order, orderItems }) {
                                 </div>
                             </div>
                             {orderItems[0].processing_date === null ? (
-                                // Processing button when the order is in "Pending" state
                                 <button
                                     onClick={handleProcessOrder}
                                     className="bg-slate-800 rounded-md text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
@@ -157,7 +151,6 @@ export default function OrderDetails({ auth, order, orderItems }) {
                                     Process Order
                                 </button>
                             ) : orderItems[0].picked_date === null ? (
-                                // Mark as Picked button when the order is in "Processing" state
                                 <button
                                     onClick={handleMarkAsPicked}
                                     className="bg-slate-800 rounded-md text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
@@ -165,7 +158,6 @@ export default function OrderDetails({ auth, order, orderItems }) {
                                     Mark as Picked
                                 </button>
                             ) : orderItems[0].shipped_date === null ? (
-                                // Shipped Out button when the order is in "Picked" state
                                 <>
                                     <div className="flex items-center mt-5">
                                         <div className="flex flex-col sm:flex-row gap-4">
@@ -193,28 +185,21 @@ export default function OrderDetails({ auth, order, orderItems }) {
                                     </span>
                                 </>
                             ) : orderItems[0].arrived_date === null ? (
-                                // Mark as Arrived button when the order is in "Shipped" state
                                 <button
                                     onClick={handleMarkAsArrived}
                                     className="bg-slate-800 rounded-md text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
                                 >
                                     Mark as Arrived
                                 </button>
-                            ) : orderItems[0].received_date === null ? (
-                                // Mark as Delivered button when the order is in "Arrived" state
-                                <button
-                                    // onClick={handleMarkAsDelivered}
-                                    className="bg-slate-800 rounded-md text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
-                                >
-                                    Mark as Delivered
-                                </button>
+                            ) : orderItems[0].arrived !== null ? (
+                                <div className="border border-primary rounded-md text-primary px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
+                                    Out for Customer Delivery
+                                </div>
                             ) : (
-                                // Message when the order is fully completed
                                 <div className="mt-6 text-green-600 font-semibold">
                                     Order Completed
                                 </div>
                             )}
-
                         </div>
                     </div>
                 </div>

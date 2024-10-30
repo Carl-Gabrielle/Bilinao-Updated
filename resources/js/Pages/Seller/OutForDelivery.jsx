@@ -6,11 +6,12 @@ import React, { useState, useEffect } from "react";
 import { Head, Link } from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
 
-export default function ArrivedOrders({
+export default function OutForDelivery({
     auth = {},
-    arrivedOrders = {},
+    deliveryOrders = {},
     success,
 }) {
+    // Accept deliveryOrders as an object
     const user = auth.user || {};
     const [visibleSuccess, setVisibleSuccess] = useState(!!success);
     useEffect(() => {
@@ -23,7 +24,7 @@ export default function ArrivedOrders({
     }, [success]);
     return (
         <SellerLayout user={user}>
-            <Head title="Arrived Orders" />
+            <Head title="Out for Delivery Orders" />
             {visibleSuccess && (
                 <div className="mt-3 bg-gray-50 py-3 px-5 rounded-lg mb-5 flex items-center justify-center w-1/2 ml-auto shadow-lg">
                     <div className="bg-green-500 p-1 rounded-full flex items-center justify-center">
@@ -38,7 +39,7 @@ export default function ArrivedOrders({
                 <div className="px-7 py-8">
                     <div className="w-full">
                         <h1 className="text-xl font-semibold text-gray-800 mb-0">
-                            Arrived Orders
+                            Our For Delivery
                         </h1>
                         <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg">
                             <table className="min-w-full">
@@ -62,8 +63,8 @@ export default function ArrivedOrders({
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {arrivedOrders.data.length > 0 ? (
-                                        arrivedOrders.data.map(
+                                    {deliveryOrders.data.length > 0 ? (
+                                        deliveryOrders.data.map(
                                             (order, index) => (
                                                 <tr
                                                     key={order.id}
@@ -71,12 +72,12 @@ export default function ArrivedOrders({
                                                 >
                                                     <td className="py-4 px-6 text-slate-800">
                                                         <div className="truncate max-w-[150px]">
-                                                            {arrivedOrders.current_page ===
+                                                            {deliveryOrders.current_page ===
                                                                 1
                                                                 ? index + 1
-                                                                : (arrivedOrders.current_page -
+                                                                : (deliveryOrders.current_page -
                                                                     1) *
-                                                                arrivedOrders.per_page +
+                                                                deliveryOrders.per_page +
                                                                 index +
                                                                 1}
                                                         </div>
@@ -89,8 +90,8 @@ export default function ArrivedOrders({
                                                         {order.amount}
                                                     </td>
                                                     <td className="py-4 px-6 text-slate-800">
-                                                        <span className="bg-red-200 text-red-800 text-medium font-semibold px-2 py-0.5 rounded-md">
-                                                            pending
+                                                        <span className="bg-orange-200 text-orange-800 text-sm font-medium px-3 py-1 rounded-full">
+                                                            Out for Delivery
                                                         </span>
                                                     </td>
                                                     <td className="py-4 px-6 text-slate-800">
@@ -125,7 +126,7 @@ export default function ArrivedOrders({
                             </table>
                         </div>
                         {/* Add the Pagination component below the table */}
-                        <Pagination links={arrivedOrders.links} />
+                        <Pagination links={deliveryOrders.links} />
                     </div>
                 </div>
             </div>

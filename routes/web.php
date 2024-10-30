@@ -47,6 +47,8 @@ Route::middleware('auth:seller')->group(function () {
     Route::get('/shippedOrders', [SellerOrderController::class, 'shippedOrders'])->name('seller.shippedOrders');
     Route::get('/arrivedOrders', [SellerOrderController::class, 'arrivedOrders'])->name('seller.arrivedOrders');
     Route::get('/completedOrders', [SellerOrderController::class, 'completedOrders'])->name('seller.completedOrders');
+    Route::get('/deliveryOrders', [SellerOrderController::class, 'deliveryOrders'])->name('seller.deliveryOrders');
+
     Route::get('/seller/order-details/{orderId}', [SellerOrderController::class, 'orderDetails'])->name('seller.OrderDetails');
 });
 

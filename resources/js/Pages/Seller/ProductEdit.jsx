@@ -67,9 +67,10 @@ export default function ProductEdit() {
             <div className="container px-4 py-6 mx-auto">
                 <Link
                     href={route("products.index")}
-                    className="flex items-center px-6 py-2 mb-5 font-semibold w-36 text-slate-800"
+                    className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
                 >
-                    <MdOutlineKeyboardArrowLeft className="mr-2" /> Go Back
+                    <MdOutlineKeyboardArrowLeft className="mr-2" />
+                    <span>Go Back</span>
                 </Link>
                 <div className="px-10 py-8 ">
                     <form onSubmit={handleSubmit} className="space-y-4">
@@ -233,15 +234,13 @@ export default function ProductEdit() {
                                                 >
                                                     <img
                                                         src={`/storage/${image.image_path}`}
-                                                        alt={`Product Image ${
-                                                            index + 1
-                                                        }`}
+                                                        alt={`Product Image ${index + 1
+                                                            }`}
                                                         className="object-cover w-12 h-12 mr-3 rounded-md"
                                                     />
                                                     <div className="flex-grow">
-                                                        <h2 className="text-sm font-semibold text-gray-700">{`Product Image ${
-                                                            index + 1
-                                                        }`}</h2>
+                                                        <h2 className="text-sm font-semibold text-gray-700">{`Product Image ${index + 1
+                                                            }`}</h2>
                                                     </div>
                                                     <button
                                                         type="button"
@@ -272,15 +271,13 @@ export default function ProductEdit() {
                                                         src={URL.createObjectURL(
                                                             image
                                                         )}
-                                                        alt={`Product Image ${
-                                                            index + 1
-                                                        }`}
+                                                        alt={`Product Image ${index + 1
+                                                            }`}
                                                         className="object-cover w-12 h-12 mr-3 rounded-md"
                                                     />
                                                     <div className="flex-grow">
-                                                        <h2 className="text-sm font-semibold text-gray-700">{`Product Image ${
-                                                            index + 1
-                                                        }`}</h2>
+                                                        <h2 className="text-sm font-semibold text-gray-700">{`Product Image ${index + 1
+                                                            }`}</h2>
                                                     </div>
                                                     <button
                                                         type="button"

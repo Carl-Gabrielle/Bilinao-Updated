@@ -6,12 +6,11 @@ import React, { useState, useEffect } from "react";
 import { Head, Link } from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
 
-export default function RecentOrders({
+export default function ArrivingOrders({
     auth = {},
-    recentOrders = {},
+    arrivedOrders = {},
     success,
 }) {
-    // Accept recentOrders as an object
     const user = auth.user || {};
     const [visibleSuccess, setVisibleSuccess] = useState(!!success);
     useEffect(() => {
@@ -24,7 +23,7 @@ export default function RecentOrders({
     }, [success]);
     return (
         <SellerLayout user={user}>
-            <Head title="Recent Orders" />
+            <Head title="Arriving Orders" />
             {visibleSuccess && (
                 <div className="mt-3 bg-gray-50 py-3 px-5 rounded-lg mb-5 flex items-center justify-center w-1/2 ml-auto shadow-lg">
                     <div className="bg-green-500 p-1 rounded-full flex items-center justify-center">
@@ -39,7 +38,7 @@ export default function RecentOrders({
                 <div className="px-7 py-8">
                     <div className="w-full">
                         <h1 className="text-xl font-semibold text-gray-800 mb-0">
-                            Recent Orders
+                            Arriving Orders
                         </h1>
                         <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg">
                             <table className="min-w-full">
@@ -63,8 +62,8 @@ export default function RecentOrders({
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {recentOrders.data.length > 0 ? (
-                                        recentOrders.data.map(
+                                    {arrivedOrders.data.length > 0 ? (
+                                        arrivedOrders.data.map(
                                             (order, index) => (
                                                 <tr
                                                     key={order.id}
@@ -72,12 +71,12 @@ export default function RecentOrders({
                                                 >
                                                     <td className="py-4 px-6 text-slate-800">
                                                         <div className="truncate max-w-[150px]">
-                                                            {recentOrders.current_page ===
+                                                            {arrivedOrders.current_page ===
                                                                 1
                                                                 ? index + 1
-                                                                : (recentOrders.current_page -
+                                                                : (arrivedOrders.current_page -
                                                                     1) *
-                                                                recentOrders.per_page +
+                                                                arrivedOrders.per_page +
                                                                 index +
                                                                 1}
                                                         </div>
@@ -90,8 +89,8 @@ export default function RecentOrders({
                                                         {order.amount}
                                                     </td>
                                                     <td className="py-4 px-6 text-slate-800">
-                                                        <span className="bg-red-200 text-red-800 text-medium font-medium px-3 py-1 rounded-full">
-                                                            Pending
+                                                        <span className="bg-purple-200 text-purple-800 text-medium font-semibold px-2 py-0.5 rounded-md">
+                                                            arriving
                                                         </span>
                                                     </td>
                                                     <td className="py-4 px-6 text-slate-800">
@@ -126,7 +125,7 @@ export default function RecentOrders({
                             </table>
                         </div>
                         {/* Add the Pagination component below the table */}
-                        <Pagination links={recentOrders.links} />
+                        <Pagination links={arrivedOrders.links} />
                     </div>
                 </div>
             </div>

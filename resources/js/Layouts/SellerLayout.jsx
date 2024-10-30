@@ -7,6 +7,7 @@ import { FaHourglassHalf } from "react-icons/fa";
 import { MdOutlinePendingActions } from "react-icons/md";
 import { IoStorefrontOutline } from "react-icons/io5";
 import { MdOutlineDashboard } from "react-icons/md";
+import { FaRoute } from "react-icons/fa6";
 import { HiOutlineClipboardList } from "react-icons/hi";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { MdLogout } from "react-icons/md";
@@ -154,7 +155,6 @@ const SellerLayout = ({ user, children }) => {
                                                     }`}
                                             />
                                         </NavLink>
-
                                         <NavLink
                                             href={route("seller.processOrders")}
                                             active={route().current(
@@ -276,11 +276,44 @@ const SellerLayout = ({ user, children }) => {
                                                         : "text-slate-800"
                                                         }`}
                                                 />
-                                                <span>Arrived Orders</span>
+                                                <span>Arriving Orders</span>
                                             </div>
                                             <MdOutlineKeyboardArrowRight
                                                 className={`size-5 ${route().current(
                                                     "seller.arrivedOrders"
+                                                )
+                                                    ? "text-slate-50"
+                                                    : "text-slate-800"
+                                                    }`}
+                                            />
+                                        </NavLink>
+                                        <NavLink
+                                            href={route("seller.deliveryOrders")}
+                                            active={route().current(
+                                                "seller.deliveryOrders"
+                                            )}
+                                            onClick={handleOrderLinkClick}
+                                            className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${route().current(
+                                                "seller.deliveryOrders"
+                                            )
+                                                ? "bg-gray-800 text-slate-800"
+                                                : "hover:bg-gray-100"
+                                                }`}
+                                        >
+                                            <div className="flex items-center space-x-3">
+                                                < FaRoute
+                                                    className={`size-4 ${route().current(
+                                                        "seller.deliveryOrders"
+                                                    )
+                                                        ? "text-slate-50"
+                                                        : "text-slate-800"
+                                                        }`}
+                                                />
+                                                <span>Out for Delivery</span>
+                                            </div>
+                                            <MdOutlineKeyboardArrowRight
+                                                className={`size-5 ${route().current(
+                                                    "seller.deliveryOrders"
                                                 )
                                                     ? "text-slate-50"
                                                     : "text-slate-800"
