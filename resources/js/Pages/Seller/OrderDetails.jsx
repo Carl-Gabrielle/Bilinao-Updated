@@ -17,7 +17,7 @@ export default function OrderDetails({ auth, order, orderItems }) {
             0
         ) + (parseFloat(order?.shipping_fee) || 0);
     const handleProcessOrder = () => {
-        Inertia.post(`/seller/proceedOrder/${order.id}`, {
+        Inertia.post(`/seller/markOrderAsProcessing/${order.id}`, {
             onSuccess: () => { },
             onError: (errors) => {
                 console.error(errors);
@@ -26,13 +26,13 @@ export default function OrderDetails({ auth, order, orderItems }) {
     };
     const handleShippedOut = () => {
         if (data.tracking_code.length === 12) {
-            Inertia.post(`/seller/shippedOut/${order.id}`, { tracking_code: data.tracking_code });
+            Inertia.post(`/seller/markOrderAsShipped/${order.id}`, { tracking_code: data.tracking_code });
         } else {
             alert('Tracking code must be exactly 12 characters long.');
         }
     };
     const handleMarkAsPicked = () => {
-        Inertia.post(`/seller/pickedOrder/${order.id}`, {
+        Inertia.post(`/seller/markOrderAsPicked/${order.id}`, {
             onSuccess: () => { },
             onError: (errors) => {
                 console.error(errors);
@@ -40,7 +40,7 @@ export default function OrderDetails({ auth, order, orderItems }) {
         });
     };
     const handleMarkAsArrived = () => {
-        Inertia.post(`/seller/arrivedOrder/${order.id}`, {
+        Inertia.post(`/seller/markOrderAsArrived/${order.id}`, {
             onSuccess: () => { },
             onError: (errors) => {
                 console.error(errors);
@@ -88,22 +88,25 @@ export default function OrderDetails({ auth, order, orderItems }) {
                             <h2 className="text-base font-semibold text-slate-800 flex items-center space-x-2 mb-4">
                                 <span>Order Status:</span>
                                 <span
-                                    className={`px-3 py-1 text-sm font-medium rounded-md
-                                ${orderItems[0].arrived_date !== null
-                                            ? "bg-orange-200 text-orange-800 font-medium"
+                                    className={`px-3 py-1 text-sm font-medium rounded-full
+                                    ${orderItems[0].arrived_date !== null
+                                            ? "bg-orange-200 text-orange-800 font-medium "
                                             : orderItems[0].processing_date === null
                                                 ? "bg-red-200 text-red-800 font-semibold"
-                                                : "bg-purple-200 text-purple-800 font-semibold"
+                                                : orderItems[0].picked_date === null
+                                                    ? "bg-yellow-200 text-yellow-800 font-semibold"
+                                                    : "bg-purple-200 text-purple-800 font-semibold"
                                         }`}
                                 >
                                     {orderItems[0].arrived_date !== null
                                         ? "Out for Delivery"
                                         : orderItems[0].processing_date === null
-                                            ? "pending"
-                                            : "arriving"
+                                            ? "Pending"
+                                            : orderItems[0].picked_date === null
+                                                ? "On Process"
+                                                : "Arriving"
                                     }
                                 </span>
-
                             </h2>
                             {orderItems.map((item) => (
                                 <div key={item.id} className="border p-2 rounded-md shadow-sm">
@@ -146,14 +149,14 @@ export default function OrderDetails({ auth, order, orderItems }) {
                             {orderItems[0].processing_date === null ? (
                                 <button
                                     onClick={handleProcessOrder}
-                                    className="bg-slate-800 rounded-md text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
+                                    className="bg-slate-800 rounded-2xl text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
                                 >
                                     Process Order
                                 </button>
                             ) : orderItems[0].picked_date === null ? (
                                 <button
                                     onClick={handleMarkAsPicked}
-                                    className="bg-slate-800 rounded-md text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
+                                    className="bg-slate-800 rounded-2xl text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
                                 >
                                     Mark as Picked
                                 </button>
@@ -173,7 +176,7 @@ export default function OrderDetails({ auth, order, orderItems }) {
                                             />
                                             <button
                                                 onClick={handleShippedOut}
-                                                className="bg-slate-800 rounded-md text-slate-50 px-4 whitespace-nowrap"
+                                                className="bg-slate-800 rounded-2xl text-slate-50 px-4 whitespace-nowrap"
                                             >
                                                 Shipped Out
                                             </button>
@@ -187,12 +190,12 @@ export default function OrderDetails({ auth, order, orderItems }) {
                             ) : orderItems[0].arrived_date === null ? (
                                 <button
                                     onClick={handleMarkAsArrived}
-                                    className="bg-slate-800 rounded-md text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
+                                    className="bg-slate-800 rounded-2xl text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
                                 >
                                     Mark as Arrived
                                 </button>
                             ) : orderItems[0].arrived !== null ? (
-                                <div className="border border-primary rounded-md text-primary px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
+                                <div className="border border-primary rounded-2xl text-primary px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
                                     Out for Customer Delivery
                                 </div>
                             ) : (

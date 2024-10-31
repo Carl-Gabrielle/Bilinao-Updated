@@ -71,40 +71,42 @@ export default function Edit({ auth, category }) {
                                 />
                             </div>
                         )}
-                        <div className="mb-4">
-                            <InputLabel
-                                htmlFor="category_image_path"
-                                value="Category Image"
-                            />
-                            <SellerInput
-                                id="category_image_path"
-                                type="file"
-                                name="image"
-                                onChange={handleImageChange}
-                            />
-                            <InputError
-                                message={errors.image}
-                                className="mt-2 text-red-600"
-                            />
-                        </div>
-                        <div className="mb-6">
-                            <InputLabel
-                                htmlFor="category_name"
-                                value="Category Name"
-                            />
-                            <SellerInput
-                                id="category_name"
-                                type="text"
-                                name="name"
-                                value={data.name}
-                                onChange={(e) =>
-                                    setData("name", e.target.value)
-                                }
-                            />
-                            <InputError
-                                message={errors.name}
-                                className="mt-2 text-red-600"
-                            />
+                        <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                            <div className="mb-4">
+                                <InputLabel
+                                    htmlFor="category_image_path"
+                                    value="Category Image"
+                                />
+                                <SellerInput
+                                    id="category_image_path"
+                                    type="file"
+                                    name="image"
+                                    onChange={handleImageChange}
+                                />
+                                <InputError
+                                    message={errors.image}
+                                    className="mt-2 text-red-600"
+                                />
+                            </div>
+                            <div className="mb-6">
+                                <InputLabel
+                                    htmlFor="category_name"
+                                    value="Category Name"
+                                />
+                                <SellerInput
+                                    id="category_name"
+                                    type="text"
+                                    name="name"
+                                    value={data.name}
+                                    onChange={(e) =>
+                                        setData("name", e.target.value)
+                                    }
+                                />
+                                <InputError
+                                    message={errors.name}
+                                    className="mt-2 text-red-600"
+                                />
+                            </div>
                         </div>
                     </form>
                 </DivContainer>

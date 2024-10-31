@@ -2,6 +2,7 @@ import { useState } from "react";
 import { FaUser } from "react-icons/fa";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { RiMenuUnfold3Line2 } from "react-icons/ri";
+import { IoAnalyticsOutline } from "react-icons/io5";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Logo from "../Pages/Illustrations/LOGO.png";
 import { FaRegUser } from "react-icons/fa";
@@ -54,9 +55,8 @@ export default function AuthenticatedLayout({ user, header, children }) {
 
             {/* Sidebar */}
             <div
-                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-slate-200    rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${
-                    isSidebarOpen ? "w-64 p-4" : "w-28 p-3"
-                }`}
+                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-slate-200    rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${isSidebarOpen ? "w-64 p-4" : "w-28 p-3"
+                    }`}
             >
                 <div className="flex flex-col justify-between h-full bg-slate-50 rounded-xl p-3">
                     <div className="mt-6">
@@ -75,22 +75,20 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     {!isSidebarOpen && (
                                         <div className="ml-1.5 ">
                                             <IoHomeOutline
-                                                className={`w-5 h-5 ${
-                                                    route().current("dashboard")
-                                                        ? "text-white"
-                                                        : "text-slate-900"
-                                                }`}
+                                                className={`w-5 h-5 ${route().current("dashboard")
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
                                             />
                                         </div>
                                     )}
                                     {isSidebarOpen && (
                                         <>
                                             <IoHomeOutline
-                                                className={`w-5 h-5 ${
-                                                    route().current("dashboard")
-                                                        ? "text-white"
-                                                        : "text-slate-900"
-                                                }`}
+                                                className={`w-5 h-5 ${route().current("dashboard")
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
                                             />
                                             <span>Dashboard</span>
                                         </>
@@ -98,11 +96,10 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 </div>
                                 {isSidebarOpen && (
                                     <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 ${
-                                            route().current("dashboard")
-                                                ? "text-white"
-                                                : "text-slate-900"
-                                        }`}
+                                        className={`w-5 h-5 ${route().current("dashboard")
+                                            ? "text-white"
+                                            : "text-slate-900"
+                                            }`}
                                     />
                                 )}
                             </AdminLink>
@@ -115,26 +112,24 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     {!isSidebarOpen && (
                                         <div className="ml-1.5 ">
                                             <BiCategory
-                                                className={`w-5 h-5 ${
-                                                    route().current(
-                                                        "category.index"
-                                                    )
-                                                        ? "text-white"
-                                                        : "text-slate-900"
-                                                }`}
+                                                className={`w-5 h-5 ${route().current(
+                                                    "category.index"
+                                                )
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
                                             />
                                         </div>
                                     )}
                                     {isSidebarOpen && (
                                         <>
                                             <BiCategory
-                                                className={`w-5 h-5 ${
-                                                    route().current(
-                                                        "category.index"
-                                                    )
-                                                        ? "text-white"
-                                                        : "text-slate-900"
-                                                }`}
+                                                className={`w-5 h-5 ${route().current(
+                                                    "category.index"
+                                                )
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
                                             />
                                             <span>Category</span>
                                         </>
@@ -142,11 +137,10 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 </div>
                                 {isSidebarOpen && (
                                     <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 ${
-                                            route().current("category.index")
-                                                ? "text-white"
-                                                : "text-slate-900"
-                                        }`}
+                                        className={`w-5 h-5 ${route().current("category.index")
+                                            ? "text-white"
+                                            : "text-slate-900"
+                                            }`}
                                     />
                                 )}
                             </AdminLink>
@@ -160,26 +154,24 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     {!isSidebarOpen && (
                                         <div className="ml-1.5 ">
                                             <FaRegUser
-                                                className={`w-5 h-5 ${
-                                                    route().current(
-                                                        "seller.index"
-                                                    )
-                                                        ? "text-white"
-                                                        : "text-slate-900"
-                                                }`}
+                                                className={`w-5 h-5 ${route().current(
+                                                    "seller.index"
+                                                )
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
                                             />
                                         </div>
                                     )}
                                     {isSidebarOpen && (
                                         <>
                                             <FaRegUser
-                                                className={`w-5 h-5 ${
-                                                    route().current(
-                                                        "seller.index"
-                                                    )
-                                                        ? "text-white"
-                                                        : "text-slate-900"
-                                                }`}
+                                                className={`w-5 h-5 ${route().current(
+                                                    "seller.index"
+                                                )
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
                                             />
                                             <span>Sellers</span>
                                         </>
@@ -187,11 +179,10 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 </div>
                                 {isSidebarOpen && (
                                     <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 font-semibold ${
-                                            route().current("seller.index")
-                                                ? "text-white"
-                                                : "text-slate-900"
-                                        }`}
+                                        className={`w-5 h-5 font-semibold ${route().current("seller.index")
+                                            ? "text-white"
+                                            : "text-slate-900"
+                                            }`}
                                     />
                                 )}
                             </AdminLink>
@@ -204,26 +195,24 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     {!isSidebarOpen && (
                                         <div className="ml-1.5 ">
                                             <LiaShippingFastSolid
-                                                className={`w-5 h-5 ${
-                                                    route().current(
-                                                        "shipping.index"
-                                                    )
-                                                        ? "text-white"
-                                                        : "text-slate-900"
-                                                }`}
+                                                className={`w-5 h-5 ${route().current(
+                                                    "shipping.index"
+                                                )
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
                                             />
                                         </div>
                                     )}
                                     {isSidebarOpen && (
                                         <>
                                             <LiaShippingFastSolid
-                                                className={`w-5 h-5 ${
-                                                    route().current(
-                                                        "shipping.index"
-                                                    )
-                                                        ? "text-white"
-                                                        : "text-slate-900"
-                                                }`}
+                                                className={`w-5 h-5 ${route().current(
+                                                    "shipping.index"
+                                                )
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
                                             />
                                             <span>Shipping Rates</span>
                                         </>
@@ -231,11 +220,51 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 </div>
                                 {isSidebarOpen && (
                                     <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 font-semibold ${
-                                            route().current("shipping.index")
-                                                ? "text-white"
-                                                : "text-slate-900"
-                                        }`}
+                                        className={`w-5 h-5 font-semibold ${route().current("shipping.index")
+                                            ? "text-white"
+                                            : "text-slate-900"
+                                            }`}
+                                    />
+                                )}
+                            </AdminLink>
+                            <AdminLink
+                                href={route("shipping.salesReport")}
+                                active={route().current("shipping.salesReport")}
+                                className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
+                            >
+                                <div className="flex items-center space-x-5">
+                                    {!isSidebarOpen && (
+                                        <div className="ml-1.5 ">
+                                            <IoAnalyticsOutline
+                                                className={`w-5 h-5 ${route().current(
+                                                    "shipping.salesReport"
+                                                )
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
+                                            />
+                                        </div>
+                                    )}
+                                    {isSidebarOpen && (
+                                        <>
+                                            <IoAnalyticsOutline
+                                                className={`w-5 h-5 ${route().current(
+                                                    "shipping.salesReport"
+                                                )
+                                                    ? "text-white"
+                                                    : "text-slate-900"
+                                                    }`}
+                                            />
+                                            <span>Sales Report</span>
+                                        </>
+                                    )}
+                                </div>
+                                {isSidebarOpen && (
+                                    <MdOutlineKeyboardArrowRight
+                                        className={`w-5 h-5 font-semibold ${route().current("shipping.salesReport")
+                                            ? "text-white"
+                                            : "text-slate-900"
+                                            }`}
                                     />
                                 )}
                             </AdminLink>
@@ -253,22 +282,20 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 {!isSidebarOpen && (
                                     <div className="ml-1.5">
                                         <LuLogOut
-                                            className={`w-5 h-5 ${
-                                                route().current("logout")
-                                                    ? "text-white"
-                                                    : "text-red-600"
-                                            }`}
+                                            className={`w-5 h-5 ${route().current("logout")
+                                                ? "text-white"
+                                                : "text-red-600"
+                                                }`}
                                         />
                                     </div>
                                 )}
                                 {isSidebarOpen && (
                                     <>
                                         <LuLogOut
-                                            className={`w-5 h-5 ${
-                                                route().current("logout")
-                                                    ? "text-white"
-                                                    : "text-red-600"
-                                            }`}
+                                            className={`w-5 h-5 ${route().current("logout")
+                                                ? "text-white"
+                                                : "text-red-600"
+                                                }`}
                                         />
                                         <span className=" text-red-600">
                                             Logout
@@ -278,11 +305,10 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             </div>
                             {isSidebarOpen && (
                                 <MdOutlineKeyboardArrowRight
-                                    className={`w-5 h-5 ${
-                                        route().current("logout")
-                                            ? "text-white"
-                                            : "text-red-600"
-                                    }`}
+                                    className={`w-5 h-5 ${route().current("logout")
+                                        ? "text-white"
+                                        : "text-red-600"
+                                        }`}
                                 />
                             )}
                         </AdminLink>
@@ -290,9 +316,8 @@ export default function AuthenticatedLayout({ user, header, children }) {
                 </div>
             </div>
             <div
-                className={`transition-all duration-300 ease-in-out ${
-                    isSidebarOpen ? "sm:ml-72 ml-0" : "ml-24"
-                }`}
+                className={`transition-all duration-300 ease-in-out ${isSidebarOpen ? "sm:ml-72 ml-0" : "ml-24"
+                    }`}
             >
                 {header && (
                     <header className="bg-white ">

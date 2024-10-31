@@ -14,6 +14,7 @@ use Inertia\Inertia;
 use App\Http\Controllers\Auth\AuthenticatedSellerController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\CustomerOrderController;
+use App\Http\Controllers\SalesReportController;
 use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\SellerOrderController;
 use App\Http\Controllers\ShippingController;
@@ -39,16 +40,15 @@ Route::middleware('auth:seller')->group(function () {
     Route::put('seller/storeProfile', [SellerDashboardController::class, 'update'])->name('seller.storeProfile');
     Route::resource('products', ProductController::class);
     Route::get('/recentOrders', [SellerOrderController::class, 'recentOrders'])->name('seller.RecentOrders');
-    Route::post('/seller/proceedOrder/{orderId}', [SellerOrderController::class, 'proceedOrder']);
-    Route::post('/seller/pickedOrder/{orderId}', [SellerOrderController::class, 'pickedOrder']);
-    Route::post('/seller/arrivedOrder/{orderId}', [SellerOrderController::class, 'arrivedOrder']);
-    Route::get('/processOrders', [SellerOrderController::class, 'processOrders'])->name('seller.processOrders');
-    Route::post('/seller/shippedOut/{orderId}', [SellerOrderController::class, 'shippedOut'])->name('seller.shippedOut');
-    Route::get('/shippedOrders', [SellerOrderController::class, 'shippedOrders'])->name('seller.shippedOrders');
-    Route::get('/arrivedOrders', [SellerOrderController::class, 'arrivedOrders'])->name('seller.arrivedOrders');
+    Route::post('/seller/markOrderAsProcessing/{orderId}', [SellerOrderController::class, 'markOrderAsProcessing']);
+    Route::post('/seller/markOrderAsPicked/{orderId}', [SellerOrderController::class, 'markOrderAsPicked']);
+    Route::post('/seller/markOrderAsArrived/{orderId}', [SellerOrderController::class, 'markOrderAsArrived']);
+    Route::get('/processing-orders', [SellerOrderController::class, 'handleOrderProcessing'])->name('seller.ProcessingOrders');
+    Route::post('/seller/markOrderAsShipped/{orderId}', [SellerOrderController::class, 'markOrderAsShipped']);
+    Route::get('/toShipOrders', [SellerOrderController::class, 'toShipOrders'])->name('seller.toShipOrders');
+    Route::get('/arrivingOrders', [SellerOrderController::class, 'arrivingOrders'])->name('seller.arrivingOrders');
     Route::get('/completedOrders', [SellerOrderController::class, 'completedOrders'])->name('seller.completedOrders');
     Route::get('/deliveryOrders', [SellerOrderController::class, 'deliveryOrders'])->name('seller.deliveryOrders');
-
     Route::get('/seller/order-details/{orderId}', [SellerOrderController::class, 'orderDetails'])->name('seller.OrderDetails');
 });
 
@@ -58,15 +58,20 @@ Route::redirect('/', '/dashboard');
 
 Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/dashboard', [HomeController::class, 'index'])->name('dashboard');
-
+// ADMIN ROUTES 
     Route::middleware('admin')->group(function () {
         Route::get('/shipping', [ShippingController::class, 'index'])->name('shipping.index');
         Route::get('/shipping/{id}/edit', [ShippingController::class, 'edit'])->name('shipping.edit');
         Route::put('/shipping/{id}', [ShippingController::class, 'update'])->name('shipping.update');
+        Route::get('/sales-report', [SalesReportController::class, 'salesReport'])->name('shipping.salesReport');
         Route::resource('category', CategoryController::class);
         Route::resource('seller', SellerController::class);
     });
-
+    Route::middleware('auth')->group(function () {
+        Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
+        Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    });
     // CUSTOMER ROUTES
     Route::middleware('customer')->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
@@ -108,10 +113,5 @@ Route::middleware(['auth', 'verified'])->group(function () {
     });
 });
 
-Route::middleware('auth')->group(function () {
-    Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
-    Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
 
 require __DIR__ . '/auth.php';

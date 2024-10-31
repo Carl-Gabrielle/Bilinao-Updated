@@ -50,76 +50,80 @@ export default function SellerCreate({ auth, seller }) {
                                     <RxUpdate className="mr-2" /> Update Seller
                                 </button>
                             </div>
-                            <div className="mb-4">
-                                <InputLabel htmlFor="name">Name</InputLabel>
-                                <SellerInput
-                                    id="name"
-                                    type="text"
-                                    value={data.name}
-                                    onChange={(e) =>
-                                        setData("name", e.target.value)
-                                    }
-                                />
-                                {errors.name && (
-                                    <p className="text-red-500 text-xs mt-1">
-                                        {errors.name}
-                                    </p>
-                                )}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                                <div className="mb-4">
+                                    <InputLabel htmlFor="name">Name</InputLabel>
+                                    <SellerInput
+                                        id="name"
+                                        type="text"
+                                        value={data.name}
+                                        onChange={(e) =>
+                                            setData("name", e.target.value)
+                                        }
+                                    />
+                                    {errors.name && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.name}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="mb-4">
+                                    <InputLabel htmlFor="address">
+                                        Address
+                                    </InputLabel>
+                                    <SellerInput
+                                        id="address"
+                                        type="text"
+                                        value={data.address}
+                                        onChange={(e) =>
+                                            setData("address", e.target.value)
+                                        }
+                                    />
+                                    {errors.address && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.address}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
-                            <div className="mb-4">
-                                <InputLabel htmlFor="address">
-                                    Address
-                                </InputLabel>
-                                <SellerInput
-                                    id="address"
-                                    type="text"
-                                    value={data.address}
-                                    onChange={(e) =>
-                                        setData("address", e.target.value)
-                                    }
-                                />
-                                {errors.address && (
-                                    <p className="text-red-500 text-xs mt-1">
-                                        {errors.address}
-                                    </p>
-                                )}
-                            </div>
-                            <div className="mb-4">
-                                <InputLabel htmlFor="contact_number">
-                                    Contact Number
-                                </InputLabel>
-                                <SellerInput
-                                    id="contact_number"
-                                    type="text"
-                                    value={data.contact_number}
-                                    onChange={(e) =>
-                                        setData(
-                                            "contact_number",
-                                            e.target.value
-                                        )
-                                    }
-                                />
-                                {errors.contact_number && (
-                                    <p className="text-red-500 text-xs mt-1">
-                                        {errors.contact_number}
-                                    </p>
-                                )}
-                            </div>
-                            <div className="mb-4">
-                                <InputLabel htmlFor="email">Email</InputLabel>
-                                <SellerInput
-                                    id="email"
-                                    type="email"
-                                    value={data.email}
-                                    onChange={(e) =>
-                                        setData("email", e.target.value)
-                                    }
-                                />
-                                {errors.email && (
-                                    <p className="text-red-500 text-xs mt-1">
-                                        {errors.email}
-                                    </p>
-                                )}
+                            <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                                <div className="mb-4">
+                                    <InputLabel htmlFor="contact_number">
+                                        Contact Number
+                                    </InputLabel>
+                                    <SellerInput
+                                        id="contact_number"
+                                        type="text"
+                                        value={data.contact_number}
+                                        onChange={(e) =>
+                                            setData(
+                                                "contact_number",
+                                                e.target.value
+                                            )
+                                        }
+                                    />
+                                    {errors.contact_number && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.contact_number}
+                                        </p>
+                                    )}
+                                </div>
+                                <div className="mb-4">
+                                    <InputLabel htmlFor="email">Email</InputLabel>
+                                    <SellerInput
+                                        id="email"
+                                        type="email"
+                                        value={data.email}
+                                        onChange={(e) =>
+                                            setData("email", e.target.value)
+                                        }
+                                    />
+                                    {errors.email && (
+                                        <p className="text-red-500 text-xs mt-1">
+                                            {errors.email}
+                                        </p>
+                                    )}
+                                </div>
                             </div>
                         </form>
                     </div>

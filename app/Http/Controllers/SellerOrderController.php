@@ -50,7 +50,7 @@ class SellerOrderController extends Controller
             'firstProduct' => $firstProduct, 
         ]);
     }
-    public function proceedOrder($orderId)
+    public function markOrderAsProcessing($orderId)
 {
     $order = OrderItem::find($orderId);
 
@@ -66,25 +66,72 @@ class SellerOrderController extends Controller
     //     'link' => 'customer.orders',
     //     'status' => 'unread',
     // ]);
-    return redirect()->route('seller.RecentOrders')->with('success', 'Order processing date has been updated.');
-}
- public function pickedOrder($orderId){
-    $order = OrderItem::find($orderId);
-    if (!$order) {
-        return redirect()->route('seller.processOrders')->with('error', 'Order not found.');
-    }
-    $order->picked_date = now();
-    $order->save(); 
-    // Notifications::create([
-    //     'user_id' => $order->user_id,
-    //     'message' => 'Your order has been handed over to the courier for delivery!',
-    //     'link' => 'customer.orders',
-    //     'status' => 'unread',
-    // ]);    
-    return redirect()->route('seller.processOrders')->with('success', 'Order picked date has been updated.');
+    return redirect()->route('seller.RecentOrders')->with('success',    'Order item is now being processed'  );
 }
 
-public function shippedOut(Request $request, $orderId)
+
+    public function handleOrderProcessing()
+    {
+        $sellerId = Auth::id(); 
+    
+        $processingOrders = Order::whereHas('orderItems', function ($query) use ($sellerId) {
+            $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+            })
+            ->whereNotNull('processing_date')
+            ->whereNull('picked_date');
+        })
+        ->with(['orderItems.product.images'])
+        ->orderBy('updated_at', 'desc') 
+        ->paginate(8); 
+    
+        $firstProduct = $processingOrders->isNotEmpty() ? $processingOrders->first()->orderItems->first() : null;
+    
+        return Inertia::render('Seller/ProcessingOrders', [
+            'success' => session('success'),
+            'processingOrders' => $processingOrders,
+            'firstProduct' => $firstProduct, 
+        ]);
+    }
+    public function markOrderAsPicked($orderId){
+        $order = OrderItem::find($orderId);
+        if (!$order) {
+            return redirect()->route('seller.ProcessingOrders')->with('error', 'Order not found.');
+        }
+        $order->picked_date = now();
+        $order->save(); 
+        // Notifications::create([
+        //     'user_id' => $order->user_id,
+        //     'message' => 'Your order has been handed over to the courier for delivery!',
+        //     'link' => 'customer.orders',
+        //     'status' => 'unread',
+        // ]);    
+        return redirect()->route('seller.ProcessingOrders')->with('success',  'Order item has been marked as  picked up ');
+    }
+    
+    public function toShipOrders (){
+        $sellerId = Auth::id(); 
+    
+        $shippedOrders = Order::whereHas('orderItems', function ($query) use ($sellerId) {
+            $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+            })
+            ->whereNotNull('picked_date')
+            ->whereNull('shipped_date');
+        })
+        ->with(['orderItems.product.images'])
+        ->orderBy('updated_at', 'desc') 
+        ->paginate(8); 
+    
+        $firstProduct = $shippedOrders->isNotEmpty() ? $shippedOrders->first()->orderItems->first() : null;
+    
+        return Inertia::render('Seller/ToShipOrders', [
+            'success' => session('success'),
+            'shippedOrders' => $shippedOrders,
+            'firstProduct' => $firstProduct, 
+        ]);
+    }
+    public function markOrderAsShipped(Request $request, $orderId)
 {
     $request->validate([
         'tracking_code' => 'required|numeric|digits:12',
@@ -93,11 +140,11 @@ public function shippedOut(Request $request, $orderId)
     $orderItem = OrderItem::find($orderId);
 
     if (!$orderItem) {
-        return redirect()->route('seller.processOrders')->with('error', 'Order not found.');
+        return redirect()->route('seller.toShipOrders')->with('error', 'Order not found.');
     }
     $order = $orderItem->order;
     if (!$order) {
-        return redirect()->route('seller.processOrders')->with('error', 'Related order not found.');
+        return redirect()->route('seller.toShipOrders')->with('error', 'Related order not found.');
     }
     $order->tracking_code = $request->tracking_code;
     $order->save();
@@ -111,25 +158,9 @@ public function shippedOut(Request $request, $orderId)
         'link' => 'customer.orders',
         'status' => 'unread',
     ]);
-
-    return redirect()->route('seller.shippedOrders')->with('success', 'Order tracking code updated successfully.');
+    return redirect()->route('seller.toShipOrders')->with('success', 'Order item has been successfully shipped out');
 }
-public function arrivedOrder($orderId){
-    $order = OrderItem::find($orderId);
-    if (!$order) {
-        return redirect()->route('seller.arrivedOrders')->with('error', 'Order not found.');
-    }
-    $order->arrived_date = now();
-    $order->save(); 
-    // Notifications::create([
-    //     'user_id' => $order->user_id,
-    //     'message' => 'Your order has been arrived at local facility!',
-    //     'link' => 'customer.orders',
-    //     'status' => 'unread',
-    // ]);
-    return redirect()->route('seller.arrivedOrders')->with('success', 'Order arrived date has been updated.');
-}
-public function arrivedOrders(){
+public function arrivingOrders(){
     $sellerId = Auth::id(); 
     
         $arrivedOrders = Order::whereHas('orderItems', function ($query) use ($sellerId) {
@@ -153,51 +184,21 @@ public function arrivedOrders(){
             'firstProduct' => $firstProduct, 
         ]);
 }
-    public function processOrders()
-    {
-        $sellerId = Auth::id(); 
-    
-        $processOrders = Order::whereHas('orderItems', function ($query) use ($sellerId) {
-            $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
-                $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
-            })
-            ->whereNotNull('processing_date')
-            ->whereNull('picked_date');
-        })
-        ->with(['orderItems.product.images'])
-        ->orderBy('updated_at', 'desc') 
-        ->paginate(8); 
-    
-        $firstProduct = $processOrders->isNotEmpty() ? $processOrders->first()->orderItems->first() : null;
-    
-        return Inertia::render('Seller/ProcessOrders', [
-            'success' => session('success'),
-            'processOrders' => $processOrders,
-            'firstProduct' => $firstProduct, 
-        ]);
+public function markOrderAsArrived($orderId){
+    $order = OrderItem::find($orderId);
+    if (!$order) {
+        return redirect()->route('seller.arrivedOrders')->with('error', 'Order not found.');
     }
-    public function shippedOrders (){
-        $sellerId = Auth::id(); 
-    
-        $shippedOrders = Order::whereHas('orderItems', function ($query) use ($sellerId) {
-            $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
-                $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
-            })
-            ->whereNotNull('picked_date')
-            ->whereNull('shipped_date');
-        })
-        ->with(['orderItems.product.images'])
-        ->orderBy('updated_at', 'desc') 
-        ->paginate(8); 
-    
-        $firstProduct = $shippedOrders->isNotEmpty() ? $shippedOrders->first()->orderItems->first() : null;
-    
-        return Inertia::render('Seller/ShippedOrders', [
-            'success' => session('success'),
-            'shippedOrders' => $shippedOrders,
-            'firstProduct' => $firstProduct, 
-        ]);
-    }
+    $order->arrived_date = now();
+    $order->save(); 
+    // Notifications::create([
+    //     'user_id' => $order->user_id,
+    //     'message' => 'Your order has been arrived at local facility!',
+    //     'link' => 'customer.orders',
+    //     'status' => 'unread',
+    // ]);
+    return redirect()->route('seller.arrivingOrders')->with('success', 'Order item has successfully arrived');
+}
     public function deliveryOrders(){
         $sellerId = Auth::id(); 
     
@@ -210,7 +211,7 @@ public function arrivedOrders(){
         })
         ->with(['orderItems.product.images'])
         ->orderBy('updated_at', 'desc') 
-        ->paginate(8); 
+        ->paginate(5); 
     
         $firstProduct = $deliveryOrders->isNotEmpty() ? $deliveryOrders->first()->orderItems->first() : null;
     

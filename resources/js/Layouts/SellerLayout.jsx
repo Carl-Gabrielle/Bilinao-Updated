@@ -156,13 +156,13 @@ const SellerLayout = ({ user, children }) => {
                                             />
                                         </NavLink>
                                         <NavLink
-                                            href={route("seller.processOrders")}
+                                            href={route("seller.ProcessingOrders")}
                                             active={route().current(
-                                                "seller.processOrders"
+                                                "seller.ProcessingOrders"
                                             )}
                                             onClick={handleOrderLinkClick}
                                             className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${route().current(
-                                                "seller.processOrders"
+                                                "seller.ProcessingOrders"
                                             )
                                                 ? "bg-gray-800 text-slate-800"
                                                 : "hover:bg-gray-100"
@@ -171,17 +171,17 @@ const SellerLayout = ({ user, children }) => {
                                             <div className="flex items-center space-x-3">
                                                 <FaHourglassHalf
                                                     className={`size-4 ${route().current(
-                                                        "seller.processOrders"
+                                                        "seller.ProcessingOrders"
                                                     )
                                                         ? "text-slate-50"
                                                         : "text-slate-800"
                                                         }`}
                                                 />
-                                                <span>On Process Orders</span>
+                                                <span>Processing Orders</span>
                                             </div>
                                             <MdOutlineKeyboardArrowRight
                                                 className={`size-5 ${route().current(
-                                                    "seller.processOrders"
+                                                    "seller.ProcessingOrders"
                                                 )
                                                     ? "text-slate-50"
                                                     : "text-slate-800"
@@ -189,13 +189,13 @@ const SellerLayout = ({ user, children }) => {
                                             />
                                         </NavLink>
                                         <NavLink
-                                            href={route("seller.shippedOrders")}
+                                            href={route("seller.toShipOrders")}
                                             active={route().current(
-                                                "seller.shippedOrders"
+                                                "seller.toShipOrders"
                                             )}
                                             onClick={handleOrderLinkClick}
                                             className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${route().current(
-                                                "seller.shippedOrders"
+                                                "seller.toShipOrders"
                                             )
                                                 ? "bg-gray-800 text-slate-800"
                                                 : "hover:bg-gray-100"
@@ -204,7 +204,7 @@ const SellerLayout = ({ user, children }) => {
                                             <div className="flex items-center space-x-3">
                                                 <FaClock
                                                     className={`size-4 ${route().current(
-                                                        "seller.shippedOrders"
+                                                        "seller.toShipOrders"
                                                     )
                                                         ? "text-slate-50"
                                                         : "text-slate-800"
@@ -214,54 +214,21 @@ const SellerLayout = ({ user, children }) => {
                                             </div>
                                             <MdOutlineKeyboardArrowRight
                                                 className={`size-5 ${route().current(
-                                                    "seller.shippedOrders"
+                                                    "seller.toShipOrders"
                                                 )
                                                     ? "text-slate-50"
                                                     : "text-slate-800"
                                                     }`}
                                             />
                                         </NavLink>
-                                        {/* <NavLink
-                                            href={route("seller.shippedOrders")}
-                                            active={route().current(
-                                                "seller.shippedOrders"
-                                            )}
-                                            onClick={handleOrderLinkClick}
-                                            className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${route().current(
-                                                "seller.shippedOrders"
-                                            )
-                                                ? "bg-gray-800 text-slate-800"
-                                                : "hover:bg-gray-100"
-                                                }`}
-                                        >
-                                            <div className="flex items-center space-x-3">
-                                                <FaClock
-                                                    className={`size-4 ${route().current(
-                                                        "seller.shippedOrders"
-                                                    )
-                                                        ? "text-slate-50"
-                                                        : "text-slate-800"
-                                                        }`}
-                                                />
-                                                <span>Shipped Orders</span>
-                                            </div>
-                                            <MdOutlineKeyboardArrowRight
-                                                className={`size-5 ${route().current(
-                                                    "seller.shippedOrders"
-                                                )
-                                                    ? "text-slate-50"
-                                                    : "text-slate-800"
-                                                    }`}
-                                            />
-                                        </NavLink> */}
                                         <NavLink
-                                            href={route("seller.arrivedOrders")}
+                                            href={route("seller.arrivingOrders")}
                                             active={route().current(
-                                                "seller.arrivedOrders"
+                                                "seller.arrivingOrders"
                                             )}
                                             onClick={handleOrderLinkClick}
                                             className={`flex items-center justify-between px-4  w-full rounded-lg transition-colors ${route().current(
-                                                "seller.arrivedOrders"
+                                                "seller.arrivingOrders"
                                             )
                                                 ? "bg-gray-800 text-slate-800"
                                                 : "hover:bg-gray-100"
@@ -270,7 +237,7 @@ const SellerLayout = ({ user, children }) => {
                                             <div className="flex items-center space-x-3">
                                                 <LuTruck
                                                     className={`size-4 ${route().current(
-                                                        "seller.arrivedOrders"
+                                                        "seller.arrivingOrders"
                                                     )
                                                         ? "text-slate-50"
                                                         : "text-slate-800"
@@ -280,7 +247,7 @@ const SellerLayout = ({ user, children }) => {
                                             </div>
                                             <MdOutlineKeyboardArrowRight
                                                 className={`size-5 ${route().current(
-                                                    "seller.arrivedOrders"
+                                                    "seller.arrivingOrders"
                                                 )
                                                     ? "text-slate-50"
                                                     : "text-slate-800"

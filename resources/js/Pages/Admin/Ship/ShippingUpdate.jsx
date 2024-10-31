@@ -65,7 +65,6 @@ export default function ShippingUpdate({ auth, shipping }) {
                                                 e.target.value
                                             )
                                         }
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                     />
                                     {errors.weight_min && (
                                         <p className="text-red-600 text-sm">
@@ -91,7 +90,6 @@ export default function ShippingUpdate({ auth, shipping }) {
                                                 e.target.value
                                             )
                                         }
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                     />
                                     {errors.weight_max && (
                                         <p className="text-red-600 text-sm">
@@ -114,7 +112,6 @@ export default function ShippingUpdate({ auth, shipping }) {
                                         onChange={(e) =>
                                             setData("luzon", e.target.value)
                                         }
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                     />
                                     {errors.luzon && (
                                         <p className="text-red-600 text-sm">
@@ -137,7 +134,6 @@ export default function ShippingUpdate({ auth, shipping }) {
                                         onChange={(e) =>
                                             setData("visayas", e.target.value)
                                         }
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                     />
                                     {errors.visayas && (
                                         <p className="text-red-600 text-sm">
@@ -160,7 +156,6 @@ export default function ShippingUpdate({ auth, shipping }) {
                                         onChange={(e) =>
                                             setData("mindanao", e.target.value)
                                         }
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                     />
                                     {errors.mindanao && (
                                         <p className="text-red-600 text-sm">
@@ -183,7 +178,6 @@ export default function ShippingUpdate({ auth, shipping }) {
                                         onChange={(e) =>
                                             setData("island", e.target.value)
                                         }
-                                        className="mt-1 block w-full rounded-md border-gray-300 shadow-sm"
                                     />
                                     {errors.island && (
                                         <p className="text-red-600 text-sm">

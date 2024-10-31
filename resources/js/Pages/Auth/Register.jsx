@@ -27,7 +27,7 @@ export default function Register() {
     return (
         <GuestLayout>
             <Head title="Register" />
-            <div className=" rounded-t-3xl xl:rounded-r-3xl shadow-inner sm:rounded-none scroll max-w-4xl overflow-y-auto lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-slate-50 ">
+            <div className=" rounded-t-3xl xl:rounded-r-3xl shadow-inner sm:rounded-none scroll-bar max-w-4xl overflow-y-auto lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-slate-50 ">
                 <h1 id="text" className="text-2xl font-bold text-gray-800 mb-2">
                     Welcome to Bili-Nao!👋
                 </h1>
@@ -94,7 +94,7 @@ export default function Register() {
                             className="mt-2"
                         />
                     </div>
-                    <div className="mt-4">
+                    {/* <div className="mt-4">
                         <InputLabel htmlFor="address" value="Address" />
                         <TextInput
                             id="address"
@@ -108,7 +108,7 @@ export default function Register() {
                         />
 
                         <InputError message={errors.address} className="mt-2" />
-                    </div>
+                    </div> */}
 
                     <div className="mt-4">
                         <InputLabel htmlFor="password" value="Password" />

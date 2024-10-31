@@ -43,9 +43,7 @@ const Orders = ({ auth, toPayOrders, toShipOrders, toReceiveOrders, receivedOrde
             </CustomerLayout>
         );
     }
-
     const orderStatuses = ["To Pay", "To Ship", "To Receive", "Received"];
-
     return (
         <CustomerLayout user={auth.user}>
             <Head title="My Orders" />

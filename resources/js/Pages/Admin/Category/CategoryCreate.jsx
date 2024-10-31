@@ -86,35 +86,37 @@ export default function Create({ auth }) {
                             </button>
                         </div>
                     )}
-                    <div className="mt-6">
-                        <InputLabel
-                            htmlFor="category_name"
-                            value="Category Name"
-                        />
-                        <SellerInput
-                            id="category_name"
-                            type="text"
-                            name="name"
-                            value={data.name}
-                            className="mt-2 block w-full"
-                            isFocused={true}
-                            onChange={(e) => setData("name", e.target.value)}
-                        />
-                        <InputError message={errors.name} className="mt-2" />
-                    </div>
-                    <div className="mt-6">
-                        <InputLabel
-                            htmlFor="category_image_path"
-                            value="Category Image"
-                        />
-                        <SellerInput
-                            id="category_image_path"
-                            type="file"
-                            name="image"
-                            className="mt-2 block w-full"
-                            onChange={handleImageChange}
-                        />
-                        <InputError message={errors.image} className="mt-2" />
+                    <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
+                        <div className="mt-6">
+                            <InputLabel
+                                htmlFor="category_name"
+                                value="Category Name"
+                            />
+                            <SellerInput
+                                id="category_name"
+                                type="text"
+                                name="name"
+                                value={data.name}
+                                className="mt-2 block w-full"
+                                isFocused={true}
+                                onChange={(e) => setData("name", e.target.value)}
+                            />
+                            <InputError message={errors.name} className="mt-2" />
+                        </div>
+                        <div className="mt-6">
+                            <InputLabel
+                                htmlFor="category_image_path"
+                                value="Category Image"
+                            />
+                            <SellerInput
+                                id="category_image_path"
+                                type="file"
+                                name="image"
+                                className="mt-2 block w-full"
+                                onChange={handleImageChange}
+                            />
+                            <InputError message={errors.image} className="mt-2" />
+                        </div>
                     </div>
                 </form>
             </DivContainer>

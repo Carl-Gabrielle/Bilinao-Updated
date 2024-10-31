@@ -158,12 +158,4 @@ class CheckoutController extends Controller
             return back()->with("error", $e->getMessage());
         }
     }
-    public function success()
-    {
-
-    }
-    public function failed()
-    {
-
-    }
 }
