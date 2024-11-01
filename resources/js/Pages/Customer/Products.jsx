@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import CustomerContainer from "@/Components/CustomerContainer";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { GrCart } from "react-icons/gr";
 import {
@@ -79,6 +80,25 @@ export default function Products({ products, auth, success, category }) {
             return () => clearTimeout(timer);
         }
     }, [success]);
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="Products" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
 
     return (
         <CustomerLayout user={auth.user}>

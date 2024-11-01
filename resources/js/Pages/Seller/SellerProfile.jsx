@@ -1,13 +1,14 @@
 import React from "react";
 import { Head, usePage, Link } from "@inertiajs/react";
 import SellerLayout from "@/Layouts/SellerLayout";
+import { MdOutlineSecurity } from "react-icons/md"
 import { CiStar } from "react-icons/ci";
 import { CiCalendar } from "react-icons/ci";
-import { LiaEditSolid } from "react-icons/lia";
 import { MdOutlineMailOutline } from "react-icons/md";
 import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import { GrMapLocation } from "react-icons/gr";
 import { IoStorefrontOutline } from "react-icons/io5";
+import SellerInput from "@/Components/SellerInput";
 
 export default function SellerProfile() {
     const { auth } = usePage().props;
@@ -17,7 +18,7 @@ export default function SellerProfile() {
         <>
             <SellerLayout user={user}>
                 <Head title="Seller Profile" />
-                <div className="container mx-auto px-4 py-8">
+                <div className="container  mx-auto px-4 py-8">
                     <div className="bg-white shadow-lg rounded-3xl overflow-hidden backdrop-blur-lg relative">
                         {/* Cover Image Section */}
                         <div className="h-60 w-full bg-slate-800 flex items-center justify-center relative overflow-hidden">
@@ -97,8 +98,7 @@ export default function SellerProfile() {
                                     href={route("seller.profileEdit")}
                                     className="mt-6 sm:mt-0 sm:ml-6"
                                 >
-                                    <button className="px-5 py-3 text-sm font-semibold rounded-md bg-slate-800 text-slate-100 flex items-center">
-                                        <LiaEditSolid className="mr-2" />
+                                    <button className="px-4 py-2 text-sm font-semibold rounded-2xl bg-slate-800 text-slate-100 text-center">
                                         Edit Profile
                                     </button>
                                 </Link>
@@ -108,10 +108,34 @@ export default function SellerProfile() {
 
                     <div className="mt-8 space-y-6">
                         <div className="bg-white shadow-md rounded-3xl p-6">
-                            <h2 className="text-xl font-semibold text-gray-800 border-b pb-2">
-                                Security
-                            </h2>
+                            <div className="flex items-center mb-4">
+                                <MdOutlineSecurity className="mr-2" />
+                                <h2 className="text-xl font-semibold text-primary ">
+                                    Security
+                                </h2>
+                            </div>
 
+                            <div className="mb-4 ">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Current Password
+                                </label>
+                                <SellerInput placeholder="Enter your current password" />
+                            </div>
+                            <div className="mb-4 ">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    New Password
+                                </label>
+                                <SellerInput placeholder="Enter your new password" />
+                            </div>
+                            <div className="mb-4 ">
+                                <label className="block text-sm font-medium text-gray-700">
+                                    Confirm New Password
+                                </label>
+                                <SellerInput placeholder="Confirm new password" />
+                            </div>
+                            <div className="mb-4">
+                                <button className="text-slate-50  py-2  w-full rounded-2xl   bg-primary">Update Password</button>
+                            </div>
                         </div>
                     </div>
                 </div>

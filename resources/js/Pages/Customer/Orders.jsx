@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import { Head } from "@inertiajs/react";
 import Banner from "@/Components/Banner";
 import CustomerLayout from "@/Layouts/CustomerLayout";
@@ -9,15 +10,15 @@ import ToShip from "./ToShip";
 import ToReceive from "./ToReceive";
 import Received from "./Received";
 
-const Orders = ({ auth, toPayOrders, toShipOrders, toReceiveOrders, receivedOrders }) => {
+const Orders = ({ auth, orders = [] }) => {
+    const toPayOrders = orders.filter(order => order.status === 'To Pay');
+    const toShipOrders = orders.filter(order => order.status === 'To Ship');
+    const toReceiveOrders = orders.filter(order => order.status === 'To Receive');
+    const receivedOrders = orders.filter(order => order.status === 'Received');
+
     const [activeStatus, setActiveStatus] = useState(() => {
         return localStorage.getItem("activeStatus") || "To Pay";
     });
-    const [loading, setLoading] = useState(true);
-
-    useEffect(() => {
-        setLoading(false);
-    }, []);
 
     const handleStatusClick = (status) => {
         setActiveStatus(status);
@@ -26,24 +27,35 @@ const Orders = ({ auth, toPayOrders, toShipOrders, toReceiveOrders, receivedOrde
 
     const renderOrderDetails = () => {
         const orderComponents = {
-            "To Pay": <ToPay toPayOrders={toPayOrders} />,
-            "To Ship": <ToShip toShipOrders={toShipOrders} />,
-            "To Receive": <ToReceive toReceiveOrders={toReceiveOrders} />,
-            "Received": <Received receivedOrders={receivedOrders} />,
+            "To Pay": <ToPay orders={toPayOrders} />,
+            "To Ship": <ToShip orders={toShipOrders} />,
+            "To Receive": <ToReceive orders={toReceiveOrders} />,
+            "Received": <Received orders={receivedOrders} />,
         };
         return orderComponents[activeStatus] || <div>No orders found for this status.</div>;
     };
+
+    const orderStatuses = ["To Pay", "To Ship", "To Receive", "Received"];
+    // LOADING SPINNER
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
     if (loading) {
         return (
             <CustomerLayout user={auth.user}>
                 <Head title="My Orders" />
-                <div className="min-h-screen pt-20 pb-1 flex justify-center items-center">
-                    <div className="spinner">Loading...</div>
-                </div>
+                <LoadingSpinner />
             </CustomerLayout>
         );
     }
-    const orderStatuses = ["To Pay", "To Ship", "To Receive", "Received"];
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="My Orders" />

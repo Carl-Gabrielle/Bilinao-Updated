@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import CustomerContainer from "@/Components/CustomerContainer";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
@@ -85,6 +86,24 @@ export default function Carts({ auth, carts, cartCount }) {
         );
     };
 
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="Carts" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Carts" />
@@ -297,11 +316,10 @@ export default function Carts({ auth, carts, cartCount }) {
                                     <div className="p-6 mt-auto">
                                         <button
                                             onClick={handleCheckout}
-                                            className={`flex items-center justify-center w-full px-8 py-4 font-semibold text-white rounded-full ${
-                                                checkedItemIds.length === 0
-                                                    ? "bg-slate-300 cursor-not-allowed"
-                                                    : "bg-slate-800"
-                                            }`}
+                                            className={`flex items-center justify-center w-full px-8 py-4 font-semibold text-white rounded-full ${checkedItemIds.length === 0
+                                                ? "bg-slate-300 cursor-not-allowed"
+                                                : "bg-slate-800"
+                                                }`}
                                             disabled={
                                                 checkedItemIds.length === 0
                                             }

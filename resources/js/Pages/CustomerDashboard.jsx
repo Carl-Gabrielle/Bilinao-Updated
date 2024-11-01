@@ -1,5 +1,6 @@
 import { PiArrowRightBold } from "react-icons/pi";
 import React, { useState, useEffect, useRef } from "react";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import BgImage from "./Illustrations/bg_frame.png";
 import { Head, Link } from "@inertiajs/react";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
@@ -17,6 +18,26 @@ export default function CustomerDashboard({ auth, category, products }) {
             applyFloatingText(textRef.current);
         }
     });
+
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="Home" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
+
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen  ">

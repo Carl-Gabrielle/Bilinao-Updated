@@ -1,4 +1,6 @@
 import Banner from "@/Components/Banner";
+import React, { useState, useEffect } from "react";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import CustomerContainer from "@/Components/CustomerContainer";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { Head, Link } from "@inertiajs/react";
@@ -6,6 +8,24 @@ import { FaUserCircle } from "react-icons/fa";
 
 export default function ProfileIndex({ auth }) {
     const { user } = auth;
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="My Account" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
     return (
         <CustomerLayout user={user}>
             <Head title="My Account" />

@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import { PiArrowRightBold } from "react-icons/pi";
 import { Head, Link } from "@inertiajs/react";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import { GiMagnifyingGlass } from "react-icons/gi";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
 import CustomerLayout from "@/Layouts/CustomerLayout";
@@ -9,6 +10,24 @@ import CustomerContainer from "@/Components/CustomerContainer";
 
 export default function Categories({ auth, categories }) {
     const categoryData = categories?.data ?? [];
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="Categories" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
 
     return (
         <CustomerLayout user={auth.user}>

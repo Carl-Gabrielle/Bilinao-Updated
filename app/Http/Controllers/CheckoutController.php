@@ -15,30 +15,30 @@ use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
-    public function completeOrders(Request $request)
-    {
+        public function completeOrders(Request $request)
+        {
 
-        $order = Order::where('user_id', Auth::id())
-            ->where('transaction_id', $request->transac_id)
-            ->firstOrFail();
+            $order = Order::where('user_id', Auth::id())
+                ->where('transaction_id', $request->transac_id)
+                ->firstOrFail();
 
-        $checkout = Paymongo::checkout()->find($order->payment_src_id);
-        if ($checkout->payments[0]['attributes']['status'] == 'paid') {
-            $order->update([
-                'remarks' => 'paid'
+            $checkout = Paymongo::checkout()->find($order->payment_src_id);
+            if ($checkout->payments[0]['attributes']['status'] == 'paid') {
+                $order->update([
+                    'remarks' => 'paid'
+                ]);
+            }
+            // If no order exists, redirect the user to the products page
+            if (!$order) {
+                return redirect()->route('customer.products')->with('error', 'No orders found, explore our products.');
+            }
+
+            $orderItems = $order->orderItems;
+            return Inertia::render('Customer/CompleteOrders', [
+                'order' => $order,
+                'orderItems' => $orderItems,
             ]);
         }
-        // If no order exists, redirect the user to the products page
-        if (!$order) {
-            return redirect()->route('customer.products')->with('error', 'No orders found, explore our products.');
-        }
-
-        $orderItems = $order->orderItems;
-        return Inertia::render('Customer/CompleteOrders', [
-            'order' => $order,
-            'orderItems' => $orderItems,
-        ]);
-    }
     public function store(Request $request)
     {
         $request->validate([

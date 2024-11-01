@@ -21,7 +21,6 @@ class CustomerController extends Controller
             ->get();
     
         return Inertia::render('Customer/Notifications', [
-            'auth' => Auth::user(),
             'notifications' => $notifications, 
         ]);
     }
@@ -39,7 +38,6 @@ class CustomerController extends Controller
                 ->get();
             
             return Inertia::render('Customer/Notifications', [
-                'auth' => Auth::user(),
                 'notifications' => $notifications, // Send the updated list
             ]);
         }

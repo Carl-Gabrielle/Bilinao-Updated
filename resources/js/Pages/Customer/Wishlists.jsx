@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import Banner from "@/Components/Banner";
 import { MdOutlineAddShoppingCart } from "react-icons/md";
@@ -23,6 +24,24 @@ export default function Wishlists({ auth, wishlists, product }) {
         }
     };
 
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="Categories" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
     return (
         <CustomerLayout user={auth.user}>
             <Head title="My Wishlists" />

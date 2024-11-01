@@ -1,4 +1,5 @@
-import { useState } from "react";
+import React, { useState, useEffect } from "react";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import { Inertia } from "@inertiajs/inertia";
 import CustomerContainer from "@/Components/CustomerContainer";
 import CustomerLayout from "@/Layouts/CustomerLayout";
@@ -10,7 +11,7 @@ import { MdMoreVert } from "react-icons/md";
 import { RiVerifiedBadgeLine } from "react-icons/ri";
 
 export default function Notifications({ auth, notifications = [] }) {
-    const userName = auth?.name || "Guest";
+
     const [filter, setFilter] = useState("all");
     const [showDropdown, setShowDropdown] = useState(false);
 
@@ -45,8 +46,27 @@ export default function Notifications({ auth, notifications = [] }) {
         return true; // For "all", return all notifications
     });
 
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="Notifications" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
+
     return (
-        <CustomerLayout user={auth || {}}>
+        <CustomerLayout user={auth.user}>
             <Head title="Notifications" />
             <div className="min-h-screen pt-20 pb-1">
                 <Banner title="Notifications" />
@@ -68,21 +88,19 @@ export default function Notifications({ auth, notifications = [] }) {
                                     <div className="flex items-center space-x-4">
                                         <span
                                             onClick={() => setFilter("all")}
-                                            className={`border px-3 py-0.5 rounded-full cursor-pointer ${
-                                                filter === "all"
-                                                    ? "bg-primary text-white"
-                                                    : "border-slate-300"
-                                            }`}
+                                            className={`border px-3 py-0.5 rounded-full cursor-pointer ${filter === "all"
+                                                ? "bg-primary text-white"
+                                                : "border-slate-300"
+                                                }`}
                                         >
                                             All
                                         </span>
                                         <span
                                             onClick={() => setFilter("unread")}
-                                            className={`border px-3 py-0.5 rounded-full cursor-pointer ${
-                                                filter === "unread"
-                                                    ? "bg-primary text-white"
-                                                    : "border-slate-300"
-                                            }`}
+                                            className={`border px-3 py-0.5 rounded-full cursor-pointer ${filter === "unread"
+                                                ? "bg-primary text-white"
+                                                : "border-slate-300"
+                                                }`}
                                         >
                                             Unread
                                         </span>
@@ -112,22 +130,20 @@ export default function Notifications({ auth, notifications = [] }) {
                                             (notification) => (
                                                 <li
                                                     key={notification.id}
-                                                    className={`rounded-lg p-4 ${
-                                                        notification.status ===
+                                                    className={`rounded-lg p-4 ${notification.status ===
                                                         "unread"
-                                                            ? "bg-slate-50 border-0 font-semibold"
-                                                            : "border border-slate-300"
-                                                    }`}
+                                                        ? "bg-slate-50 border-0 font-semibold"
+                                                        : "border border-slate-300"
+                                                        }`}
                                                 >
                                                     <div className="flex items-center justify-between">
                                                         <div className="flex-1">
                                                             <p
-                                                                className={`text-md font-medium text-primary ${
-                                                                    notification.status ===
+                                                                className={`text-md font-medium text-primary ${notification.status ===
                                                                     "unread"
-                                                                        ? "font-semibold"
-                                                                        : "text-primary"
-                                                                }`}
+                                                                    ? "font-semibold"
+                                                                    : "text-primary"
+                                                                    }`}
                                                                 onClick={() =>
                                                                     handleNotificationClick(
                                                                         notification.id
@@ -167,18 +183,18 @@ export default function Notifications({ auth, notifications = [] }) {
                                                         </div>
                                                         {notification.status ===
                                                             "unread" && (
-                                                            <button
-                                                                onClick={() =>
-                                                                    handleNotificationClick(
-                                                                        notification.id
-                                                                    )
-                                                                }
-                                                                className="ml-4 bg-slate-500 bg-opacity-30 backdrop-blur-md text-primary font-medium flex items-center px-2 py-1 rounded"
-                                                            >
-                                                                <HiCheck className="mr-1" />
-                                                                Mark as Read
-                                                            </button>
-                                                        )}
+                                                                <button
+                                                                    onClick={() =>
+                                                                        handleNotificationClick(
+                                                                            notification.id
+                                                                        )
+                                                                    }
+                                                                    className="ml-4 bg-slate-500 bg-opacity-30 backdrop-blur-md text-primary font-medium flex items-center px-2 py-1 rounded"
+                                                                >
+                                                                    <HiCheck className="mr-1" />
+                                                                    Mark as Read
+                                                                </button>
+                                                            )}
                                                     </div>
                                                 </li>
                                             )

@@ -1,4 +1,6 @@
 import CustomerContainer from "@/Components/CustomerContainer";
+import React, { useState, useEffect } from "react";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { LiaHandHoldingHeartSolid, LiaPeopleCarrySolid } from "react-icons/lia";
 import { IoHomeOutline } from "react-icons/io5";
@@ -8,6 +10,25 @@ import { MdOutlineRocket } from "react-icons/md";
 import { Head } from "@inertiajs/react";
 
 export default function About({ auth }) {
+    const [loading, setLoading] = useState(true);
+
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="About Us" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="About Us" />

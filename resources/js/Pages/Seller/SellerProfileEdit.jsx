@@ -2,7 +2,6 @@ import React from "react";
 import { Head, useForm, Link } from "@inertiajs/react";
 import SellerLayout from "@/Layouts/SellerLayout";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
-import { RxUpdate } from "react-icons/rx";
 import SellerInput from "@/Components/SellerInput";
 export default function SellerProfileEdit({ seller }) {
     const { data, setData, post, processing, errors, reset, progress } =
@@ -40,20 +39,9 @@ export default function SellerProfileEdit({ seller }) {
                 </Link>
                 <div className="bg-slate-100 shadow-lg rounded-3xl p-6">
                     <form onSubmit={handleSubmit} encType="multipart/form-data">
-                        <div className="flex items-center justify-between">
-                            <h2 className="text-2xl font-semibold mb-6">
-                                Edit Profile
-                            </h2>
-                            <button
-                                type="submit"
-                                className="px-5 py-2 bg-slate-800 text-white rounded-md flex items-center"
-                            >
-                                {processing
-                                    ? "Updating Profile..."
-                                    : "Update Profile"}
-                                <RxUpdate className="ml-2" />
-                            </button>
-                        </div>
+                        <h2 className="text-2xl font-semibold mb-6">
+                            Edit Profile
+                        </h2>
                         <div className="mb-4">
                             <img
                                 src={
@@ -154,8 +142,14 @@ export default function SellerProfileEdit({ seller }) {
                                 )}
                             </div>
                         </div>
-
-
+                        <button
+                            type="submit"
+                            className="px-5 py-2 bg-slate-800 text-white rounded-2xl text-center w-full"
+                        >
+                            {processing
+                                ? "Updating Profile..."
+                                : "Update Profile"}
+                        </button>
                     </form>
                 </div>
             </div>

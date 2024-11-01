@@ -1,5 +1,6 @@
-import React from "react";
+import React, { useState, useEffect } from "react";
 import CustomerLayout from "@/Layouts/CustomerLayout";
+import LoadingSpinner from "@/Components/LoadingSkeletal";
 import { CgSearchFound } from "react-icons/cg";
 import { FaPesoSign } from "react-icons/fa6";
 import { Head, Link } from "@inertiajs/react";
@@ -7,7 +8,24 @@ import Banner from "@/Components/Banner";
 import CustomerContainer from "@/Components/CustomerContainer";
 const SearchResults = ({ products, auth, query }) => {
     const itemsFound = products.length;
+    const [loading, setLoading] = useState(true);
 
+    useEffect(() => {
+        const timer = setTimeout(() => {
+            setLoading(false);
+        }, 500);
+
+        return () => clearTimeout(timer);
+    }, []);
+
+    if (loading) {
+        return (
+            <CustomerLayout user={auth.user}>
+                <Head title="Categories" />
+                <LoadingSpinner />
+            </CustomerLayout>
+        );
+    }
     return (
         <>
             <CustomerLayout user={auth.user}>

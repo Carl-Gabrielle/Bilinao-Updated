@@ -10,16 +10,16 @@ import CustomerContainer from "@/Components/CustomerContainer";
 export default function CompletedOrder({ auth, order, orderItems }) {
     return (
         <CustomerLayout user={auth.user}>
-            <Head title="Order Completed" />
+            <Head title="Completed Orders" />
             <div className="min-h-screen pt-20 pb-10 bg-slate-300">
-                <Banner title="Order Completed" />
+                <Banner title="Completed Orders" />
                 <CustomerContainer>
                     <div className="flex flex-col items-center mb-8">
                         <div className="w-72 relative flex flex-col items-center mb-5">
                             <img
                                 src={successImg}
                                 alt="Success Image"
-                                className="size-20 mb-4" // Adjust size for better visibility
+                                className="size-20 mb-4"
                             />
                             <TbArrowCurveRight className="absolute bottom-0 left-20 rotate-45 text-primary" />
                             <TbArrowCurveRight className="absolute top-5 right-20 -rotate-90 text-primary" />
