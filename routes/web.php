@@ -67,16 +67,17 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('category', CategoryController::class);
         Route::resource('seller', SellerController::class);
     });
-    Route::middleware('auth')->group(function () {
+    Route::middleware('admin')->group(function () {
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-        Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     });
     // CUSTOMER ROUTES
     Route::middleware('customer')->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
         Route::get('/customerProfile', [CustomerController::class, 'profile'])->name('customer.customerProfile');
+        Route::patch('/profile', [CustomerController::class, 'update'])->name('profile.update');
+        Route::put('/customer/profile/{id}', [CustomerController::class, 'updateProfile'])->name('customer.updateProfile');
         Route::get('/customerNotifications', [CustomerController::class, 'notifications'])->name('customer.notifications');
         Route::patch('/notifications/{id}/read', [CustomerController::class, 'markAsRead'])->name('notifications.markAsRead');
         Route::get('/review', [CustomerController::class, 'review'])->name('customer.review');

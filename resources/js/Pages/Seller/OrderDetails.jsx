@@ -195,9 +195,15 @@ export default function OrderDetails({ auth, order, orderItems }) {
                                     Mark as Arrived
                                 </button>
                             ) : orderItems[0].arrived !== null ? (
-                                <div className="border border-primary rounded-2xl text-primary px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
-                                    Out for Customer Delivery
-                                </div>
+                                // <div className="border border-primary rounded-2xl text-primary px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
+                                //     Out for Customer Delivery
+                                // </div>
+                                <button
+                                    // onClick={handleMarkAsArrived}
+                                    className="bg-slate-800 rounded-2xl text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
+                                >
+                                    Mark as Recieved
+                                </button>
                             ) : (
                                 <div className="mt-6 text-green-600 font-semibold">
                                     Order Completed

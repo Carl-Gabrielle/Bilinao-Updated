@@ -10,14 +10,14 @@ export default forwardRef(function TextInput(
         if (isFocused) {
             input.current.focus();
         }
-    }, [isFocused]);
+    }, []);
 
     return (
         <input
             {...props}
             type={type}
             className={
-                "focus:outline-none focus:ring-0 border  focus:border-slate-800 focus:border hover:border-gray-900   py-2 px-4 w-full rounded-2xl  border-gray-500 bg-transparent" +
+                "focus:outline-none focus:ring-0 border  focus:border-slate-800 focus:border hover:border-gray-900   py-2 px-4 w-full rounded-2xl  border-gray-500 bg-transparent " +
                 className
             }
             ref={input}

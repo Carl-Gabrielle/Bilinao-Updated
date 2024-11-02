@@ -18,18 +18,9 @@ import CustomCheckbox from "@/Components/CustomCheckbox";
 export default function Carts({ auth, carts, cartCount }) {
     const [cartItems, setCartItems] = useState(carts);
     const [checkedItemIds, setCheckedItemIds] = useState([]);
-    const updateQuantity = async (id, quantity) => {
-        try {
-            await axios.put(route("cart.update", id), { quantity });
-            setCartItems(
-                cartItems.map((cart) =>
-                    cart.id === id ? { ...cart, quantity } : cart
-                )
-            );
-        } catch (error) {
-            console.error("Error updating quantity!", error);
-        }
-    };
+    const [subtotal, setSubtotal] = useState(0);
+    const [total, setTotal] = useState(0);
+
 
     const handleDelete = async (id) => {
         try {
@@ -45,21 +36,49 @@ export default function Carts({ auth, carts, cartCount }) {
     };
 
     const handleIncrement = (id) => {
-        const updatedQuantity =
-            cartItems.find((cart) => cart.id === id).quantity + 1;
+        const item = cartItems.find((cart) => cart.id === id);
+        const updatedQuantity = item.quantity + 1;
         updateQuantity(id, updatedQuantity);
     };
 
     const handleDecrement = (id) => {
-        const currentQuantity = cartItems.find(
-            (cart) => cart.id === id
-        ).quantity;
-        if (currentQuantity > 1) {
-            const updatedQuantity = currentQuantity - 1;
+        const item = cartItems.find((cart) => cart.id === id);
+        if (item.quantity > 1) {
+            const updatedQuantity = item.quantity - 1;
             updateQuantity(id, updatedQuantity);
         }
     };
 
+    const updateQuantity = async (id, quantity) => {
+        try {
+            await axios.put(route("cart.update", id), { quantity });
+            setCartItems((prevCartItems) =>
+                prevCartItems.map((cart) =>
+                    cart.id === id ? { ...cart, quantity } : cart
+                )
+            );
+
+            calculateSummary();
+        } catch (error) {
+            console.error("Error updating quantity!", error);
+        }
+    };
+
+    const calculateSummary = () => {
+        let newSubtotal = 0;
+        checkedItemIds.forEach((selectedItem) => {
+            const item = cartItems.find((cart) => cart.id === selectedItem.cart_id);
+            if (item) {
+                newSubtotal += item.product.price * item.quantity;
+            }
+        });
+        setSubtotal(newSubtotal);
+        setTotal(newSubtotal);
+    };
+
+    useEffect(() => {
+        calculateSummary();
+    }, [cartItems, checkedItemIds]);
     // MANAGING SELECTED ITEMS
 
     const handleChange = (id, qty, cartId) => {
@@ -104,6 +123,7 @@ export default function Carts({ auth, carts, cartCount }) {
             </CustomerLayout>
         );
     }
+
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Carts" />
@@ -296,33 +316,31 @@ export default function Carts({ auth, carts, cartCount }) {
                         <div className="flex flex-col w-full min-h-full lg:w-96 rounded-2xl">
                             <div className="px-6 py-4 text-white bg-slate-800 rounded-t-2xl">
                                 <span className="flex-1 text-xs uppercase">
-                                    Order Summary (FRONTEND ONLY)
+                                    Order Summary
                                 </span>
                             </div>
                             <div className="flex flex-col text-sm shadow-lg bg-slate-50 bg-opacity-60 backdrop-blur-lg rounded-b-2xl h-72">
                                 <div className="px-6 pt-5">
                                     <div className="flex items-start justify-between mb-4">
                                         <p>Subtotal</p>
-                                        <p>&#8369; 10</p>
+                                        <p>&#8369; {subtotal.toLocaleString()}</p>
                                     </div>
                                 </div>
                                 <div className="flex items-start justify-between px-6 py-2 font-semibold bg-slate-300">
                                     <p className="uppercase">Total</p>
                                     <p className="font-semibold ">
-                                        &#8369; 325{" "}
+                                        &#8369; {total.toLocaleString()}
                                     </p>
                                 </div>
                                 {cartItems.length > 0 && (
                                     <div className="p-6 mt-auto">
                                         <button
                                             onClick={handleCheckout}
-                                            className={`flex items-center justify-center w-full px-8 py-4 font-semibold text-white rounded-full ${checkedItemIds.length === 0
-                                                ? "bg-slate-300 cursor-not-allowed"
-                                                : "bg-slate-800"
+                                            className={`flex items-center justify-center w-full px-8 py-4 font-semibold  rounded-full ${checkedItemIds.length === 0
+                                                ? "bg-slate-300  text-slate-500  cursor-not-allowed"
+                                                : "bg-slate-800 text-slate-50"
                                                 }`}
-                                            disabled={
-                                                checkedItemIds.length === 0
-                                            }
+                                            disabled={checkedItemIds.length === 0}
                                         >
                                             {checkedItemIds.length === 0
                                                 ? "Please Select a Product"

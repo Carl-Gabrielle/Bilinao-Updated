@@ -1,7 +1,7 @@
 import InputError from "@/Components/InputError";
 import InputLabel from "@/Components/InputLabel";
 import PrimaryButton from "@/Components/PrimaryButton";
-import TextInput from "@/Components/TextInput";
+import InformationInput from '@/Components/InformationInput';
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
 
@@ -16,6 +16,7 @@ export default function UpdateProfileInformation({
         useForm({
             name: user.name,
             email: user.email,
+            phone_number: user.phone_number,
         });
 
     const submit = (e) => {
@@ -40,7 +41,7 @@ export default function UpdateProfileInformation({
                 <div>
                     <InputLabel htmlFor="name" value="Name" />
 
-                    <TextInput
+                    <InformationInput
                         id="name"
                         className="mt-1 block w-full"
                         value={data.name}
@@ -52,11 +53,25 @@ export default function UpdateProfileInformation({
 
                     <InputError className="mt-2" message={errors.name} />
                 </div>
+                {/* <div>
+                    <InputLabel htmlFor="name" value="Contact Number" />
 
+                    <InformationInput
+                        id="phone_number"
+                        className="mt-1 block w-full"
+                        value={data.phone_number}
+                        onChange={(e) => setData("phone_number", e.target.value)}
+                        required
+                        isFocused
+                        autoComplete="phone_number"
+                    />
+
+                    <InputError className="mt-2" message={errors.phone_number} />
+                </div> */}
                 <div>
                     <InputLabel htmlFor="email" value="Email" />
 
-                    <TextInput
+                    <InformationInput
                         id="email"
                         type="email"
                         className="mt-1 block w-full"
@@ -93,7 +108,7 @@ export default function UpdateProfileInformation({
                 )}
 
                 <div className="flex items-center gap-4">
-                    <PrimaryButton disabled={processing}>Save</PrimaryButton>
+                    <PrimaryButton disabled={processing}>Update Profile</PrimaryButton>
 
                     <Transition
                         show={recentlySuccessful}
@@ -102,7 +117,7 @@ export default function UpdateProfileInformation({
                         leave="transition ease-in-out"
                         leaveTo="opacity-0"
                     >
-                        <p className="text-sm text-gray-600">Saved.</p>
+                        <p className="text-sm text-gray-600">Updated.</p>
                     </Transition>
                 </div>
             </form>
