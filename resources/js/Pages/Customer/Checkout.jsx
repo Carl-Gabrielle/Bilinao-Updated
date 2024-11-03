@@ -243,7 +243,7 @@ export default function Checkout({ auth }) {
                                                 )?.name
                                             );
                                         }}
-                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar custom-dropdown text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-2xl scroll-bar custom-dropdown text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -279,7 +279,7 @@ export default function Checkout({ auth }) {
                                                 )?.name
                                             );
                                         }}
-                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-2xl scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -319,7 +319,7 @@ export default function Checkout({ auth }) {
                                                 )?.name
                                             );
                                         }}
-                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-2xl scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -359,7 +359,7 @@ export default function Checkout({ auth }) {
                                                 )?.name
                                             );
                                         }}
-                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-md scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
+                                        className="w-full px-4 py-3 text-sm bg-transparent border border-gray-500 rounded-2xl scroll-bar text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                     >
                                         <option
                                             value=""
@@ -394,7 +394,7 @@ export default function Checkout({ auth }) {
                                         setData("landmark", e.target.value)
                                     }
                                     placeholder="ex. Alabama St. in front of  John Doe Shop."
-                                    className="w-full h-32 px-4 py-3 bg-transparent border border-gray-500 rounded-md placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
+                                    className="w-full h-32 px-4 py-3 bg-transparent border border-gray-500 rounded-2xl placeholder:text-sm placeholder:text-slate-600 focus:outline-none focus:ring-0 focus:border-slate-800 focus:border hover:border-gray-900"
                                 />
                                 <label className="text-xs font-medium text-gray-700">
                                     Please enter a landmark near your home
@@ -506,15 +506,14 @@ export default function Checkout({ auth }) {
                                         }
                                         onClick={handleCheckoutButton}
                                         className={`w-full bg-amber-500 text-slate-50 rounded-full tracking-wide px-8 py-4
-                                        ${
-                                            region == null ||
-                                            province == null ||
-                                            city == null ||
-                                            barangay == null ||
-                                            landmark == null
+                                        ${region == null ||
+                                                province == null ||
+                                                city == null ||
+                                                barangay == null ||
+                                                landmark == null
                                                 ? "cursor-not-allowed"
                                                 : " hover:bg-amber-600 duration-200 ease-in-out"
-                                        }`}
+                                            }`}
                                     >
                                         {[
                                             processing
@@ -532,11 +531,10 @@ export default function Checkout({ auth }) {
                                     <div className="mt-4 space-y-4">
                                         {/* GCash Payment Option */}
                                         <label
-                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
-                                                data.payment_method === "gcash"
-                                                    ? "bg-blue-100 border-0 hover:bg-blue-100"
-                                                    : "hover:bg-slate-100"
-                                            }`}
+                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method === "gcash"
+                                                ? "bg-blue-100 border-0 hover:bg-blue-100"
+                                                : "hover:bg-slate-100"
+                                                }`}
                                             onClick={() =>
                                                 handlePaymentChange("gcash")
                                             }
@@ -553,22 +551,20 @@ export default function Checkout({ auth }) {
                                                 GCash
                                             </div>
                                             <HiOutlineCheckCircle
-                                                className={`text-gray-300 text-xl ${
-                                                    data.payment_method ===
+                                                className={`text-gray-300 text-xl ${data.payment_method ===
                                                     "gcash"
-                                                        ? "text-green-700"
-                                                        : "text-gray-300"
-                                                }`}
+                                                    ? "text-green-700"
+                                                    : "text-gray-300"
+                                                    }`}
                                             />
                                         </label>
                                         {/* PayMaya Payment Option */}
                                         <label
-                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${
-                                                data.payment_method ===
+                                            className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method ===
                                                 "paymaya"
-                                                    ? "bg-green-100 border-0 hover:bg-green-100"
-                                                    : "hover:bg-slate-100"
-                                            }`}
+                                                ? "bg-green-100 border-0 hover:bg-green-100"
+                                                : "hover:bg-slate-100"
+                                                }`}
                                             onClick={() =>
                                                 handlePaymentChange("paymaya")
                                             }
@@ -585,12 +581,11 @@ export default function Checkout({ auth }) {
                                                 PayMaya
                                             </div>
                                             <HiOutlineCheckCircle
-                                                className={`text-gray-300 text-xl ${
-                                                    data.payment_method ===
+                                                className={`text-gray-300 text-xl ${data.payment_method ===
                                                     "paymaya"
-                                                        ? "text-green-700"
-                                                        : "text-gray-300"
-                                                }`}
+                                                    ? "text-green-700"
+                                                    : "text-gray-300"
+                                                    }`}
                                             />
                                         </label>
                                     </div>

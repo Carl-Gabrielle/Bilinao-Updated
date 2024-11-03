@@ -306,11 +306,10 @@ export default function ProductDetails({
                                 {product.images.map((image) => (
                                     <div
                                         key={image.id}
-                                        className={`relative w-24 h-24 cursor-pointer rounded-md border-2 transition-all duration-300 ${
-                                            selectedImage === image.image_path
-                                                ? "border-green-500"
-                                                : "border-transparent"
-                                        } hover:border-gray-800`}
+                                        className={`relative w-24 h-24 cursor-pointer rounded-md border-2 transition-all duration-300 ${selectedImage === image.image_path
+                                            ? "border-green-500"
+                                            : "border-transparent"
+                                            } hover:border-gray-800`}
                                         onClick={() =>
                                             setSelectedImage(image.image_path)
                                         }
@@ -366,9 +365,8 @@ export default function ProductDetails({
                                                 <div
                                                     className="h-3 bg-yellow-500 rounded-full"
                                                     style={{
-                                                        width: `${
-                                                            (5 - star + 1) * 20
-                                                        }%`,
+                                                        width: `${(5 - star + 1) * 20
+                                                            }%`,
                                                     }} // Example percentage
                                                 ></div>
                                             </div>
@@ -495,7 +493,7 @@ export default function ProductDetails({
                                         >
                                             <div className="flex p-4 space-x-2 shadow-lg bg-slate-50 bg-opacity-30 backdrop-blur-md rounded-2xl">
                                                 {relatedProduct.images &&
-                                                relatedProduct.images.length >
+                                                    relatedProduct.images.length >
                                                     0 ? (
                                                     relatedProduct.images
                                                         .length === 1 ? (
@@ -514,12 +512,12 @@ export default function ProductDetails({
                                                             {relatedProduct
                                                                 .images.length >
                                                                 1 && (
-                                                                <img
-                                                                    src={`/storage/${relatedProduct.images[1].image_path}`}
-                                                                    alt={`${relatedProduct.name} image 2`}
-                                                                    className="object-cover w-1/2 h-48 mb-4 rounded-lg"
-                                                                />
-                                                            )}
+                                                                    <img
+                                                                        src={`/storage/${relatedProduct.images[1].image_path}`}
+                                                                        alt={`${relatedProduct.name} image 2`}
+                                                                        className="object-cover w-1/2 h-48 mb-4 rounded-lg"
+                                                                    />
+                                                                )}
                                                         </>
                                                     )
                                                 ) : (

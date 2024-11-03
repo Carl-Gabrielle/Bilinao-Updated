@@ -8,7 +8,7 @@ import InformationInput from '@/Components/InformationInput';
 import { Link, useForm, usePage } from "@inertiajs/react";
 import { Transition } from "@headlessui/react";
 
-export default function UpdateProfileInformation({
+export default function UpdateProfileInformationAdmin({
     mustVerifyEmail,
     status,
     className = "",
@@ -50,7 +50,7 @@ export default function UpdateProfileInformation({
         <section>
             <header>
                 <div className="flex items-center">
-                    <div className="bg-slate-100 mr-2 p-2 rounded-md inline-block">
+                    <div className="bg-slate-100 mr-2 p-2 rounded-2xl inline-block">
                         <FaRegUser />
                     </div>
                     <h2 className="text-lg font-medium text-primary">
@@ -69,7 +69,7 @@ export default function UpdateProfileInformation({
                             alt="Profile Image"
                             className="w-32 h-32 mt-4 rounded-full border-4 border-primary overflow-hidden flex justify-center items-center text-gray-500 bg-gray-200 shadow-lg object-cover"
                         />
-                        <div className="absolute bottom-1 right-64 sm:block hidden  text-white bg-primary p-1 rounded-full">
+                        <div className="absolute bottom-1 right-[22rem] sm:block hidden  text-white bg-primary p-1 rounded-full">
                             <IoCameraOutline />
                         </div>
                     </label>

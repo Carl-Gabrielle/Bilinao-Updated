@@ -16,7 +16,7 @@ class CategoryController extends Controller
     public function index()
     {
         $query = Category::query();
-        $category = $query->paginate(5);
+        $category = $query->paginate(8);
         return Inertia('Admin/Category/CategoryIndex', [
             'category' => CategoryResource::collection($category),
             'success' => session('success'),
@@ -81,7 +81,7 @@ class CategoryController extends Controller
         }
         $category->update($data);
         return to_route('category.index')
-        ->with('success',"Project  \"$category->name\" Updated Successfully");
+        ->with('success',"Category  \"$category->name\" Updated Successfully");
     }
     /**
      * Remove the specified resource from storage.

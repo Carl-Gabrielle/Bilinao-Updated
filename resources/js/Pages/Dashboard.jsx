@@ -10,9 +10,18 @@ import CustomerContainer from "@/Components/CustomerContainer";
 import DivContainer from "@/Components/DivContainer";
 import WelcomeImg from ".//Illustrations/welcomeImg.png";
 import DashboardCard from "../Components/DashboardCard";
+import { Line } from 'react-chartjs-2';
+import SalesMetricsChart from "@/Components/SalesMetricsChart";
 export default function AdminDashboard({ auth, sellerCount, customerCount }) {
     const { user } = auth;
-
+    const salesData = [
+        { date: '2024-10-01', revenue: 1000 },
+        { date: '2024-10-02', revenue: 1200 },
+        { date: '2024-10-03', revenue: 800 },
+        { date: '2024-10-04', revenue: 1500 },
+        { date: '2024-10-05', revenue: 1300 },
+        // Add more data as needed
+    ]
     const getGreeting = () => {
         const hour = new Date().getHours();
         const greetings = [
@@ -86,12 +95,13 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                                     <HiOutlineUserGroup className="size-6" />
                                 </div>
                             </DashboardCard>
+                            {/* Total Sales Revenue */}
+                            {/* Daily/Weekly/Monthly Sales Trends:  */}
                             <DashboardCard>
-                                {/* Total Sales Revenue */}
-                                {/* Daily/Weekly/Monthly Sales Trends:  */}
-                                <h1 className="font-medium text-md">
-                                    Sales Metrics{" "}
-                                </h1>
+                                <div className="flex items-center flex-col w-full">
+                                    <h1 className="font-medium text-md">Sales Metrics</h1>
+                                    <SalesMetricsChart salesData={salesData} />
+                                </div>
                             </DashboardCard>
                         </div>
                     </div>

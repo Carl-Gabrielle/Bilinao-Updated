@@ -64,7 +64,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                             </h2>
                             <Link
                                 href={route("seller.create")}
-                                className="bg-slate-800 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                                className="bg-slate-800 py-3 px-6 text-white rounded-2xl font-bold shadow text-xs flex items-center"
                             >
                                 <MdAdd className="mr-2 size-4" /> Add a New
                                 Seller

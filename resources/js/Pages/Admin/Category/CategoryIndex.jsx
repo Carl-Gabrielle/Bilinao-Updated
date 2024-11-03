@@ -6,6 +6,7 @@ import { LiaEditSolid } from "react-icons/lia";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { Head, Link, router } from "@inertiajs/react";
 import ConfirmationModal from "@/Components/ConfirmationModal";
+import Pagination from "@/Components/Pagination";
 import DivContainer from "@/Components/DivContainer";
 export default function Index({ auth, category, success, categoryCount }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -61,7 +62,7 @@ export default function Index({ auth, category, success, categoryCount }) {
                             </h2>
                             <Link
                                 href={route("category.create")}
-                                className="bg-slate-800 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center"
+                                className="bg-slate-800 py-3 px-6 text-white rounded-2xl font-bold shadow text-xs flex items-center"
                             >
                                 <MdAdd className="mr-2 size-4" /> Add New
                                 Category
@@ -114,6 +115,7 @@ export default function Index({ auth, category, success, categoryCount }) {
                                 ))}
                             </ul>
                         )}
+                        {/* <Pagination links={category.links} /> */}
                     </div>
                 </DivContainer>
             </AuthenticatedLayout>

@@ -35,21 +35,12 @@ export default function SellerCreate({ auth, seller }) {
                     </Link>
                     <div className="mt-10 bg-slate-50 bg-opacity-80  backdrop-blur-lg    overflow-hidden shadow-sm rounded-3xl p-6">
                         <form onSubmit={onSubmit}>
-                            <div className="flex items-center justify-between  mb-6">
-                                <h1 className="text-2xl font-semibold text-gray-800">
-                                    Edit Seller{" "}
-                                    <span className="font-bold">
-                                        {seller.name}
-                                    </span>
-                                </h1>
-                                <button
-                                    type="submit"
-                                    className="flex items-center px-4 py-2 bg-slate-800  text-white text-sm font-medium rounded-md transition-all duration-200"
-                                    disabled={processing}
-                                >
-                                    <RxUpdate className="mr-2" /> Update Seller
-                                </button>
-                            </div>
+                            <h1 className="text-xl font-medium text-gray-800 mb-6">
+                                Edit Seller{" "}
+                                <span className="font-semibold">
+                                    {seller.name}
+                                </span>
+                            </h1>
                             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
                                 <div className="mb-4">
                                     <InputLabel htmlFor="name">Name</InputLabel>
@@ -125,6 +116,13 @@ export default function SellerCreate({ auth, seller }) {
                                     )}
                                 </div>
                             </div>
+                            <button
+                                type="submit"
+                                className="text-center px-4 py-2 bg-slate-800  text-white text-sm font-medium rounded-2xl transition-all duration-200 w-full"
+                                disabled={processing}
+                            >
+                                Update Seller
+                            </button>
                         </form>
                     </div>
                 </DivContainer>

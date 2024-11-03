@@ -58,18 +58,9 @@ export default function Create({ auth }) {
                     onSubmit={onSubmit}
                     className="p-6 sm:p-8  bg-slate-50 bg-opacity-80  backdrop-blur-lg    shadow-md  rounded-3xl"
                 >
-                    <div className="flex items-center justify-between">
-                        <h1 className="text-2xl font-semibold text-gray-900">
-                            Add Category
-                        </h1>
-                        <button
-                            className="flex items-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-md transition-all duration-200"
-                            disabled={processing}
-                        >
-                            <MdPublish className="mr-2 text-xl" /> Publish
-                            Category
-                        </button>
-                    </div>
+                    <h1 className="text-xl font-medium text-gray-900">
+                        Add Category
+                    </h1>
                     {imagePreview && (
                         <div className="mt-4 mb-4 relative">
                             <img
@@ -118,8 +109,14 @@ export default function Create({ auth }) {
                             <InputError message={errors.image} className="mt-2" />
                         </div>
                     </div>
+                    <button
+                        className="text-center px-4 py-2 bg-primary text-white text-sm font-medium rounded-2xl transition-all duration-200 mt-6 w-full"
+                        disabled={processing}
+                    >
+                        Publish Category
+                    </button>
                 </form>
             </DivContainer>
-        </AuthenticatedLayout>
+        </AuthenticatedLayout >
     );
 }

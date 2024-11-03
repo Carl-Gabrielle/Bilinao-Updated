@@ -12,7 +12,6 @@ export default function Register() {
         email: "",
         password: "",
         phone_number: "",
-        address: "",
         password_confirmation: "",
     });
 

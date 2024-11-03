@@ -3,6 +3,7 @@ import { FaUser } from "react-icons/fa";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { RiMenuUnfold3Line2 } from "react-icons/ri";
 import { IoAnalyticsOutline } from "react-icons/io5";
+import { RiUserSettingsLine } from "react-icons/ri";
 import { RxHamburgerMenu } from "react-icons/rx";
 import Logo from "../Pages/Illustrations/LOGO.png";
 import { FaRegUser } from "react-icons/fa";
@@ -14,6 +15,8 @@ import { MdMenuOpen } from "react-icons/md";
 import { MdOutlineKeyboardArrowRight } from "react-icons/md";
 import { Link } from "@inertiajs/react";
 import AdminLink from "@/Components/AdminLink";
+import SidebarItem from "@/Components/SidebarItem";
+import SidebarLogoutItem from "@/Components/SidebarLogoutItem";
 
 export default function AuthenticatedLayout({ user, header, children }) {
     const [isSidebarOpen, setIsSidebarOpen] = useState(true);
@@ -21,7 +24,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
     const toggleSidebar = () => {
         setIsSidebarOpen(!isSidebarOpen);
     };
-
     return (
         <div className="min-h-screen bg-slate-300">
             {/* NAVBAR */}
@@ -38,21 +40,19 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             </button>
                         </div>
                     </div>
-                    {/* <Link href={route("profile.edit")}> */}
-                    <div className=" px-2 py-1 rounded-md  hover:bg-slate-200 transition-colors duration-300 ease-in-out flex items-center cursor-pointer">
-                        <div className="border size-6   mr-2 bg-slate-800 rounded-full" />
-                        <h1 className="text-sm font-medium hidden sm:block">
-                            Hi,
-                            <span className="ml-1 font-semibold ">
+                    <article className=" px-2 py-1 rounded-md  hover:bg-slate-100 transition-colors duration-300 ease-in-out flex items-center">
+                        <figure>
+                            <img className="border w-6 h-6  object-cover  mr-2 bg-slate-500 rounded-full" src="" alt="Profile Image" />
+                        </figure>
+                        <figcaption>
+                            <h1 className="text-xs font-semibold hidden sm:block">
                                 {user.name}
-                            </span>{" "}
-                        </h1>
-                        <IoIosArrowDown className="ml-1" />
-                    </div>
-                    {/* </Link> */}
+                            </h1>
+                            <p className="text-xs font-normal text-slate-700">{user.email}</p>
+                        </figcaption>
+                    </article>
                 </div>
             </div>
-
             {/* Sidebar */}
             <div
                 className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-slate-200    rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${isSidebarOpen ? "w-64 p-4" : "w-28 p-3"
@@ -69,204 +69,74 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <AdminLink
                                 href={route("dashboard")}
                                 active={route().current("dashboard")}
-                                className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
+                                className="rounded-lg transition-colors px-4 py-3"
                             >
-                                <div className="flex items-center space-x-5">
-                                    {!isSidebarOpen && (
-                                        <div className="ml-1.5 ">
-                                            <IoHomeOutline
-                                                className={`w-5 h-5 ${route().current("dashboard")
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                        </div>
-                                    )}
-                                    {isSidebarOpen && (
-                                        <>
-                                            <IoHomeOutline
-                                                className={`w-5 h-5 ${route().current("dashboard")
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                            <span>Dashboard</span>
-                                        </>
-                                    )}
-                                </div>
-                                {isSidebarOpen && (
-                                    <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 ${route().current("dashboard")
-                                            ? "text-white"
-                                            : "text-slate-900"
-                                            }`}
-                                    />
-                                )}
+                                <SidebarItem
+                                    icon={IoHomeOutline}
+                                    label="Dashboard"
+                                    routeName="dashboard"
+                                    isSidebarOpen={isSidebarOpen}
+                                />
                             </AdminLink>
                             <AdminLink
                                 href={route("category.index")}
                                 active={route().current("category.index")}
-                                className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
+                                className=" rounded-lg transition-colors px-4 py-3"
                             >
-                                <div className="flex items-center space-x-5">
-                                    {!isSidebarOpen && (
-                                        <div className="ml-1.5 ">
-                                            <BiCategory
-                                                className={`w-5 h-5 ${route().current(
-                                                    "category.index"
-                                                )
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                        </div>
-                                    )}
-                                    {isSidebarOpen && (
-                                        <>
-                                            <BiCategory
-                                                className={`w-5 h-5 ${route().current(
-                                                    "category.index"
-                                                )
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                            <span>Category</span>
-                                        </>
-                                    )}
-                                </div>
-                                {isSidebarOpen && (
-                                    <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 ${route().current("category.index")
-                                            ? "text-white"
-                                            : "text-slate-900"
-                                            }`}
-                                    />
-                                )}
+                                <SidebarItem
+                                    icon={BiCategory}
+                                    label="Category"
+                                    routeName="category.index"
+                                    isSidebarOpen={isSidebarOpen}
+                                />
                             </AdminLink>
-
                             <AdminLink
                                 href={route("seller.index")}
                                 active={route().current("seller.index")}
-                                className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
+                                className=" rounded-lg transition-colors px-4 py-3"
                             >
-                                <div className="flex items-center space-x-5">
-                                    {!isSidebarOpen && (
-                                        <div className="ml-1.5 ">
-                                            <FaRegUser
-                                                className={`w-5 h-5 ${route().current(
-                                                    "seller.index"
-                                                )
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                        </div>
-                                    )}
-                                    {isSidebarOpen && (
-                                        <>
-                                            <FaRegUser
-                                                className={`w-5 h-5 ${route().current(
-                                                    "seller.index"
-                                                )
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                            <span>Sellers</span>
-                                        </>
-                                    )}
-                                </div>
-                                {isSidebarOpen && (
-                                    <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 font-semibold ${route().current("seller.index")
-                                            ? "text-white"
-                                            : "text-slate-900"
-                                            }`}
-                                    />
-                                )}
+                                <SidebarItem
+                                    icon={FaRegUser}
+                                    label="Sellers"
+                                    routeName="seller.index"
+                                    isSidebarOpen={isSidebarOpen}
+                                />
                             </AdminLink>
                             <AdminLink
                                 href={route("shipping.index")}
                                 active={route().current("shipping.index")}
-                                className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
+                                className="rounded-lg transition-colors px-4 py-3"
                             >
-                                <div className="flex items-center space-x-5">
-                                    {!isSidebarOpen && (
-                                        <div className="ml-1.5 ">
-                                            <LiaShippingFastSolid
-                                                className={`w-5 h-5 ${route().current(
-                                                    "shipping.index"
-                                                )
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                        </div>
-                                    )}
-                                    {isSidebarOpen && (
-                                        <>
-                                            <LiaShippingFastSolid
-                                                className={`w-5 h-5 ${route().current(
-                                                    "shipping.index"
-                                                )
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                            <span>Shipping Rates</span>
-                                        </>
-                                    )}
-                                </div>
-                                {isSidebarOpen && (
-                                    <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 font-semibold ${route().current("shipping.index")
-                                            ? "text-white"
-                                            : "text-slate-900"
-                                            }`}
-                                    />
-                                )}
+                                <SidebarItem
+                                    icon={LiaShippingFastSolid}
+                                    label="Shipping Rates"
+                                    routeName="shipping.index"
+                                    isSidebarOpen={isSidebarOpen}
+                                />
                             </AdminLink>
                             <AdminLink
-                                href={route("shipping.salesReport")}
-                                active={route().current("shipping.salesReport")}
-                                className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
+                                href={route("admin.salesReport")}
+                                active={route().current("admin.salesReport")}
+                                className=" rounded-lg transition-colors px-4 py-3"
                             >
-                                <div className="flex items-center space-x-5">
-                                    {!isSidebarOpen && (
-                                        <div className="ml-1.5 ">
-                                            <IoAnalyticsOutline
-                                                className={`w-5 h-5 ${route().current(
-                                                    "shipping.salesReport"
-                                                )
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                        </div>
-                                    )}
-                                    {isSidebarOpen && (
-                                        <>
-                                            <IoAnalyticsOutline
-                                                className={`w-5 h-5 ${route().current(
-                                                    "shipping.salesReport"
-                                                )
-                                                    ? "text-white"
-                                                    : "text-slate-900"
-                                                    }`}
-                                            />
-                                            <span>Sales Report</span>
-                                        </>
-                                    )}
-                                </div>
-                                {isSidebarOpen && (
-                                    <MdOutlineKeyboardArrowRight
-                                        className={`w-5 h-5 font-semibold ${route().current("shipping.salesReport")
-                                            ? "text-white"
-                                            : "text-slate-900"
-                                            }`}
-                                    />
-                                )}
+                                <SidebarItem
+                                    icon={IoAnalyticsOutline}
+                                    label="Sales Report"
+                                    routeName="admin.salesReport"
+                                    isSidebarOpen={isSidebarOpen}
+                                />
+                            </AdminLink>
+                            <AdminLink
+                                href={route("profile.edit")}
+                                active={route().current("profile.edit")}
+                                className=" rounded-lg transition-colors px-4 py-3"
+                            >
+                                <SidebarItem
+                                    icon={RiUserSettingsLine}
+                                    label="Settings"
+                                    routeName="profile.edit"
+                                    isSidebarOpen={isSidebarOpen}
+                                />
                             </AdminLink>
                         </div>
                     </div>
@@ -276,41 +146,9 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             method="post"
                             as="button"
                             active={route().current("logout")}
-                            className="flex items-center justify-between rounded-lg transition-colors px-4 py-3"
+                            className=" rounded-lg transition-colors px-4 py-3"
                         >
-                            <div className="flex items-center space-x-5">
-                                {!isSidebarOpen && (
-                                    <div className="ml-1.5">
-                                        <LuLogOut
-                                            className={`w-5 h-5 ${route().current("logout")
-                                                ? "text-white"
-                                                : "text-red-600"
-                                                }`}
-                                        />
-                                    </div>
-                                )}
-                                {isSidebarOpen && (
-                                    <>
-                                        <LuLogOut
-                                            className={`w-5 h-5 ${route().current("logout")
-                                                ? "text-white"
-                                                : "text-red-600"
-                                                }`}
-                                        />
-                                        <span className=" text-red-600">
-                                            Logout
-                                        </span>
-                                    </>
-                                )}
-                            </div>
-                            {isSidebarOpen && (
-                                <MdOutlineKeyboardArrowRight
-                                    className={`w-5 h-5 ${route().current("logout")
-                                        ? "text-white"
-                                        : "text-red-600"
-                                        }`}
-                                />
-                            )}
+                            <SidebarLogoutItem isSidebarOpen={isSidebarOpen} />
                         </AdminLink>
                     </div>
                 </div>
@@ -328,6 +166,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                 )}
                 <main className="px-4  sm:px-6">{children}</main>
             </div>
-        </div>
+        </div >
     );
 }

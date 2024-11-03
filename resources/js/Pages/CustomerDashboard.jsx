@@ -64,7 +64,7 @@ export default function CustomerDashboard({ auth, category, products }) {
                                         repellat!
                                     </p>
                                     <Link href={route("customer.products")}>
-                                        <button className="shop-button sm:self-start self-center px-8 py-3 rounded-full text-white font-semibold flex items-center bg-slate-800">
+                                        <button className="shop-button sm:self-start self-center px-8 py-3 rounded-2xl text-white font-semibold flex items-center bg-slate-800">
                                             Shop Now{" "}
                                             <HiMiniArrowLongRight className="ml-2" />
                                         </button>
@@ -109,7 +109,7 @@ export default function CustomerDashboard({ auth, category, products }) {
                                                         </p>
                                                         <Link
                                                             href={`/category/${cat.id}/products`}
-                                                            className="inline-flex items-center px-4 sm:px-6 py-2 rounded-lg text-white bg-slate-800"
+                                                            className="inline-flex items-center px-4 sm:px-6 py-2 rounded-2xl text-white bg-slate-800"
                                                         >
                                                             <span className="mr-2">
                                                                 View Products

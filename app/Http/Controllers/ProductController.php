@@ -38,7 +38,7 @@ class ProductController extends Controller
     public function products (){
         $query = Category::query();
         $category = $query->paginate(4);
-        $products = Product::with('images')->paginate(6);
+        $products = Product::with('images')->paginate(9);
         return Inertia::render('Customer/Products', [
             'success' => session('success'),
             'category' => CategoryResource::collection($category),

@@ -47,19 +47,9 @@ export default function SellerCreate({ auth }) {
                     </Link>
                     <div className="  bg-slate-50 bg-opacity-80  backdrop-blur-lg   overflow-hidden shadow-sm rounded-3xl p-6 ">
                         <form onSubmit={submit}>
-                            <div className="flex justify-between items-center mb-6">
-                                <h1 className="text-2xl font-semibold text-gray-800">
-                                    Create Seller
-                                </h1>
-                                <button
-                                    type="submit"
-                                    disabled={processing}
-                                    className="bg-slate-800 text-white font-bold px-4 py-2 rounded focus:outline-none focus:shadow-outline flex items-center"
-                                >
-                                    <IoCreateOutline className="mr-2" /> Create
-                                    Seller
-                                </button>
-                            </div>
+                            <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+                                Create Seller
+                            </h1>
                             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">
                                 <div className="mb-4">
                                     <InputLabel className="mb-2" htmlFor="name">
@@ -72,6 +62,7 @@ export default function SellerCreate({ auth }) {
                                         onChange={(e) =>
                                             setData("name", e.target.value)
                                         }
+                                        placeholder="Enter seller name"
                                     />
                                     {errors.name && (
                                         <p className="text-red-500 text-xs mt-1">
@@ -93,6 +84,7 @@ export default function SellerCreate({ auth }) {
                                         onChange={(e) =>
                                             setData("address", e.target.value)
                                         }
+                                        placeholder="Enter seller address"
                                     />
                                     {errors.address && (
                                         <p className="text-red-500 text-xs mt-1">
@@ -119,6 +111,7 @@ export default function SellerCreate({ auth }) {
                                                 e.target.value
                                             )
                                         }
+                                        placeholder="Enter contact number"
                                     />
                                     {errors.contact_number && (
                                         <p className="text-red-500 text-xs mt-1">
@@ -140,6 +133,7 @@ export default function SellerCreate({ auth }) {
                                         onChange={(e) =>
                                             setData("email", e.target.value)
                                         }
+                                        placeholder="Enter seller email"
                                         className=" appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                                     />
                                     {errors.email && (
@@ -149,6 +143,13 @@ export default function SellerCreate({ auth }) {
                                     )}
                                 </div>
                             </div>
+                            <button
+                                type="submit"
+                                disabled={processing}
+                                className="bg-slate-800 text-center w-full text-white font-bold px-4 py-2 rounded-2xl focus:outline-none focus:shadow-outline "
+                            >
+                                Create Seller
+                            </button>
                         </form>
                     </div>
                 </DivContainer>

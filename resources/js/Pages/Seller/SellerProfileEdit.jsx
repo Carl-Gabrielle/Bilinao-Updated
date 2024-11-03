@@ -1,26 +1,35 @@
-import React from "react";
 import { Head, useForm, Link } from "@inertiajs/react";
+import { FaRegUser } from "react-icons/fa";
+import React, { useState, useEffect } from "react";
+import { IoCameraOutline } from "react-icons/io5";
 import SellerLayout from "@/Layouts/SellerLayout";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import SellerInput from "@/Components/SellerInput";
 export default function SellerProfileEdit({ seller }) {
-    const { data, setData, post, processing, errors, reset, progress } =
-        useForm({
-            name: seller.name || "",
-            address: seller.address || "",
-            contact_number: seller.contact_number || "",
-            email: seller.email || "",
-            image_path: seller.image_path || "",
-            _method: "PUT",
-        });
+    const [previewImage, setPreviewImage] = useState(seller.image_path || "/images/default-profile.png");
+
+    const { data, setData, post, processing, errors, reset, progress } = useForm({
+        name: seller.name || "",
+        address: seller.address || "",
+        contact_number: seller.contact_number || "",
+        email: seller.email || "",
+        image_path: seller.image_path || "",
+        _method: "PUT",
+    });
+
+    function handleFileChange(e) {
+        const file = e.target.files[0];
+        if (file) {
+            setPreviewImage(URL.createObjectURL(file));
+            setData("profile_picture", file);
+        }
+    }
+
     function handleSubmit(e) {
         e.preventDefault();
-
-        // Submit form data using multipart/form-data
         post(route("seller.storeProfile"), {
             forceFormData: true,
             onSuccess: () => {
-                // Redirect to profile page after successful update
                 window.location.href = route("seller.profile");
             },
         });
@@ -29,7 +38,7 @@ export default function SellerProfileEdit({ seller }) {
     return (
         <SellerLayout user={seller}>
             <Head title="Edit Profile" />
-            <div className="container mx-auto px-4 py-8">
+            <div className="max-w-3xl mx-auto px-4 py-8">
                 <Link
                     href={route("seller.profile")}
                     className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
@@ -39,32 +48,34 @@ export default function SellerProfileEdit({ seller }) {
                 </Link>
                 <div className="bg-slate-100 shadow-lg rounded-3xl p-6">
                     <form onSubmit={handleSubmit} encType="multipart/form-data">
-                        <h2 className="text-2xl font-semibold mb-6">
-                            Edit Profile
-                        </h2>
-                        <div className="mb-4">
-                            <img
-                                src={
-                                    seller.image_path ||
-                                    "/images/default-profile.png"
-                                }
-                                alt="Profile"
-                                className="w-32 h-32 object-cover rounded-full border-4 border-slate-300 shadow-md mb-4"
-                            />
-                            <label className="block text-sm font-medium text-gray-700">
-                                Profile Picture
-                            </label>{" "}
-                            <SellerInput
+                        <div className="flex items-center">
+                            <div className="bg-slate-100 mr-2 p-2 rounded-md inline-block">
+                                <FaRegUser />
+                            </div>
+                            <h2 className="text-lg font-medium text-primary">
+                                Profile
+                            </h2>
+                        </div>
+                        <div className="relative flex items-center justify-center mb-4 ">
+                            <label htmlFor="profile-picture" className="cursor-pointer">
+                                <img
+                                    src={previewImage}
+                                    alt="Profile Image"
+                                    className="w-32 h-32 mt-4 rounded-full border-4 border-primary overflow-hidden flex justify-center items-center text-gray-500 bg-gray-200 shadow-lg object-cover"
+                                />
+                                <div className="absolute bottom-1 right-72 sm:block hidden text-white bg-primary p-1 rounded-full">
+                                    <IoCameraOutline />
+                                </div>
+                            </label>
+                            <input
+                                id="profile-picture"
                                 type="file"
-                                onChange={(e) =>
-                                    setData(
-                                        "profile_picture",
-                                        e.target.files[0]
-                                    )
-                                }
+                                className="hidden"
+                                onChange={handleFileChange}
+                                accept="image/*"
                             />
                             {errors.profile_picture && (
-                                <div className="text-red-600">
+                                <div className="text-red-600 text-sm mt-2">
                                     {errors.profile_picture}
                                 </div>
                             )}
@@ -87,7 +98,6 @@ export default function SellerProfileEdit({ seller }) {
                                     </div>
                                 )}
                             </div>
-
                             <div className="mb-4">
                                 <label className="block text-sm font-medium text-gray-700">
                                     Address
@@ -128,18 +138,15 @@ export default function SellerProfileEdit({ seller }) {
                                 <label className="block text-sm font-medium text-gray-700">
                                     Email
                                 </label>
-                                <SellerInput
-                                    type="email"
+                                <input
+                                    type="text"
                                     value={data.email}
-                                    onChange={(e) =>
-                                        setData("email", e.target.value)
-                                    }
+                                    readOnly
+                                    className="focus:outline-none focus:ring-0 border  focus:border-primary focus:border   py-2 px-4 w-full rounded-2xl  border-gray-500 bg-slate-300"
                                 />
-                                {errors.email && (
-                                    <div className="text-red-600">
-                                        {errors.email}
-                                    </div>
-                                )}
+                                <label className="block text-sm  text-gray-700">
+                                    Email cannot be changed
+                                </label>
                             </div>
                         </div>
                         <button

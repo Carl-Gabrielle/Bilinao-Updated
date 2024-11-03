@@ -33,7 +33,6 @@ export default function Edit({ auth, category }) {
             reader.readAsDataURL(file);
         }
     };
-
     return (
         <>
             <AuthenticatedLayout user={auth.user}>
@@ -50,18 +49,9 @@ export default function Edit({ auth, category }) {
                         onSubmit={onSubmit}
                         className="p-6 bg-slate-50 bg-opacity-80  backdrop-blur-lg    rounded-3xl"
                     >
-                        <div className="flex justify-between items-center mb-6">
-                            <h1 className="text-2xl font-semibold text-gray-800">
-                                Edit Category
-                            </h1>
-                            <button
-                                type="submit"
-                                className="flex items-center px-4 py-2 bg-slate-800  text-white text-sm font-medium rounded-md transition-all duration-200"
-                                disabled={processing}
-                            >
-                                <RxUpdate className="mr-2" /> Update Category
-                            </button>
-                        </div>
+                        <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+                            Edit Category
+                        </h1>
                         {imagePreview && (
                             <div className="mb-4">
                                 <img
@@ -108,6 +98,13 @@ export default function Edit({ auth, category }) {
                                 />
                             </div>
                         </div>
+                        <button
+                            type="submit"
+                            className="text-center px-4 py-3 bg-slate-800  text-white text-sm font-medium rounded-2xl transition-all duration-200 w-full"
+                            disabled={processing}
+                        >
+                            Update Category
+                        </button>
                     </form>
                 </DivContainer>
             </AuthenticatedLayout>

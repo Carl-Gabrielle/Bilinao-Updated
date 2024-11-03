@@ -6,6 +6,7 @@ use App\Http\Resources\CategoryResource;
 use App\Models\Product;
 use App\Http\Requests\ProfileUpdateRequest;
 use Inertia\Response;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Contracts\Auth\MustVerifyEmail;
 use Illuminate\Support\Facades\Redirect;
 use Illuminate\Http\RedirectResponse;
@@ -85,17 +86,40 @@ class CustomerController extends Controller
     return Inertia::render('Customer/ProfileIndex');
     }
     public function update(ProfileUpdateRequest $request)
-    {
-        $request->user()->fill($request->validated());
+{
+    $user = $request->user(); 
+    $data = $request->validated();
+    unset($data['email']);
 
-        if ($request->user()->isDirty('email')) {
-            $request->user()->email_verified_at = null;
+  
+    if ($request->hasFile('profile_photo_path')) {
+        $imagePath = $request->file('profile_photo_path')->store('profile_photos', 'public');
+
+   
+        if ($user->profile_photo_path) {
+            Storage::disk('public')->delete($user->profile_photo_path);
         }
 
-        $request->user()->save();
-
-        return Inertia::render('Customer/ProfileIndex');
+        
+        $data['profile_photo_path'] = $imagePath; 
     }
+
+   
+    $user->update([
+        'name' => $data['name'],
+        'phone_number' => $data['phone_number'],
+        'profile_photo_path' => $data['profile_photo_path'] ?? $user->profile_photo_path,
+    ]);
+    
+
+   
+    return Inertia::render('Customer/ProfileIndex', [
+        'user' => $user,
+    ]);
+}
+
+    
+    
     public function review()
     {
     return Inertia::render('Customer/Review');

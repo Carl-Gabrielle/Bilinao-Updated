@@ -63,13 +63,11 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/shipping', [ShippingController::class, 'index'])->name('shipping.index');
         Route::get('/shipping/{id}/edit', [ShippingController::class, 'edit'])->name('shipping.edit');
         Route::put('/shipping/{id}', [ShippingController::class, 'update'])->name('shipping.update');
-        Route::get('/sales-report', [SalesReportController::class, 'salesReport'])->name('shipping.salesReport');
-        Route::resource('category', CategoryController::class);
-        Route::resource('seller', SellerController::class);
-    });
-    Route::middleware('admin')->group(function () {
+        Route::get('/sales-report', [SalesReportController::class, 'salesReport'])->name('admin.salesReport');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::resource('category', CategoryController::class);
+        Route::resource('seller', SellerController::class);
     });
     // CUSTOMER ROUTES
     Route::middleware('customer')->group(function () {

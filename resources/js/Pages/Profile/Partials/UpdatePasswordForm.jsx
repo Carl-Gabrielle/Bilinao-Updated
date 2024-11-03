@@ -1,6 +1,7 @@
 import { useRef } from 'react';
 import InputError from '@/Components/InputError';
 import InputLabel from '@/Components/InputLabel';
+import { MdOutlineSecurity } from "react-icons/md";
 import PrimaryButton from '@/Components/PrimaryButton';
 import { useForm } from '@inertiajs/react';
 import { Transition } from '@headlessui/react';
@@ -27,7 +28,6 @@ export default function UpdatePasswordForm({ className = '' }) {
                     reset('password', 'password_confirmation');
                     passwordInput.current.focus();
                 }
-
                 if (errors.current_password) {
                     reset('current_password');
                     currentPasswordInput.current.focus();
@@ -37,19 +37,23 @@ export default function UpdatePasswordForm({ className = '' }) {
     };
 
     return (
-        <section className={className}>
+        <section >
             <header>
-                <h2 className="text-lg font-medium text-gray-900">Update Password</h2>
-
+                <div className="flex items-center">
+                    <div className="bg-slate-100 mr-2 p-2 rounded-md inline-block">
+                        <MdOutlineSecurity />
+                    </div>
+                    <h2 className="text-lg font-medium text-primary">
+                        Security
+                    </h2>
+                </div>
                 <p className="mt-1 text-sm text-gray-600">
                     Ensure your account is using a long, random password to stay secure.
                 </p>
             </header>
-
             <form onSubmit={updatePassword} className="mt-6 space-y-6">
                 <div>
                     <InputLabel htmlFor="current_password" value="Current Password" />
-
                     <InformationInput
                         id="current_password"
                         ref={currentPasswordInput}
@@ -58,14 +62,13 @@ export default function UpdatePasswordForm({ className = '' }) {
                         type="password"
                         className="mt-1 block w-full"
                         autoComplete="current-password"
+                        placeholder="Enter your current password"
+                        required
                     />
-
                     <InputError message={errors.current_password} className="mt-2" />
                 </div>
-
                 <div>
                     <InputLabel htmlFor="password" value="New Password" />
-
                     <InformationInput
                         id="password"
                         ref={passwordInput}
@@ -74,14 +77,13 @@ export default function UpdatePasswordForm({ className = '' }) {
                         type="password"
                         className="mt-1 block w-full"
                         autoComplete="new-password"
+                        placeholder="Enter your new password"
+                        required
                     />
-
                     <InputError message={errors.password} className="mt-2" />
                 </div>
-
                 <div>
                     <InputLabel htmlFor="password_confirmation" value="Confirm Password" />
-
                     <InformationInput
                         id="password_confirmation"
                         value={data.password_confirmation}
@@ -89,14 +91,13 @@ export default function UpdatePasswordForm({ className = '' }) {
                         type="password"
                         className="mt-1 block w-full"
                         autoComplete="new-password"
+                        placeholder="Confirm new password"
+                        required
                     />
-
                     <InputError message={errors.password_confirmation} className="mt-2" />
                 </div>
-
                 <div className="flex items-center gap-4">
                     <PrimaryButton disabled={processing}>Update Password</PrimaryButton>
-
                     <Transition
                         show={recentlySuccessful}
                         enter="transition ease-in-out"
