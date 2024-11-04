@@ -8,17 +8,19 @@ use App\Models\OrderItem;
 use Illuminate\Support\Facades\Auth;
 class CustomerOrderController extends Controller
 {
-    public function orders() {
+    public function orders()
+    {
         $orders = Order::with('orderItems')
             ->where('user_id', Auth::id())
             ->get();
-    
+
+
         return Inertia::render('Customer/Orders', [
             'orders' => $orders,
         ]);
     }
 
-// public  function  toPayOrders(){
+    // public  function  toPayOrders(){
 //     return Inertia::render('Customer/ToPay');
 // }
 // public  function  toShipOrders(){

@@ -11,10 +11,24 @@ import ToReceive from "./ToReceive";
 import Received from "./Received";
 
 const Orders = ({ auth, orders = [] }) => {
-    const toPayOrders = orders.filter(order => order.status === 'To Pay');
-    const toShipOrders = orders.filter(order => order.status === 'To Ship');
-    const toReceiveOrders = orders.filter(order => order.status === 'To Receive');
-    const receivedOrders = orders.filter(order => order.status === 'Received');
+    const toPayOrders = orders.filter(order => order.remarks == 'to pay')
+    const toShipOrders = orders.filter(order => order.remarks === 'paid'
+        && order.order_items.some(
+            item => item.processing_date !== null && item.shipped_date == null && item.shipped_date == null && item.delivered_date == null
+        )
+    );
+
+    const toReceiveOrders = orders.filter(order => order.remarks === 'paid'
+        && order.order_items.some(
+            item => item.processing_date || item.shipped_date || item.shipped_date && item.delivered_date == null
+        )
+    );
+
+    const receivedOrders = orders.filter(order => order.remarks === 'paid'
+        && order.order_items.some(
+            item => item.processing_date && item.shipped_date && item.shipped_date && item.delivered_date
+        )
+    ); orders.filter(order => order.status === 'Received');
 
     const [activeStatus, setActiveStatus] = useState(() => {
         return localStorage.getItem("activeStatus") || "To Pay";
@@ -25,12 +39,14 @@ const Orders = ({ auth, orders = [] }) => {
         localStorage.setItem("activeStatus", status);
     };
 
+
+
     const renderOrderDetails = () => {
         const orderComponents = {
-            "To Pay": <ToPay orders={toPayOrders} />,
-            "To Ship": <ToShip orders={toShipOrders} />,
-            "To Receive": <ToReceive orders={toReceiveOrders} />,
-            "Received": <Received orders={receivedOrders} />,
+            "To Pay": <ToPay toPay={toPayOrders} />,
+            "To Ship": <ToShip toShipData={toShipOrders} />,
+            "To Receive": <ToReceive toReceiveData={toReceiveOrders} />,
+            "Received": <Received toReceivedData={receivedOrders} />,
         };
         return orderComponents[activeStatus] || <div>No orders found for this status.</div>;
     };
@@ -67,7 +83,7 @@ const Orders = ({ auth, orders = [] }) => {
                             Below is a list of your current order statuses. Click on each status to filter and view the corresponding orders.
                         </p>
                     </div>
-                    <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mb-8">
+                    <div className="grid grid-cols-1 gap-4 mb-8 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4">
                         {orderStatuses.map((status) => (
                             <OrderStatus
                                 key={status}
@@ -77,7 +93,7 @@ const Orders = ({ auth, orders = [] }) => {
                             />
                         ))}
                     </div>
-                    <div className="bg-slate-50 bg-opacity-65 backdrop-blur-lg p-6 rounded-lg shadow-md text-slate-900">
+                    <div className="p-6 rounded-lg shadow-md bg-slate-50 bg-opacity-65 backdrop-blur-lg text-slate-900">
                         {renderOrderDetails()}
                     </div>
                 </CustomerContainer>

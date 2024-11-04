@@ -3,31 +3,32 @@ import { FaPesoSign } from "react-icons/fa6";
 import logo from "../Illustrations/LOGO.png";
 import { Link } from "@inertiajs/react";
 
-export default function Received() {
+export default function Received({ toReceivedData }) {
+    console.log('to received data = ', toReceivedData)
     return (
         <div className="px-1">
             <div>
                 <div className="flex items-center space-x-3">
-                    <h2 className="text-md flex font-semibold text-slate-800">
+                    <h2 className="flex font-semibold text-md text-slate-800">
                         Delivered Orders
                     </h2>
-                    <span className="px-3 py-1 text-green-800 bg-green-500 bg-opacity-30 backdrop-blur-md  text-sm font-medium rounded-md">
+                    <span className="px-3 py-1 text-sm font-medium text-green-800 bg-green-500 rounded-md bg-opacity-30 backdrop-blur-md">
                         1
                     </span>
                 </div>
-                <p className=" text-slate-600  text-xs">
+                <p className="text-xs  text-slate-600">
                     Your order has been successfully delivered. We hope you
                     enjoy your purchase!
                 </p>
-                <hr className="border-slate-300 my-2" />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-                    <div className="col-span-2 h-28  flex items-center justify-between border border-slate-400 p-2 rounded-lg mt-2 ">
+                <hr className="my-2 border-slate-300" />
+                <div className="grid grid-cols-1 gap-4 md:grid-cols-2 lg:grid-cols-3">
+                    <div className="flex items-center justify-between col-span-2 p-2 mt-2 border rounded-lg h-28 border-slate-400 ">
                         <img
                             src={logo}
                             alt=""
-                            className="sm:size-20 size-10 object-cover rounded "
+                            className="object-cover rounded sm:size-20 size-10 "
                         />
-                        <div className=" ml-4 text-md text-slate-800  font-medium">
+                        <div className="ml-4 font-medium  text-md text-slate-800">
                             <h3> Vases for home decoration</h3>
                             <span className="text-sm">Qty.1 </span>
                         </div>
@@ -38,8 +39,8 @@ export default function Received() {
                             </span>
                         </div>
                     </div>
-                    <div className="  border border-slate-400 p-3 rounded-lg mt-2">
-                        <div className="flex  justify-between pb-2">
+                    <div className="p-3 mt-2 border rounded-lg  border-slate-400">
+                        <div className="flex justify-between pb-2">
                             <span className="font-semibold">Subtotal</span>
                             <span>
                                 {" "}
@@ -47,7 +48,7 @@ export default function Received() {
                                 600
                             </span>
                         </div>
-                        <div className="flex  justify-between border-b pb-4 border-slate-300 ">
+                        <div className="flex justify-between pb-4 border-b border-slate-300 ">
                             <span>Shipping Fee</span>
                             <span>
                                 {" "}
@@ -55,7 +56,7 @@ export default function Received() {
                                 325
                             </span>
                         </div>
-                        <div className="flex  justify-between pt-2 text-lg font-bold">
+                        <div className="flex justify-between pt-2 text-lg font-bold">
                             <span>Order Total</span>
                             <span>
                                 {" "}
@@ -63,9 +64,9 @@ export default function Received() {
                                 600
                             </span>
                         </div>
-                        <div className="pt-5 space-x-3 flex items-center justify-end">
+                        <div className="flex items-center justify-end pt-5 space-x-3">
                             <Link href={route("customer.review")}>
-                                <button className="px-3 py-1  rounded-md text-slate-50 bg-slate-800  text-sm font-medium">
+                                <button className="px-3 py-1 text-sm font-medium rounded-md text-slate-50 bg-slate-800">
                                     Review
                                 </button>
                             </Link>

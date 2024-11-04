@@ -1,9 +1,11 @@
 import React from "react";
 
-export default function ToReceive() {
+export default function ToReceive({ toReceiveData }) {
+
+    console.log('to received data= ', toReceiveData)
     return (
         <div>
-            <h2 className="text-md font-semibold text-slate-800">
+            <h2 className="font-semibold text-md text-slate-800">
                 To Receive Orders
             </h2>
             {/* Add order details here */}
