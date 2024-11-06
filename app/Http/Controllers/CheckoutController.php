@@ -15,30 +15,39 @@ use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
-        public function completeOrders(Request $request)
-        {
+       public function completeOrders(Request $request)
+{
+    $order = Order::where('user_id', Auth::id())
+        ->where('transaction_id', $request->transac_id)
+        ->firstOrFail();
 
-            $order = Order::where('user_id', Auth::id())
-                ->where('transaction_id', $request->transac_id)
-                ->firstOrFail();
+    $checkout = Paymongo::checkout()->find($order->payment_src_id);
 
-            $checkout = Paymongo::checkout()->find($order->payment_src_id);
-            if ($checkout->payments[0]['attributes']['status'] == 'paid') {
-                $order->update([
-                    'remarks' => 'paid'
-                ]);
-            }
-            // If no order exists, redirect the user to the products page
-            if (!$order) {
-                return redirect()->route('customer.products')->with('error', 'No orders found, explore our products.');
-            }
+    if ($checkout->payments[0]['attributes']['status'] == 'paid') {
+        $order->update([
+            'remarks' => 'paid'
+        ]);
+        
+        Notifications::create([
+            'user_id' => Auth::id(),
+            'message' => 'Your order has been placed successfully!',
+            'link' => 'customer.orders',
+            'status' => 'unread',
+        ]);
+    }
 
-            $orderItems = $order->orderItems;
-            return Inertia::render('Customer/CompleteOrders', [
-                'order' => $order,
-                'orderItems' => $orderItems,
-            ]);
-        }
+    if (!$order) {
+        return redirect()->route('customer.products')->with('error', 'No orders found, explore our products.');
+    }
+
+    $orderItems = $order->orderItems;
+
+    return Inertia::render('Customer/CompleteOrders', [
+        'order' => $order,
+        'orderItems' => $orderItems,
+    ]);
+}
+
     public function store(Request $request)
     {
         $request->validate([
@@ -110,13 +119,7 @@ class CheckoutController extends Controller
                 'description' => 'Total shipping fee for order',
             ];
             // dd($line_items);
-            // Create a notification
-            Notifications::create([
-                'user_id' => Auth::id(),
-                'message' => 'Your order has been placed successfully!',
-                'link' => 'customer.orders',
-                'status' => 'unread',
-            ]);
+        
             // dd($line_items);
             $checkout = Paymongo::checkout()->create([
                 'cancel_url' => route('customer.orders'),
@@ -142,7 +145,6 @@ class CheckoutController extends Controller
                 // 'remarks' => $gcashSource->status
             ]);
              // Decrement the stock for each product in the order items
-             
         // foreach ($request->products as $item) {
         //     $product = Product::find((int) $item['product_id']);
         //     $product->decrement('stock', (int) $item['qty']);

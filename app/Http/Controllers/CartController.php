@@ -17,7 +17,7 @@ class CartController extends Controller
      */
     public function carts()
     {
-        $carts = Cart::with('product.images', 'product.seller') // Load seller relationship
+        $carts = Cart::with('product.images', 'product.seller')
             ->where('user_id', Auth::id())
             ->get();
 

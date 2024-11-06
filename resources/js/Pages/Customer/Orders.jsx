@@ -14,19 +14,19 @@ const Orders = ({ auth, orders = [] }) => {
     const toPayOrders = orders.filter(order => order.remarks == 'to pay')
     const toShipOrders = orders.filter(order => order.remarks === 'paid'
         && order.order_items.some(
-            item => item.processing_date !== null && item.shipped_date == null && item.shipped_date == null && item.delivered_date == null
+            item => item.processing_date !== null && (item.picked_date == null || item.picked_date !== null) && (item.shipped_date == null || item.shipped_date !== null) && item.arrived_date == null && item.received_date == null
         )
     );
 
     const toReceiveOrders = orders.filter(order => order.remarks === 'paid'
         && order.order_items.some(
-            item => item.processing_date || item.shipped_date || item.shipped_date && item.delivered_date == null
+            item => item.processing_date !== null && item.picked_date !== null && item.shipped_date !== null && item.arrived_date != null && item.received_date == null
         )
     );
 
     const receivedOrders = orders.filter(order => order.remarks === 'paid'
         && order.order_items.some(
-            item => item.processing_date && item.shipped_date && item.shipped_date && item.delivered_date
+            item => item.processing_date && item.picked_date && item.arrived_date && item.shipped_date && item.received_date
         )
     ); orders.filter(order => order.status === 'Received');
 
@@ -46,7 +46,7 @@ const Orders = ({ auth, orders = [] }) => {
             "To Pay": <ToPay toPay={toPayOrders} />,
             "To Ship": <ToShip toShipData={toShipOrders} />,
             "To Receive": <ToReceive toReceiveData={toReceiveOrders} />,
-            "Received": <Received toReceivedData={receivedOrders} />,
+            "Received": <Received receivedData={receivedOrders} />,
         };
         return orderComponents[activeStatus] || <div>No orders found for this status.</div>;
     };

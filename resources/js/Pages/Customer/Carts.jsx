@@ -183,7 +183,6 @@ export default function Carts({ auth, carts, cartCount }) {
                                                         <MdKeyboardArrowRight />
                                                     </span>
                                                 </Link>
-
                                                 <div className="flex items-center mt-2">
                                                     <CustomCheckbox
                                                         isChecked={checkedItemIds.some(

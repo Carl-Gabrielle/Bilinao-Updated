@@ -10,29 +10,20 @@ class CustomerOrderController extends Controller
 {
     public function orders()
     {
-        $orders = Order::with('orderItems')
+        $orders = Order::with('orderItems.product.images','orderItems.product.seller')
             ->where('user_id', Auth::id())
+            ->orderBy('updated_at', 'asc')
             ->get();
-
-
         return Inertia::render('Customer/Orders', [
             'orders' => $orders,
         ]);
     }
+    public function cancelOrder(){
 
-    // public  function  toPayOrders(){
-//     return Inertia::render('Customer/ToPay');
-// }
-// public  function  toShipOrders(){
-//     return Inertia::render('Customer/ToShip');
-// }
-// public  function  toReceiveOrders(){
-//     return Inertia::render('Customer/ToReceive');
-// }
-// public  function receivedOrders(){
-//     return Inertia::render('Customer/Received');
-// }
+    }
 
-
+    public function completePayment(){
+        
+    }
 
 }

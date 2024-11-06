@@ -125,7 +125,6 @@ export default function RecentOrders({
                                     </tbody>
                                 </table>
                             </div>
-                            {/* Add the Pagination component below the table */}
                             <Pagination links={recentOrders.links} />
                         </div>
                     </div>

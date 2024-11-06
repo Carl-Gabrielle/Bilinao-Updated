@@ -39,7 +39,7 @@ Route::middleware('auth:seller')->group(function () {
     Route::get('seller/profileEdit', [SellerDashboardController::class, 'profileEdit'])->name('seller.profileEdit');
     Route::put('seller/storeProfile', [SellerDashboardController::class, 'update'])->name('seller.storeProfile');
     Route::resource('products', ProductController::class);
-    Route::get('/recentOrders', [SellerOrderController::class, 'recentOrders'])->name('seller.RecentOrders');
+    Route::get('/recent-orders', [SellerOrderController::class, 'recentOrders'])->name('seller.RecentOrders');
     Route::post('/seller/markOrderAsProcessing/{orderId}', [SellerOrderController::class, 'markOrderAsProcessing']);
     Route::post('/seller/markOrderAsPicked/{orderId}', [SellerOrderController::class, 'markOrderAsPicked']);
     Route::post('/seller/markOrderAsArrived/{orderId}', [SellerOrderController::class, 'markOrderAsArrived']);
@@ -94,6 +94,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/toShip', [CustomerOrderController::class, 'toShipOrders'])->name('order.toShip');
         Route::get('/toReceive', [CustomerOrderController::class, 'toReceiveOrders'])->name('order.toReceive');
         Route::get('/received', [CustomerOrderController::class, 'receivedOrders'])->name('order.Received');
+        Route::post('/orders/{order}/cancel', [CustomerOrderController::class, 'cancelOrder'])->name('orders.cancel');
+        Route::post('/orders/{order}/complete', [CustomerOrderController::class, 'completePayment'])->name('orders.complete');
 
         Route::get('/search', [ProductController::class, 'search'])->name('products.search');
         Route::get('/customerProfile/edit', [CustomerController::class, 'edit'])->name('customer.editProfile');

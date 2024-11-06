@@ -305,3 +305,112 @@ export default function ProfileIndex({ auth }) {
         </CustomerLayout>
     );
 }
+
+
+
+
+<div className="mt-8 p-4   rounded-2xl bg-slate-50 transition-all ease-in-out duration-300">
+    <h4 className="text-md font-medium text-primary mb-6">Shipment Tracking</h4>
+    <div className="space-y-2">
+        {receivedDate && (
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between bg-white shadow-sm p-2 rounded-lg space-y-3 lg:space-y-0 lg:space-x-4">
+                <div className="flex items-center space-x-2 bg-slate-100 rounded-md px-3 py-1">
+                    <MdDoneAll className="text-primary text-xs" />
+                    <div className="flex flex-col">
+                        <span className="text-xs font-medium text-primary">Received</span>
+                        <span className="text-[0.6rem] text-green-500 whitespace-nowrap">Delivered to customer</span>
+                    </div>
+                </div>
+                <div className="flex flex-col lg:items-start space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                        <FaCheckCircle className="text-green-500 text-sm    " />
+                        <span className=" text-gray-900 font-semibold">{formatDate(receivedDate)} </span>
+                    </div>
+                    <p className=" text-gray-600 max-w-sm lg:max-w-md">
+                        Your order has been successfully delivered and received. Enjoy your purchase!
+                    </p>
+                </div>
+            </div>
+        )}
+        {arrivedDate && (
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between bg-white shadow-sm p-2 rounded-lg space-y-3 lg:space-y-0 lg:space-x-4">
+                <div className="flex items-center space-x-2 bg-slate-100 rounded-md px-3 py-1">
+                    <MdLocationOn className="text-primary text-xs" />
+                    <div className="flex flex-col">
+                        <span className="text-xs font-medium text-primary">Arrived</span>
+                        <span className="text-[0.6rem] text-purple-500 whitespace-nowrap ">Location</span>
+                    </div>
+                </div>
+                <div className="flex flex-col lg:items-start space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                        <FaCheckCircle className="text-green-500 text-sm    " />
+                        <span className=" text-gray-900 font-semibold">{formatDate(arrivedDate)} </span>
+                    </div>
+                    <p className=" text-gray-600 max-w-sm lg:max-w-md">
+                        Your order is on its way and will arrive to {getBarangay(address)}.
+                    </p>
+                </div>
+            </div>
+        )}
+        {shippedDate && (
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between bg-white shadow-sm p-2 rounded-lg space-y-3 lg:space-y-0 lg:space-x-4">
+                <div className="flex items-center space-x-2 bg-slate-100 rounded-md px-3 py-1">
+                    <LuTruck className="text-primary text-xs" />
+                    <div className="flex flex-col">
+                        <span className="text-xs font-medium text-primary">Shipped</span>
+                        <span className="text-[0.6rem] text-blue-500 whitespace-nowrap">On the way</span>
+                    </div>
+                </div>
+                <div className="flex flex-col lg:items-start space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                        <FaCheckCircle className="text-green-500 text-sm    " />
+                        <span className=" text-gray-900 font-semibold">{formatDate(shippedDate)} </span>
+                    </div>
+                    <p className=" text-gray-600 max-w-sm lg:max-w-md">
+                        Your order has shipped and is on its way to {getMunicipal(address)}.
+                    </p>
+                </div>
+            </div>
+        )}
+        {pickedDate && (
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between bg-white shadow-sm p-2 rounded-lg space-y-3 lg:space-y-0 lg:space-x-4">
+                <div className="flex items-center space-x-2 bg-slate-100 rounded-md px-3 py-1">
+                    <RiHandHeartFill className="text-primary text-xs" />
+                    <div className="flex flex-col">
+                        <span className="text-xs font-medium text-primary">Picked</span>
+                        <span className="text-[0.6rem]  text-yellow-500 whitespace-nowrap">Handled with care</span>
+                    </div>
+                </div>
+                <div className="flex flex-col lg:items-start space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                        <FaCheckCircle className="text-green-500 text-sm    " />
+                        <span className=" text-gray-900 font-semibold">{formatDate(pickedDate)} </span>
+                    </div>
+                    <p className=" text-gray-600 max-w-sm lg:max-w-md">
+                        Your items have been picked and are now prepared for packing and shipment.
+                    </p>
+                </div>
+            </div>
+        )}
+        {processingDate && (
+            <div className="flex flex-col lg:flex-row lg:items-center lg:justify-between bg-white shadow-sm p-2 rounded-lg space-y-3 lg:space-y-0 lg:space-x-4">
+                <div className="flex items-center space-x-2 bg-slate-100 rounded-md px-3 py-1">
+                    <FaHourglassHalf className="text-primary text-xs" />
+                    <div className="flex flex-col">
+                        <span className="text-xs font-medium text-primary">Processing</span>
+                        <span className="text-[0.6rem]  text-red-500 whitespace-nowrap">Awaiting fulfillment</span>
+                    </div>
+                </div>
+                <div className="flex flex-col lg:items-start space-y-1 text-xs">
+                    <div className="flex items-center space-x-2">
+                        <FaCheckCircle className="text-green-500 text-sm    " />
+                        <span className=" text-gray-900 font-semibold">{formatDate(processingDate)} </span>
+                    </div>
+                    <p className=" text-gray-600 max-w-sm lg:max-w-md">
+                        Your order is currently being processed and prepared for the next steps. We’ll update you as soon as it progresses.
+                    </p>
+                </div>
+            </div>
+        )}
+    </div>
+</div>

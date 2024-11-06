@@ -231,11 +231,7 @@ export default function Products({ products, auth, success, category }) {
                             <Pagination links={products.links} />
                         </div>
                     </div>
-                    <div>
-                        <h1 className="text-2xl font-medium text-slate-900 uppercase tracking-wider leading-relaxed mb-6 mt-10">
-                            Categories
-                        </h1>
-                    </div>
+
                 </CustomerContainer>
             </div>
         </CustomerLayout>

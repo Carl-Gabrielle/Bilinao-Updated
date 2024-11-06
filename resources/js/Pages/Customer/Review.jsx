@@ -51,12 +51,11 @@ export default function Review({ auth, products }) {
                                                 <FaStar
                                                     key={index}
                                                     size={30}
-                                                    className={`cursor-pointer ${
-                                                        currentRating <=
+                                                    className={`cursor-pointer ${currentRating <=
                                                         (hover || rating)
-                                                            ? "text-yellow-400 transition duration-100 ease-in-out"
-                                                            : "text-gray-400"
-                                                    }`}
+                                                        ? "text-yellow-400 transition duration-100 ease-in-out"
+                                                        : "text-gray-400"
+                                                        }`}
                                                     onClick={() =>
                                                         setRating(currentRating)
                                                     }
@@ -81,7 +80,7 @@ export default function Review({ auth, products }) {
                                 />
                                 {/* Submit Button */}
                                 <button
-                                    className="w-full bg-slate-800 text-white py-2 rounded-lg font-semibold "
+                                    className="w-full bg-slate-800 text-white py-2 rounded-2xl font-semibold "
                                     onClick={handleSubmit}
                                 >
                                     Submit Review
