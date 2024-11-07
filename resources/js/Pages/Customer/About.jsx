@@ -53,49 +53,6 @@ export default function About({ auth }) {
                         worldwide audience that values the skill and cultural
                         importance behind each handmade piece.
                     </p>
-                    {/* bg-gradient-to-r from-blue-50 to-blue-100 */}
-                    <div className="py-10 w-full h-auto mb-10 ">
-                        <div className="grid grid-cols-1 md:grid-cols-2 sm:gap-20 gap-6 items-center">
-                            <div className="order-1 md:order-2 h-72 w-full bg-slate-50 rounded-md"></div>
-                            <div className="order-2 md:order-1 text-center md:text-left">
-                                <div className="flex items-center space-x-3">
-                                    <hr className="w-28 border  border-slate-500 mb-6" />
-                                    <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
-                                        Mission
-                                    </h1>
-                                </div>
-                                <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
-                                    Our Mission
-                                </h1>
-                                <p className="text-md leading-8 max-w-3xl mx-auto md:mx-0 tracking-wide">
-                                    To promote and preserve the traditional
-                                    handicrafts of Bolinao while supporting
-                                    local artisans
-                                </p>
-                            </div>
-                        </div>
-                    </div>
-                    <div className="py-10 w-full h-auto mb-10 ">
-                        <div className="grid grid-cols-1 md:grid-cols-2 sm:gap-20 gap-6 items-center">
-                            <div className="order-2 md:order-1 h-72 w-full bg-slate-50 rounded-md"></div>
-                            <div className="order-1 md:order-2 text-center md:text-left">
-                                <div className="flex items-center space-x-3">
-                                    <hr className="w-28 border  border-slate-500 mb-6" />
-                                    <h1 className=" font-bold text text-3xl mb-6 uppercase tracking-widest">
-                                        Vision
-                                    </h1>
-                                </div>
-                                <h1 className="text-2xl sm:text-2xl lg:text-4xl font-bold text-slate-800 mb-6 uppercase tracking-wide">
-                                    Our Vision
-                                </h1>
-                                <p className="text-md leading-8 max-w-3xl mx-auto md:mx-0 tracking-wide">
-                                    To become the leading platform for Bolinao's
-                                    handcrafted products, recognized globally
-                                    for quality and authenticity
-                                </p>
-                            </div>
-                        </div>
-                    </div>
                 </CustomerContainer>
                 <div className=" w-full h-auto mb-10 bg-slate-200 py-10">
                     <div className="max-w-5xl mx-auto px-6 py-5 ">

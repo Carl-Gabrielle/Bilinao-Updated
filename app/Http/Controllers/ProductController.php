@@ -6,6 +6,7 @@ use App\Http\Requests\StoreProductRequest;
 use App\Http\Requests\UpdateProductRequest;
 use App\Http\Resources\CategoryResource;
 use Inertia\Inertia;
+use App\Models\Review;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -124,19 +125,41 @@ class ProductController extends Controller
     public function show(Product $product)
     {
         $product->load(['images', 'category', 'seller']);
-
+    
+        // Load reviews with user information
+        $reviews = Review::where('product_id', $product->id)
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    
+        // Calculate average rating
+        $averageRating = $reviews->avg('rate') ?? 0;
+        
+        // Calculate star distribution
+        $ratingDistribution = [
+            5 => $reviews->where('rate', 5)->count(),
+            4 => $reviews->where('rate', 4)->count(),
+            3 => $reviews->where('rate', 3)->count(),
+            2 => $reviews->where('rate', 2)->count(),
+            1 => $reviews->where('rate', 1)->count(),
+        ];
+    
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
             ->with('images')
             ->take(4)
             ->get();
-
+    
         return Inertia::render('Customer/ProductDetails', [
             'product' => $product,
-            'success' => session('success'),
+            'averageRating' => round($averageRating, 1),
+            'ratingDistribution' => $ratingDistribution,
+            'reviews' => $reviews,
             'relatedProducts' => $relatedProducts,
+            'success' => session('success'),
         ]);
     }
+    
 
 
 

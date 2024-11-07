@@ -84,24 +84,25 @@ export default function ToReceive({ receivedData }) {
                                                                 {item.price}
                                                             </div>
                                                         </div>
+                                                        <ShippingDetails
+                                                            shippingFee={order.shipping_fee}
+                                                            subtotal={subtotal}
+                                                            total={order.amount}
+                                                        />
+                                                        <div className="flex items-center justify-end w-full mt-4 space-x-5">
+                                                            <Link
+                                                                href={route('customer.review', { orderItemId: item.id })}
+                                                                className="px-4 py-2 text-sm text-white bg-primary rounded-md transition-colors duration-200 hover:bg-slate-900"
+                                                            >
+                                                                Review
+                                                            </Link>
+                                                        </div>
                                                     </div>
+
                                                 );
                                             })}
                                         </>
                                     )}
-                                </div>
-                                <ShippingDetails
-                                    shippingFee={order.shipping_fee}
-                                    subtotal={subtotal}
-                                    total={order.amount}
-                                />
-                                <div className="flex items-center justify-end w-full mt-4 space-x-5">
-                                    <Link
-                                        href={route('customer.review')}
-                                        className="px-4 py-2 text-sm text-white bg-primary rounded-md transition-colors duration-200 hover:bg-slate-900"
-                                    >
-                                        Review
-                                    </Link>
                                 </div>
                             </div>
                         );

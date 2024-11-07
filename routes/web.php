@@ -78,7 +78,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/customer/profile/{id}', [CustomerController::class, 'updateProfile'])->name('customer.updateProfile');
         Route::get('/customerNotifications', [CustomerController::class, 'notifications'])->name('customer.notifications');
         Route::patch('/notifications/{id}/read', [CustomerController::class, 'markAsRead'])->name('notifications.markAsRead');
-        Route::get('/review', [CustomerController::class, 'review'])->name('customer.review');
+        Route::get('/review/{orderItemId}', [CustomerController::class, 'review'])->name('customer.review');
+        Route::post('/customer/storeReview', [CustomerController::class, 'storeReview'])->name('customer.storeReview.store');
         Route::get('/products', [ProductController::class, 'products'])->name('products.list');
         Route::get('/product/{product}', [ProductController::class, 'show'])->name('product.show');
         Route::get('category/{category}/products', [ProductController::class, 'productsByCategory'])->name('category.products');

@@ -3,7 +3,7 @@ import { FaPesoSign } from "react-icons/fa6";
 
 export default function ShippingDetails({ shippingFee, subtotal, total }) {
     return (
-        <div className=" mt-1 border rounded-lg  border-slate-400 ">
+        <div className=" mt-3 border rounded-lg  border-slate-400 ">
             <div className="p-3">
                 <div className="flex justify-between ">
                     <span>Shipping Fee</span>

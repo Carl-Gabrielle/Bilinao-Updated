@@ -143,7 +143,7 @@ export default function Carts({ auth, carts, cartCount }) {
                         </span>
                     </h1>
                     <div className="grid grid-cols-1 gap-10 py-10 lg:grid-cols-3">
-                        <div className="col-span-2 shadow-lg rounded-2xl bg-slate-50 bg-opacity-60 backdrop-blur-lg">
+                        <div className="col-span-2 shadow-lg rounded-2xl bg-white">
                             <div className="flex items-center justify-between px-4 py-5 text-xs text-white sm:px-0 space-x-14 bg-slate-800 rounded-t-2xl">
                                 <span className="flex-1 text-center uppercase">
                                     Product
@@ -174,7 +174,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                         }
                                                     )}
                                                 >
-                                                    <span className="text-xs inline-flex items-center text-slate-700 font-medium hover:text-slate-900 border bg-slate-300 shadow-inner px-2 py-0.5 rounded-full  transition-colors duration-200 ease-in-out">
+                                                    <span className="text-xs inline-flex items-center text-slate-700 font-medium hover:text-slate-900 border bg-slate-100  px-2 py-0.5 rounded-full  transition-colors duration-200 ease-in-out">
                                                         <IoStorefrontOutline className="mr-2" />
                                                         {
                                                             cart.product.seller
@@ -233,7 +233,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                         </p>
                                                     </div>
                                                     <div className="flex-1 text-xs text-center">
-                                                        <div className="flex items-center justify-center px-1 py-1 space-x-2 rounded-full sm:space-x-8 bg-slate-300 sm:py-2 sm:px-3">
+                                                        <div className="flex items-center justify-center px-1 py-1 space-x-2 rounded-full sm:space-x-8 bg-slate-100 sm:py-2 sm:px-3">
                                                             <button
                                                                 onClick={() =>
                                                                     handleDecrement(
@@ -318,14 +318,14 @@ export default function Carts({ auth, carts, cartCount }) {
                                     Order Summary
                                 </span>
                             </div>
-                            <div className="flex flex-col text-sm shadow-lg bg-slate-50 bg-opacity-60 backdrop-blur-lg rounded-b-2xl h-72">
+                            <div className="flex flex-col text-sm shadow-lg bg-white rounded-b-2xl h-72">
                                 <div className="px-6 pt-5">
                                     <div className="flex items-start justify-between mb-4">
                                         <p>Subtotal</p>
                                         <p>&#8369; {subtotal.toLocaleString()}</p>
                                     </div>
                                 </div>
-                                <div className="flex items-start justify-between px-6 py-2 font-semibold bg-slate-300">
+                                <div className="flex items-start justify-between px-6 py-2 font-semibold bg-slate-100">
                                     <p className="uppercase">Total</p>
                                     <p className="font-semibold ">
                                         &#8369; {total.toLocaleString()}
@@ -351,8 +351,9 @@ export default function Carts({ auth, carts, cartCount }) {
                             </div>
                         </div>
                     </div>
-                </CustomerContainer>
-            </div>
-        </CustomerLayout>
+
+                </CustomerContainer >
+            </div >
+        </CustomerLayout >
     );
 }

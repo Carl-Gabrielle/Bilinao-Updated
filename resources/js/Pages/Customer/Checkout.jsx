@@ -4,6 +4,8 @@ import CustomerLayout from "@/Layouts/CustomerLayout";
 import { FaPesoSign } from "react-icons/fa6";
 import { HiOutlineCheckCircle } from "react-icons/hi";
 import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
+import { RiSecurePaymentLine } from "react-icons/ri";
+import { MdOutlinePayments } from "react-icons/md";
 import Banner from "@/Components/Banner";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
@@ -212,7 +214,7 @@ export default function Checkout({ auth }) {
                     </div>
                     <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 ">
                         {/* Billing Information */}
-                        <div className="col-span-2 p-8 space-y-6 shadow-lg bg-slate-50 rounded-3xl">
+                        <div className="col-span-2 p-8 space-y-6 shadow-lg bg-white rounded-3xl">
                             <h2 className="font-semibold text-md ">
                                 <h1>Contact and Shipping Information</h1>
                             </h2>
@@ -403,13 +405,13 @@ export default function Checkout({ auth }) {
                         </div>
                         <div className="grid grid-rows-2 gap-10 xl:gap-20">
                             {/* Order Summary */}
-                            <div className="w-full shadow-lg lg:w-96 lg:h-72 bg-slate-50 rounded-3xl">
+                            <div className="w-full shadow-lg lg:w-96 lg:h-72 bg-white rounded-3xl">
                                 <div className="px-6 py-4 text-white bg-gray-800 rounded-t-3xl">
                                     <h3 className="text-xs tracking-wider uppercase">
                                         Order Summary
                                     </h3>
                                 </div>
-                                <div className="p-6 space-y-4 overflow-y-auto bg-slate-50 h-72 scroll-bar">
+                                <div className="p-6 space-y-4 overflow-y-auto bg-white h-72 scroll-bar">
                                     <h1 className="font-medium">Your Order</h1>
                                     {product.map((item) => (
                                         <div key={item.id} className="flex">
@@ -495,7 +497,7 @@ export default function Checkout({ auth }) {
                                         </span>
                                     </div>
                                 </div>
-                                <div className="p-6 border border-t bg-slate-50 rounded-b-3xl">
+                                <div className="p-6 border border-t bg-white rounded-b-3xl">
                                     <button
                                         disabled={
                                             region == null ||
@@ -524,7 +526,7 @@ export default function Checkout({ auth }) {
                                 </div>
                             </div>
                             <div className="w-full lg:mt-10">
-                                <div className="p-6 space-y-4 overflow-y-auto bg-slate-50 lg:w-96 lg:h-72 rounded-3xl h-72">
+                                <div className="p-6 space-y-4 overflow-y-auto bg-white lg:w-96 lg:h-72 rounded-3xl h-72">
                                     <div className="font-semibold text-gray-700 text-md">
                                         <h1>How would you like to pay?</h1>
                                     </div>
@@ -590,6 +592,35 @@ export default function Checkout({ auth }) {
                                         </label>
                                     </div>
                                 </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div className="shadow-lg bg-white p-6 rounded-2xl mt-6">
+                        <div className="grid  grid-cols-1 md:grid-cols-2 lg:grid-cols-3  gap-6">
+                            <div className="bg-blue-50 rounded-xl p-5 ">
+                                <div className="flex items-center space-x-3">
+                                    <MdOutlinePayments className="text-2xl text-primary" />
+                                    <h1 className="text-primary text-sm font-semibold">Secure Payment</h1>
+                                </div>
+                                <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                                    Payments are securely processed through trusted partners, ensuring privacy.
+                                </p>
+                            </div>
+                            <div className="bg-green-50 rounded-xl p-5 ">
+                                <div className="flex items-center space-x-3">
+                                    <RiSecurePaymentLine className="text-2xl text-primary" />
+                                    <h1 className="text-primary text-sm font-semibold">Your Security, Our Priority</h1>
+                                </div>
+                                <p className="text-sm text-gray-600 mt-2 leading-relaxed">
+                                    All transactions are encrypted  to protect your information.
+                                </p>
+                            </div>
+                            <div className="sm:border-l border-0 border-slate-300 p-5 ">
+                                <h1 className="text-primary text-sm font-semibold">Accepted Payment Methods</h1>
+                                <ul className="flex items-center space-x-4 justify-center pt-5">
+                                    <li className="bg-slate-100 rounded-2xl px-4 py-0.5 text-sm text-primary">GCash</li>
+                                    <li className="bg-slate-100 rounded-2xl px-4 py-0.5 text-sm text-primary">Paymaya</li>
+                                </ul>
                             </div>
                         </div>
                     </div>
