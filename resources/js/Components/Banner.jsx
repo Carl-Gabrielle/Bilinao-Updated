@@ -5,7 +5,7 @@ const Banner = ({ title, suffix, prefix }) => {
         <>
             <div className="h-72 w-full bg-slate-800 mt-6 flex items-center justify-center rounded-b-3xl relative overflow-hidden">
                 {/* Main text */}
-                <h2 className="text-center text-2xl md:text-3xl lg:text-5xl text-slate-100 font-medium z-10 tracking-wide">
+                <h2 className="text-center text-2xl md:text-3xl lg:text-5xl text-slate-100 font-medium z-10 tracking-wide  ">
                     {title} {suffix} {prefix}
                 </h2>
 

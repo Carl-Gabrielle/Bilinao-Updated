@@ -41,7 +41,7 @@ export default function Login({ status, canResetPassword }) {
                 <div className="mt-5 w-full flex flex-col">
                     <Link
                         href="/sellerLogin"
-                        className=" inline-flex items-center text-sm px-6 py-2 w-80 mb-2 text-white bg-slate-800 rounded-2xl shadow-md transition-colors duration-300 font-semibold"
+                        className=" inline-flex items-center text-sm px-6 py-2 w-80 mb-2 text-primary  border border-primary rounded-2xl shadow-md transition-colors duration-300 font-semibold"
                     >
                         <FaRegUser className="mr-2" />
                         Log In to Your Seller Account

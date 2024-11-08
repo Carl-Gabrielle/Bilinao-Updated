@@ -177,57 +177,62 @@ export default function Products({ products, auth, success, category }) {
                                 />
                             </div>
                             <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
-                                {filteredProducts.map((product) => (
-                                    <Link
-                                        key={product.id}
-                                        href={route("product.show", product.id)}
-                                    >
-                                        <div className="bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-2xl p-4 flex space-x-2 shadow-lg relative">
-                                            <img
-                                                src={`/storage/${product.images[0].image_path}`}
-                                                alt={product.name}
-                                                className="w-full h-48 object-cover mb-4 rounded-lg "
-                                            />
-                                        </div>
-
-                                        <div className=" text-xs p-3 flex items-center justify-between">
-                                            <div>
-                                                <h3 className="pb-1 text-md font-semibold">
-                                                    {product.name}
-                                                </h3>
-                                                <p className="text-sm">
-                                                    <FaPesoSign className="inline-block mr-1" />
-                                                    {Number(
-                                                        product.price
-                                                    ).toLocaleString("en-PH", {
-                                                        minimumFractionDigits: 2,
-                                                        maximumFractionDigits: 2,
-                                                    })}
-                                                </p>
+                                {filteredProducts.length === 0 ? (
+                                    <div className="col-span-2 lg:col-span-3 text-center text-gray-500">
+                                        No products found
+                                    </div>
+                                ) : (
+                                    filteredProducts.map((product) => (
+                                        <Link
+                                            key={product.id}
+                                            href={route("product.show", product.id)}
+                                        >
+                                            <div className="bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-2xl p-4 flex space-x-2 shadow-lg relative">
+                                                <img
+                                                    src={`/storage/${product.images[0].image_path}`}
+                                                    alt={product.name}
+                                                    className="w-full h-48 object-cover mb-4 rounded-lg "
+                                                />
                                             </div>
-                                            {product.stock > 0 ? (
-                                                <Link
-                                                    preserveScroll
-                                                    href={route("cart.store")}
-                                                    method="post"
-                                                    data={{
-                                                        product_id: product.id,
-                                                        quantity: 1,
-                                                    }}
-                                                >
-                                                    <div className="bg-slate-800 px-3 py-3 rounded-full text-white">
-                                                        <GrCart size={15} />
-                                                    </div>
-                                                </Link>
-                                            ) : (
-                                                <div className="bg-slate-100 text-xs  cursor-not-allowed  w-full sm:w-1/2  px-2 sm:py-2 py-1  rounded-full text-slate-600 text-center">
-                                                    Out of Stock
+
+                                            <div className="text-xs p-3 flex items-center justify-between">
+                                                <div>
+                                                    <h3 className="pb-1 text-md font-semibold">
+                                                        {product.name}
+                                                    </h3>
+                                                    <p className="text-sm">
+                                                        <FaPesoSign className="inline-block mr-1" />
+                                                        {Number(product.price).toLocaleString("en-PH", {
+                                                            minimumFractionDigits: 2,
+                                                            maximumFractionDigits: 2,
+                                                        })}
+                                                    </p>
                                                 </div>
-                                            )}
-                                        </div>
-                                    </Link>
-                                ))}
+                                                {product.stock > 0 ? (
+                                                    <Link
+                                                        preserveScroll
+                                                        href={route("cart.store")}
+                                                        method="post"
+                                                        data={{
+                                                            product_id: product.id,
+                                                            quantity: 1,
+                                                        }}
+                                                    >
+                                                        <div className="bg-slate-800 px-3 py-3 rounded-full text-white">
+                                                            <GrCart size={15} />
+                                                        </div>
+                                                    </Link>
+                                                ) : (
+                                                    <div className="bg-slate-100 text-xs cursor-not-allowed w-full sm:w-1/2 px-2 sm:py-2 py-1 rounded-full text-slate-600 text-center">
+                                                        Out of Stock
+                                                    </div>
+                                                )}
+                                            </div>
+                                        </Link>
+                                    ))
+                                )}
                             </div>
+
                             <Pagination links={products.links} />
                         </div>
                     </div>

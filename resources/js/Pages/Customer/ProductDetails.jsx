@@ -133,7 +133,6 @@ export default function ProductDetails({
                             </div>
                         </div>
                     )}
-
                     <CustomerContainer>
                         <Link
                             href={route("customer.products")}
@@ -175,7 +174,7 @@ export default function ProductDetails({
                                             <FaRegCheckSquare className="inline-block mr-2" />
                                             In Stock
                                         </span>{" "}
-                                        {product.stock} products
+                                        {product.stock} {product.stock > 1 ? "products" : "product"}
                                     </span>
                                 ) : (
                                     <p className="mb-5 text-sm font-medium text-slate-800">
@@ -279,7 +278,6 @@ export default function ProductDetails({
                                             >
                                                 Buy Now
                                             </button>
-
                                             <Link
                                                 preserveScroll
                                                 href={route("cart.store")}
@@ -306,10 +304,10 @@ export default function ProductDetails({
                                 {product.images.map((image) => (
                                     <div
                                         key={image.id}
-                                        className={`relative w-24 h-24 cursor-pointer rounded-md border-2 transition-all duration-300 ${selectedImage === image.image_path
-                                            ? "border-green-500"
-                                            : "border-transparent"
-                                            } hover:border-gray-800`}
+                                        className={`relative w-24 h-24 cursor-pointer rounded-md transition-all duration-300 ${selectedImage === image.image_path
+                                            ? "border-green-500 border-2"
+                                            : "border-slate-500 border"
+                                            } hover:border-gray-800 border-2`}
                                         onClick={() =>
                                             setSelectedImage(image.image_path)
                                         }
@@ -317,7 +315,7 @@ export default function ProductDetails({
                                         <img
                                             src={`/storage/${image.image_path}`}
                                             alt={product.name}
-                                            className="object-cover w-full h-full rounded-md"
+                                            className="object-cover w-full h-full rounded-md "
                                         />
                                     </div>
                                 ))}
@@ -435,46 +433,6 @@ export default function ProductDetails({
                                     </h1>
                                 </div>
                                 <hr className="mt-2 border-slate-300" />
-                                <div className="flex items-center justify-between mt-2">
-                                    <div className="flex items-center space-x-3">
-                                        {/* CUSTOMER PROFILE */}
-                                        <img
-                                            src={ProfileImg}
-                                            alt="CustomerProfile"
-                                            className="object-cover border-2 rounded-full size-12 border-slate-700 border-opacity-30 backdrop-blur-md"
-                                        />
-                                        <div className="flex flex-col gap-1">
-                                            <span className="text-xs font-semibold text-slate-800">
-                                                John Legaspi
-                                            </span>
-                                            <span className="px-2 py-1 text-xs font-medium rounded-md bg-slate-700 bg-opacity-30 backdrop-blur-md text-slate-800 ">
-                                                Verified Purchase
-                                            </span>
-                                        </div>
-                                    </div>
-                                    {/*DATE AND RATINGS  */}
-                                    <div>
-                                        <span className="text-xs text-slate-800 ">
-                                            August 12,2024
-                                        </span>
-                                        <div className="flex items-center mt-2 space-x-1 text-xs text-yellow-500">
-                                            <FaStar />
-                                            <FaStar />
-                                            <FaStar />
-                                            <FaStarHalfAlt />
-                                            <FaRegStar />
-                                        </div>
-                                    </div>
-                                </div>
-                                <div className="mt-2 px-14">
-                                    <h1 className="text-sm text-slate-800">
-                                        I absolutely love this vase! It arrived
-                                        in perfect condition and looks stunning
-                                        in my living room. The craftsmanship is
-                                        excellent, and it adds a beautiful touch
-                                        to my home decor.
-                                    </h1>
-                                </div>
                             </div>
                         </div>
                         {relatedProducts.length > 0 && (

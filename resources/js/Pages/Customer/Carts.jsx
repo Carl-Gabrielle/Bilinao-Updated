@@ -142,7 +142,7 @@ export default function Carts({ auth, carts, cartCount }) {
                             {cartCount}
                         </span>
                     </h1>
-                    <div className="grid grid-cols-1 gap-10 py-10 lg:grid-cols-3">
+                    <div className="grid grid-cols-1 gap-y-5 gap-x-5 sm:gap-y-10  py-10 lg:grid-cols-3">
                         <div className="col-span-2 shadow-lg rounded-2xl bg-white">
                             <div className="flex items-center justify-between px-4 py-5 text-xs text-white sm:px-0 space-x-14 bg-slate-800 rounded-t-2xl">
                                 <span className="flex-1 text-center uppercase">
@@ -211,7 +211,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                                 cart.product
                                                                     .name
                                                             }
-                                                            className="object-cover rounded sm:size-16 size-10"
+                                                            className="object-cover rounded sm:size-16 size-10 border border-slate-200"
                                                         />
                                                     </Link>
                                                     <div className="flex-1 ml-4 text-xs text-slate-800 ">

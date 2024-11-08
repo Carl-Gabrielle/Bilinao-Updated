@@ -212,7 +212,7 @@ export default function Checkout({ auth }) {
                             Product Checkout
                         </h1>
                     </div>
-                    <div className="grid grid-cols-1 gap-10 lg:grid-cols-3 ">
+                    <div className="grid grid-cols-1 gap-y-5 gap-x-5 sm:gap-y-10 lg:grid-cols-3 ">
                         {/* Billing Information */}
                         <div className="col-span-2 p-8 space-y-6 shadow-lg bg-white rounded-3xl">
                             <h2 className="font-semibold text-md ">
@@ -617,9 +617,9 @@ export default function Checkout({ auth }) {
                             </div>
                             <div className="sm:border-l border-0 border-slate-300 p-5 ">
                                 <h1 className="text-primary text-sm font-semibold">Accepted Payment Methods</h1>
-                                <ul className="flex items-center space-x-4 justify-center pt-5">
-                                    <li className="bg-slate-100 rounded-2xl px-4 py-0.5 text-sm text-primary">GCash</li>
-                                    <li className="bg-slate-100 rounded-2xl px-4 py-0.5 text-sm text-primary">Paymaya</li>
+                                <ul className="flex items-center space-x-4 justify-start pt-5">
+                                    <li className="bg-slate-100 rounded-2xl px-4 py-0.5 text-sm text-gray-600">GCash</li>
+                                    <li className="bg-slate-100 rounded-2xl px-4 py-0.5 text-sm text-gray-600">Paymaya</li>
                                 </ul>
                             </div>
                         </div>

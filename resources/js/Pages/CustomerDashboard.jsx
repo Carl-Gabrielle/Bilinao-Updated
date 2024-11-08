@@ -46,29 +46,33 @@ export default function CustomerDashboard({ auth, category, products }) {
                     <div className="max-w-screen-xl mx-auto">
                         <div className="min-h-[650px] pt-24 relative sm:min-h-[630px] flex justify-center items-center ">
                             <div className="px-8">
-                                <div className="flex flex-col justify-center gap-4 text-center sm:text-left px-6 py-6 rounded-3xl w-full order-2 sm:order-1">
+                                <div className="flex flex-col justify-center gap-3 text-center sm:text-left px-6 py-4 rounded-3xl w-full order-2 sm:order-1">
                                     <p
                                         ref={textRef}
                                         className="animated-text   sm:w-2/3 w-full text-4xl tracking-wide text-slate-900 sm:text-6xl lg:text-7xl font-extrabold"
                                     >
                                         Embrace Local Artistry
                                     </p>
-                                    <p className="title sm:w-2/3 w-full text-2xl tracking-tight bg-clip-text text-transparent sm:text-3xl lg:text-5xl bg-gradient-to-r from-indigo-400 to-cyan-400">
+                                    <p className="title sm:w-2/3 w-full text-2xl tracking-wide bg-clip-text text-transparent sm:text-3xl lg:text-6xl bg-gradient-to-r from-indigo-400 to-cyan-400">
                                         Discover Unique, Handcrafted Treasures
                                     </p>
                                     <p className="subtitle text-base text-slate-900 font-normal sm:w-1/2 w-full">
-                                        Lorem ipsum dolor sit amet consectetur
-                                        adipisicing elit. Qui veniam, itaque
-                                        commodi reiciendis laborum dolor
-                                        dignissimos sunt voluptatum error
-                                        repellat!
+                                        Discover the beauty of handcrafted creations, where every piece reflects passion and skill. Our local artisans create unique treasures that embody cultural richness, adding authentic charm and character to your space.
                                     </p>
-                                    <Link href={route("customer.products")}>
-                                        <button className="shop-button sm:self-start self-center px-8 py-3 rounded-2xl text-white font-semibold flex items-center bg-slate-800">
-                                            Shop Now{" "}
-                                            <HiMiniArrowLongRight className="ml-2" />
-                                        </button>
-                                    </Link>
+                                    <div className="flex flex-col sm:flex-row items-center space-x-4 space-y-4 sm:space-y-0">
+                                        <Link href={route("customer.products")}>
+                                            <button className="shop-button w-full sm:w-auto px-8 py-4 rounded-xl text-white font-semibold flex items-center bg-slate-800">
+                                                Shop Now{" "}
+                                                <HiMiniArrowLongRight className="ml-2" />
+                                            </button>
+                                        </Link>
+                                        <Link href={route("customer.about")}>
+                                            <button className="shop-button sm:self-start self-center sm:ml-4 px-8 py-4 rounded-xl text-primary font-semibold flex items-center border border-primary">
+                                                See How It Works{" "}
+                                            </button>
+                                        </Link>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -104,7 +108,7 @@ export default function CustomerDashboard({ auth, category, products }) {
                                                         />
                                                     )}
                                                     <div className="flex flex-col justify-between items-center   lg:items-start w-full lg:w-auto lg:ml-6 lg:h-36">
-                                                        <p className="text-slate-900 font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-4xl mb-4 lg:mb-0">
+                                                        <p className="text-slate-900 font-extrabold text-2xl sm:text-3xl md:text-4xl lg:text-3xl xl:text-3xl mb-4 lg:mb-0 tracking-wide">
                                                             {cat.name}
                                                         </p>
                                                         <Link

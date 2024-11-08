@@ -125,7 +125,7 @@ export default function CategoryProducts({
                                             )}
                                             className="w-full flex justify-center"
                                         >
-                                            <div className="bg-gray-200 rounded-3xl relative mb-7 h-72">
+                                            <div className="bg-slate-100 rounded-3xl relative mb-7 h-72">
                                                 <div className="rounded-t-3xl rounded-b-2xl overflow-hidden flex flex-col">
                                                     <Link
                                                         preserveScroll
@@ -138,18 +138,18 @@ export default function CategoryProducts({
                                                                 product.id,
                                                         }}
                                                     >
-                                                        <div className="absolute right-4 top-4 px-2 py-2 rounded-full text-slate-800 bg-white bg-opacity-50 backdrop-blur-lg z-10">
+                                                        <div className="absolute right-4 top-4 px-2 py-2 rounded-full text-slate-800  border border-slate-400 bg-opacity-50 backdrop-blur-lg z-10">
                                                             <FaRegHeart />
                                                         </div>
                                                     </Link>
                                                     {product.images.length >
                                                         0 && (
-                                                        <img
-                                                            src={`/storage/${product.images[0].image_path}`}
-                                                            alt={product.name}
-                                                            className="size-72 object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
-                                                        />
-                                                    )}
+                                                            <img
+                                                                src={`/storage/${product.images[0].image_path}`}
+                                                                alt={product.name}
+                                                                className="size-72 object-cover cursor-pointer transition-transform duration-300 hover:scale-110"
+                                                            />
+                                                        )}
                                                     <div className="text-xs px-4 py-4 flex items-center justify-between bg-slate-300 bg-opacity-50 backdrop-blur-md text-slate-800 w-full z-10 rounded-2xl absolute -bottom-8">
                                                         <div className="flex flex-col gap-1 ">
                                                             <span className="font-semibold">

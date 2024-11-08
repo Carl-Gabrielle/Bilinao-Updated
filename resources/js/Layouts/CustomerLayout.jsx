@@ -158,60 +158,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                         </span>
                                     </div>
                                 </Link>
-                                {/* </Dropdown.Trigger> */}
-                                {/* <Dropdown.Content>
-                                        <div className="px-2 py-2 flex items-center justify-between">
-                                            <h1 className="text-md font-semibold text-slate">
-                                                Notifications
-                                            </h1>
-                                            <div className="bg-primary text-white px-3 rounded-md py-1">
-                                                <span>
-                                                    {notificationCount} new
-                                                </span>
-                                            </div>
-                                        </div>
-                                        <ul className="mt-2 divide-y divide-gray-200">
-                                            <li className="px-3 py-2 hover:bg-gray-100 transition-colors duration-300 ease-in-out rounded-md">
-                                                <p className="text-sm font-semibold">
-                                                    Order #12345 has been
-                                                    shipped!
-                                                </p>
-                                                <span className="text-xs text-gray-500">
-                                                    2 hours ago
-                                                </span>
-                                            </li>
-                                            <li className="px-3 py-2 hover:bg-gray-100  transition-colors duration-300 ease-in-out rounded-md">
-                                                <p className="text-sm font-semibold">
-                                                    Your refund request for
-                                                    Order #67890 has been
-                                                    processed.
-                                                </p>
-                                                <span className="text-xs text-gray-500">
-                                                    1 day ago
-                                                </span>
-                                            </li>
-                                            <li className="px-3 py-2 hover:bg-gray-100   transition-colors duration-300 ease-in-out rounded-md">
-                                                <p className="text-sm font-semibold">
-                                                    Order #98765 has been
-                                                    delivered. Enjoy your new
-                                                    items!
-                                                </p>
-                                                <span className="text-xs text-gray-500">
-                                                    5 days ago
-                                                </span>
-                                            </li>
-                                        </ul>
-                                        <div className="mt-2 text-center">
-                                            <a
-                                                href="#"
-                                                className="text-sm font-semibold text-blue-500 hover:underline"
-                                            >
-                                                View all notifications
-                                            </a>
-                                        </div>
-                                    </Dropdown.Content> */}
-                                {/* </Dropdown> */}
-                                {/* Cart Icon */}
+
                                 <Link
                                     href={route("customer.carts")}
                                     className="relative flex items-center text-slate-900 cursor-pointer   px-2 py-2 hover:text-slate-50  hover:bg-primary rounded-full transition-colors duration-300 ease-in-out"
