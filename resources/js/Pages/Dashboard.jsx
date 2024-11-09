@@ -82,7 +82,7 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                             </DashboardCard>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-                            <DashboardCard>
+                            <DashboardCard >
                                 <div>
                                     <h1 className="font-medium text-md">
                                         Registered Customers

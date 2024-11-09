@@ -10,23 +10,16 @@ import { Link } from '@inertiajs/react'; // Ensure you're importing Link if usin
 export default function ToReceive({ toReceiveData }) {
     return (
         <div className="px-4 py-6 bg-white shadow-lg rounded-lg">
-            {toReceiveData.length > 0 ? (
-                <>
-                    <header className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-bold text-slate-800">Delivered Orders</h2>
-                        <span className="px-4 py-1 text-sm font-semibold text-orange-800 bg-orange-200 rounded-md bg-opacity-30">
-                            {toReceiveData.length}
-                        </span>
-                    </header>
-                    <p className="text-sm text-slate-600 mb-4">
-                        Below is your list of delivered orders. Thank you for choosing us.
-                    </p>
-                    <hr className="my-2 border-slate-300" />
-                </>
+            <header className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-slate-800">Delivered Orders </h2>
+                <span className="px-4 py-1 text-sm font-semibold text-orange-800 bg-orange-200 rounded-md bg-opacity-30">
+                    {toReceiveData.length}
+                </span>
+            </header>
+            <hr className="my-2 border-slate-300" />
+            {toReceiveData.length === 0 ? (
+                <p className="text-center text-slate-500">No delivered orders to receive at this moment.</p>
             ) : (
-                <p className="text-center  text-slate-500">No orders to ship at this moment.</p>
-            )}
-            {toReceiveData.length > 0 && (
                 <div className="grid grid-cols-1 gap-6 max-w-3xl mx-auto mt-6">
                     {toReceiveData.map((order, index) => {
                         const subtotal = order.order_items.reduce((acc, item) => acc + item.price * item.qty, 0);

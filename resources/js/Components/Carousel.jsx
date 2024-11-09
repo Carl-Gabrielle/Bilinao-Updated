@@ -36,13 +36,13 @@ export default function Carousel() {
             <div
                 className={`absolute top-10 sm:top-20 object-cover transition-opacity duration-500 ${fade ? 'opacity-100' : 'opacity-0'}`}
             >
-                <img src={currentImage} alt="Mockup" className="transition-opacity duration-500" />
+                <img src={currentImage} alt="Mockup" className="transition-opacity duration-500 object-cover" />
             </div>
 
             <div
                 className={`transition-opacity duration-500 ${fade ? 'opacity-100' : 'opacity-0'}`}
             >
-                <p className="text-primary text-lg text-center font-medium tracking-wide">{currentText}</p>
+                <p className="text-slate-700 text-lg text-center font-medium tracking-wide">{currentText}</p>
                 <p className="bg-gradient-to-r from-indigo-400 to-cyan-400 tracking-tight bg-clip-text text-transparent text-1xl sm:text-3xl pb-6">
                     Discover Unique, Handcrafted Treasures
                 </p>

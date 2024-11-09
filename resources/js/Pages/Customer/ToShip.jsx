@@ -10,23 +10,16 @@ import { Link } from '@inertiajs/react';
 export default function ToShip({ toShipData }) {
     return (
         <div className="px-4 py-6 bg-white shadow-lg rounded-lg">
-            {toShipData.length > 0 ? (
-                <>
-                    <header className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-bold text-slate-800">Orders Awaiting Shipment</h2>
-                        <span className="px-4 py-1 text-sm font-semibold text-blue-800 bg-blue-200 rounded-md bg-opacity-30">
-                            {toShipData.length}
-                        </span>
-                    </header>
-                    <p className="text-sm text-slate-600 mb-4">
-                        Your order is being prepared and will be shipped soon.
-                    </p>
-                    <hr className="my-2 border-slate-300" />
-                </>
+            <header className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-slate-800">Orders Awaiting Shipment</h2>
+                <span className="px-4 py-1 text-sm font-semibold text-blue-800 bg-blue-200 rounded-md bg-opacity-30">
+                    {toShipData.length}
+                </span>
+            </header>
+            <hr className="my-2 border-slate-300" />
+            {toShipData.length === 0 ? (
+                <p className="text-center text-slate-500">No orders to ship at this moment.</p>
             ) : (
-                <p className="text-center  text-slate-500">No orders to ship at this moment.</p>
-            )}
-            {toShipData.length > 0 && (
                 <div className="grid grid-cols-1 gap-6 max-w-3xl mx-auto mt-6">
                     {toShipData.map((order, index) => {
                         const subtotal = order.order_items.reduce((acc, item) => acc + item.price * item.qty, 0);
@@ -98,7 +91,8 @@ export default function ToShip({ toShipData }) {
                         );
                     })}
                 </div>
-            )}
-        </div>
+            )
+            }
+        </div >
     );
 }

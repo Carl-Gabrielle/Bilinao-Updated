@@ -64,6 +64,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/shipping/{id}/edit', [ShippingController::class, 'edit'])->name('shipping.edit');
         Route::put('/shipping/{id}', [ShippingController::class, 'update'])->name('shipping.update');
         Route::get('/sales-report', [SalesReportController::class, 'salesReport'])->name('admin.salesReport');
+        Route::get('/sales-report-individual', [SalesReportController::class, 'salesReportIndividual'])->name('admin.salesReportIndividual');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
         Route::resource('category', CategoryController::class);

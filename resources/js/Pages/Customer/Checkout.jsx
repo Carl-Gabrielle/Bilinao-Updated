@@ -403,7 +403,7 @@ export default function Checkout({ auth }) {
                                 </label>
                             </div>
                         </div>
-                        <div className="grid grid-rows-2 gap-10 xl:gap-20">
+                        <div className="grid grid-rows-2 gap-10">
                             {/* Order Summary */}
                             <div className="w-full shadow-lg lg:w-96 lg:h-72 bg-white rounded-3xl">
                                 <div className="px-6 py-4 text-white bg-gray-800 rounded-t-3xl">
@@ -415,11 +415,11 @@ export default function Checkout({ auth }) {
                                     <h1 className="font-medium">Your Order</h1>
                                     {product.map((item) => (
                                         <div key={item.id} className="flex">
-                                            <div className="relative border">
+                                            <div className="relative border rounded-md">
                                                 <img
                                                     src={`/storage/${item.product.images[0].image_path}`}
                                                     alt={item.product.name}
-                                                    className="object-cover rounded sm:size-16 size-10"
+                                                    className="object-cover  sm:size-16 size-10"
                                                 />
                                                 <div className="absolute flex items-center justify-center rounded-full -top-3 text-slate-100 -right-3 size-5 bg-slate-700">
                                                     <span className="text-xs">
@@ -525,7 +525,7 @@ export default function Checkout({ auth }) {
                                     </button>
                                 </div>
                             </div>
-                            <div className="w-full lg:mt-10">
+                            <div className="w-full lg:mt-10 ">
                                 <div className="p-6 space-y-4 overflow-y-auto bg-white lg:w-96 lg:h-72 rounded-3xl h-72">
                                     <div className="font-semibold text-gray-700 text-md">
                                         <h1>How would you like to pay?</h1>

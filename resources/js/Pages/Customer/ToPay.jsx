@@ -11,14 +11,11 @@ export default function ToPay({ toPay }) {
     return (
         <div className="px-4 py-6 bg-white shadow-lg rounded-lg">
             <header className="flex items-center justify-between mb-4">
-                <h2 className="text-xl font-bold text-slate-800">Orders To Pay</h2>
+                <h2 className="text-lg font-semibold text-slate-800">Orders To Pay</h2>
                 <span className="px-4 py-1 text-sm font-semibold text-red-800 bg-red-200 rounded-md bg-opacity-30">
                     {toPay.length}
                 </span>
             </header>
-            <p className="text-sm text-slate-600 mb-4">
-                Review your orders and complete the payment process to secure your products.
-            </p>
             <hr className="my-4 border-slate-300" />
             {toPay.length === 0 ? (
                 <p className="text-center text-slate-500">No orders to pay at this moment.</p>

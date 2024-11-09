@@ -241,7 +241,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                             href={route("logout")}
                                             method="post"
                                             as="button"
-                                            className="bg-primary text-white flex items-center  justify-center rounded-md "
+                                            className="bg-primary text-white flex items-center  justify-center rounded-2xl "
                                         >
                                             Log Out
                                         </Dropdown.Link>

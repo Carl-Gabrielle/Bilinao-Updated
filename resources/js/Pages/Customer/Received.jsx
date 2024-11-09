@@ -10,23 +10,17 @@ import { Link } from '@inertiajs/react';
 export default function ToReceive({ receivedData }) {
     return (
         <div className="px-4 py-6 bg-white shadow-lg rounded-lg">
-            {receivedData.length > 0 ? (
-                <>
-                    <header className="flex items-center justify-between mb-4">
-                        <h2 className="text-xl font-bold text-slate-800">Received Orders</h2>
-                        <span className="px-4 py-1 text-sm font-semibold text-green-800 bg-green-200 rounded-md bg-opacity-30">
-                            {receivedData.length}
-                        </span>
-                    </header>
-                    <p className="text-sm text-slate-600 mb-4">
-                        Thank you for choosing us. Below is a summary of your completed  orders.
-                    </p>
-                    <hr className="my-2 border-slate-300" />
-                </>
+            <header className="flex items-center justify-between mb-4">
+                <h2 className="text-lg font-semibold text-slate-800">Received Orders </h2>
+                <span className="px-4 py-1 text-sm font-semibold text-green-800 bg-green-200 rounded-md bg-opacity-30">
+                    {receivedData.length}
+                </span>
+            </header>
+            <hr className="my-2 border-slate-300" />
+            {receivedData.length === 0 ? (
+                <p className="text-center text-slate-500">No received orders at this moment.</p>
             ) : (
-                <p className="text-center  text-slate-500">No orders to ship at this moment.</p>
-            )}
-            {receivedData.length > 0 && (
+
                 <div className="grid grid-cols-1 gap-6 max-w-3xl mx-auto mt-6">
                     {receivedData.map((order, index) => {
                         const subtotal = order.order_items.reduce((acc, item) => acc + item.price * item.qty, 0);

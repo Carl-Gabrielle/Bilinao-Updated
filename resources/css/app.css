@@ -14,3 +14,19 @@ body{
     color: transparent; /* Make text fill transparent */
     -webkit-text-stroke: 1px rgb(241 245 249); /* 2px outline with black color */
 }
+@media print {
+    body * {
+        visibility: hidden;
+    }
+
+    .printable-area, .printable-area * {
+        visibility: visible;
+    }
+
+    .printable-area {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+    }
+}
