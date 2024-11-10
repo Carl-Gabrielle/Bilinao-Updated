@@ -8,8 +8,12 @@ import ShippingDetails from "@/Components/ShippingDetails";
 import { Link } from "@inertiajs/react";
 
 export default function ToPay({ toPay }) {
+    const handleCompleteOrder = (link) => {
+        window.location.href = link;
+    }
+
     return (
-        <div className="px-4 py-6 bg-white shadow-lg rounded-lg">
+        <div className="px-4 py-6 bg-white rounded-lg shadow-lg">
             <header className="flex items-center justify-between mb-4">
                 <h2 className="text-lg font-semibold text-slate-800">Orders To Pay</h2>
                 <span className="px-4 py-1 text-sm font-semibold text-red-800 bg-red-200 rounded-md bg-opacity-30">
@@ -20,11 +24,11 @@ export default function ToPay({ toPay }) {
             {toPay.length === 0 ? (
                 <p className="text-center text-slate-500">No orders to pay at this moment.</p>
             ) : (
-                <div className="grid grid-cols-1 gap-6 max-w-3xl mx-auto mt-6">
+                <div className="grid max-w-3xl grid-cols-1 gap-6 mx-auto mt-6">
                     {toPay.map((order, index) => {
                         const subtotal = order.order_items.reduce((acc, item) => acc + item.price * item.qty, 0);
                         return (
-                            <div key={index} className="p-4 rounded-2xl border border-slate-300 flex flex-col">
+                            <div key={index} className="flex flex-col p-4 border rounded-2xl border-slate-300">
                                 <div className="flex items-center justify-between">
                                     <Link
                                         href={route("seller.public.profile", { seller: order.order_items[0]?.product.seller.id })}
@@ -45,7 +49,7 @@ export default function ToPay({ toPay }) {
                                         const imageUrl = imagePath ? `/storage/${imagePath}` : '/path/to/default-image.jpg';
                                         return (
                                             <div key={itemIndex} >
-                                                <div className="w-full h-auto flex items-center justify-between space-x-4 border text-xs text-primary p-2 border-slate-400 rounded-lg mt-3">
+                                                <div className="flex items-center justify-between w-full h-auto p-2 mt-3 space-x-4 text-xs border rounded-lg text-primary border-slate-400">
                                                     <div className="flex items-center space-x-4">
                                                         <div>
                                                             <TbCreditCardPay size={16} />
@@ -57,13 +61,13 @@ export default function ToPay({ toPay }) {
                                                     <img
                                                         src={imageUrl}
                                                         alt={item.product.name}
-                                                        className="object-cover rounded-md w-24 h-24 border-2 border-slate-500"
+                                                        className="object-cover w-24 h-24 border-2 rounded-md border-slate-500"
                                                     />
-                                                    <div className="ml-4 flex-grow">
-                                                        <h3 className="font-semibold text-sm text-primary">{item.product.name}</h3>
+                                                    <div className="flex-grow ml-4">
+                                                        <h3 className="text-sm font-semibold text-primary">{item.product.name}</h3>
                                                         <span className="text-sm text-slate-600">Qty. {item.qty}</span>
                                                     </div>
-                                                    <div className="text-sm text-slate-800 flex items-center">
+                                                    <div className="flex items-center text-sm text-slate-800">
                                                         <FaPesoSign className="mr-1 text-sm" />
                                                         {item.price}
                                                     </div>
@@ -78,12 +82,12 @@ export default function ToPay({ toPay }) {
                                     total={order.amount}
                                 />
                                 <div className="flex items-center justify-end w-full mt-4 space-x-5">
-                                    <Link href={route('orders.cancel', order.id)} method="post" className="px-4 py-2 text-sm text-primary border border-slate-400 rounded-md transition-colors duration-200 hover:bg-slate-100">
+                                    <Link href={route('orders.cancel', order.id)} method="post" className="px-4 py-2 text-sm transition-colors duration-200 border rounded-md text-primary border-slate-400 hover:bg-slate-100">
                                         Cancel Order
                                     </Link>
-                                    <Link href={route('orders.complete', order.id)} method="post" className="px-4 py-2 text-sm text-white bg-primary rounded-md transition-colors duration-200 hover:bg-slate-900">
+                                    <button type="button" onClick={() => handleCompleteOrder(order.checkout_session_url)} className="px-4 py-2 text-sm text-white transition-colors duration-200 rounded-md bg-primary hover:bg-slate-900">
                                         Complete Payment
-                                    </Link>
+                                    </button>
                                 </div>
                             </div>
                         );
