@@ -5,7 +5,7 @@ import { IoStorefrontOutline } from "react-icons/io5";
 import ShipmentDetailsToggle from "@/Components/ShipmentDetailsToggle";
 import { LuTruck } from "react-icons/lu";
 import { MdKeyboardArrowRight } from "react-icons/md";
-import { Link } from '@inertiajs/react'; // Ensure you're importing Link if using Inertia.js
+import { Link } from '@inertiajs/react';
 
 export default function ToReceive({ toReceiveData }) {
     return (
@@ -59,9 +59,6 @@ export default function ToReceive({ toReceiveData }) {
                                                     month: 'short',
                                                     day: 'numeric',
                                                     year: 'numeric',
-                                                    // hour: '2-digit',
-                                                    // minute: '2-digit',
-                                                    // hour12: false,
                                                 });
                                                 return (
                                                     <div key={itemIndex} >
@@ -93,12 +90,23 @@ export default function ToReceive({ toReceiveData }) {
                                 />
                                 <div className="flex items-center justify-end w-full mt-4 space-x-5">
                                     <Link
+                                        preserveScroll
                                         href={route('orders.complete', order.id)}
                                         method="post"
                                         className="px-4 py-2 text-sm text-white bg-primary rounded-md transition-colors duration-200 hover:bg-slate-900"
                                     >
-                                        Received
+                                        Order Received
                                     </Link>
+                                </div>
+                                <div className="mt-4 text-xs text-slate-600">
+                                    <p className="flex items-center space-x-2">
+                                        <span className=" text-red-600 bg-red-100 px-3 py-1 rounded-lg border border-red-300 font-medium text-nowrap">
+                                            Please note:
+                                        </span>
+                                        <span>
+                                            If the "Order Received" button is not clicked within 2 days from the delivery date, the order will automatically be marked as "Received" and moved to the "Received Orders" section.
+                                        </span>
+                                    </p>
                                 </div>
                             </div>
                         );

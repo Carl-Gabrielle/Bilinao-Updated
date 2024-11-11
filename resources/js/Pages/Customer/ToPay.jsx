@@ -78,10 +78,16 @@ export default function ToPay({ toPay }) {
                                     total={order.amount}
                                 />
                                 <div className="flex items-center justify-end w-full mt-4 space-x-5">
-                                    <Link href={route('orders.cancel', order.id)} method="post" className="px-4 py-2 text-sm text-primary border border-slate-400 rounded-md transition-colors duration-200 hover:bg-slate-100">
+                                    <Link
+                                        preserveScroll
+                                        href={route('orders.cancel', order.id)}
+                                        method="post" className="px-4 py-2 text-sm text-primary border border-slate-400 rounded-md transition-colors duration-200 hover:bg-slate-100">
                                         Cancel Order
                                     </Link>
-                                    <Link href={route('orders.complete', order.id)} method="post" className="px-4 py-2 text-sm text-white bg-primary rounded-md transition-colors duration-200 hover:bg-slate-900">
+                                    <Link
+                                        href={route('orders.complete', order.id)}
+                                        method="post"
+                                        className="px-4 py-2 text-sm text-white bg-primary rounded-md transition-colors duration-200 hover:bg-slate-900">
                                         Complete Payment
                                     </Link>
                                 </div>

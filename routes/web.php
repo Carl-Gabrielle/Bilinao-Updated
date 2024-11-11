@@ -87,6 +87,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/about', [CustomerController::class, 'about'])->name('customer.about');
         Route::get('/categories', [CustomerController::class, 'categories'])->name('customer.categories');
         Route::get('/completeOrders', [CheckoutController::class, 'completeOrders'])->name('customer.completeOrders');
+        Route::post('/checkout', [CheckoutController::class, 'store'])->name('store.checkout');
         Route::get('/products', [ProductController::class, 'products'])->name('customer.products');
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/orderSelection', [CartController::class, 'orderSelection'])->name('customer.orderSelection');
@@ -97,7 +98,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/toReceive', [CustomerOrderController::class, 'toReceiveOrders'])->name('order.toReceive');
         Route::get('/received', [CustomerOrderController::class, 'receivedOrders'])->name('order.Received');
         Route::post('/orders/{order}/cancel', [CustomerOrderController::class, 'cancelOrder'])->name('orders.cancel');
-        Route::post('/orders/{order}/complete', [CustomerOrderController::class, 'completePayment'])->name('orders.complete');
+        Route::post('/orders/{order}/received', [CustomerOrderController::class, 'markAsReceived'])->name('orders.complete');
 
         Route::get('/search', [ProductController::class, 'search'])->name('products.search');
         Route::get('/customerProfile/edit', [CustomerController::class, 'edit'])->name('customer.editProfile');
@@ -107,7 +108,6 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('/cart/{id}', [CartController::class, 'update'])->name('cart.update');
         Route::get('/checkout-preview', [CartController::class, 'checkoutPreview'])->name('show.checkout');
         Route::get('/myWishlists', [WishlistsController::class, 'myWishlists'])->name('customer.myWishlists');
-        Route::post('/checkout', [CheckoutController::class, 'store'])->name('store.checkout');
         Route::post('/wishlists', [WishlistsController::class, 'storeWishlists'])->name('customer.storeWishlists');
         Route::delete('/wishItem/{id}', [WishlistsController::class, 'destroy'])->name('wishItem.destroy');
         Route::get('/payment/success/{order}', [CheckoutController::class, 'success'])->name('checkout.success');

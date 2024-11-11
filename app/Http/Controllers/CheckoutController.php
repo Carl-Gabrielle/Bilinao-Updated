@@ -15,7 +15,7 @@ use Illuminate\Support\Str;
 
 class CheckoutController extends Controller
 {
-       public function completeOrders(Request $request)
+    public function completeOrders(Request $request)
 {
     $order = Order::where('user_id', Auth::id())
         ->where('transaction_id', $request->transac_id)
