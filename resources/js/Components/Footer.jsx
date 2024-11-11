@@ -80,10 +80,9 @@ const Footer = () => {
                         <h3 className="text-lg lg:text-xl font-semibold mb-4">
                             Information
                         </h3>
-                        <Menu href="/faqs">FAQs</Menu>
-                        <Menu href="/refund-policy">Refund Policy</Menu>
-                        <Menu href="/privacy-policy">Privacy Policy</Menu>
-                        <Menu href="/terms-conditions">Terms & Conditions</Menu>
+                        <Menu href={route("customer.faqs")}>FAQs</Menu>
+                        <Menu href={route("customer.privacyPolicy")}>Privacy Policy</Menu>
+                        <Menu href={route("customer.terms")}>Terms & Conditions</Menu>
                     </div>
                 </div>
                 <hr className="border-gray-400 mt-5" />

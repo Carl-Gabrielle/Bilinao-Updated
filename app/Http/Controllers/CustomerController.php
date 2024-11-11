@@ -78,6 +78,15 @@ use Illuminate\Support\Facades\Log;
             public function  about (){
                 return Inertia::render('Customer/About');
             }
+            public function faqs (){
+                return Inertia::render('Customer/Faqs');
+            }
+            public function privacyPolicy(){
+                return Inertia::render('Customer/PrivacyPolicy');
+            }
+            public function terms(){
+                return Inertia::render('Customer/Terms');
+            }
             public function categories()
             {
                 $categories = Category::all(); 

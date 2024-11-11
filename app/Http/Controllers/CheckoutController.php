@@ -58,7 +58,6 @@ class CheckoutController extends Controller
         try {
             DB::beginTransaction();
             // Create order
-
             // dd($request->all());
             $transac_id = 'Bilinao-' . uniqid();
             $order = Order::create([

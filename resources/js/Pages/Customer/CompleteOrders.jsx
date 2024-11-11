@@ -109,7 +109,6 @@ export default function CompletedOrder({ auth, order, orderItems }) {
                                 ))}
                             </div>
                         </div>
-                        {/* Action Buttons */}
                         <div className="flex flex-col sm:flex-row justify-end mt-8">
                             <Link href={route("customer.products")}>
                                 <button className="border text-sm border-primary  text-gray-800 font-semibold py-2 px-6 rounded-full shadow-md mr-4 w-full sm:w-auto ">
