@@ -93,7 +93,7 @@ export default function ToPay({ toPay }) {
                                         method="post"
                                         className="px-4 py-2 text-sm text-white transition-colors duration-200 rounded-md bg-primary hover:bg-slate-900">
                                         Complete Payment
-                                    </button>
+                                    </Link>
                                 </div>
                             </div>
                         );
