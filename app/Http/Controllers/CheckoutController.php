@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 use App\Models\Cart;
+use App\Models\DailySalesReport;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Order;
 use App\Models\Notifications;
@@ -19,6 +20,7 @@ class CheckoutController extends Controller
     {
         $order = Order::where('user_id', Auth::id())
             ->where('transaction_id', $request->transac_id)
+            ->with('orderItems.product.seller')
             ->firstOrFail();
 
         $checkout = Paymongo::checkout()->find($order->payment_src_id);
@@ -42,6 +44,17 @@ class CheckoutController extends Controller
         }
 
         $orderItems = $order->orderItems;
+
+        foreach ($order->orderItems as $data) {
+            $contribution = $data->price * 0.04;
+            DailySalesReport::firstOrCreate([
+                'order_item_id' => $data->id,
+                'net_sales_amount' => $data->price - $contribution,
+                'contribution' => $contribution,
+                'status' => 'unpaid'
+            ]);
+        }
+        // dd(json_encode($order->orderItems, JSON_PRETTY_PRINT));
 
         return Inertia::render('Customer/CompleteOrders', [
             'order' => $order,
