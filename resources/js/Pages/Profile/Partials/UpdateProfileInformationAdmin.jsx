@@ -50,7 +50,7 @@ export default function UpdateProfileInformationAdmin({
         <section>
             <header>
                 <div className="flex items-center">
-                    <div className="bg-slate-100 mr-2 p-2 rounded-2xl inline-block">
+                    <div className="bg-slate-200 mr-2 p-2 rounded-md inline-block">
                         <FaRegUser />
                     </div>
                     <h2 className="text-lg font-medium text-primary">

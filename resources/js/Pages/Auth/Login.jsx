@@ -125,7 +125,7 @@ export default function Login({ status, canResetPassword }) {
                         </PrimaryButton>
                     </form>
                     {status && (
-                        <div className="mt-4 text-red-500 text-sm">
+                        <div className="mt-4 text-green-500 text-sm">
                             {status}
                         </div>
                     )}

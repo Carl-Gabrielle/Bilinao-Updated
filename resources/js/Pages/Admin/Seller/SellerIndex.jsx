@@ -3,17 +3,18 @@ import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { MdAdd } from "react-icons/md";
 import DivContainer from "@/Components/DivContainer";
 import { FaCheck } from "react-icons/fa6";
-import { RiDeleteBinLine } from "react-icons/ri";
 import { LiaEditSolid } from "react-icons/lia";
 import { Head, Link, router } from "@inertiajs/react";
+import { FaEyeSlash } from 'react-icons/fa';
 import ConfirmationModal from "@/Components/ConfirmationModal";
 import Pagination from "@/Components/Pagination";
 
 export default function SellerIndex({ auth, sellers, success }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [visibleSuccess, setVisibleSuccess] = useState(!!success);
-    const [sellerToDelete, setSellerToDelete] = useState(null);
+    const [sellerToDeactivate, setSellerToDeactivate] = useState(null);
     const [sellerName, setSellerName] = useState("");
+    const [isReactivating, setIsReactivating] = useState(false);
 
     useEffect(() => {
         if (success) {
@@ -25,26 +26,37 @@ export default function SellerIndex({ auth, sellers, success }) {
     }, [success]);
 
     const openModal = (seller) => {
-        setSellerToDelete(seller);
+        setSellerToDeactivate(seller);
         setSellerName(seller.name);
         setIsModalOpen(true);
     };
 
     const closeModal = () => {
-        setSellerToDelete(null);
+        setSellerToDeactivate(null);
         setSellerName("");
         setIsModalOpen(false);
     };
 
-    const confirmDelete = () => {
-        if (sellerToDelete) {
-            router.delete(
-                route("seller.destroy", { seller: sellerToDelete.id })
-            );
-            setSellerToDelete(null);
-            setSellerName("");
-            setIsModalOpen(false);
+    const handleSellerAction = () => {
+        if (sellerToDeactivate) {
+            if (isReactivating) {
+                // Reactivate seller
+                router.patch(route("seller.reactivate", sellerToDeactivate.id), {}, {
+                    onSuccess: () => closeModal(),
+                });
+            } else {
+                // Deactivate seller
+                router.patch(route("seller.deactivate", sellerToDeactivate.id), {}, {
+                    onSuccess: () => closeModal(),
+                });
+            }
         }
+    };
+
+    const toggleSellerState = (seller) => {
+        // If the seller is inactive, we will show the "Reactivate" option
+        setIsReactivating(!seller.is_active);
+        openModal(seller);
     };
 
     return (
@@ -57,7 +69,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                             <FaCheck className="mr-2" /> {success}
                         </div>
                     )}
-                    <div className=" bg-slate-50 bg-opacity-80  backdrop-blur-lg     overflow-hidden shadow-sm rounded-3xl p-6  ">
+                    <div className=" bg-slate-50 bg-opacity-80 backdrop-blur-lg overflow-hidden shadow-sm rounded-3xl p-6">
                         <div className="flex justify-between items-center mb-5">
                             <h2 className="font-semibold text-2xl text-gray-800 leading-tight">
                                 Sellers
@@ -66,13 +78,12 @@ export default function SellerIndex({ auth, sellers, success }) {
                                 href={route("seller.create")}
                                 className="bg-slate-800 py-3 px-6 text-white rounded-2xl font-bold shadow text-xs flex items-center"
                             >
-                                <MdAdd className="mr-2 size-4" /> Add a New
-                                Seller
+                                <MdAdd className="mr-2 size-4" /> Add a New Seller
                             </Link>
                         </div>
                         <div className="overflow-x-auto scroll-bar">
                             <table className="min-w-full divide-y divide-gray-200">
-                                <thead className="bg-gray-50 ">
+                                <thead className="bg-gray-50">
                                     <tr>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Name
@@ -80,7 +91,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Address
                                         </th>
-                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider  whitespace-nowrap">
+                                        <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
                                             Contact Number
                                         </th>
                                         <th className="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
@@ -114,22 +125,19 @@ export default function SellerIndex({ auth, sellers, success }) {
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-gray-500 flex items-center space-x-4">
                                                 <Link
-                                                    href={route(
-                                                        "seller.edit",
-                                                        user.id
-                                                    )}
-                                                    className="border border-slate-800 text-slate-800 px-3 py-2 rounded"
+                                                    href={route("seller.edit", user.id)}
+                                                    className="border border-slate-500 text-slate-800 px-3 py-2 rounded"
                                                 >
                                                     <LiaEditSolid />
                                                 </Link>
                                                 <Link
                                                     onClick={(e) => {
                                                         e.preventDefault();
-                                                        openModal(user);
+                                                        toggleSellerState(user);
                                                     }}
-                                                    className="bg-slate-800 text-slate-50 px-3 py-2 rounded"
+                                                    className={`px-4 py-2 rounded-2xl ${user.is_active ? "bg-slate-800 text-slate-50" : "bg-green-100 text-green-500"}`}
                                                 >
-                                                    <RiDeleteBinLine />
+                                                    {user.is_active ? <FaEyeSlash /> : "Reactivate"}
                                                 </Link>
                                             </td>
                                         </tr>
@@ -144,8 +152,8 @@ export default function SellerIndex({ auth, sellers, success }) {
             <ConfirmationModal
                 isOpen={isModalOpen}
                 onClose={closeModal}
-                onConfirm={confirmDelete}
-                message={`Are you sure you want to delete ${sellerName}?`}
+                onConfirm={handleSellerAction}
+                message={`Are you sure you want to ${isReactivating ? 'reactivate' : 'deactivate'} ${sellerName}?`}
             />
         </>
     );

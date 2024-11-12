@@ -67,11 +67,13 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/sales-report-individual', [SalesReportController::class, 'salesReportIndividual'])->name('admin.salesReportIndividual');
         Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
         Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
+        Route::patch('/sellers/{seller}/deactivate', [SellerController::class, 'deactivate'])->name('seller.deactivate');
+        Route::patch('/sellers/{seller}/reactivate', [SellerController::class, 'reactivate'])->name('seller.reactivate');
         Route::resource('category', CategoryController::class);
         Route::resource('seller', SellerController::class);
     });
     // CUSTOMER ROUTES
-    Route::middleware('customer')->group(function () {
+        Route::middleware('customer')->group(function () {
         Route::post('/cart', [CartController::class, 'store'])->name('cart.store');
         Route::resource('customer', CustomerController::class);
         Route::get('/customerProfile', [CustomerController::class, 'profile'])->name('customer.customerProfile');

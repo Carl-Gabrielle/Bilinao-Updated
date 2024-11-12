@@ -102,7 +102,6 @@ export default function ShipmentDetailsToggle({
             content: "Your order has been successfully delivered and received.",
         },
     ];
-
     return (
         <div>
             <div
@@ -119,6 +118,7 @@ export default function ShipmentDetailsToggle({
                                 month: "short",
                                 day: "numeric",
                                 year: "numeric",
+                                timeZone: "Asia/Manila",
                             })}
                         </span>
                         <p>{isLoading ? "Processing..." : getCurrentStatus()}</p>
@@ -126,7 +126,6 @@ export default function ShipmentDetailsToggle({
                 </div>
                 {isOpen ? <MdKeyboardArrowDown /> : <MdKeyboardArrowRight />}
             </div>
-
             {isLoading ? (
                 <div className="mt-2 text-center text-slate-600">
                     <div className="flex justify-center items-center space-x-2">

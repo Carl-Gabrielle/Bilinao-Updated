@@ -91,13 +91,22 @@
         /**
          * Remove the specified resource from storage.
          */
-        public function destroy(Seller $seller)
+        public function deactivate(Seller $seller)
         {
-            // Delete the seller record
-            $seller->delete();
+            $seller->update(['is_active' => false]);
         
-            return to_route('seller.index')
-            ->with('success', "Seller \"$seller\" Was Deleted");
+            return redirect()->route('seller.index')
+                ->with('success', "Seller \"{$seller->name}\" was deactivated.");
         }
-  
+        // Reactivation of seller account
+        public function reactivate($id)
+{
+    $seller = Seller::findOrFail($id);
+    $seller->is_active = true;  // Reactivate seller
+    $seller->save();
+
+    return redirect()->route('seller.index')->with('success', 'Seller reactivated successfully');
+}
+
+
     }

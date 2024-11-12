@@ -88,15 +88,23 @@ export default function ToReceive({ toReceiveData }) {
                                     subtotal={subtotal}
                                     total={order.amount}
                                 />
-                                <div className="flex items-center justify-end w-full mt-4 space-x-5">
-                                    <Link
-                                        preserveScroll
-                                        href={route('orders.complete', order.id)}
-                                        method="post"
-                                        className="px-4 py-2 text-sm text-white bg-primary rounded-md transition-colors duration-200 hover:bg-slate-900"
-                                    >
-                                        Order Received
-                                    </Link>
+                                <div className="flex items-center justify-end w-full mt-4">
+                                    <div className="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto">
+                                        <Link
+                                            preserveScroll
+                                            href={route('orders.complete', order.id)}
+                                            method="post"
+                                            className="px-4 py-2 text-sm text-white bg-primary rounded-md text-center transition-colors duration-200  w-full sm:w-auto mb-4 sm:mb-0"
+                                        >
+                                            Order Received
+                                        </Link>
+                                        <Link
+                                            // href={route('orders.complete', order.id)}
+                                            className="px-4 py-2 text-sm border border-slate-500 rounded-md text-center transition-colors duration-200  w-full sm:w-auto"
+                                        >
+                                            Track Order
+                                        </Link>
+                                    </div>
                                 </div>
                                 <div className="mt-4 text-xs text-slate-600">
                                     <p className="flex items-center space-x-2">

@@ -3,7 +3,6 @@
 namespace App\Http\Controllers\Auth;
 
 use App\Http\Controllers\Controller;
-use App\Http\Requests\Auth\LoginRequest;
 use App\Http\Requests\Auth\SellerLoginRequest;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -29,13 +28,24 @@ class AuthenticatedSellerController extends Controller
      */
     public function store(SellerLoginRequest $request): RedirectResponse
     {
-
         $credentials = $request->only('username', 'password');
         
         if (auth()->guard('seller')->attempt($credentials)) {
+            $seller = auth()->guard('seller')->user();
+            
+            if (!$seller->is_active) {
+                auth()->guard('seller')->logout();
+                
+                return back()->withErrors([
+                    'username' => 'Your account is inactive. Please contact support.',
+                ])->onlyInput('username');
+            }
+
             $request->session()->regenerate();
-            return redirect()->intended(route('seller.dashboard',absolute:false));
+
+            return redirect()->intended(route('seller.dashboard', absolute: false));
         }
+
         return back()->withErrors([
             'username' => 'The provided credentials do not match our records.',
         ])->onlyInput('username');
@@ -51,6 +61,6 @@ class AuthenticatedSellerController extends Controller
         $request->session()->invalidate();
         $request->session()->regenerateToken();
 
-        return redirect()->route('seller.login'); // Redirect to seller login or other page
+        return redirect()->route('seller.login'); 
     }
 }

@@ -111,23 +111,28 @@ export default function OrderDetails({ auth, order, orderItems }) {
                                         </div>
                                     </div>
                                 </>
-                            ) : orderItems[0].arrived_date === null ? (
-                                <button
-                                    onClick={handleMarkAsArrived}
-                                    className="bg-slate-800 rounded-2xl text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
-                                    disabled={processing}
-                                >
-                                    Mark as Arrived
-                                </button>
-                            ) : orderItems[0].arrived !== null ? (
-                                <div className="border border-primary rounded-2xl text-primary px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
-                                    Out for Customer Delivery
-                                </div>
-                            ) : orderItems[0].received_date !== null ? (
-                                <div className="border border-green-500 rounded-2xl text-green-500 px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
-                                    Order Completed
-                                </div>
-                            ) : null}
+                            ) :
+                                orderItems[0].received_date !== null ? (
+                                    <div className="border border-green-500 rounded-2xl text-green-500 px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
+                                        Order Completed
+                                    </div>
+                                ) : orderItems[0].arrived_date === null ? (
+                                    <button
+                                        onClick={handleMarkAsArrived}
+                                        className="bg-slate-800 rounded-2xl text-slate-50 px-4 py-2 whitespace-nowrap w-full mt-6"
+                                        disabled={processing}
+                                    >
+                                        Mark as Arrived
+                                    </button>
+                                ) : orderItems[0].arrived !== null ? (
+                                    <div className="border border-primary rounded-2xl text-primary px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
+                                        Out for Customer Delivery
+                                    </div>
+                                ) : orderItems[0].received_date !== null ? (
+                                    <div className="border border-green-500 rounded-2xl text-green-500 px-4 py-2 whitespace-nowrap w-full mt-6 text-center cursor-default">
+                                        Order Completed
+                                    </div>
+                                ) : null}
                         </div>
                     </div>
                 </div>
