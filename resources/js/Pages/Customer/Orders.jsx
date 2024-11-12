@@ -11,10 +11,11 @@ import ToReceive from "./ToReceive";
 import Received from "./Received";
 
 const Orders = ({ auth, orders = [] }) => {
+    console.log(orders)
     const toPayOrders = orders.filter(order => order.remarks == 'to pay')
     const toShipOrders = orders.filter(order => order.remarks === 'paid'
         && order.order_items.some(
-            item => item.processing_date !== null && (item.picked_date == null || item.picked_date !== null) && (item.shipped_date == null || item.shipped_date !== null) && item.arrived_date == null && item.received_date == null
+            item => item.processing_date !== null || item.processing_date == null && (item.picked_date == null || item.picked_date !== null) && (item.shipped_date == null || item.shipped_date !== null) && item.arrived_date == null && item.received_date == null
         )
     );
 
