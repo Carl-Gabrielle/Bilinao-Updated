@@ -1,5 +1,4 @@
 <?php
-
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
@@ -19,6 +18,7 @@ use App\Http\Controllers\SellerDashboardController;
 use App\Http\Controllers\SellerOrderController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\WishlistsController;
+use App\Http\Controllers\Auth\ChangePasswordController;
 
 Route::middleware('guest')->group(function () {
     Route::get('seller/login', [AuthenticatedSellerController::class, 'create'])
@@ -31,13 +31,16 @@ Route::middleware('guest')->group(function () {
 // Public route for seller profile
 Route::get('seller/{seller}/profile', [SellerDashboardController::class, 'publicProfile'])->name('seller.public.profile');
 // SELLLER ROUTES
-Route::middleware('auth:seller')->group(function () {
+Route::middleware(['auth:seller','enforce.password.change'])->group(function () {
+    Route::get('/seller/change-password', [ChangePasswordController::class, 'show'])->name('seller.change_password');
+    Route::post('/seller/change-password', [ChangePasswordController::class, 'update'])->name('seller.change_password.submit');
     Route::get('seller/dashboard', [SellerDashboardController::class, 'dashboard'])->name('seller.dashboard');
     Route::get('seller/products', [ProductController::class, 'showProductsBySeller'])->name('seller.products.index');
     Route::get('seller/products', [ProductController::class, 'index'])->name('products.index');
     Route::get('seller/profile', [SellerDashboardController::class, 'profile'])->name('seller.profile');
     Route::get('seller/profileEdit', [SellerDashboardController::class, 'profileEdit'])->name('seller.profileEdit');
     Route::put('seller/storeProfile', [SellerDashboardController::class, 'update'])->name('seller.storeProfile');
+    Route::get('seller/sales', [SellerDashboardController::class, 'salesReport'])->name('seller.salesReport');
     Route::resource('products', ProductController::class);
     Route::get('/recent-orders', [SellerOrderController::class, 'recentOrders'])->name('seller.RecentOrders');
     Route::post('/seller/markOrderAsProcessing/{orderId}', [SellerOrderController::class, 'markOrderAsProcessing']);
@@ -70,6 +73,8 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::patch('/sellers/{seller}/deactivate', [SellerController::class, 'deactivate'])->name('seller.deactivate');
         Route::patch('/sellers/{seller}/reactivate', [SellerController::class, 'reactivate'])->name('seller.reactivate');
         Route::resource('category', CategoryController::class);
+        Route::put('/category/{category}/publish', [CategoryController::class, 'publish'])->name('category.publish');
+        Route::put('category/{category}/unpublish', [CategoryController::class, 'unpublish'])->name('category.unpublish');
         Route::resource('seller', SellerController::class);
     });
     // CUSTOMER ROUTES
@@ -96,6 +101,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/products', [ProductController::class, 'products'])->name('customer.products');
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/orderSelection', [CartController::class, 'orderSelection'])->name('customer.orderSelection');
+        Route::get('/product/{id}/reviews', [ProductController::class, 'reviews']);
         // CUSTOMER  ORDERS  ROUTE
         Route::get('/orders', [CustomerOrderController::class, 'orders'])->name('customer.orders');
         Route::get('/toPay', [CustomerOrderController::class, 'toPayOrders'])->name('order.toPay');

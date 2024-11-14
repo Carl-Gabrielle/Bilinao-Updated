@@ -36,17 +36,23 @@ class ProductController extends Controller
     }
 
 
-    public function products (){
-        $query = Category::query();
-        $category = $query->paginate(4);
-        $products = Product::with('images')->paginate(9);
+    public function products()
+    {
+        $category = Category::where('is_active', 1)->paginate(4);
+        $products = Product::with(['images', 'seller', 'category'])
+            ->whereHas('seller', function ($query) {
+                $query->where('is_active', 1);  
+            })
+            ->whereHas('category', function ($query) {
+                $query->where('is_active', 1); 
+            })
+            ->paginate(9);
         return Inertia::render('Customer/Products', [
             'success' => session('success'),
             'category' => CategoryResource::collection($category),
             'products' => $products,
         ]);
     }
-
     public function productsByCategory(Category $category)
     {
         $sortOption = request('sort');
@@ -90,7 +96,7 @@ class ProductController extends Controller
      */
     public function create()
     {
-        $categories = Category::all();
+        $categories = Category::where('is_active', 1)->get();
         return Inertia::render('Seller/AddProduct', [
             'categories' => $categories,
             'success' => session('success'),
@@ -132,17 +138,6 @@ class ProductController extends Controller
             ->orderBy('created_at', 'desc')
             ->get();
     
-        // Calculate average rating
-        $averageRating = $reviews->avg('rate') ?? 0;
-        
-        // Calculate star distribution
-        $ratingDistribution = [
-            5 => $reviews->where('rate', 5)->count(),
-            4 => $reviews->where('rate', 4)->count(),
-            3 => $reviews->where('rate', 3)->count(),
-            2 => $reviews->where('rate', 2)->count(),
-            1 => $reviews->where('rate', 1)->count(),
-        ];
     
         $relatedProducts = Product::where('category_id', $product->category_id)
             ->where('id', '!=', $product->id)
@@ -152,8 +147,6 @@ class ProductController extends Controller
     
         return Inertia::render('Customer/ProductDetails', [
             'product' => $product,
-            'averageRating' => round($averageRating, 1),
-            'ratingDistribution' => $ratingDistribution,
             'reviews' => $reviews,
             'relatedProducts' => $relatedProducts,
             'success' => session('success'),
@@ -251,6 +244,20 @@ class ProductController extends Controller
     {
         $product->delete();
         return redirect()->route('products.index')->with('success', 'Product deleted successfully.');
+    }
+
+    public function reviews($productId)
+    {
+        $reviews = Review::with('user') 
+            ->where('product_id', $productId)
+            ->get();
+
+        $averageRating = $reviews->avg('rate');
+
+        return Inertia::render('ProductRatingReviews', [
+            'reviews' => $reviews,
+            'averageRating' => $averageRating,
+        ]);
     }
 
 }

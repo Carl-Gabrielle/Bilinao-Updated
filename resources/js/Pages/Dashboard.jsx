@@ -48,7 +48,7 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                     </h1>
                     <hr className="mt-4 border-gray-400 mb-5" />
                     <div className="w-full h-screen   ">
-                        <div className="grid grid-cols-1 lg:grid-cols-2 gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-5">
                             <DashboardCard>
                                 <div>
                                     <h1 className="text-md font-medium hidden sm:block">
@@ -68,33 +68,19 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                                 />
                             </DashboardCard>
                             <DashboardCard>
-                                <div>
-                                    <h1 className="font-medium text-md">
-                                        Registered Sellers
-                                    </h1>
-                                    <p className="mt-2 text-4xl font-bold text-gray-900">
-                                        {sellerCount}
-                                    </p>
-                                </div>
-                                <div className="bg-blue-100 text-blue-500 p-4 rounded-full">
-                                    <HiOutlineShoppingBag className="size-6" />
-                                </div>
+                                <h1 className="font-semibold">
+                                    Registered Sellers
+                                </h1>
+                                <div className="bg-green-200 px-4 py-0.5 rounded-md"><span className="text-2xl font-semibold text-green-600">{sellerCount}</span></div>
+                            </DashboardCard>
+                            <DashboardCard >
+                                <h1 className="font-semibold">
+                                    Registered Customers
+                                </h1>
+                                <div className="bg-blue-200 px-4 py-0.5 rounded-md"><span className="text-2xl font-semibold text-blue-600">{customerCount}</span></div>
                             </DashboardCard>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-                            <DashboardCard >
-                                <div>
-                                    <h1 className="font-medium text-md">
-                                        Registered Customers
-                                    </h1>
-                                    <p className="mt-2 text-4xl font-bold text-gray-900">
-                                        {customerCount}
-                                    </p>
-                                </div>
-                                <div className="bg-green-100 text-green-500 p-4 rounded-full">
-                                    <HiOutlineUserGroup className="size-6" />
-                                </div>
-                            </DashboardCard>
                             {/* Total Sales Revenue */}
                             {/* Daily/Weekly/Monthly Sales Trends:  */}
                             <DashboardCard>

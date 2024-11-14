@@ -299,20 +299,30 @@ export default function AuthenticatedLayout({ user, header, children }) {
                         " sm:hidden"
                     }
                 >
-                    <div className="pt-2 pb-3 space-y-1">
-                        <ResponsiveNavLink>Dashboard</ResponsiveNavLink>
+                    <div className="pt-1 pb-3 space-y-1">
+                        <ResponsiveNavLink href={route("customer.index")}> Home</ResponsiveNavLink>
+                    </div>
+                    <div className="pt-1 pb-3 space-y-1">
+                        <ResponsiveNavLink href={route("customer.about")} >About Us</ResponsiveNavLink>
+                    </div>
+                    <div className="pt-1 pb-3 space-y-1">
+                        <ResponsiveNavLink href={route("customer.products")} >Products</ResponsiveNavLink>
+                    </div>
+                    <div className="pt-1 pb-3 space-y-1">
+                        <ResponsiveNavLink href={route("customer.categories")}>Categories</ResponsiveNavLink>
                     </div>
                     <div className="pt-4 pb-1 border-t border-gray-200">
                         <div className="px-4">
-                            <div className="font-medium text-base text-gray-800">
+                            <div className="font-medium text-base text-primary">
                                 {user.name}
                             </div>
-                            <div className="font-medium text-sm text-gray-500">
+                            <div className="font-medium text-sm text-slate-700">
                                 {user.email}
                             </div>
                         </div>
                         <div className="mt-3 space-y-1">
-                            <ResponsiveNavLink>Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink href="/customerProfile">Profile</ResponsiveNavLink>
+                            <ResponsiveNavLink href={route("customer.orders")}>My Orders</ResponsiveNavLink>
                             <ResponsiveNavLink
                                 method="post"
                                 href={route("logout")}

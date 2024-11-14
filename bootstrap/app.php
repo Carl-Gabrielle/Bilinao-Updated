@@ -3,6 +3,7 @@ use App\Http\Middleware\AdminMiddleware;
 use App\Http\Middleware\CustomerMiddleware;
 use App\Http\Middleware\SellerMiddleware;
 use Illuminate\Foundation\Application;
+use App\Http\Middleware\EnforcePasswordChange;
 use Illuminate\Foundation\Configuration\Exceptions;
 use Illuminate\Foundation\Configuration\Middleware;
 
@@ -21,6 +22,7 @@ return Application::configure(basePath: dirname(__DIR__))
             'admin'=>AdminMiddleware::class,
             'customer'=>CustomerMiddleware::class,
             // 'seller'=>SellerMiddleware::class,
+            'enforce.password.change' => EnforcePasswordChange::class,
         ]);
     })
     ->withExceptions(function (Exceptions $exceptions) {

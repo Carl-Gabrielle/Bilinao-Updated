@@ -1,6 +1,5 @@
 import React from "react";
-import { Transition } from "@headlessui/react"; // Import for transitions
-
+import { Transition } from "@headlessui/react";
 const ConfirmationModal = ({ isOpen, onClose, onConfirm, message }) => {
     return (
         <Transition show={isOpen}>
@@ -19,13 +18,13 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, message }) => {
                         <div className="flex justify-end space-x-4">
                             <button
                                 onClick={onClose}
-                                className="bg-gray-300 text-gray-700 hover:bg-gray-400 px-4 py-2 rounded transition duration-150"
+                                className="border border-primary  text-primary  px-4 py-0.5 rounded-2xl transition duration-150"
                             >
                                 Cancel
                             </button>
                             <button
                                 onClick={onConfirm}
-                                className="bg-red-600 text-white hover:bg-red-700 px-4 py-2 rounded transition duration-150"
+                                className="bg-red-200  text-red-600 px-4 py-0.5 rounded-2xl transition duration-150"
                             >
                                 Confirm
                             </button>

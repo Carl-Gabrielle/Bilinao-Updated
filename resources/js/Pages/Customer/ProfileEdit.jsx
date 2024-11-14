@@ -414,3 +414,112 @@ export default function ProfileIndex({ auth }) {
         )}
     </div>
 </div>
+
+
+
+
+
+
+
+{
+    relatedProducts.length > 0 && (
+        <div className="mt-20">
+            <h1 className="mb-6 text-2xl font-medium tracking-wide uppercase text-slate-900">
+                Related Products
+            </h1>
+            <div className="grid grid-cols-2 gap-8 pb-10 lg:grid-cols-3 xl:grid-cols-4">
+                {relatedProducts.map((relatedProduct) => (
+                    <Link
+                        key={relatedProduct.id}
+                        href={route(
+                            "product.show",
+                            relatedProduct.id
+                        )}
+                    >
+                        <div className="flex p-4 space-x-2 shadow-lg bg-slate-50 bg-opacity-30 backdrop-blur-md rounded-2xl">
+                            {relatedProduct.images &&
+                                relatedProduct.images.length >
+                                0 ? (
+                                relatedProduct.images
+                                    .length === 1 ? (
+                                    <img
+                                        src={`/storage/${relatedProduct.images[0].image_path}`}
+                                        alt={`${relatedProduct.name} image 1`}
+                                        className="object-cover w-full h-48 mb-4 rounded-lg"
+                                    />
+                                ) : (
+                                    <>
+                                        <img
+                                            src={`/storage/${relatedProduct.images[0].image_path}`}
+                                            alt={`${relatedProduct.name} image 1`}
+                                            className="object-cover w-1/2 h-48 mb-4 rounded-lg"
+                                        />
+                                        {relatedProduct
+                                            .images.length >
+                                            1 && (
+                                                <img
+                                                    src={`/storage/${relatedProduct.images[1].image_path}`}
+                                                    alt={`${relatedProduct.name} image 2`}
+                                                    className="object-cover w-1/2 h-48 mb-4 rounded-lg"
+                                                />
+                                            )}
+                                    </>
+                                )
+                            ) : (
+                                <p className="text-lg text-center text-gray-600">
+                                    No Images Available
+                                </p>
+                            )}
+                        </div>
+                        <div className="flex items-center justify-between p-3 text-xs ">
+                            <div>
+                                <h3 className="pb-1 font-semibold text-md">
+                                    {relatedProduct.name}
+                                </h3>
+                                <p className="text-sm">
+                                    <FaPesoSign className="inline-block mr-1" />
+                                    {Number(
+                                        relatedProduct.price
+                                    ).toLocaleString(
+                                        "en-US",
+                                        {
+                                            minimumFractionDigits: 2,
+                                            maximumFractionDigits: 2,
+                                        }
+                                    )}
+                                </p>
+                            </div>
+                            {relatedProduct.stock > 0 ? (
+                                <Link
+                                    preserveScroll
+                                    href={route(
+                                        "cart.store"
+                                    )}
+                                    method="post"
+                                    data={{
+                                        product_id:
+                                            relatedProduct.id,
+                                        quantity: 1,
+                                    }}
+                                    onClick={() =>
+                                        handleAddToCart(
+                                            product.id
+                                        )
+                                    }
+                                >
+                                    <div className="px-3 py-3 text-white rounded-full bg-slate-800">
+                                        <GrCart size={15} />
+                                    </div>
+                                </Link>
+                            ) : (
+                                <div className="w-full px-2 py-1 text-xs text-center text-gray-600 rounded-full cursor-not-allowed bg-slate-100 sm:w-1/2 sm:py-2">
+                                    Out of Stock
+                                </div>
+                            )}
+                        </div>
+                    </Link>
+                ))}
+            </div>
+        </div>
+    )
+}

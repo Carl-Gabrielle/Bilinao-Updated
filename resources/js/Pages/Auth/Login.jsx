@@ -37,7 +37,7 @@ export default function Login({ status, canResetPassword }) {
     return (
         <GuestLayout>
             <Head title="Log in" />
-            <div className="rounded-t-3xl  sm:rounded-none xl:rounded-r-3xl scroll shadow-inner max-w-4xl lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-slate-50   overflow-hidden ">
+            <div className="rounded-t-3xl  sm:rounded-none xl:rounded-r-3xl scroll shadow-inner max-w-4xl lg:px-32 p-10 mx-auto w-full sm:h-full order-2 lg:order-1 bg-slate-50   overflow-auto ">
                 <div className="mt-5 w-full flex flex-col">
                     <Link
                         href="/sellerLogin"

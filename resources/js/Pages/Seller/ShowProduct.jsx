@@ -105,7 +105,7 @@ export default function ShowProduct({ success }) {
                                         >
                                             <td className="py-4 px-6">
                                                 {product.images &&
-                                                product.images.length > 0 ? (
+                                                    product.images.length > 0 ? (
                                                     <img
                                                         src={`/storage/${product.images[0].image_path}`}
                                                         alt={product.name}
@@ -137,7 +137,13 @@ export default function ShowProduct({ success }) {
                                                 {product.price}
                                             </td>
                                             <td className="py-4 px-6 text-gray-800 font-bold">
-                                                {product.stock}
+                                                {product.stock > 0 ? (
+                                                    product.stock
+                                                ) : (
+                                                    <p className="bg-red-100 text-red-500 font-semibold px-3 py-0.5 rounded-2xl text-sm text-center text-nowrap">
+                                                        Out of Stock
+                                                    </p>
+                                                )}
                                             </td>
                                             <td className="py-4 px-6 text-gray-800 whitespace-nowrap">
                                                 {product.category?.name ||

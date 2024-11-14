@@ -32,6 +32,9 @@ class SellerDashboardController extends Controller
         ]);
     }
     
+    public function salesReport (){
+        return Inertia::render('Seller/SalesReport');
+    }
     public function  profile(){
         return Inertia::render('Seller/SellerProfile');
     }

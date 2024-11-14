@@ -86,14 +86,17 @@ class CategoryController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Category $category)
+    public function unpublish(Category $category)
     {
-    $name =$category->name;
-    $category->delete();
-    if($category->image_path){
-        Storage::disk('public')->deleteDirectory
-        (dirname($category->image_path));
+        $category->update(['is_active' => false]);
+        return redirect()->route('category.index')
+            ->with('success', "Category \"{$category->name}\" was unpublished.");
     }
-    return to_route('category.index');
+    
+    public function publish(Category $category)
+    {
+        $category->update(['is_active' => true]);
+        return redirect()->route('category.index')->with('success', "Category \"{$category->name}\" was published.");
     }
+    
 }

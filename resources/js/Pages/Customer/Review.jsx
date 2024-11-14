@@ -96,15 +96,14 @@ export default function Review({ auth, orderItem, success, error }) {
                                 value={data.description}
                                 onChange={(e) => setData("description", e.target.value)}
                             />
-
                             {errors.description && (
                                 <div className="text-red-500 text-sm mb-4">{errors.description}</div>
                             )}
                             {errors.rate && (
                                 <div className="text-red-500 text-sm mb-4">{errors.rate}</div>
                             )}
-
                             <button
+                                preserveScroll
                                 className="w-full bg-slate-800 text-white py-2 rounded-2xl font-semibold"
                                 onClick={handleSubmit}
                                 disabled={processing}

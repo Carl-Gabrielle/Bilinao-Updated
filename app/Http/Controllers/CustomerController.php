@@ -67,14 +67,25 @@ use Illuminate\Support\Facades\Log;
         
         public function index()
         {
-            $query = Category::query();
-            $category = $query->paginate(7);
-            $products = Product::with('images')->orderBy('created_at', 'desc')->paginate(6);
+            $category = Category::where('is_active', 1)->paginate(7);
+            
+            $products = Product::with('images')
+                ->whereHas('category', function ($query) {
+                    $query->where('is_active', 1);
+                })
+                ->whereHas('seller', function ($query) {
+                    $query->where('is_active', 1); 
+                })
+                ->orderBy('created_at', 'desc')
+                ->paginate(6);
+        
             return Inertia::render('CustomerDashboard', [
                 'category' => CategoryResource::collection($category),
                 'products' => $products,
             ]);
         }
+        
+        
             public function  about (){
                 return Inertia::render('Customer/About');
             }
@@ -88,12 +99,15 @@ use Illuminate\Support\Facades\Log;
                 return Inertia::render('Customer/Terms');
             }
             public function categories()
-            {
-                $categories = Category::all(); 
-                return Inertia::render('Customer/Categories', [
-                    'categories' => CategoryResource::collection($categories),
-                ]);
-            }
+{
+    // Fetch only active categories
+    $categories = Category::where('is_active', 1)->get();
+
+    return Inertia::render('Customer/Categories', [
+        'categories' => CategoryResource::collection($categories),
+    ]);
+}
+
         public function profile()
         {
         return Inertia::render('Customer/ProfileIndex');
@@ -142,56 +156,55 @@ use Illuminate\Support\Facades\Log;
         ]);
     }
     public function storeReview(Request $request)
-{
-    $request->validate([
-        'user_id' => 'required|exists:users,id',
-        'product_id' => 'required|exists:products,id',
-        'order_id' => 'required|exists:order_items,id',
-        'rate' => 'required|integer|min:1|max:5',
-        'description' => 'required|string|min:10|max:1000',
-    ]);
-
-    try {
-        DB::beginTransaction();
-
-        $orderItem = OrderItem::findOrFail($request->order_id);
-        $orderItem->update(['is_rated' => true]);
-
-        $product = Product::findOrFail($request->product_id);
-        $existingReviews = Review::where('product_id', $product->id)->get();
-        $existingRatingsCount = $existingReviews->count();
-        $existingRatingsSum = $existingReviews->sum('rate');
-
-        $newRatingsCount = $existingRatingsCount + 1;
-        $newRatingsSum = $existingRatingsSum + $request->rate;
-        $newAverageRating = $newRatingsSum / $newRatingsCount;
-
-        $product->update(['rating' => $newAverageRating]);
-
-        Review::create([
-            'user_id' => $request->user_id,
-            'product_id' => $product->id,
-            'order_id' => $orderItem->id,
-            'rate' => $request->rate,
-            'description' => $request->description,
+    {
+        $request->validate([
+            'user_id' => 'required|exists:users,id',
+            'product_id' => 'required|exists:products,id',
+            'order_id' => 'required|exists:order_items,id',
+            'rate' => 'required|integer|min:1|max:5',
+            'description' => 'required|string|min:10|max:1000',
         ]);
-
-        DB::commit();
-
-        return Inertia::render('Customer/Review', [
-            'orderItem' => OrderItem::with('product.images')->find($request->order_id),
-            'success' => 'Review submitted successfully!',
-        ]);
-    } catch (\Exception $e) {
-        DB::rollBack();
-        Log::error($e->getMessage());
-
-        return Inertia::render('Customer/Review', [
-            'orderItem' => OrderItem::with('product.images')->find($request->order_id),
-            'error' => 'An error occurred while submitting the review.',
-        ]);
+    
+        try {
+            DB::beginTransaction();
+    
+            $orderItem = OrderItem::findOrFail($request->order_id);
+            $orderItem->update(['is_rated' => true]);
+    
+            $product = Product::findOrFail($request->product_id);
+            $existingReviews = Review::where('product_id', $product->id)->get();
+            $existingRatingsCount = $existingReviews->count();
+            $existingRatingsSum = $existingReviews->sum('rate');
+    
+            $newRatingsCount = $existingRatingsCount + 1;
+            $newRatingsSum = $existingRatingsSum + $request->rate;
+            $newAverageRating = $newRatingsSum / $newRatingsCount;
+    
+            $product->update(['rating' => $newAverageRating]);
+    
+            Review::create([
+                'user_id' => $request->user_id,
+                'product_id' => $product->id,
+                'order_id' => $orderItem->id,
+                'rate' => $request->rate,
+                'description' => $request->description,
+            ]);
+    
+            DB::commit();
+    
+            // Redirect to the product details page
+            return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Review submitted successfully!');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            Log::error($e->getMessage());
+    
+            return Inertia::render('Customer/Review', [
+                'orderItem' => OrderItem::with('product.images')->find($request->order_id),
+                'error' => 'An error occurred while submitting the review.',
+            ]);
+        }
     }
-}
+    
         public function edit()
         {
             return Inertia::render('Customer/ProfileEdit');

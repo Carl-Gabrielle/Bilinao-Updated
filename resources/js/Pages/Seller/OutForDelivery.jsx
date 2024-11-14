@@ -118,7 +118,7 @@ export default function OutForDelivery({
                                                 colSpan={5}
                                                 className="py-4 px-6 text-slate-800 text-center text-sm"
                                             >
-                                                No recent orders found.
+                                                No out for delivery  orders found.
                                             </td>
                                         </tr>
                                     )}

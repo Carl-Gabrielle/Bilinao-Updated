@@ -5,6 +5,7 @@ import { MdOutlineKeyboardArrowLeft, MdLogin } from "react-icons/md";
 import { Head, Link } from "@inertiajs/react";
 import Checkbox from "@/Components/Checkbox";
 import Bgimage from "./Illustrations/BgImage.jpg";
+import SellerInput from "@/Components/SellerInput";
 
 const SellerLogin = () => {
     const { data, setData, post, processing, errors } = useForm({
@@ -29,7 +30,7 @@ const SellerLogin = () => {
         <>
             <Head title="Seller Login" />
             <div
-                className="w-full bg-gray-100 h-screen flex items-center justify-center relative"
+                className="w-full bg-slate-200 h-screen flex items-center justify-center relative"
                 style={{
                     backgroundImage: `url(${Bgimage})`,
                     backgroundSize: "cover",
@@ -70,8 +71,7 @@ const SellerLogin = () => {
                                 </p>
                                 <form onSubmit={handleLogin} className="mt-5">
                                     <div className="mt-5">
-                                        <TextInput
-                                            className="bg-white border-2 border-transparent focus:border-2"
+                                        <SellerInput
                                             required
                                             placeholder="Enter your Username"
                                             value={data.username}
@@ -84,8 +84,7 @@ const SellerLogin = () => {
                                         />
                                     </div>
                                     <div className="mt-5">
-                                        <TextInput
-                                            className="bg-white border-2 border-transparent focus:border-2"
+                                        <SellerInput
                                             required
                                             type={
                                                 showPassword

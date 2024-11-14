@@ -88,7 +88,11 @@ export default function ToReceive({ toReceiveData }) {
                                     subtotal={subtotal}
                                     total={order.amount}
                                 />
-                                <div className="flex items-center justify-end w-full mt-4">
+                                <div className="flex items-center justify-between w-full mt-4">
+                                    <div className="flex items-center space-x-2">
+                                        <span className="text-gray-700 font-medium">Tracking Code:</span>
+                                        <span className="text-primary font-semibold">{order.tracking_code}</span>
+                                    </div>
                                     <div className="flex flex-col sm:flex-row sm:space-x-4 w-full sm:w-auto">
                                         <Link
                                             preserveScroll

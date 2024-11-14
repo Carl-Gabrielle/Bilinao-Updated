@@ -19,6 +19,8 @@ class OrderItem extends Model
         'picked_date',
         'shipped_date',
         'delivered_date',
+        'created_at',
+        'updated_at',
         'shipping_fee_individual'
     ];
     use HasFactory;

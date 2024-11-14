@@ -21,6 +21,7 @@ class CategoryResource extends JsonResource
             'name'=>$this->name,
             'image_path' =>$this->image_path ? 
             Storage::url($this->image_path) : '',
+            'is_active'=>$this->is_active 
         ];
     }
 }

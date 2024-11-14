@@ -22,19 +22,6 @@ export default function ShipmentDetailsToggle({
             setIsLoading(false);
         }, 1000);
     };
-
-    const formatDate = (date) => {
-        if (!date) return null;
-        const formattedDate = new Date(date);
-        return formattedDate.toLocaleString("en-Ph", {
-            year: "numeric",
-            month: "short",
-            day: "numeric",
-            hour: "numeric",
-            minute: "numeric",
-        });
-    };
-
     const getMunicipal = (address) => {
         if (!address) return "";
         const addressParts = address.split(",");
@@ -102,6 +89,18 @@ export default function ShipmentDetailsToggle({
             content: "Your order has been successfully delivered and received.",
         },
     ];
+
+    const formatDate = (date) => {
+        if (!date) return "";
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric',
+        };
+        const formattedDate = new Date(date).toLocaleDateString("en-US", options);
+        return formattedDate;
+    };
+
     return (
         <div>
             <div
