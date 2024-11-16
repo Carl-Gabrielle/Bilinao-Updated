@@ -102,12 +102,14 @@ export default function ToReceive({ toReceiveData }) {
                                         >
                                             Order Received
                                         </Link>
-                                        <Link
-                                            // href={route('orders.complete', order.id)}
-                                            className="px-4 py-2 text-sm border border-slate-500 rounded-md text-center transition-colors duration-200  w-full sm:w-auto"
+                                        <a
+                                            href="https://www.jtexpress.ph/trajectoryQuery?flag=1"
+                                            target="_blank"
+                                            rel="noopener noreferrer"
+                                            className="px-4 py-2 text-sm border border-slate-500 rounded-md text-center transition-colors duration-200 w-full sm:w-auto"
                                         >
                                             Track Order
-                                        </Link>
+                                        </a>
                                     </div>
                                 </div>
                                 <div className="mt-4 text-xs text-slate-600">

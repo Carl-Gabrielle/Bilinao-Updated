@@ -72,9 +72,8 @@ export default function ProductDetails({
             applyFloatingAnimation(imageRef.current);
         }
     }, [selectedImage]);
-    const [actionType, setActionType] = useState(null); // Tracks 'cart' or 'wishlist'
+    const [actionType, setActionType] = useState(null);
 
-    // Function to handle adding to cart
     const handleAddToCart = async (productId) => {
         setActionType("cart");
     };
@@ -90,10 +89,8 @@ export default function ProductDetails({
             quantity: quantity,
         };
         console.log("submitted", { items: [item] });
-
         router.get(route("show.checkout", { items: [item] }));
     };
-
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen pt-20 pb-1">
@@ -330,7 +327,6 @@ export default function ProductDetails({
                                 averageRating={averageRating}
                             />
                         )}
-
                         {/* RELATED PRODUCTS */}
                         {
                             relatedProducts.length > 0 && (
@@ -347,7 +343,7 @@ export default function ProductDetails({
                                                     relatedProduct.id
                                                 )}
                                             >
-                                                <div className="flex p-4 space-x-2 shadow-lg bg-slate-50 bg-opacity-30 backdrop-blur-md rounded-2xl">
+                                                <div className="product-card flex p-4 space-x-2 shadow-lg bg-slate-50 bg-opacity-30 backdrop-blur-md rounded-2xl">
                                                     {relatedProduct.images &&
                                                         relatedProduct.images.length >
                                                         0 ? (
@@ -434,7 +430,6 @@ export default function ProductDetails({
                                 </div>
                             )
                         }
-
                     </CustomerContainer>
                 </main>
             </div>

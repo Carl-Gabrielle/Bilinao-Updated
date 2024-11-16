@@ -3,6 +3,8 @@ import CustomerContainer from "@/Components/CustomerContainer";
 import LoadingSpinner from "@/Components/LoadingSkeletal";
 import CustomerLayout from "@/Layouts/CustomerLayout";
 import { GrCart } from "react-icons/gr";
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { animateText } from '@/gsap'
 import {
     MdOutlineKeyboardArrowDown,
     MdOutlineKeyboardArrowUp,
@@ -91,10 +93,16 @@ export default function Products({ products, auth, success, category }) {
         return () => clearTimeout(timer);
     }, []);
 
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
+
     if (loading) {
         return (
             <CustomerLayout user={auth.user}>
-                <Head title="Products" />
+                <Head title="Home" />
                 <LoadingSpinner />
             </CustomerLayout>
         );
@@ -187,7 +195,7 @@ export default function Products({ products, auth, success, category }) {
                                             key={product.id}
                                             href={route("product.show", product.id)}
                                         >
-                                            <div className="bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-2xl p-4 flex space-x-2 shadow-lg relative">
+                                            <div className="product-card bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-2xl p-4 flex space-x-2 shadow-lg relative">
                                                 <img
                                                     src={`/storage/${product.images[0].image_path}`}
                                                     alt={product.name}

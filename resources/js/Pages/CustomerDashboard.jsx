@@ -5,20 +5,14 @@ import BgImage from "./Illustrations/bg_frame.png";
 import { Head, Link } from "@inertiajs/react";
 import { HiMiniArrowLongRight } from "react-icons/hi2";
 import CustomerLayout from "@/Layouts/CustomerLayout";
-import { applyFloatingText } from "../Pages/Animations/gsap";
+import ScrollTrigger from 'gsap/ScrollTrigger';
 import Footer from "@/Components/Footer";
+import { animateText } from '@/gsap';
 import CustomerContainer from "@/Components/CustomerContainer";
 export default function CustomerDashboard({ auth, category, products }) {
     const categoryData = category?.data ?? [];
     const productData = products?.data ?? [];
     const textRef = useRef(null);
-
-    useEffect(() => {
-        if (textRef.current) {
-            applyFloatingText(textRef.current);
-        }
-    });
-
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
@@ -28,6 +22,12 @@ export default function CustomerDashboard({ auth, category, products }) {
 
         return () => clearTimeout(timer);
     }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
 
     if (loading) {
         return (
@@ -67,7 +67,7 @@ export default function CustomerDashboard({ auth, category, products }) {
                                             </button>
                                         </Link>
                                         <Link href={route("customer.about")}>
-                                            <button className="shop-button sm:self-start self-center sm:ml-4 px-8 py-4 rounded-xl text-primary font-semibold flex items-center border border-primary">
+                                            <button className="cta-button sm:self-start self-center sm:ml-4 px-8 py-4 rounded-xl text-primary font-semibold flex items-center border border-primary">
                                                 See How It Works{" "}
                                             </button>
                                         </Link>
@@ -76,7 +76,7 @@ export default function CustomerDashboard({ auth, category, products }) {
                                 </div>
                             </div>
                         </div>
-                        <p className="-mb-20 sm:-mb-11 text-2xl text-center md:text-3xl lg:text-5xl uppercase font-extrabold text-slate-800">
+                        <p className="shop-categories -mb-20 sm:-mb-11 text-2xl text-center md:text-3xl lg:text-5xl uppercase font-extrabold text-slate-800">
                             Shop our{" "}
                             <span className="bg-slate-100 px-4 rounded-tr-3xl rounded-bl-3xl ">
                                 Categories
@@ -142,7 +142,7 @@ export default function CustomerDashboard({ auth, category, products }) {
                                         productData.map((product) => (
                                             <div
                                                 key={product.id}
-                                                className="bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-3xl shadow-lg transition-transform transform-gpu hover:scale-105 duration-300"
+                                                className=" bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-3xl shadow-lg transition-transform transform-gpu hover:scale-105 duration-300"
                                             >
                                                 <img
                                                     src={`/storage/${product.images[0].image_path}`}

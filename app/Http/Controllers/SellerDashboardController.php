@@ -15,22 +15,20 @@ class SellerDashboardController extends Controller
 {
     public function dashboard() {
         $sellerId = Auth::id();
-        
-        // Count products belonging to the seller
-        $productCount = Product::where('seller_id', $sellerId)->count();
     
-        // Count orders that contain items associated with the seller's products
-        $orderCount = Order::whereHas('orderItems', function ($query) use ($sellerId) {
+        $orders = Order::with(['orderItems' => function ($query) use ($sellerId) {
             $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
                 $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
             });
-        })->count();
-        
+        }])->get();
+    
         return Inertia::render('SellerDashboard', [
-            'productCount' => $productCount,
-            'orderCount' => $orderCount,
+            'productCount' => Product::where('seller_id', $sellerId)->count(),
+            'orderCount' => $orders->count(),
+            'orders' => $orders,
         ]);
     }
+    
     
     public function salesReport (){
         return Inertia::render('Seller/SalesReport');

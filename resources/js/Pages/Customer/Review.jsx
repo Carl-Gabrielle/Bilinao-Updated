@@ -26,6 +26,13 @@ export default function Review({ auth, orderItem, success, error }) {
         post(route("customer.storeReview.store"));
     };
 
+    const handleKeyDown = (e) => {
+        if (e.key === 'Enter') {
+            e.preventDefault();
+            handleSubmit(e);
+        }
+    };
+
     const imagePath = orderItem.product.images[0]?.image_path;
     const imageUrl = imagePath ? `/storage/${imagePath}` : "/path/to/default-image.jpg";
 
@@ -66,7 +73,6 @@ export default function Review({ auth, orderItem, success, error }) {
                                     {orderItem.product.name}
                                 </span>
                             </div>
-
                             {/* Star Rating */}
                             <div className="flex items-center space-x-2 mb-4">
                                 {Array(5)
@@ -88,13 +94,13 @@ export default function Review({ auth, orderItem, success, error }) {
                                         );
                                     })}
                             </div>
-
                             <textarea
                                 className="mb-4 focus:outline-none focus:ring-0 border focus:border-slate-600 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"
                                 placeholder="Share your experience with this product..."
                                 rows={5}
                                 value={data.description}
                                 onChange={(e) => setData("description", e.target.value)}
+                                onKeyDown={handleKeyDown} // Detect Enter key press
                             />
                             {errors.description && (
                                 <div className="text-red-500 text-sm mb-4">{errors.description}</div>
@@ -103,7 +109,6 @@ export default function Review({ auth, orderItem, success, error }) {
                                 <div className="text-red-500 text-sm mb-4">{errors.rate}</div>
                             )}
                             <button
-                                preserveScroll
                                 className="w-full bg-slate-800 text-white py-2 rounded-2xl font-semibold"
                                 onClick={handleSubmit}
                                 disabled={processing}

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import { useForm } from "@inertiajs/react";
 import TextInput from "@/Components/TextInput";
 import { MdOutlineKeyboardArrowLeft, MdLogin } from "react-icons/md";
@@ -25,7 +25,10 @@ const SellerLogin = () => {
             },
         });
     };
-
+    useEffect(() => {
+        const preloadImage = new Image();
+        preloadImage.src = Bgimage;
+    }, []);
     return (
         <>
             <Head title="Seller Login" />

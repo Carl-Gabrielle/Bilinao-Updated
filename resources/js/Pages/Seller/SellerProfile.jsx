@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { Head, usePage, Link } from "@inertiajs/react";
 import SellerLayout from "@/Layouts/SellerLayout";
 import { MdOutlineSecurity } from "react-icons/md"
@@ -13,7 +13,13 @@ import SellerInput from "@/Components/SellerInput";
 export default function SellerProfile() {
     const { auth } = usePage().props;
     const user = auth?.user;
-
+    useEffect(() => {
+        const preloadImage = new Image();
+        preloadImage.src =
+            user.image_path
+                ? `/storage/${user.image_path}`
+                : '/path/to/default/profile/picture.jpg';
+    }, [user.image_path]);
     return (
         <>
             <SellerLayout user={user}>

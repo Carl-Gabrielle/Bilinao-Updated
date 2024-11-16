@@ -125,7 +125,7 @@ export default function CategoryProducts({
                                             )}
                                             className="w-full flex justify-center"
                                         >
-                                            <div className="bg-slate-100 rounded-3xl relative mb-7 h-72">
+                                            <div className="product-card bg-slate-100 rounded-3xl relative mb-7 h-72">
                                                 <div className="rounded-t-3xl rounded-b-2xl overflow-hidden flex flex-col">
                                                     <Link
                                                         preserveScroll

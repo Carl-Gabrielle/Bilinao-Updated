@@ -42,7 +42,14 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     </div>
                     <article className=" px-2 py-1 rounded-md  hover:bg-slate-100 transition-colors duration-300 ease-in-out flex items-center">
                         <figure>
-                            <img className="border w-6 h-6  object-cover  mr-2 bg-slate-500 rounded-full" src="" alt="Profile Image" />
+                            {/* <img className="border w-6 h-6  object-cover  mr-2 bg-slate-500 rounded-full" src="" alt="Profile Image" /> */}
+                            <div className="flex items-center justify-center w-7 h-7 mr-2 bg-slate-600 bg-opacity-30 backdrop-blur-md  text-primary rounded-full text-lg border-slate-500 border-2 ">
+                                {user.name
+                                    .split(' ')
+                                    .map((name) => name.charAt(0))
+                                    .slice(0, 2)
+                                    .join('')}
+                            </div>
                         </figure>
                         <figcaption>
                             <h1 className="text-xs font-semibold hidden sm:block">
