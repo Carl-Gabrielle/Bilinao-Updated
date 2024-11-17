@@ -67,11 +67,13 @@ class CustomerOrderController extends Controller
                         [
                             'total_net_sales' => 0,
                             'total_contribution' => 0,
+                            'total_solds' => 0,
                         ]
                     );
 
                     $monthlyReport->increment('total_net_sales', $report->net_sales_amount);
                     $monthlyReport->increment('total_contribution', $report->contribution);
+                    $monthlyReport->increment('total_solds', $report->solds);
 
                     $report->update(['monthly_sales_report_id' => $monthlyReport->id]);
                 }
@@ -82,6 +84,7 @@ class CustomerOrderController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+            // dd(json_encode($e->getMessage(), JSON_PRETTY_PRINT));
             dd(json_encode($e->getMessage(), JSON_PRETTY_PRINT));
             return back()->withErrors(['Order not found or access denied.']);
 

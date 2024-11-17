@@ -46,12 +46,13 @@ class CheckoutController extends Controller
         $orderItems = $order->orderItems;
         foreach ($order->orderItems as $data) {
             $contribution = $data->price * 0.04;
-            DailySalesReport::firstOrCreate([
+            DailySalesReport::updateOrCreate([
                 'order_item_id' => $data->id,
                 'net_sales_amount' => $data->price - $contribution,
                 'contribution' => $contribution,
                 'status' => 'unpaid',
-                'seller_id' => $data->product->seller->id
+                'seller_id' => $data->product->seller->id,
+                'solds' => $data->qty
             ]);
         }
         // dd(json_encode($orderItems, JSON_PRETTY_PRINT));
