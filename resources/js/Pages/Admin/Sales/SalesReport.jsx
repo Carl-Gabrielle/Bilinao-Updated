@@ -4,7 +4,7 @@ import { FaPesoSign } from "react-icons/fa6";
 import { FaRegEye } from "react-icons/fa";
 import { IoPrintOutline } from "react-icons/io5";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 
 const sellersData = [
     {
@@ -29,6 +29,8 @@ const calculateCommission = (price, quantitySold) => {
 
 export default function SalesReport({ auth }) {
     const { user } = auth;
+    const { monthlySalesReport } = usePage().props;
+    console.log(monthlySalesReport);
 
     const totalCommission = sellersData.reduce((total, seller) => {
         return total + seller.products.reduce((productTotal, product) => {
@@ -40,10 +42,10 @@ export default function SalesReport({ auth }) {
         <AuthenticatedLayout user={user}>
             <Head title="Sales Report" />
             <DivContainer>
-                <div className="w-full h-auto p-6 bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-lg printable-area">
+                <div className="w-full h-auto p-6 shadow-lg bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl printable-area">
                     <div className="p-2">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="font-semibold text-xl text-primary">Sales Reports</h2>
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-xl font-semibold text-primary">Sales Reports</h2>
                             <button
                                 onClick={() => window.print()}
                                 className="flex items-center border border-primary rounded-md text-md text-primary px-3 py-0.5"
@@ -55,42 +57,44 @@ export default function SalesReport({ auth }) {
                             <table className="min-w-full rounded-lg">
                                 <thead className="bg-slate-200">
                                     <tr>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Seller</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Product Name</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Price</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Quantity Sold</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Sustainability Contribution (4%)</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Action</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Seller</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Total Sales</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Quantity Sold</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Sustainability Contribution (4%)</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200 text-sm">
-                                    {sellersData.map((seller, sellerIndex) => (
-                                        seller.products.map((product, productIndex) => (
-                                            <tr key={`${sellerIndex}-${productIndex}`} className="hover:bg-slate-50 transition duration-200 ease-in-out text-xs whitespace-nowrap">
-                                                <td className="py-4 px-6 text-gray-800 font-medium">{seller.name}</td>
-                                                <td className="py-4 px-6 text-gray-600">{product.name}</td>
-                                                <td className="py-4 px-6 text-gray-600 flex items-center">
+                                <tbody className="text-sm bg-white divide-y divide-gray-200">
+                                    {monthlySalesReport == null || monthlySalesReport.length == 0 ? (
+                                        <>No data Yet.</>
+                                    ) : (
+                                        monthlySalesReport.map((data, index) => (
+                                            <tr key={index} className="text-xs transition duration-200 ease-in-out hover:bg-slate-50 whitespace-nowrap">
+                                                <td className="px-6 py-4 font-medium text-gray-800">{data.seller.name}</td>
+                                                <td className="flex items-center px-6 py-4 text-gray-600">
                                                     <FaPesoSign className="mr-1 text-gray-500" />
-                                                    {product.price.toFixed(2)}
+                                                    {data.total_net_sales.toFixed(2)}
                                                 </td>
-                                                <td className="py-4 px-6 text-gray-600">{product.quantitySold}</td>
-                                                <td className="py-4 px-6 text-gray-600 flex items-center">
+
+                                                <td className="px-6 py-4 text-gray-600">{'fake 00'}</td>
+                                                <td className="flex items-center px-6 py-4 text-gray-600">
                                                     <FaPesoSign className="mr-1 text-green-500" />
-                                                    {calculateCommission(product.price, product.quantitySold).toFixed(2)}
+                                                    {data.total_contribution.toFixed(2)}
                                                 </td>
                                                 <td className="py-4 px-7">
-                                                    <Link href={route('admin.salesReportIndividual')} className="flex items-center justify-center font-medium bg-blue-50 text-blue-500 py-1 px-3 rounded-full">
+                                                    <Link href={route('admin.salesReportIndividual')} className="flex items-center justify-center px-3 py-1 font-medium text-blue-500 rounded-full bg-blue-50">
                                                         View
                                                     </Link>
                                                 </td>
                                             </tr>
-                                        ))
-                                    ))}
+                                        )
+
+                                        ))}
                                 </tbody>
                             </table>
-                            <div className="p-6 bg-slate-200 text-gray-800 font-bold rounded-b-lg flex justify-between items-center">
-                                <h3 className="text-md text-gray-700">Total Sustainability Contribution:</h3>
-                                <p className="text-lg flex items-center text-green-600">
+                            <div className="flex items-center justify-between p-6 font-bold text-gray-800 rounded-b-lg bg-slate-200">
+                                <h3 className="text-gray-700 text-md">Total Sustainability Contribution:</h3>
+                                <p className="flex items-center text-lg text-green-600">
                                     <FaPesoSign className="mr-1" />
                                     {totalCommission.toFixed(2)}
                                 </p>

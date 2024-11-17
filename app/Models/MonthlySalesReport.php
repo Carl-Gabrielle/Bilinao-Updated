@@ -16,4 +16,9 @@ class MonthlySalesReport extends Model
         'total_contribution',
         'month_date'
     ];
+
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class, 'seller_id');
+    }
 }
