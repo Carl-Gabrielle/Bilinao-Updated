@@ -16,8 +16,11 @@ class SalesReportController extends Controller
             ->with('seller')
             ->get();
 
+        $totalContribution = MonthlySalesReport::where('month_date', $firstDayOfTheMonth)->sum('total_contribution');
+
         return Inertia('Admin/Sales/SalesReport', [
-            'monthlySalesReport' => $monthlySalesReport
+            'monthlySalesReport' => $monthlySalesReport,
+            'totalContributionForCurrentMonth' => $totalContribution
         ]);
     }
     public function salesReportIndividual()

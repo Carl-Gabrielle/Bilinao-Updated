@@ -29,7 +29,7 @@ const calculateCommission = (price, quantitySold) => {
 
 export default function SalesReport({ auth }) {
     const { user } = auth;
-    const { monthlySalesReport } = usePage().props;
+    const { monthlySalesReport, totalContributionForCurrentMonth } = usePage().props;
     console.log(monthlySalesReport);
 
     const totalCommission = sellersData.reduce((total, seller) => {
@@ -76,7 +76,9 @@ export default function SalesReport({ auth }) {
                                                     {data.total_net_sales.toFixed(2)}
                                                 </td>
 
-                                                <td className="px-6 py-4 text-gray-600">{'fake 00'}</td>
+                                                <td className="px-6 py-4 text-gray-600">
+                                                    {data.total_solds}
+                                                </td>
                                                 <td className="flex items-center px-6 py-4 text-gray-600">
                                                     <FaPesoSign className="mr-1 text-green-500" />
                                                     {data.total_contribution.toFixed(2)}
@@ -96,7 +98,7 @@ export default function SalesReport({ auth }) {
                                 <h3 className="text-gray-700 text-md">Total Sustainability Contribution:</h3>
                                 <p className="flex items-center text-lg text-green-600">
                                     <FaPesoSign className="mr-1" />
-                                    {totalCommission.toFixed(2)}
+                                    {totalContributionForCurrentMonth}
                                 </p>
                             </div>
                         </div>
