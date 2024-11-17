@@ -72,6 +72,8 @@ class CustomerOrderController extends Controller
 
                     $monthlyReport->increment('total_net_sales', $report->net_sales_amount);
                     $monthlyReport->increment('total_contribution', $report->contribution);
+
+                    $report->update(['monthly_sales_report_id' => $monthlyReport->id]);
                 }
 
                 DB::commit();
@@ -80,6 +82,7 @@ class CustomerOrderController extends Controller
 
         } catch (\Exception $e) {
             DB::rollBack();
+            dd(json_encode($e->getMessage(), JSON_PRETTY_PRINT));
             return back()->withErrors(['Order not found or access denied.']);
 
         }
