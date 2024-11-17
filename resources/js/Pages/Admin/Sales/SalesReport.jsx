@@ -15,7 +15,6 @@ export default function SalesReport({ auth }) {
         const reportMonth = new Date(data.created_at).getMonth() + 1;
         return reportMonth === selectedMonth;
     }) || [];
-
     return (
         <AuthenticatedLayout user={user}>
             <Head title="Sales Report" />

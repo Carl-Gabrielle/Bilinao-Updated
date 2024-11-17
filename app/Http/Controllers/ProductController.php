@@ -36,23 +36,44 @@ class ProductController extends Controller
     }
 
 
-    public function products()
-    {
-        $category = Category::where('is_active', 1)->paginate(4);
-        $products = Product::with(['images', 'seller', 'category'])
-            ->whereHas('seller', function ($query) {
-                $query->where('is_active', 1);  
-            })
-            ->whereHas('category', function ($query) {
-                $query->where('is_active', 1); 
-            })
-            ->paginate(9);
-        return Inertia::render('Customer/Products', [
-            'success' => session('success'),
-            'category' => CategoryResource::collection($category),
-            'products' => $products,
-        ]);
-    }
+        public function products()
+        {
+            $category = Category::where('is_active', 1)->paginate(4);
+            $products = Product::with(['images', 'seller', 'category'])
+                ->whereHas('seller', function ($query) {
+                    $query->where('is_active', 1);  
+                })
+                ->whereHas('category', function ($query) {
+                    $query->where('is_active', 1); 
+                })
+                ->paginate(9);
+            return Inertia::render('Customer/Products', [
+                'success' => session('success'),
+                'category' => CategoryResource::collection($category),
+                'products' => $products,
+            ]);
+        }
+        // public function products()
+        // {
+        //     $category = Category::where('is_active', 1)->paginate(4);
+        
+        //     $products = Product::with(['images', 'seller', 'category'])
+        //         ->whereHas('seller', function ($query) {
+        //             $query->where('is_active', 1);  
+        //         })
+        //         ->paginate(9);
+        
+        //     $products->getCollection()->transform(function ($product) {
+        //         $product->is_available_for_order = $product->category->is_active && $product->seller->is_active;
+        //         return $product;
+        //     });
+        
+        //     return Inertia::render('Customer/Products', [
+        //         'success' => session('success'),
+        //         'category' => CategoryResource::collection($category),
+        //         'products' => $products,
+        //     ]);
+        // }
     public function productsByCategory(Category $category)
     {
         $sortOption = request('sort');
@@ -132,7 +153,6 @@ class ProductController extends Controller
     {
         $product->load(['images', 'category', 'seller']);
     
-        // Load reviews with user information
         $reviews = Review::where('product_id', $product->id)
             ->with('user')
             ->orderBy('created_at', 'desc')

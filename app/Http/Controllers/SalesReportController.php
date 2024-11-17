@@ -1,8 +1,8 @@
 <?php
 
 namespace App\Http\Controllers;
-use App\Models\DailySalesReport;
 use App\Models\MonthlySalesReport;
+use App\Models\DailySalesReport;
 use Carbon\Carbon;
 use Inertia\Inertia;
 use Illuminate\Http\Request;
@@ -41,21 +41,19 @@ class SalesReportController extends Controller
         ]);
     }
     public function toggleStatus($id, Request $request)
-    {
-        $salesReport = DailySalesReport::find($id);
-        
-        if ($salesReport) {
-            $newStatus = $request->input('status'); 
-    
-            $salesReport->status = ($newStatus === 'Paid') ? 'Paid' : 'To Pay';
-    
-            $salesReport->save();
-    
-            return redirect()->route('admin.salesReportIndividual', ['id' => $salesReport->monthly_sales_report_id]);
-        }
-    
-        return response()->json(['error' => 'Report not found'], 404);
+{
+    $salesReport = DailySalesReport::find($id);
+
+    if ($salesReport && $request->input('status') === 'Paid') {
+        $salesReport->status = 'Paid';
+        $salesReport->save();
+
+        return redirect()->route('admin.salesReportIndividual', ['id' => $salesReport->monthly_sales_report_id]);
     }
+
+    return response()->json(['error' => 'Invalid operation'], 400);
+}
+
     
 
 

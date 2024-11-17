@@ -7,6 +7,8 @@ use App\Http\Requests\UpdateSellerRequest;
 use Inertia\Inertia;
 use App\Models\Product;
 use App\Models\Order;
+use App\Models\DailySalesReport;
+use Carbon\Carbon;
 use App\Http\Resources\SellerResource;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
@@ -30,8 +32,25 @@ class SellerDashboardController extends Controller
     }
     
     
-    public function salesReport (){
-        return Inertia::render('Seller/SalesReport');
+    public function salesReport()
+    {
+        $sellerId = Auth::id(); 
+        $firstDayOfTheMonth = Carbon::now()->startOfMonth()->toDateString();
+    
+        $dailySalesReport = DailySalesReport::whereHas('seller', function ($query) use ($sellerId) {
+            $query->where('seller_id', $sellerId);
+        })
+        ->whereDate('created_at', '>=', $firstDayOfTheMonth)
+        ->with(['orderItems.product'])
+        ->orderBy('updated_at', 'asc')
+        ->get();
+    
+        $totalContribution = $dailySalesReport->sum('contribution');
+    
+        return Inertia::render('Seller/SalesReport', [
+            'data' => $dailySalesReport,
+            'totalContribution' => $totalContribution
+        ]);
     }
     public function  profile(){
         return Inertia::render('Seller/SellerProfile');
@@ -73,7 +92,6 @@ class SellerDashboardController extends Controller
             $data['image_path'] = $imagePath; 
         }
     
-        // Update seller's information
         $seller->update([
             'name' => $data['name'],
             'address' => $data['address'],
@@ -90,7 +108,6 @@ class SellerDashboardController extends Controller
 
     public function destroy(Seller $seller)
 {
-    // Delete the seller record and profile picture if exists
     if ($seller->profile_picture) {
         Storage::disk('public')->delete($seller->profile_picture);
     }
@@ -101,11 +118,11 @@ class SellerDashboardController extends Controller
 }
 public function logout(Request $request)
 {
-    Auth::guard('seller')->logout(); // Logs out the seller
+    Auth::guard('seller')->logout(); 
 
-    $request->session()->invalidate(); // Invalidate the session
-    $request->session()->regenerateToken(); // Regenerate the CSRF token
+    $request->session()->invalidate(); 
+    $request->session()->regenerateToken(); 
 
-    return redirect()->route('seller.login'); // Redirect to seller login or other page
+    return redirect()->route('seller.login'); 
 }
 }

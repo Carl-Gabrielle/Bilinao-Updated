@@ -78,7 +78,6 @@ export default function ProductDetails({
         setActionType("cart");
     };
 
-    // Function to handle adding to wishlist
     const handleAddToWishlist = async (productId) => {
         setActionType("wishlist");
     };

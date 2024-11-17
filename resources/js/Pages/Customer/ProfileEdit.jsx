@@ -638,3 +638,99 @@ export default function SalesReport({ auth }) {
         </AuthenticatedLayout>
     );
 }
+
+
+
+
+<div className="flex flex-col items-start justify-center max-w-lg mx-auto">
+    <p className="mt-5 mb-4 text-xl font-medium text-slate-800">
+        Category: {product.category.name}
+    </p>
+    <h1 className="mb-4 text-2xl font-bold leading-tight text-gray-900 md:text-3xl lg:text-4xl font-Roboto">
+        {product.name}
+    </h1>
+    <p className="mb-4 text-sm leading-relaxed text-gray-600">
+        {product.description}
+    </p>
+
+    {/* Product Availability */}
+    {product.stock > 0 ? (
+        <span className="mb-5 text-sm font-medium text-slate-800">
+            <span className="px-3 py-1 rounded-full shadow-inner text-emerald-100 bg-emerald-600">
+                <FaRegCheckSquare className="inline-block mr-2" />
+                In Stock
+            </span>{" "}
+            {product.stock} {product.stock > 1 ? "products" : "product"}
+        </span>
+    ) : (
+        <p className="mb-5 text-sm font-medium text-slate-800">
+            <span className="px-3 py-1 text-red-100 bg-red-600 rounded-full shadow-inner">
+                <MdOutlineRemoveShoppingCart className="inline-block mr-2" />
+                Out of Stock
+            </span>{" "}
+            {product.stock} product
+        </p>
+    )}
+
+    {/* Category Active Check */}
+    {!category_is_active && (
+        <p className="mb-5 text-sm font-medium text-red-600">
+            <span className="px-3 py-1 text-white bg-red-600 rounded-full shadow-inner">
+                This product is in an inactive category and cannot be purchased.
+            </span>
+        </p>
+    )}
+
+    <div className="flex items-center mb-4 text-xl font-bold text-slate-800">
+        <FaPesoSign className="text-lg" />
+        <span className="ml-1">
+            {product.price}
+        </span>
+    </div>
+
+    {/* Add to Cart / Buy Now */}
+    <div className="flex flex-col w-full gap-4 py-4 sm:flex-row">
+        {product.stock > 0 && category_is_active && (
+            <>
+                <button
+                    onClick={handleBuyNow}
+                    className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium border rounded-full shadow-md sm:w-52 text-slate-800 border-slate-500 lg:mt-0"
+                >
+                    Buy Now
+                </button>
+                <Link
+                    preserveScroll
+                    href={route("cart.store")}
+                    method="post"
+                    data={{
+                        product_id: product.id,
+                        quantity: quantity,
+                    }}
+                    onClick={() => handleAddToCart(product.id)}
+                >
+                    <button className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium text-white rounded-full shadow-inner sm:w-52 bg-slate-800 lg:mt-0">
+                        Add to Cart
+                    </button>
+                </Link>
+            </>
+        )}
+
+        {/* Disabled buttons when category is inactive */}
+        {!category_is_active && (
+            <>
+                <button
+                    disabled
+                    className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium border rounded-full shadow-md sm:w-52 text-slate-500 border-slate-300 lg:mt-0"
+                >
+                    Buy Now
+                </button>
+                <button
+                    disabled
+                    className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium text-white rounded-full shadow-inner sm:w-52 bg-slate-500 lg:mt-0"
+                >
+                    Add to Cart
+                </button>
+            </>
+        )}
+    </div>
+</div>

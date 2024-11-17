@@ -1,40 +1,37 @@
-import DivContainer from "@/Components/DivContainer";
-import { FaPesoSign } from "react-icons/fa6";
-import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
+import React, { useState } from "react";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { FaPesoSign } from "react-icons/fa6";
 import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
+import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import { Head, Link, usePage } from "@inertiajs/react";
 import { Inertia } from "@inertiajs/inertia";
-import { useState } from "react";
-
-const sellersData = [
-    {
-        name: "Seller 1",
-        products: [
-            { name: "Product A", price: 50, quantitySold: 10, status: "Paid" },
-            { name: "Product B", price: 100, quantitySold: 5, status: "Pending" },
-        ],
-    },
-];
-
-const calculateCommission = (price, quantitySold) => {
-    return price * quantitySold * 0.04;
-};
+import { IoPricetagsOutline } from "react-icons/io5";
+import DivContainer from "@/Components/DivContainer";
+import ConfirmationModal from "@/Components/ConfirmationModal";
 
 export default function SellerIndividualSales({ auth }) {
     const { user } = auth;
     const { data, totalContribution } = usePage().props;
-    console.log(data)
-    const [processing, setProcessing] = useState(false);
-    const sellerData = sellersData[0];
-    const [products, setProducts] = useState(sellerData.products);
-    const toggleStatus = (id, currentStatus) => {
-        const newStatus = currentStatus === 'Paid' ? 'To Pay' : 'Paid';
-        Inertia.post(`/sales-report/${id}/toggle-status`, { status: newStatus }, {
-            onError: (errors) => {
-                console.error(errors);
-            },
-        });
+    const [isModalOpen, setIsModalOpen] = useState(false);
+    const [selectedItem, setSelectedItem] = useState(null);
+
+    const openModal = (item) => {
+        setSelectedItem(item);
+        setIsModalOpen(true);
+    };
+
+    const closeModal = () => {
+        setSelectedItem(null);
+        setIsModalOpen(false);
+    };
+
+    const markAsPaid = () => {
+        if (selectedItem) {
+            Inertia.post(`/sales-report/${selectedItem.id}/toggle-status`, { status: "Paid" }, {
+                onSuccess: () => closeModal(),
+                onError: (errors) => console.error(errors),
+            });
+        }
     };
     return (
         <AuthenticatedLayout user={user}>
@@ -50,7 +47,9 @@ export default function SellerIndividualSales({ auth }) {
                 <div className="w-full h-auto p-6 shadow-lg bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl">
                     <div className="p-2">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-xl font-semibold text-primary">Sales Report of {data[0].seller.name}</h2>
+                            <h2 className="text-xl font-semibold text-primary">
+                                Sales Report of {data[0].seller.name}
+                            </h2>
                         </div>
                         <div className="overflow-x-auto rounded-lg">
                             <table className="min-w-full rounded-lg">
@@ -66,8 +65,8 @@ export default function SellerIndividualSales({ auth }) {
                                 </thead>
                                 <tbody className="text-sm bg-white divide-y divide-gray-200">
                                     {data.map((item, index) => (
-                                        <tr key={index} className="text-xs transition duration-200 ease-in-out hover:bg-slate-50 whitespace-nowrap">
-                                            <td className="px-6 py-4 font-medium text-gray-800">{item.order_items.product.name}</td>
+                                        <tr key={index} className="text-xs hover:bg-slate-50 whitespace-nowrap">
+                                            <td className="px-6 py-4 font-medium text-gray-800"> <IoPricetagsOutline className="inline-block  mr-1" />  {item.order_items.product.name}</td>
                                             <td className="flex items-center px-6 py-4 text-gray-600">
                                                 <FaPesoSign className="mr-1 text-gray-500" />
                                                 {item.net_sales_amount}
@@ -77,25 +76,26 @@ export default function SellerIndividualSales({ auth }) {
                                                 <FaPesoSign className="mr-1 text-green-500" />
                                                 {item.contribution}
                                             </td>
-                                            <td className="px-6 py-4 text-gray-600">
-                                                <span className={`py-1 px-3 rounded-full ${item.status === "Paid" ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"} `}>{item.status} </span>
+                                            <td className="px-6 py-4">
+                                                <span
+                                                    className={`py-1 px-3 rounded-full ${item.status === "Paid" ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}
+                                                >
+                                                    {item.status}
+                                                </span>
                                             </td>
                                             <td className="py-4 px-7">
-                                                <button
-                                                    onClick={() => toggleStatus(item.id, item.status)}
-                                                    className={`flex items-center justify-center border ${item.status === "Paid" ? "border-green-600 text-green-600" : "border-red-600 text-red-600"
-                                                        } py-1 px-3 rounded-full`}
-                                                >
-                                                    {item.status === "To Pay" ? (
-                                                        <>
-                                                            <FaPesoSign className="mr-2" /> Mark Paid
-                                                        </>
-                                                    ) : (
-                                                        <>
-                                                            <FaTimesCircle className="mr-2" /> Mark Unpaid
-                                                        </>
-                                                    )}
-                                                </button>
+                                                {item.status !== "Paid" ? (
+                                                    <button
+                                                        onClick={() => openModal(item)}
+                                                        className="flex items-center justify-center border border-green-600 text-green-600 py-1 px-3 rounded-full  hover:bg-green-600 transition-colors duration-300 ease-in-out hover:text-white"
+                                                    >
+                                                        <FaCheckCircle className="mr-2" /> Mark Paid
+                                                    </button>
+                                                ) : (
+                                                    <span className="flex items-center justify-center bg-green-100 text-green-700 py-1 px-3 rounded-full  ">
+                                                        <FaCheckCircle className="mr-2" /> Paid
+                                                    </span>
+                                                )}
                                             </td>
                                         </tr>
                                     ))}
@@ -112,6 +112,14 @@ export default function SellerIndividualSales({ auth }) {
                     </div>
                 </div>
             </DivContainer>
+
+            <ConfirmationModal
+                isOpen={isModalOpen}
+                onClose={closeModal}
+                onConfirm={markAsPaid}
+                title="Mark as Paid"
+                message="Are you sure you want to mark this as Paid? This action cannot be undone."
+            />
         </AuthenticatedLayout>
     );
 }
