@@ -12,7 +12,9 @@ class DailySalesReport extends Model
         'order_item_id',
         'net_sales_amount',
         'contribution',
-        'status'
+        'status',
+        'monthly_sales_report_id',
+        'seller_id'
     ];
 
     use HasFactory;

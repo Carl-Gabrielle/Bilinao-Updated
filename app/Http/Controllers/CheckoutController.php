@@ -44,17 +44,17 @@ class CheckoutController extends Controller
         }
 
         $orderItems = $order->orderItems;
-
         foreach ($order->orderItems as $data) {
             $contribution = $data->price * 0.04;
             DailySalesReport::firstOrCreate([
                 'order_item_id' => $data->id,
                 'net_sales_amount' => $data->price - $contribution,
                 'contribution' => $contribution,
-                'status' => 'unpaid'
+                'status' => 'unpaid',
+                'seller_id' => $data->product->seller->id
             ]);
         }
-        // dd(json_encode($order->orderItems, JSON_PRETTY_PRINT));
+        // dd(json_encode($orderItems, JSON_PRETTY_PRINT));
 
         return Inertia::render('Customer/CompleteOrders', [
             'order' => $order,
