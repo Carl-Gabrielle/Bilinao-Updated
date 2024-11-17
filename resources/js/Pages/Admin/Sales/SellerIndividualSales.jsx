@@ -2,7 +2,7 @@ import DivContainer from "@/Components/DivContainer";
 import { FaPesoSign } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
-import { Head, Link } from "@inertiajs/react";
+import { Head, Link, usePage } from "@inertiajs/react";
 import { useState } from "react";
 
 const sellersData = [
@@ -21,12 +21,10 @@ const calculateCommission = (price, quantitySold) => {
 
 export default function SellerIndividualSales({ auth }) {
     const { user } = auth;
+    const { data, totalContribution } = usePage().props;
+    console.log(data)
 
     const sellerData = sellersData[0];
-
-    const totalCommission = sellerData.products.reduce((total, product) => {
-        return total + calculateCommission(product.price, product.quantitySold);
-    }, 0);
 
     const [products, setProducts] = useState(sellerData.products);
 
@@ -44,60 +42,60 @@ export default function SellerIndividualSales({ auth }) {
             <DivContainer>
                 <Link
                     href={route("admin.salesReport")}
-                    className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
+                    className="flex items-center px-6 py-1 mb-5 text-sm font-semibold rounded-full bg-slate-100 w-36"
                 >
                     <MdOutlineKeyboardArrowLeft className="mr-2" />
                     <span>Go Back</span>
                 </Link>
-                <div className="w-full h-auto p-6 bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl shadow-lg">
+                <div className="w-full h-auto p-6 shadow-lg bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl">
                     <div className="p-2">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="font-semibold text-xl text-primary">Sales Report of {sellerData.name}</h2>
+                        <div className="flex items-center justify-between mb-6">
+                            <h2 className="text-xl font-semibold text-primary">Sales Report of {data[0].seller.name}</h2>
                         </div>
                         <div className="overflow-x-auto rounded-lg">
                             <table className="min-w-full rounded-lg">
                                 <thead className="bg-slate-200">
                                     <tr>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Product Name</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Price</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Quantity Sold</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Sustainability Contribution (4%)</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Status</th>
-                                        <th className="px-6 py-4 text-left text-xs font-semibold text-gray-700 uppercase tracking-wider">Action</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Product Name</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Net Pay</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Quantity Sold</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Sustainability Contribution (4%)</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Status</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Action</th>
                                     </tr>
                                 </thead>
-                                <tbody className="bg-white divide-y divide-gray-200 text-sm">
-                                    {products.map((product, index) => (
-                                        <tr key={index} className="hover:bg-slate-50 transition duration-200 ease-in-out text-xs whitespace-nowrap">
-                                            <td className="py-4 px-6 text-gray-800 font-medium">{product.name}</td>
-                                            <td className="py-4 px-6 text-gray-600 flex items-center">
+                                <tbody className="text-sm bg-white divide-y divide-gray-200">
+                                    {data.map((item, index) => (
+                                        <tr key={index} className="text-xs transition duration-200 ease-in-out hover:bg-slate-50 whitespace-nowrap">
+                                            <td className="px-6 py-4 font-medium text-gray-800">{item.order_items.product.name}</td>
+                                            <td className="flex items-center px-6 py-4 text-gray-600">
                                                 <FaPesoSign className="mr-1 text-gray-500" />
-                                                {product.price.toFixed(2)}
+                                                {item.net_sales_amount}
                                             </td>
-                                            <td className="py-4 px-6 text-gray-600">{product.quantitySold}</td>
-                                            <td className="py-4 px-6 text-gray-600 flex items-center">
+                                            <td className="px-6 py-4 text-gray-600">{item.solds}</td>
+                                            <td className="flex items-center px-6 py-4 text-gray-600">
                                                 <FaPesoSign className="mr-1 text-green-500" />
-                                                {calculateCommission(product.price, product.quantitySold).toFixed(2)}
+                                                {item.contribution}
                                             </td>
-                                            <td className="py-4 px-6 text-gray-600">{product.status}</td>
+                                            <td className="px-6 py-4 text-gray-600">{item.status}</td>
                                             <td className="py-4 px-7">
                                                 <button
                                                     onClick={() => toggleStatus(index)}
-                                                    className={`flex items-center justify-center border ${product.status === "Paid" ? "border-green-600 text-green-600" : "border-red-600 text-red-600"
+                                                    className={`flex items-center justify-center border ${item.status === "Paid" ? "border-green-600 text-green-600" : "border-red-600 text-red-600"
                                                         } py-1 px-3 rounded-full`}
                                                 >
-                                                    {product.status === "Paid" ? "Mark Unpaid" : "Mark Paid"}
+                                                    {item.status === "ready_to_pay" ? "Mark Paid" : "Mark Unpaid"}
                                                 </button>
                                             </td>
                                         </tr>
                                     ))}
                                 </tbody>
                             </table>
-                            <div className="p-6 bg-slate-200 text-gray-800 font-bold rounded-b-lg flex justify-between items-center">
-                                <h3 className="text-md text-gray-700">Total Sustainability Contribution:</h3>
-                                <p className="text-lg flex items-center text-green-600">
+                            <div className="flex items-center justify-between p-6 font-bold text-gray-800 rounded-b-lg bg-slate-200">
+                                <h3 className="text-gray-700 text-md">Total Sustainability Contribution:</h3>
+                                <p className="flex items-center text-lg text-green-600">
                                     <FaPesoSign className="mr-1" />
-                                    {/* {totalCommission.toFixed(2)} */}
+                                    {totalContribution}
                                 </p>
                             </div>
                         </div>

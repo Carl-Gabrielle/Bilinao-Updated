@@ -19,4 +19,14 @@ class DailySalesReport extends Model
     ];
 
     use HasFactory;
+
+    public function orderItems()
+    {
+        return $this->belongsTo(OrderItem::class, 'order_item_id');
+    }
+
+    public function seller()
+    {
+        return $this->belongsTo(Seller::class, 'seller_id');
+    }
 }

@@ -84,7 +84,7 @@ export default function SalesReport({ auth }) {
                                                     {data.total_contribution.toFixed(2)}
                                                 </td>
                                                 <td className="py-4 px-7">
-                                                    <Link href={route('admin.salesReportIndividual')} className="flex items-center justify-center px-3 py-1 font-medium text-blue-500 rounded-full bg-blue-50">
+                                                    <Link href={route('admin.salesReportIndividual', { id: data.id })} className="flex items-center justify-center px-3 py-1 font-medium text-blue-500 rounded-full bg-blue-50">
                                                         View
                                                     </Link>
                                                 </td>
