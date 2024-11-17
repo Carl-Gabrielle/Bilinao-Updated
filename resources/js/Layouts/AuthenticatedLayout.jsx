@@ -66,13 +66,13 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     }`}
             >
                 <div className="flex flex-col justify-between h-full bg-slate-50 rounded-xl p-3">
-                    <div className="mt-6">
+                    <div >
                         {isSidebarOpen && (
                             <span className="text-gray-600 text-sm font-normal uppercase tracking-wider ">
                                 Bilinao
                             </span>
                         )}
-                        <div className="space-y-4 mt-5">
+                        <div className="space-y-4 mt-2">
                             <AdminLink
                                 href={route("dashboard")}
                                 active={route().current("dashboard")}
@@ -133,6 +133,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                     isSidebarOpen={isSidebarOpen}
                                 />
                             </AdminLink>
+                            {isSidebarOpen && (
+                                <span className="text-gray-600 text-sm font-normal uppercase tracking-wider   ">
+                                    Account Settings
+                                </span>
+                            )}
                             <AdminLink
                                 href={route("profile.edit")}
                                 active={route().current("profile.edit")}

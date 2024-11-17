@@ -2,7 +2,9 @@ import DivContainer from "@/Components/DivContainer";
 import { FaPesoSign } from "react-icons/fa6";
 import { MdOutlineKeyboardArrowLeft } from "react-icons/md";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
+import { FaCheckCircle, FaTimesCircle } from "react-icons/fa";
 import { Head, Link, usePage } from "@inertiajs/react";
+import { Inertia } from "@inertiajs/inertia";
 import { useState } from "react";
 
 const sellersData = [
@@ -23,19 +25,17 @@ export default function SellerIndividualSales({ auth }) {
     const { user } = auth;
     const { data, totalContribution } = usePage().props;
     console.log(data)
-
+    const [processing, setProcessing] = useState(false);
     const sellerData = sellersData[0];
-
     const [products, setProducts] = useState(sellerData.products);
-
-    const toggleStatus = (index) => {
-        setProducts((prevProducts) => {
-            const updatedProducts = [...prevProducts];
-            updatedProducts[index].status = updatedProducts[index].status === "Paid" ? "Pending" : "Paid";
-            return updatedProducts;
+    const toggleStatus = (id, currentStatus) => {
+        const newStatus = currentStatus === 'Paid' ? 'To Pay' : 'Paid';
+        Inertia.post(`/sales-report/${id}/toggle-status`, { status: newStatus }, {
+            onError: (errors) => {
+                console.error(errors);
+            },
         });
     };
-
     return (
         <AuthenticatedLayout user={user}>
             <Head title="Sales Report" />
@@ -77,14 +77,24 @@ export default function SellerIndividualSales({ auth }) {
                                                 <FaPesoSign className="mr-1 text-green-500" />
                                                 {item.contribution}
                                             </td>
-                                            <td className="px-6 py-4 text-gray-600">{item.status}</td>
+                                            <td className="px-6 py-4 text-gray-600">
+                                                <span className={`py-1 px-3 rounded-full ${item.status === "Paid" ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"} `}>{item.status} </span>
+                                            </td>
                                             <td className="py-4 px-7">
                                                 <button
-                                                    onClick={() => toggleStatus(index)}
+                                                    onClick={() => toggleStatus(item.id, item.status)}
                                                     className={`flex items-center justify-center border ${item.status === "Paid" ? "border-green-600 text-green-600" : "border-red-600 text-red-600"
                                                         } py-1 px-3 rounded-full`}
                                                 >
-                                                    {item.status === "ready_to_pay" ? "Mark Paid" : "Mark Unpaid"}
+                                                    {item.status === "To Pay" ? (
+                                                        <>
+                                                            <FaPesoSign className="mr-2" /> Mark Paid
+                                                        </>
+                                                    ) : (
+                                                        <>
+                                                            <FaTimesCircle className="mr-2" /> Mark Unpaid
+                                                        </>
+                                                    )}
                                                 </button>
                                             </td>
                                         </tr>
@@ -95,7 +105,7 @@ export default function SellerIndividualSales({ auth }) {
                                 <h3 className="text-gray-700 text-md">Total Sustainability Contribution:</h3>
                                 <p className="flex items-center text-lg text-green-600">
                                     <FaPesoSign className="mr-1" />
-                                    {totalContribution}
+                                    {totalContribution !== null && totalContribution.toFixed(2)}
                                 </p>
                             </div>
                         </div>

@@ -75,6 +75,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::resource('category', CategoryController::class);
         Route::put('/category/{category}/publish', [CategoryController::class, 'publish'])->name('category.publish');
         Route::put('category/{category}/unpublish', [CategoryController::class, 'unpublish'])->name('category.unpublish');
+        Route::post('/sales-report/{id}/toggle-status', [SalesReportController::class, 'toggleStatus'])->name('salesReport.toggleStatus');
         Route::resource('seller', SellerController::class);
     });
     // CUSTOMER ROUTES

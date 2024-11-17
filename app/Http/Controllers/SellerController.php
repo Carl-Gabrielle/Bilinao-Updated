@@ -95,11 +95,14 @@
         {
             $seller->update(['is_active' => false]);
         
+        
             return redirect()->route('seller.index')
                 ->with('success', "Seller \"{$seller->name}\" was deactivated.");
         }
-        // Reactivation of seller account
-        public function reactivate($id)
+        
+
+// Reactivate the seller account
+public function reactivate($id)
 {
     $seller = Seller::findOrFail($id);
     $seller->is_active = true;  // Reactivate seller
@@ -107,6 +110,7 @@
 
     return redirect()->route('seller.index')->with('success', 'Seller reactivated successfully');
 }
+
 
 
     }

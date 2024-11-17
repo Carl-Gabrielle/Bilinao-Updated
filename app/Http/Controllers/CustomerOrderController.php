@@ -50,14 +50,11 @@ class CustomerOrderController extends Controller
                 foreach ($order->orderItems as $item) {
                     $item->received_date = Carbon::now();
                     $item->save();
-
                     $report = DailySalesReport::where('order_item_id', $item->id)->firstOrFail();
                     $report->update([
-                        'status' => 'ready_to_pay'
+                        'status' => 'To Pay'
                     ]);
-
                     $firstDayOfTheMonth = Carbon::now()->startOfMonth()->toDateString();
-
                     $monthlyReport = MonthlySalesReport::firstOrCreate(
                         [
                             'seller_id' => $report->seller_id,
@@ -70,14 +67,11 @@ class CustomerOrderController extends Controller
                             'total_solds' => 0,
                         ]
                     );
-
                     $monthlyReport->increment('total_net_sales', $report->net_sales_amount);
                     $monthlyReport->increment('total_contribution', $report->contribution);
                     $monthlyReport->increment('total_solds', $report->solds);
-
                     $report->update(['monthly_sales_report_id' => $monthlyReport->id]);
                 }
-
                 DB::commit();
                 return back()->with('message', 'Order marked as received.');
             }

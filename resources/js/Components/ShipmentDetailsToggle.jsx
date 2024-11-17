@@ -112,14 +112,16 @@ export default function ShipmentDetailsToggle({
                         <LuTruck size={16} />
                     </div>
                     <div className="flex flex-col">
-                        <span>
-                            {new Date(processingDate).toLocaleString("en-US", {
-                                month: "short",
-                                day: "numeric",
-                                year: "numeric",
-                                timeZone: "Asia/Manila",
-                            })}
-                        </span>
+                        {processingDate !== null && (
+                            <span>
+                                {new Date(processingDate).toLocaleString("en-US", {
+                                    month: "short",
+                                    day: "numeric",
+                                    year: "numeric",
+                                    timeZone: "Asia/Manila",
+                                })}
+                            </span>
+                        )}
                         <p>{isLoading ? "Processing..." : getCurrentStatus()}</p>
                     </div>
                 </div>

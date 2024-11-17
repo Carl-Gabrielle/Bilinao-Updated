@@ -15,7 +15,7 @@ return new class extends Migration {
             $table->unsignedBigInteger('seller_id');
             $table->bigInteger('total_net_sales');
             $table->bigInteger('total_contribution');
-            $table->date('month_date')->unique();
+            $table->date('month_date');
             $table->timestamps();
         });
     }

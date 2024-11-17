@@ -128,7 +128,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                                 >
                                                     <LiaEditSolid />
                                                 </Link>
-                                                <Link
+                                                <button
                                                     onClick={(e) => {
                                                         e.preventDefault();
                                                         toggleSellerState(user);
@@ -136,7 +136,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                                     className={`px-4 py-2 rounded-2xl ${user.is_active ? "bg-slate-800 text-slate-50" : "bg-green-100 text-green-500"}`}
                                                 >
                                                     {user.is_active ? < LiaUserAltSlashSolid /> : "Reactivate"}
-                                                </Link>
+                                                </button>
                                             </td>
                                         </tr>
                                     ))}
