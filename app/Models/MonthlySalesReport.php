@@ -14,7 +14,8 @@ class MonthlySalesReport extends Model
         'seller_id',
         'total_net_sales',
         'total_contribution',
-        'month_date'
+        'month_date',
+        'total_solds'
     ];
 
     public function seller()
