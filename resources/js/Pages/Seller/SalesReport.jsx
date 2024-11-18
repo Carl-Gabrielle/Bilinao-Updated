@@ -14,7 +14,7 @@ export default function SalesReport({ auth }) {
             <Head title="Sales Report" />
             <div className="px-6 py-4 printable-area">
                 <h2 className="text-2xl font-semibold text-gray-800 mb-4">Sales Report</h2>
-                <div className="w-full h-auto p-6 shadow-lg bg-white rounded-lg">
+                <div className="w-full h-auto p-6 shadow-lg bg-slate-50 rounded-3xl">
                     <div className="flex  items-center justify-end mb-6">
                         <button
                             onClick={() => window.print()}
@@ -23,9 +23,9 @@ export default function SalesReport({ auth }) {
                             <IoPrintOutline className="mr-2" /> Print
                         </button>
                     </div>
-                    <div className="overflow-x-auto rounded-lg">
+                    <div className="overflow-x-auto rounded-lg ">
                         <table className="min-w-full rounded-lg">
-                            <thead className="bg-gray-100">
+                            <thead className="bg-slate-200">
                                 <tr>
                                     <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Product Name</th>
                                     <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Net Pay</th>
@@ -36,7 +36,7 @@ export default function SalesReport({ auth }) {
                             </thead>
                             <tbody className="text-sm bg-white divide-y divide-gray-200">
                                 {data.map((item, index) => (
-                                    <tr key={index} className="text-xs hover:bg-gray-50  transition-colors duration-300 ease-in-out whitespace-nowrap">
+                                    <tr key={index} className="text-xs hover:bg-gray-50  transitiqon-colors duration-300 ease-in-out whitespace-nowrap">
                                         <td className="px-6 py-4 font-medium text-gray-800">
                                             <IoPricetagsOutline className="inline-block mr-1" />
                                             {item.order_items.product.name}
@@ -61,7 +61,7 @@ export default function SalesReport({ auth }) {
                                 ))}
                             </tbody>
                         </table>
-                        <div className="flex items-center justify-between p-6 font-bold text-gray-800 rounded-b-lg bg-gray-100">
+                        <div className="flex items-center justify-between p-6 font-bold text-gray-800 rounded-b-lg bg-slate-200">
                             <h3 className="text-gray-700 text-md">Total Sustainability Contribution:</h3>
                             <p className="flex items-center text-lg text-green-600">
                                 <FaPesoSign className="mr-1" />

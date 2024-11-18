@@ -58,7 +58,7 @@ const ConfirmationModal = ({ isOpen, onClose, onConfirm, message, title = "Confi
                             </button>
                             <button
                                 onClick={onConfirm}
-                                className="bg-blue-200 text-blue-600 px-4 py-0.5 rounded-2xl transition duration-150"
+                                className="bg-blue-200 text-blue-600 px-4 py-0.5 rounded-md transition duration-150"
                             >
                                 Confirm
                             </button>

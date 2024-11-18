@@ -26,23 +26,18 @@ export default function SellerProfile() {
                 <Head title="Seller Profile" />
                 <div className="container  mx-auto px-4 py-8">
                     <div className="bg-white shadow-lg rounded-3xl overflow-hidden backdrop-blur-lg relative">
-                        {/* Cover Image Section */}
                         <div className="h-60 w-full bg-slate-800 flex items-center justify-center relative overflow-hidden">
-                            {/* Main Title */}
                             <h2 className="text-center text-3xl md:text-4xl lg:text-5xl text-slate-100 font-bold z-10 tracking-wide">
                                 Seller Profile
                             </h2>
-                            {/* Star Icon Decorations */}
                             <CiStar className="hidden sm:block absolute top-16 left-28 text-white size-7 opacity-20" />
                             <CiStar className="hidden sm:block absolute top-20 left-60 text-white size-7 opacity-20" />
                             <CiStar className="hidden sm:block absolute top-16 right-28 text-white size-7 opacity-20" />
                             <CiStar className="hidden sm:block absolute top-20 right-60 text-white size-7 opacity-20" />
 
-                            {/* Decorative Circles */}
                             <div className="absolute w-56 h-56 rounded-full border-2 border-white opacity-20 right-0 sm:-right-10 -top-10"></div>
                             <div className="absolute w-56 h-56 rounded-full border-2 border-white opacity-20 -bottom-10 -left-10"></div>
 
-                            {/* Subtle Background Text */}
                             <h2 className="absolute top-10 text-center text-4xl md:text-5xl text-banner lg:text-7xl text-slate-100 font-medium opacity-5 transform translate-y-3 blur-xs tracking-widest">
                                 Seller Profile
                             </h2>
