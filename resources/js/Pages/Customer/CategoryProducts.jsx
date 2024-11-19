@@ -159,13 +159,13 @@ export default function CategoryProducts({
                                                                 <FaPesoSign className="inline-block mr-" />{" "}
                                                                 {product.price}
                                                             </span>
-                                                            <div className="flex items-center space-x-1 text-yellow-500">
+                                                            {/* <div className="flex items-center space-x-1 text-yellow-500">
                                                                 <FaStar className="text-xs" />
                                                                 <FaStar className="text-xs" />
                                                                 <FaStar className="text-xs" />
                                                                 <FaStarHalfAlt className="text-xs" />
                                                                 <FaRegStar className="text-xs" />
-                                                            </div>
+                                                            </div> */}
                                                         </div>
                                                         {product.stock > 0 ? (
                                                             <Link

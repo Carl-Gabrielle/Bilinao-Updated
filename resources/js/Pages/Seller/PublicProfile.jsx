@@ -19,48 +19,45 @@ const PublicProfile = ({ seller, products, auth }) => {
                     <Banner title={`${seller.name}'s Profile`} />
                     <CustomerContainer>
                         <div className="container mx-auto px-4 py-8">
-                            <div className="bg-white shadow-lg rounded-2xl overflow-hidden">
-                                <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-6 p-8">
-                                    <img
-                                        src={
-                                            seller.image_path ||
-                                            "/images/default-profile.png"
-                                        }
-                                        alt="Profile"
-                                        className="w-28 h-28 md:w-32 md:h-32 object-cover rounded-full border-4 border-gray-200 shadow-md"
-                                    />
-                                    <div className="text-center md:text-left mt-4 md:mt-0">
-                                        <h1 className="text-2xl font-bold text-primary flex items-center">
-                                            <IoStorefrontOutline className="mr-2" />
-                                            {seller.name}
-                                        </h1>
-                                        <p className="text-gray-600 flex items-center mt-2">
-                                            <MdOutlineMailOutline className="mr-2 text-gray-500" />
-                                            {seller.email}
-                                        </p>
-                                        <p className="text-gray-600 flex items-center mt-2">
-                                            <HiOutlineDevicePhoneMobile className="mr-2 text-gray-500" />
-                                            {seller.contact_number ||
-                                                "Not provided"}
-                                        </p>
-                                        <p className="text-gray-600 flex items-center mt-2">
-                                            <GrMapLocation className="mr-2 text-gray-500" />
-                                            {seller.address || "Not provided"}
-                                        </p>
+                            <div className="bg-slate-50 shadow-lg rounded-2xl overflow-hidden">
+                                <div className="flex flex-col md:flex-row items-center md:items-start justify-between p-8">
+                                    <div className="flex flex-col md:flex-row items-center md:items-start md:space-x-6">
+                                        <img
+                                            src={seller.image_path || "/images/default-profile.png"}
+                                            alt="Profile"
+                                            className="w-28 h-28 md:w-32 md:h-32 object-cover rounded-full border-4 border-gray-200 shadow-md"
+                                        />
+                                        <div className="text-center md:text-left mt-4 md:mt-0">
+                                            <h1 className="text-2xl font-bold text-primary flex items-center">
+                                                <IoStorefrontOutline className="mr-2" />
+                                                {seller.name}
+                                            </h1>
+                                            <p className="text-gray-600 flex items-center mt-2">
+                                                <MdOutlineMailOutline className="mr-2 text-gray-500" />
+                                                {seller.email}
+                                            </p>
+                                            <p className="text-gray-600 flex items-center mt-2">
+                                                <HiOutlineDevicePhoneMobile className="mr-2 text-gray-500" />
+                                                {seller.contact_number || "Not provided"}
+                                            </p>
+                                            <p className="text-gray-600 flex items-center mt-2">
+                                                <GrMapLocation className="mr-2 text-gray-500" />
+                                                {seller.address || "Not provided"}
+                                            </p>
+                                        </div>
                                     </div>
-                                    <div >
+                                    {/* <div className="self-center mt-4 md:mt-0">
                                         <Link>
-                                            <button className="bg-primary text-slate-50  px-4 py-1 rounded-2xl flex items-center">
+                                            <button className="bg-primary text-slate-50 px-4 py-1 rounded-2xl flex items-center">
                                                 <AiOutlineMessage className="mr-2" />
-                                                Message  Seller
+                                                Message Seller
                                             </button>
                                         </Link>
-                                    </div>
+                                    </div> */}
                                 </div>
                             </div>
-
                             <div className="mt-8">
-                                <div className="bg-white shadow-lg rounded-2xl  p-6">
+                                <div className="bg-slate-50 shadow-lg rounded-2xl  p-6">
                                     <h2 className="text-lg font-semibold text-gray-800 border-b pb-3">
                                         Products by {seller.name}
                                     </h2>
@@ -69,7 +66,7 @@ const PublicProfile = ({ seller, products, auth }) => {
                                             products.map((product) => (
                                                 <div
                                                     key={product.id}
-                                                    className="border border-slate-200 rounded-lg  overflow-hidden"
+                                                    className="border border-slate-200 rounded-lg overflow-hidden relative"
                                                 >
                                                     <Link
                                                         href={`/product/${product.id}`}
@@ -77,9 +74,7 @@ const PublicProfile = ({ seller, products, auth }) => {
                                                     >
                                                         <img
                                                             src={
-                                                                product
-                                                                    .images?.[0]
-                                                                    ?.image_path
+                                                                product.images?.[0]?.image_path
                                                                     ? `/storage/${product.images[0].image_path}`
                                                                     : "/images/default-product.png"
                                                             }
@@ -95,13 +90,17 @@ const PublicProfile = ({ seller, products, auth }) => {
                                                             <FaPesoSign className="mr-1" />
                                                             {product.price}
                                                         </p>
+                                                        {!product.is_published && (
+                                                            <span className="text-red-500 text-xs mt-2">
+                                                                This product is unpublished.
+                                                            </span>
+                                                        )}
                                                     </div>
                                                 </div>
                                             ))
                                         ) : (
                                             <p className="text-gray-600">
-                                                No products available from this
-                                                seller.
+                                                No products available from this seller.
                                             </p>
                                         )}
                                     </div>
@@ -114,5 +113,4 @@ const PublicProfile = ({ seller, products, auth }) => {
         </>
     );
 };
-
 export default PublicProfile;

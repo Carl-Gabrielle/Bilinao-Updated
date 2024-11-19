@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { Link } from "@inertiajs/react";
 import NavLink from "@/Components/NavLink";
+import { usePage } from '@inertiajs/react';
 import { AiOutlineCheckCircle } from "react-icons/ai";
 import { LuTruck } from "react-icons/lu";
 import { FaHourglassHalf } from "react-icons/fa";
@@ -21,6 +22,7 @@ import NavLinkItem from "@/Pages/Seller/NavLinkItem";
 import { HiMenu, HiOutlineX, HiChevronDown } from "react-icons/hi";
 
 const SellerLayout = ({ user, children }) => {
+    const { orderCounts } = usePage().props;
     const [showDropdown, setShowDropdown] = useState(false);
     const [sidebarOpen, setSidebarOpen] = useState(false);
     const [isManageOrdersOpen, setIsManageOrdersOpen] = useState(true);

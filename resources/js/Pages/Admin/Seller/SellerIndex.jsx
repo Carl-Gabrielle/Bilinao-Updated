@@ -5,7 +5,9 @@ import DivContainer from "@/Components/DivContainer";
 import { FaCheck } from "react-icons/fa6";
 import { LiaEditSolid } from "react-icons/lia";
 import { Head, Link, router } from "@inertiajs/react";
+import { MdOutlineContentCopy } from "react-icons/md";
 import { LiaUserAltSlashSolid } from "react-icons/lia";
+import { LuCopyCheck } from "react-icons/lu";
 import ConfirmationModal from "@/Components/ConfirmationModal";
 import Pagination from "@/Components/Pagination";
 
@@ -15,6 +17,7 @@ export default function SellerIndex({ auth, sellers, success }) {
     const [sellerToDeactivate, setSellerToDeactivate] = useState(null);
     const [sellerName, setSellerName] = useState("");
     const [isReactivating, setIsReactivating] = useState(false);
+    const [copiedUsername, setCopiedUsername] = useState("");
 
     useEffect(() => {
         if (success) {
@@ -24,19 +27,16 @@ export default function SellerIndex({ auth, sellers, success }) {
             return () => clearTimeout(timer);
         }
     }, [success]);
-
     const openModal = (seller) => {
         setSellerToDeactivate(seller);
         setSellerName(seller.name);
         setIsModalOpen(true);
     };
-
     const closeModal = () => {
         setSellerToDeactivate(null);
         setSellerName("");
         setIsModalOpen(false);
     };
-
     const handleSellerAction = () => {
         if (sellerToDeactivate) {
             if (isReactivating) {
@@ -50,12 +50,18 @@ export default function SellerIndex({ auth, sellers, success }) {
             }
         }
     };
-
     const toggleSellerState = (seller) => {
         setIsReactivating(!seller.is_active);
         openModal(seller);
     };
-
+    const handleCopy = (username) => {
+        navigator.clipboard.writeText(username).then(() => {
+            setCopiedUsername(username);
+            setTimeout(() => setCopiedUsername(""), 3000);
+        }).catch((error) => {
+            console.error('Error copying text: ', error);
+        });
+    };
     return (
         <>
             <AuthenticatedLayout user={auth.user}>
@@ -119,7 +125,17 @@ export default function SellerIndex({ auth, sellers, success }) {
                                                 {user.email}
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-gray-500">
-                                                {user.username}
+                                                <div className="flex items-center">
+                                                    {user.username}
+                                                    {copiedUsername === user.username ? (
+                                                        <LuCopyCheck className="ml-1 text-green-500" />
+                                                    ) : (
+                                                        <MdOutlineContentCopy
+                                                            className="ml-1 cursor-pointer"
+                                                            onClick={() => handleCopy(user.username)}
+                                                        />
+                                                    )}
+                                                </div>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-gray-500 flex items-center space-x-4">
                                                 <Link
@@ -133,9 +149,9 @@ export default function SellerIndex({ auth, sellers, success }) {
                                                         e.preventDefault();
                                                         toggleSellerState(user);
                                                     }}
-                                                    className={`px-4 py-2 rounded-2xl ${user.is_active ? "bg-slate-800 text-slate-50" : "bg-green-100 text-green-500"}`}
+                                                    className={`px-4 py-2 rounded-2xl ${user.is_active ? "bg-red-200 text-red-500" : "bg-green-100 text-green-500"}`}
                                                 >
-                                                    {user.is_active ? < LiaUserAltSlashSolid /> : "Reactivate"}
+                                                    {user.is_active ? <LiaUserAltSlashSolid /> : "Reactivate"}
                                                 </button>
                                             </td>
                                         </tr>
@@ -146,7 +162,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                         <Pagination links={sellers.links} />
                     </div>
                 </DivContainer>
-            </AuthenticatedLayout >
+            </AuthenticatedLayout>
             <ConfirmationModal
                 isOpen={isModalOpen}
                 onClose={closeModal}

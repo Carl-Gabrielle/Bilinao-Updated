@@ -22,7 +22,13 @@ class SellerDashboardController extends Controller
             $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
                 $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
             });
-        }])->get();
+        }])
+        ->whereHas('orderItems', function ($query) use ($sellerId) {
+            $query->whereIn('product_id', function ($subQuery) use ($sellerId) {
+                $subQuery->select('id')->from('products')->where('seller_id', $sellerId);
+            });
+        })
+        ->get();
     
         return Inertia::render('SellerDashboard', [
             'productCount' => Product::where('seller_id', $sellerId)->count(),
@@ -68,7 +74,13 @@ class SellerDashboardController extends Controller
     
     public function publicProfile(Seller $seller)
     {
-        $products = $seller->products()->with('images')->get();
+        $products = $seller->products()
+            ->with(['images', 'category'])
+            ->get()
+            ->map(function ($product) {
+                $product->is_published = $product->isCategoryActive();
+                return $product;
+            });
     
         return Inertia::render('Seller/PublicProfile', [
             'seller' => new SellerResource($seller),

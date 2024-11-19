@@ -159,10 +159,10 @@ class CheckoutController extends Controller
                 'checkout_session_url' => $checkout->checkout_url
             ]);
             // Decrement the stock for each product in the order items
-            // foreach ($request->products as $item) {
-            //     $product = Product::find((int) $item['product_id']);
-            //     $product->decrement('stock', (int) $item['qty']);
-            // }
+            foreach ($request->products as $item) {
+                $product = Product::find((int) $item['product_id']);
+                $product->decrement('stock', (int) $item['qty']);
+            }
             //     // dd($checkout);
             DB::commit();
 

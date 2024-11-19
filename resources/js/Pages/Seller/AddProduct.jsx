@@ -73,7 +73,7 @@ const SellerDashboard = ({ categories }) => {
                             </h1>
                             <button
                                 type="submit"
-                                className="flex items-center text-sm px-4 py-2 sm:px-6 sm:py-3  text-white font-semibold rounded-lg shadow-md bg-slate-800"
+                                className="flex items-center text-sm px-3 py-2 sm:px-6 sm:py-3  text-white font-semibold rounded-2xl shadow-md bg-slate-800"
                             >
                                 <MdPublish className="mr-2 text-lg sm:text-md" />{" "}
                                 Publish Product

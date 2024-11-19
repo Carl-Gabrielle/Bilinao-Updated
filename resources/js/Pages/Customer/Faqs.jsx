@@ -34,7 +34,7 @@ export default function Faqs({ auth }) {
         {
             question: "Is it possible to return an item?",
             answer:
-                "Due to the nature of Bili-Nao’s marketplace, which features handmade and unique items, we do not offer a standard return policy. However, if you receive a damaged or incorrect product, you may be eligible for a replacement or refund. ",
+                "We do not offer a standard return policy. However, if you receive a damaged or incorrect product, you may be eligible for a replacement or refund. ",
         },
         {
             question: "Can I trust that my payment details are protected?",

@@ -29,6 +29,7 @@ export default function ProductDetails({
     relatedProducts = [],
     success,
     reviews, averageRating,
+    isCategoryActive
 }) {
     const { user } = auth;
     const [quantity, setQuantity] = useState(1);
@@ -166,40 +167,24 @@ export default function ProductDetails({
                                 <p className="mb-4 text-sm leading-relaxed text-gray-600">
                                     {product.description}
                                 </p>
-                                {product.stock > 0 ? (
-                                    <span className="mb-5 text-sm font-medium text-slate-800">
-                                        <span className="px-3 py-1 rounded-full shadow-inner text-emerald-100 bg-emerald-600">
-                                            <FaRegCheckSquare className="inline-block mr-2" />
-                                            In Stock
-                                        </span>{" "}
-                                        {product.stock} {product.stock > 1 ? "products" : "product"}
-                                    </span>
-                                ) : (
-                                    <p className="mb-5 text-sm font-medium text-slate-800">
-                                        <span className="px-3 py-1 text-red-100 bg-red-600 rounded-full shadow-inner">
-                                            <MdOutlineRemoveShoppingCart className="inline-block mr-2" />
-                                            Out of Stock
-                                        </span>{" "}
-                                        {product.stock} product
-                                    </p>
-                                )}
-                                <div className="flex items-center mb-4 text-xl font-bold text-slate-800">
-                                    <FaPesoSign className="text-lg" />
-                                    <span className="ml-1">
-                                        {product.price}
-                                    </span>
-                                </div>
-                                <div className="flex items-center justify-between mb-6 space-x-4">
-                                    <div className="flex items-center space-x-1 text-yellow-500">
-                                        <FaStar className="text-sm" />
-                                        <FaStar className="text-sm" />
-                                        <FaStar className="text-sm" />
-                                        <FaStarHalfAlt className="text-sm" />
-                                        <FaRegStar className="text-sm" />
-                                    </div>
-                                    <span className="text-sm text-gray-600">
-                                        140 reviews | 431 sold
-                                    </span>
+                                <div className="flex items-center mb-5 space-x-4">
+                                    {product.stock > 0 ? (
+                                        <span className=" text-sm font-medium text-slate-800">
+                                            <span className="px-3 py-1 rounded-full shadow-inner text-emerald-100 bg-emerald-600">
+                                                <FaRegCheckSquare className="inline-block mr-2" />
+                                                In Stock
+                                            </span>{" "}
+                                            {product.stock} {product.stock > 1 ? "products" : "product"}
+                                        </span>
+                                    ) : (
+                                        <p className="mb-5 text-sm font-medium text-slate-800">
+                                            <span className="px-3 py-1 text-red-100 bg-red-600 rounded-full shadow-inner">
+                                                <MdOutlineRemoveShoppingCart className="inline-block mr-2" />
+                                                Out of Stock
+                                            </span>{" "}
+                                            {product.stock === 0 ? 'No products available' : `${product.stock} product${product.stock > 1 ? 's' : ''}`}
+                                        </p>
+                                    )}
                                     <div className="flex items-center space-x-1">
                                         <Link
                                             href={route(
@@ -218,7 +203,16 @@ export default function ProductDetails({
                                         </Link>
                                     </div>
                                 </div>
-                                {product.stock > 0 && (
+                                {!isCategoryActive && (
+                                    <p className="mb-5 text-xs font-medium text-red-600">
+                                        <span className="px-3 py-2 bg-transparent sm:text-slate-50 sm:bg-red-500 rounded-2xl leading-8 text-wrap sm:text-nowrap">
+                                            This product is currently unavailable because its category is inactive.
+                                        </span>
+                                    </p>
+
+                                )}
+                                {/* Product Actions */}
+                                {isCategoryActive && product.stock > 0 && (
                                     <div className="flex items-center w-full space-x-4 ">
                                         <div className="flex items-center justify-between px-3 py-2 bg-opacity-50 rounded-full shadow-md bg-slate-50 backdrop-blur-md text-slate-800">
                                             <button
@@ -228,8 +222,9 @@ export default function ProductDetails({
                                                 -
                                             </button>
                                             <span className="px-7">
-                                                {quantity}
+                                                {quantity > 0 ? quantity : 1}
                                             </span>
+
                                             <button
                                                 onClick={handleIncrease}
                                                 className="flex items-center justify-center text-sm text-white rounded-full bg-slate-800 size-6"
@@ -238,63 +233,52 @@ export default function ProductDetails({
                                             </button>
                                         </div>
                                         {/* Popup Notification */}
-                                        {showPopup && (
-                                            <div className="z-10 fixed  bottom-5 right-5 bg-red-100 font-semibold text-red-800  px-2 py-0.5 text-md rounded-lg shadow-lg transition-opacity">
-                                                You can't add more than{" "}
-                                                {product.stock} items in stock.
+                                        {showPopup && product.stock > 0 && (
+                                            <div className="z-10 fixed bottom-5 right-5 bg-red-100 font-semibold text-red-800 px-2 py-0.5 text-md rounded-lg shadow-lg transition-opacity">
+                                                You can't add more than {product.stock} items in stock.
                                             </div>
                                         )}
                                         <Link
                                             preserveScroll
-                                            href={route(
-                                                "customer.storeWishlists"
-                                            )}
+                                            href={route("customer.storeWishlists")}
                                             method="post"
                                             data={{
                                                 product_id: product.id,
                                             }}
-                                            onClick={() =>
-                                                handleAddToWishlist(product.id)
-                                            }
+                                            onClick={() => handleAddToWishlist(product.id)}
                                         >
                                             <div className="p-2 border rounded-full shadow-md border-slate-500">
                                                 <FaRegHeart />
                                             </div>
                                         </Link>
-                                        <ProductLink
-                                            productId={product.id}
-                                            success={success}
-                                        />
+                                        <ProductLink productId={product.id} success={success} />
                                     </div>
                                 )}
-                                <div className="flex flex-col w-full gap-4 py-4 sm:flex-row">
-                                    {product.stock > 0 && (
-                                        <>
-                                            <button
-                                                onClick={handleBuyNow}
-                                                className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium border rounded-full shadow-md sm:w-52 text-slate-800 border-slate-500 lg:mt-0"
-                                            >
-                                                Buy Now
+                                {/* Hide buttons if category is inactive */}
+                                {isCategoryActive && product.stock > 0 && (
+                                    <div className="flex flex-col w-full gap-4 py-4 sm:flex-row">
+                                        <button
+                                            onClick={handleBuyNow}
+                                            className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium border rounded-full shadow-md sm:w-52 text-slate-800 border-slate-500 lg:mt-0"
+                                        >
+                                            Buy Now
+                                        </button>
+                                        <Link
+                                            preserveScroll
+                                            href={route("cart.store")}
+                                            method="post"
+                                            data={{
+                                                product_id: product.id,
+                                                quantity: quantity,
+                                            }}
+                                            onClick={() => handleAddToCart(product.id)}
+                                        >
+                                            <button className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium text-white rounded-full shadow-inner sm:w-52 bg-slate-800 lg:mt-0">
+                                                Add to Cart
                                             </button>
-                                            <Link
-                                                preserveScroll
-                                                href={route("cart.store")}
-                                                method="post"
-                                                data={{
-                                                    product_id: product.id,
-                                                    quantity: quantity,
-                                                }}
-                                                onClick={() =>
-                                                    handleAddToCart(product.id)
-                                                }
-                                            >
-                                                <button className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium text-white rounded-full shadow-inner sm:w-52 bg-slate-800 lg:mt-0">
-                                                    Add to Cart
-                                                </button>
-                                            </Link>
-                                        </>
-                                    )}
-                                </div>
+                                        </Link>
+                                    </div>
+                                )}
                             </div>
                         </div>
                         {product.images?.length > 0 && (

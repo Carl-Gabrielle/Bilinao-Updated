@@ -69,12 +69,12 @@ export default function SellerIndividualSales({ auth }) {
                                             <td className="px-6 py-4 font-medium text-gray-800"> <IoPricetagsOutline className="inline-block  mr-1" />  {item.order_items.product.name}</td>
                                             <td className="flex items-center px-6 py-4 text-gray-600">
                                                 <FaPesoSign className="mr-1 text-gray-500" />
-                                                {item.net_sales_amount}
+                                                {Math.round(item.net_sales_amount)}
                                             </td>
                                             <td className="px-6 py-4 text-gray-600">{item.solds}</td>
                                             <td className="flex items-center px-6 py-4 text-gray-600">
                                                 <FaPesoSign className="mr-1 text-green-500" />
-                                                {item.contribution}
+                                                {Math.round(item.contribution)}
                                             </td>
                                             <td className="px-6 py-4">
                                                 <span
@@ -105,7 +105,7 @@ export default function SellerIndividualSales({ auth }) {
                                 <h3 className="text-gray-700 text-md">Total Sustainability Contribution:</h3>
                                 <p className="flex items-center text-lg text-green-600">
                                     <FaPesoSign className="mr-1" />
-                                    {totalContribution !== null && totalContribution.toFixed(2)}
+                                    {totalContribution !== null && Math.round(totalContribution)}
                                 </p>
                             </div>
                         </div>

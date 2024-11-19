@@ -6,6 +6,7 @@ use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\SellerController;
+use App\Http\Controllers\SellerNotificationController;
 use Illuminate\Foundation\Application;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Route;
@@ -53,6 +54,7 @@ Route::middleware(['auth:seller','enforce.password.change'])->group(function () 
     Route::get('/completedOrders', [SellerOrderController::class, 'completedOrders'])->name('seller.completedOrders');
     Route::get('/deliveryOrders', [SellerOrderController::class, 'deliveryOrders'])->name('seller.deliveryOrders');
     Route::get('/seller/order-details/{orderId}', [SellerOrderController::class, 'orderDetails'])->name('seller.OrderDetails');
+    Route::get('/seller/notification/{order}', [SellerNotificationController::class, 'show'])->name('seller.notification');
 });
 
 Route::inertia('/sellerLogin', 'SellerLogin')->name('seller.login');

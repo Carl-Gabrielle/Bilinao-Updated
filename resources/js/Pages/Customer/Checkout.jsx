@@ -419,7 +419,7 @@ export default function Checkout({ auth }) {
                                                 <img
                                                     src={`/storage/${item.product.images[0].image_path}`}
                                                     alt={item.product.name}
-                                                    className="object-cover  sm:size-16 size-10"
+                                                    className="object-cover  sm:size-16 size-10 rounded-md"
                                                 />
                                                 <div className="absolute flex items-center justify-center rounded-full -top-3 text-slate-100 -right-3 size-5 bg-slate-700">
                                                     <span className="text-xs">

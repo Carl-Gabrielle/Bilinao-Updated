@@ -61,7 +61,7 @@ export default function ShowProduct({ success }) {
                         </h1>
                         <Link
                             href={route("products.create")}
-                            className="bg-slate-800 py-3 px-6 text-white rounded-md font-bold shadow text-xs flex items-center whitespace-nowrap"
+                            className="bg-slate-800 py-3 px-6 text-white rounded-2xl font-bold shadow text-xs flex items-center whitespace-nowrap"
                         >
                             <MdAdd className="mr-2 size-4" /> Add a New Product
                         </Link>

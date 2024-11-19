@@ -22,7 +22,7 @@ export default function SalesReport({ auth }) {
                 <div className="w-full h-auto p-6 shadow-lg bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl printable-area">
                     <div className="p-2">
                         <div className="flex items-center justify-between mb-6">
-                            <h2 className="text-xl font-semibold text-primary">Sales Reports</h2>
+                            <h2 className="text-xl font-semibold text-primary">Monthly Sales Report</h2>
                             <div className="flex items-center space-x-4">
                                 <select
                                     className="border cursor-pointer border-primary rounded-md bg-transparent px-6 py-0.5 text-primary"
@@ -37,7 +37,7 @@ export default function SalesReport({ auth }) {
                                 </select>
                                 <button
                                     onClick={() => window.print()}
-                                    className="flex items-center border border-primary rounded-md text-md text-primary px-3 py-0.5"
+                                    className="flex items-center border border-primary rounded-md text-md text-primary px-6 py-1"
                                 >
                                     <IoPrintOutline className="mr-2" /> Print
                                 </button>
@@ -48,7 +48,7 @@ export default function SalesReport({ auth }) {
                                 <thead className="bg-slate-200">
                                     <tr>
                                         <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Sellers</th>
-                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Total Sales</th>
+                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Net Sales</th>
                                         <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Quantity Sold</th>
                                         <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Sustainability Contribution (4%)</th>
                                         <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Date</th>
@@ -68,14 +68,14 @@ export default function SalesReport({ auth }) {
                                                 <td className="px-6 py-4 font-medium text-primary">{data.seller.name}</td>
                                                 <td className="flex items-center px-6 py-4 text-gray-600">
                                                     <FaPesoSign className="mr-1 text-gray-500" />
-                                                    {data.total_net_sales.toFixed(2)}
+                                                    {Math.round(data.total_net_sales)}
                                                 </td>
                                                 <td className="px-6 py-4 text-gray-600">
                                                     {data.total_solds}
                                                 </td>
                                                 <td className="flex items-center px-6 py-4 text-gray-600">
                                                     <FaPesoSign className="mr-1 text-green-500" />
-                                                    {data.total_contribution.toFixed(2)}
+                                                    {Math.round(data.total_contribution)}
                                                 </td>
                                                 <th className="font-normal py-4 px-6 text-gray-600 uppercase">
                                                     {new Date(data.created_at).toLocaleDateString("en-US", {

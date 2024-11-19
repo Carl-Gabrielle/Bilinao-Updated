@@ -72,6 +72,11 @@ const SellerLogin = () => {
                                     Enter your username and password to start
                                     selling
                                 </p>
+                                <p className="text-red-500 text-xs mt-2">
+                                    {data.username && data.password && data.username !== data.password
+                                        ? "For the first login, your username and password must be the same."
+                                        : ""}
+                                </p>
                                 <form onSubmit={handleLogin} className="mt-5">
                                     <div className="mt-5">
                                         <SellerInput
@@ -126,11 +131,11 @@ const SellerLogin = () => {
                                             See Password
                                         </span>
                                     </div>
-                                    <div className="flex justify-between items-center mt-2">
+                                    {/* <div className="flex justify-between items-center mt-2">
                                         <span className="text-gray-800 cursor-pointer font-bold">
                                             Forgot Password?
                                         </span>
-                                    </div>
+                                    </div> */}
                                     <div className="mt-6">
                                         <button
                                             className="w-full bg-slate-800 text-white py-3 rounded-full transition duration-300 flex items-center justify-center font-bold"

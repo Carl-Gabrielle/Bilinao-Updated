@@ -23,30 +23,23 @@ const Orders = ({ auth, orders = [] }) => {
                 item.received_date === null
         )
     );
-
     const toReceiveOrders = orders.filter(order => order.remarks === 'paid'
         && order.order_items.some(
             item => item.processing_date !== null && item.picked_date !== null && item.shipped_date !== null && item.arrived_date != null && item.received_date == null
         )
     );
-
     const receivedOrders = orders.filter(order => order.remarks === 'paid'
         && order.order_items.some(
             item => item.processing_date && item.picked_date && item.arrived_date && item.shipped_date && item.received_date
         )
     ); orders.filter(order => order.status === 'Received');
-
     const [activeStatus, setActiveStatus] = useState(() => {
         return localStorage.getItem("activeStatus") || "To Pay";
     });
-
     const handleStatusClick = (status) => {
         setActiveStatus(status);
         localStorage.setItem("activeStatus", status);
     };
-
-
-
     const renderOrderDetails = () => {
         const orderComponents = {
             "To Pay": <ToPay toPay={toPayOrders} />,
@@ -58,7 +51,6 @@ const Orders = ({ auth, orders = [] }) => {
     };
 
     const orderStatuses = ["To Pay", "To Ship", "To Receive", "Received"];
-    // LOADING SPINNER
     const [loading, setLoading] = useState(true);
 
     useEffect(() => {
