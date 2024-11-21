@@ -37,7 +37,7 @@ const OrderItems = ({ order, orderItems }) => {
                 </span>
             </h2>
             {orderItems.map((item) => (
-                <div key={item.id} className="border p-2 rounded-md shadow-sm">
+                <div key={item.id} className="border p-2 rounded-md shadow-sm my-4">
                     <span className="text-[0.7em] text-slate-500">Order# {order.order_number}</span>
                     <div className="flex items-center space-x-6">
                         <img
@@ -47,7 +47,7 @@ const OrderItems = ({ order, orderItems }) => {
                         />
                         <div className="text-xs text-gray-700 space-y-0.5">
                             <h3 className="font-semibold">{item.product_name}</h3>
-                            <span className="inline-block bg-gray-200 text-slate-900 px-2 py-0.5 rounded">Qty. {item.qty}</span>
+                            <span className="inline-block bg-green-100 text-green-600 px-2 py-0.5 rounded">Qty. {item.qty}</span>
                             <span className="flex items-center">
                                 Price: <FaPesoSign />
                                 {parseFloat(item.price).toFixed(2) || 0.0}{" "}

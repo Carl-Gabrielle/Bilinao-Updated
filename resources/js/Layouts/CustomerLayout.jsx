@@ -22,13 +22,11 @@ export default function AuthenticatedLayout({ user, header, children }) {
     const [localNotificationCount, setLocalNotificationCount] =
         useState(notificationCount);
     const handleNotificationClick = (notificationId) => {
-        // Make an Inertia request to mark the notification as read
         Inertia.patch(
             `/notifications/${notificationId}/read`,
             {},
             {
                 onSuccess: (page) => {
-                    // Update local notification count
                     setLocalNotificationCount((prev) => prev - 1);
                 },
                 onError: (error) => {
@@ -111,7 +109,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                                 <span>BN</span>
                             </Link>
                             {/* Nav Links */}
-                            <div className="hidden sm:flex space-x-2 sm:ms-10 ">
+                            <div className="hidden sm:flex space-x-2 sm:ms-7 ">
                                 <CustomerLink
                                     href={route("customer.index")}
                                     active={route().current("customer.index")}
@@ -143,7 +141,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             </div>
                         </div>
                         {/* Search and Icons */}
-                        <div className="flex items-center space-x-4">
+                        <div className="flex items-center space-x-2">
                             <SearchProduct />
                             <div className="relative flex items-center space-x-2 ">
                                 {/* <Dropdown> */}

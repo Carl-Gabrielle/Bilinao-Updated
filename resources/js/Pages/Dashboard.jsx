@@ -10,18 +10,39 @@ import CustomerContainer from "@/Components/CustomerContainer";
 import DivContainer from "@/Components/DivContainer";
 import WelcomeImg from ".//Illustrations/welcomeImg.png";
 import DashboardCard from "../Components/DashboardCard";
-import { Line } from 'react-chartjs-2';
 import SalesMetricsChart from "@/Components/SalesMetricsChart";
-export default function AdminDashboard({ auth, sellerCount, customerCount }) {
+
+export default function AdminDashboard({ auth, sellerCount, customerCount, salesData = [] }) {
     const { user } = auth;
-    const salesData = [
-        { date: '2024-10-01', revenue: 1000 },
-        { date: '2024-10-02', revenue: 1200 },
-        { date: '2024-10-03', revenue: 800 },
-        { date: '2024-10-04', revenue: 1500 },
-        { date: '2024-10-05', revenue: 1300 },
-        // Add more data as needed
-    ]
+
+    const safeSalesData = salesData.filter(data => data?.seller && data?.total_net_sales !== undefined && data?.total_contribution !== undefined);
+
+    const netSalesData = {
+        labels: safeSalesData.length ? safeSalesData.map((data) => data.seller.name) : ["No Data"],
+        datasets: [
+            {
+                label: "Net Sales",
+                data: safeSalesData.length ? safeSalesData.map((data) => data.total_net_sales) : [0],
+                backgroundColor: "rgba(75, 124, 15)",
+                borderColor: '#ffffff',
+                borderWidth: 1,
+            },
+        ],
+    };
+
+    const contributionData = {
+        labels: safeSalesData.length ? safeSalesData.map((data) => data.seller.name) : ["No Data"],
+        datasets: [
+            {
+                label: "Total Contribution",
+                data: safeSalesData.length ? safeSalesData.map((data) => data.total_contribution) : [0],
+                backgroundColor: "rgb(51 65 85)",
+                borderColor: '#ffffff',
+                borderWidth: 1,
+            },
+        ],
+    };
+
     const getGreeting = () => {
         const hour = new Date().getHours();
         const greetings = [
@@ -38,9 +59,9 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
     };
     const greeting = getGreeting();
     return (
-        <AuthenticatedLayout user={auth.user}>
+        <AuthenticatedLayout user={user}>
             <Head title="Dashboard" />
-            <div className="min-h-screen  ">
+            <div className="min-h-screen">
                 <DivContainer>
                     <h1 className="text-xl tracking-wider">
                         {greeting},{" "}
@@ -48,7 +69,7 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                     </h1>
                     <hr className="mt-4 border-gray-400 mb-5" />
                     <div className="w-full h-screen   ">
-                        <div className="grid grid-cols-1 md:grid-cols-2  lg:grid-cols-3 gap-5">
+                        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 mt-5">
                             <DashboardCard>
                                 <div>
                                     <h1 className="text-md font-medium hidden sm:block">
@@ -81,18 +102,16 @@ export default function AdminDashboard({ auth, sellerCount, customerCount }) {
                             </DashboardCard>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-                            {/* Total Sales Revenue */}
-                            {/* Daily/Weekly/Monthly Sales Trends:  */}
-                            <DashboardCard>
-                                <div className="flex items-center flex-col w-full">
-                                    <h1 className="font-medium text-md">Sales Metrics</h1>
-                                    <SalesMetricsChart salesData={salesData} />
-                                </div>
+                            <DashboardCard title="Net Sales by Seller">
+                                <SalesMetricsChart data={netSalesData} />
+                            </DashboardCard>
+                            <DashboardCard title="Total Contribution by Seller">
+                                <SalesMetricsChart data={contributionData} />
                             </DashboardCard>
                         </div>
                     </div>
                 </DivContainer>
             </div>
-        </AuthenticatedLayout>
+        </AuthenticatedLayout >
     );
 }

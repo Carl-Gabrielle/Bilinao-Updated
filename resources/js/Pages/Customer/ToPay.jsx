@@ -44,19 +44,19 @@ export default function ToPay({ toPay }) {
                                     </span>
                                 </div>
                                 <div className="flex-grow mb-4">
+                                    <div className="flex items-center justify-between w-full h-auto p-2 mt-3 space-x-4 text-xs border rounded-lg text-primary border-slate-400">
+                                        <div className="flex items-center space-x-4">
+                                            <div>
+                                                <TbCreditCardPay size={16} />
+                                            </div>
+                                            <p>Payment required to proceed with shipment</p>
+                                        </div>
+                                    </div>
                                     {order.order_items.map((item, itemIndex) => {
                                         const imagePath = item.product.images[0]?.image_path;
                                         const imageUrl = imagePath ? `/storage/${imagePath}` : '/path/to/default-image.jpg';
                                         return (
                                             <div key={itemIndex} >
-                                                <div className="flex items-center justify-between w-full h-auto p-2 mt-3 space-x-4 text-xs border rounded-lg text-primary border-slate-400">
-                                                    <div className="flex items-center space-x-4">
-                                                        <div>
-                                                            <TbCreditCardPay size={16} />
-                                                        </div>
-                                                        <p>Payment required to proceed with shipment</p>
-                                                    </div>
-                                                </div>
                                                 <div className="flex items-center justify-between mt-3">
                                                     <img
                                                         src={imageUrl}
@@ -75,7 +75,7 @@ export default function ToPay({ toPay }) {
                                             </div>
                                         );
                                     })}
-                                </div>
+                                </div >
                                 <ShippingDetails
                                     shippingFee={order.shipping_fee}
                                     subtotal={subtotal}
@@ -99,7 +99,8 @@ export default function ToPay({ toPay }) {
                         );
                     })}
                 </div>
-            )}
+            )
+            }
         </div>
     );
 }

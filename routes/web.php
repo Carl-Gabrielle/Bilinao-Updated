@@ -27,6 +27,7 @@ Route::middleware('guest')->group(function () {
     Route::post('seller/login', [AuthenticatedSellerController::class, 'store'])
         ->name('seller.authenticate');
     Route::post('seller/logout', [AuthenticatedSellerController::class, 'logout'])->name('seller.logout');
+   
 });
 
 // Public route for seller profile

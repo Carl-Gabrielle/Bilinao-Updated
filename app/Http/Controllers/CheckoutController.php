@@ -110,6 +110,7 @@ class CheckoutController extends Controller
                         'total_price' => $product->price * (int) $item['qty'] + $item['shipping'],
                     ]);
                     $amountInCentavos = (int) ($product->price * (int) $item['qty']) * 100;
+                    
 
                     $line_items[] = [
                         'name' => $product->name,
@@ -132,9 +133,7 @@ class CheckoutController extends Controller
                 'currency' => 'PHP',
                 'description' => 'Total shipping fee for order',
             ];
-            // dd($line_items);
-
-            // dd($line_items);
+           
             $checkout = Paymongo::checkout()->create([
                 'cancel_url' => route('customer.orders'),
                 'billing' => [
@@ -163,11 +162,9 @@ class CheckoutController extends Controller
                 $product = Product::find((int) $item['product_id']);
                 $product->decrement('stock', (int) $item['qty']);
             }
-            //     // dd($checkout);
             DB::commit();
 
             return Inertia::location($checkout->checkout_url);
-            // return Inertia::location($gcashSource->redirect['checkout_url']);
         } catch (\Exception $e) {
             DB::rollBack();
             dd($e->getMessage());

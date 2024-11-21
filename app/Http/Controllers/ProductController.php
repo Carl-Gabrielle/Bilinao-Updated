@@ -132,32 +132,7 @@ class ProductController extends Controller
     }
 
 
-    /**
-     * Display the specified resource.
-     */
-    // public function show(Product $product)
-    // {
-    //     $product->load(['images', 'category', 'seller']);
-    
-    //     $reviews = Review::where('product_id', $product->id)
-    //         ->with('user')
-    //         ->orderBy('created_at', 'desc')
-    //         ->get();
-    
-    
-    //     $relatedProducts = Product::where('category_id', $product->category_id)
-    //         ->where('id', '!=', $product->id)
-    //         ->with('images')
-    //         ->take(4)
-    //         ->get();
-    
-    //     return Inertia::render('Customer/ProductDetails', [
-    //         'product' => $product,
-    //         'reviews' => $reviews,
-    //         'relatedProducts' => $relatedProducts,
-    //         'success' => session('success'),
-    //     ]);
-    // }
+ 
     public function show(Product $product)
 {
     $product->load(['images', 'category', 'seller']);

@@ -40,6 +40,7 @@ export default function CustomerDashboard({ auth, category, products }) {
 
     return (
         <CustomerLayout user={auth.user}>
+            {/* landingpagelayput */}
             <div className="min-h-screen  ">
                 <Head title="Home" />
                 <main>

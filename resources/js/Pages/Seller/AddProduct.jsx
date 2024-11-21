@@ -9,12 +9,23 @@ import SellerInput from "@/Components/SellerInput";
 import Label from "@/Components/Label";
 import SellerLayout from "@/Layouts/SellerLayout";
 
+
+const prohibitedWords = [
+    "inappropriate", "badword", "shit", "f***", "bitch", "asshole", "dick",
+    "pussy", "slut", "whore", "cunt", "bastard", "damn", "hell", "motherfucker",
+    "fuckhead", "retard", "idiot", "dumbass", "jackass", "piss off", "crap",
+    "puta", "gago", "bobo", "tangina", "putang ina", "leche", "bwisit", "tanga",
+    "hayop", "salbahe", "lintik", "kupal", "peste", "hampaslupa", "titi",
+    "nagmumura", "bobo ka", "uwang", "balyena"
+];
+
 const SellerDashboard = ({ categories }) => {
     const { props } = usePage();
     const user = props.auth.user;
 
     const fileInputRef = useRef(null);
     const [images, setImages] = useState([]);
+    const [error, setError] = useState("");
 
     const { data, setData, post, errors, reset } = useForm({
         name: "",
@@ -25,6 +36,7 @@ const SellerDashboard = ({ categories }) => {
         weight: "",
         images: [],
     });
+
     const handleImageChange = (e) => {
         const newImages = Array.from(e.target.files).map((file) => ({
             url: URL.createObjectURL(file),
@@ -48,9 +60,25 @@ const SellerDashboard = ({ categories }) => {
         setData("images", []);
     };
 
+    const containsProhibitedWords = (text) => {
+        return prohibitedWords.some((word) =>
+            text.toLowerCase().includes(word)
+        );
+    };
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log(data);
+
+        // Validation for inappropriate content
+        if (
+            containsProhibitedWords(data.name) ||
+            containsProhibitedWords(data.description)
+        ) {
+            alert(
+                "Your product name or description contains prohibited content. Please revise and try again."
+            );
+            return;
+        }
+
         post(route("products.store"), {
             onSuccess: () => {
                 reset();
@@ -61,6 +89,8 @@ const SellerDashboard = ({ categories }) => {
             },
         });
     };
+
+
     return (
         <SellerLayout user={user}>
             <Head title="Add Product" />

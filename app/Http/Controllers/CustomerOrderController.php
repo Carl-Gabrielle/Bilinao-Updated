@@ -40,7 +40,6 @@ class CustomerOrderController extends Controller
     {
 
     }
-
     public function markAsReceived($id)
     {
         $order = Order::where('id', $id)->where('user_id', Auth::id())->with('orderItems')->first();
@@ -48,9 +47,11 @@ class CustomerOrderController extends Controller
             DB::beginTransaction();
             if ($order) {
                 foreach ($order->orderItems as $item) {
+                    // dd(json_encode('test value inside foreach '.$item, JSON_PRETTY_PRINT));
                     $item->received_date = Carbon::now();
                     $item->save();
                     $report = DailySalesReport::where('order_item_id', $item->id)->firstOrFail();
+                    // dd(json_encode($report, JSON_PRETTY_PRINT));
                     $report->update([
                         'status' => 'To Pay'
                     ]);
@@ -75,13 +76,11 @@ class CustomerOrderController extends Controller
                 DB::commit();
                 return back()->with('message', 'Order marked as received.');
             }
-
         } catch (\Exception $e) {
             DB::rollBack();
             // dd(json_encode($e->getMessage(), JSON_PRETTY_PRINT));
-            dd(json_encode($e->getMessage(), JSON_PRETTY_PRINT));
+            dd(json_encode('Error message is '.$e->getMessage(), JSON_PRETTY_PRINT));
             return back()->withErrors(['Order not found or access denied.']);
-
         }
     }
 

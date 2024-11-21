@@ -113,7 +113,7 @@ export default function SellerIndex({ auth, sellers, success }) {
                                         <tr key={user.id}>
                                             <td className="px-6 py-4   whitespace-nowrap font-medium text-gray-500">
                                                 <span className="text-gray-700 text-sm font-normal">{user.name} - </span>
-                                                <span className={`px-4 py-1   rounded-2xl ${user.is_active ? "bg-blue-100 text-blue-500 " : "bg-red-100 text-red-500"}`}>{user.is_active ? "Active " : "Inactive"}</span>
+                                                <span className={`px-4 py-1   rounded-2xl ${user.is_active ? "bg-green-100 text-green-500 " : "bg-red-100 text-red-500"}`}>{user.is_active ? "Active " : "Inactive"}</span>
                                             </td>
                                             <td className="px-6 py-4 whitespace-nowrap text-gray-500">
                                                 {user.address}

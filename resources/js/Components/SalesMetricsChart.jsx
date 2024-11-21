@@ -1,39 +1,36 @@
-// SalesMetricsChart.jsx
-import React from 'react';
-import { Line } from 'react-chartjs-2';
-import { Chart as ChartJS, CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend } from 'chart.js';
+import {
+    Chart as ChartJS,
+    CategoryScale,
+    LinearScale,
+    BarElement,
+    Title,
+    Tooltip,
+    Legend,
+} from "chart.js";
+import { Bar } from "react-chartjs-2";
 
-ChartJS.register(CategoryScale, LinearScale, PointElement, LineElement, Tooltip, Legend);
+// Register required components
+ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend);
 
-const SalesMetricsChart = ({ salesData }) => {
-    const data = {
-        labels: salesData.map(data => data.date), // Dates for the x-axis
-        datasets: [
-            {
-                label: 'Sales Revenue',
-                data: salesData.map(data => data.revenue), // Sales revenue for the y-axis
-                fill: false,
-                backgroundColor: 'rgba(75, 192, 192, 0.2)',
-                borderColor: 'rgba(75, 192, 192, 1)',
-                tension: 0.1,
-            },
-        ],
-    };
+const SalesMetricsChart = ({ data }) => {
+    if (!data || !data.labels?.length) {
+        return <p className="text-center text-gray-500">No data available</p>;
+    }
 
     const options = {
         responsive: true,
         plugins: {
             legend: {
-                position: 'top',
+                position: "top",
             },
             title: {
                 display: true,
-                text: 'Sales Metrics',
+                text: "Sales Metrics",
             },
         },
     };
 
-    return <Line data={data} options={options} />;
+    return <Bar data={data} options={options} />;
 };
 
 export default SalesMetricsChart;
