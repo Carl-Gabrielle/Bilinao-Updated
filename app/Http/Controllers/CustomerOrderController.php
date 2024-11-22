@@ -42,15 +42,26 @@ class CustomerOrderController extends Controller
     }
     public function markAsReceived($id)
     {
-        $order = Order::where('id', $id)->where('user_id', Auth::id())->with('orderItems')->first();
+        $order = Order::where('id', $id)->where('user_id', Auth::id())
+            ->with('orderItems.product.seller')->first();
         try {
             DB::beginTransaction();
+            // dd($order);
             if ($order) {
                 foreach ($order->orderItems as $item) {
                     // dd(json_encode('test value inside foreach '.$item, JSON_PRETTY_PRINT));
                     $item->received_date = Carbon::now();
                     $item->save();
-                    $report = DailySalesReport::where('order_item_id', $item->id)->firstOrFail();
+
+                    $contribution = $item->price * 0.04;
+                    $report = DailySalesReport::firstOrCreate([
+                        'order_item_id' => $item->id,
+                        'net_sales_amount' => $item->price - $contribution,
+                        'contribution' => $contribution,
+                        'seller_id' => $item->product->seller->id,
+                        'solds' => $item->qty
+                    ]);
+
                     // dd(json_encode($report, JSON_PRETTY_PRINT));
                     $report->update([
                         'status' => 'To Pay'
@@ -79,7 +90,7 @@ class CustomerOrderController extends Controller
         } catch (\Exception $e) {
             DB::rollBack();
             // dd(json_encode($e->getMessage(), JSON_PRETTY_PRINT));
-            dd(json_encode('Error message is '.$e->getMessage(), JSON_PRETTY_PRINT));
+            dd(json_encode('Error message is ' . $e->getMessage(), JSON_PRETTY_PRINT));
             return back()->withErrors(['Order not found or access denied.']);
         }
     }
