@@ -56,7 +56,6 @@ export default function ProductEdit() {
                 // Handle success
             },
             onError: () => {
-                // Handle errors
             },
         });
     };
@@ -81,7 +80,7 @@ export default function ProductEdit() {
                             <button
                                 type="submit"
                                 disabled={processing}
-                                className="flex items-center px-6 py-3 text-sm font-semibold text-white rounded-md shadow-lg bg-slate-800"
+                                className="flex items-center px-6 py-3 text-sm font-semibold text-white rounded-2xl shadow-lg bg-slate-800"
                             >
                                 <RxUpdate className="mr-2" /> Update Product
                             </button>

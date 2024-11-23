@@ -56,6 +56,8 @@ Route::middleware(['auth:seller','enforce.password.change'])->group(function () 
     Route::get('/deliveryOrders', [SellerOrderController::class, 'deliveryOrders'])->name('seller.deliveryOrders');
     Route::get('/seller/order-details/{orderId}', [SellerOrderController::class, 'orderDetails'])->name('seller.OrderDetails');
     Route::get('/seller/notification/{order}', [SellerNotificationController::class, 'show'])->name('seller.notification');
+    Route::put('/product/{product}/publish', [ProductController::class, 'publish'])->name('products.publish');
+    Route::put('product/{product}/unpublish', [ProductController::class, 'unpublish'])->name('products.unpublish');
 });
 
 Route::inertia('/sellerLogin', 'SellerLogin')->name('seller.login');

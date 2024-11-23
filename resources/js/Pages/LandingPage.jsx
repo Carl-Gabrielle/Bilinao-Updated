@@ -1,3 +1,4 @@
+import LandingLayout from "@/Layouts/LandingLayout";
 import { PiArrowRightBold } from "react-icons/pi";
 import React, { useState, useEffect, useRef } from "react";
 import LoadingSpinner from "@/Components/LoadingSkeletal";
@@ -9,12 +10,12 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Footer from "@/Components/Footer";
 import { animateText } from '@/gsap';
 import CustomerContainer from "@/Components/CustomerContainer";
-export default function CustomerDashboard({ auth, category, products }) {
+
+export default function LandingPage({ category, products }) {
     const categoryData = category?.data ?? [];
     const productData = products?.data ?? [];
     const textRef = useRef(null);
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
@@ -31,18 +32,16 @@ export default function CustomerDashboard({ auth, category, products }) {
 
     if (loading) {
         return (
-            <CustomerLayout user={auth.user}>
-                <Head title="Home" />
+            <LandingLayout >
+                <Head title="Discover Page" />
                 <LoadingSpinner />
-            </CustomerLayout>
+            </LandingLayout>
         );
     }
-
     return (
-        <CustomerLayout user={auth.user}>
-            {/* landingpagelayput */}
-            <div className="min-h-screen  ">
-                <Head title="Home" />
+        <LandingLayout>
+            <div className="min-h-screen">
+                <Head title="Discover Page" />
                 <main>
                     <div className="max-w-screen-xl mx-auto">
                         <div className="min-h-[650px] pt-24 relative sm:min-h-[630px] flex justify-center items-center ">
@@ -61,16 +60,14 @@ export default function CustomerDashboard({ auth, category, products }) {
                                         Discover the beauty of handcrafted creations, where every piece reflects passion and skill. Our local artisans create unique treasures that embody cultural richness, adding authentic charm and character to your space.
                                     </p>
                                     <div className="flex items-center space-x-4">
-                                        {/* Shop Now Button */}
                                         <Link href={route("customer.products")}>
-                                            <button className="shop-button px-8 text-nowrap py-4 rounded-2xl text-white font-semibold flex items-center justify-center bg-slate-800">
+                                            <button className="shop-button px-8 text-nowrap py-4 rounded-xl text-white font-semibold flex items-center justify-center bg-slate-800">
                                                 Shop Now <HiMiniArrowLongRight className="ml-2" />
                                             </button>
                                         </Link>
-                                        {/* Our Story Button */}
                                         <Link href={route("customer.about")}>
-                                            <button className="cta-button px-8 text-nowrap py-4 rounded-2xl text-primary font-semibold flex items-center justify-center border-2 border-primary  ">
-                                                See How It Works
+                                            <button className="cta-button px-8 text-nowrap py-4 rounded-xl text-primary font-semibold flex items-center justify-center border border-primary  ">
+                                                Our Story
                                             </button>
                                         </Link>
                                     </div>
@@ -186,6 +183,6 @@ export default function CustomerDashboard({ auth, category, products }) {
                     </div>
                 </main>
             </div>
-        </CustomerLayout>
-    );
+        </LandingLayout>
+    )
 }

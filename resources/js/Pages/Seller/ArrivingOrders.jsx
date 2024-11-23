@@ -3,6 +3,7 @@ import { FaPesoSign } from "react-icons/fa6";
 import { FaCheck } from "react-icons/fa6";
 import { AiOutlineEye } from "react-icons/ai";
 import React, { useState, useEffect } from "react";
+import { animateText } from '@/gsap';
 import { Head, Link } from "@inertiajs/react";
 import Pagination from "@/Components/Pagination";
 
@@ -21,6 +22,16 @@ export default function ArrivingOrders({
             return () => clearTimeout(timer);
         }
     }, [success]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
     return (
         <SellerLayout user={user}>
             <Head title="Arriving Orders" />
@@ -41,7 +52,7 @@ export default function ArrivingOrders({
                             <h1 className="text-xl font-semibold text-gray-800 mb-0">
                                 Arriving Orders
                             </h1>
-                            <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg">
+                            <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg dashboard-card">
                                 <table className="min-w-full">
                                     <thead className="bg-slate-50 border-b border-gray-200 text-xs uppercase">
                                         <tr>

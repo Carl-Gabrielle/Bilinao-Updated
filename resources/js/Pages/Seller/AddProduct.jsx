@@ -8,7 +8,7 @@ import SectionHeader from "@/Components/SectionHeader";
 import SellerInput from "@/Components/SellerInput";
 import Label from "@/Components/Label";
 import SellerLayout from "@/Layouts/SellerLayout";
-
+import { animateText } from '@/gsap';
 
 const prohibitedWords = [
     "inappropriate", "badword", "shit", "f***", "bitch", "asshole", "dick",
@@ -90,7 +90,16 @@ const SellerDashboard = ({ categories }) => {
         });
     };
 
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
     return (
         <SellerLayout user={user}>
             <Head title="Add Product" />
@@ -109,7 +118,7 @@ const SellerDashboard = ({ categories }) => {
                                 Publish Product
                             </button>
                         </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5 dashboard-card">
                             <div className="w-full col-span-2 bg-slate-50  px-6 py-4 rounded-3xl">
                                 <div className="mb-4">
                                     <SectionHeader text="Product Information" />
@@ -213,7 +222,7 @@ const SellerDashboard = ({ categories }) => {
                                 </div>
                             </div>
                         </div>
-                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5">
+                        <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5 dashboard-card">
                             <div className="col-span-2  bg-slate-50 px-6 py-4 rounded-3xl  w-full">
                                 <SectionHeader text="Product Images" />
                                 <div className="mb-4">

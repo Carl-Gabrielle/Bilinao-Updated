@@ -1,9 +1,11 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Head, usePage } from "@inertiajs/react";
 import SellerLayout from "@/Layouts/SellerLayout";
 import WelcomeImg from "./Illustrations/welcomeImg.png";
 import DashboardCard from "@/Components/DashboardCard";
 import { Bar, Doughnut } from "react-chartjs-2";
+import ScrollTrigger from 'gsap/ScrollTrigger';
+import { animateText } from '@/gsap';
 import {
     Chart as ChartJS,
     CategoryScale,
@@ -20,6 +22,16 @@ ChartJS.register(CategoryScale, LinearScale, BarElement, Title, Tooltip, Legend,
 const SellerDashboard = ({ productCount, orderCount, orders }) => {
     const { props } = usePage();
     const user = props.auth.user;
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
 
     const getGreeting = () => {
         const hour = new Date().getHours();
@@ -91,7 +103,7 @@ const SellerDashboard = ({ productCount, orderCount, orders }) => {
             {
                 label: 'Order Completion',
                 data: [orderStatusCounts.completed, orderCount - orderStatusCounts.completed],
-                backgroundColor: ['rgb(21 128 61)', 'rgb(51 65 85)'],
+                backgroundColor: ['rgb(77 124 15)', 'rgb(51 65 85)'],
                 borderColor: '#ffffff',
                 borderWidth: 1,
             },
@@ -101,13 +113,13 @@ const SellerDashboard = ({ productCount, orderCount, orders }) => {
     return (
         <SellerLayout user={user}>
             <Head title="Seller Dashboard" />
-            <div className="container mx-auto px-4 py-6">
+            <div className="container mx-auto px-4 py-6 ">
                 <h1 className="text-xl">
                     {greeting},{" "}
                     <span className="font-semibold">{user.name}</span>
                 </h1>
                 <hr className="mt-4 border-slate-500" />
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-5 gap-5">
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 mt-5 gap-5 dashboard-card">
                     <DashboardCard>
                         <div>
                             <h1>
@@ -134,7 +146,7 @@ const SellerDashboard = ({ productCount, orderCount, orders }) => {
                         </div>
                     </DashboardCard>
                 </div>
-                <div className="grid grid-cols-1 lg:grid-cols-2 mt-5 gap-10">
+                <div className="grid grid-cols-1 lg:grid-cols-2 mt-5 gap-10 dashboard-card ">
                     <DashboardCard>
                         <div className="w-full h-full">
                             <h1 className="font-medium text-md">Order Status Distribution</h1>

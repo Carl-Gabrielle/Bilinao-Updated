@@ -29,7 +29,7 @@ export default function ProductDetails({
     relatedProducts = [],
     success,
     reviews, averageRating,
-    isCategoryActive
+    isProductPublished
 }) {
     const { user } = auth;
     const [quantity, setQuantity] = useState(1);
@@ -113,7 +113,6 @@ export default function ProductDetails({
                                     </span>
                                 </div>
                                 <div>
-                                    {/* Conditionally rendering the button based on actionType */}
                                     <Link
                                         href={route(
                                             actionType === "cart"
@@ -158,6 +157,13 @@ export default function ProductDetails({
                                 )}
                             </div>
                             <div className="flex flex-col items-start justify-center max-w-lg mx-auto">
+                                {!isProductPublished && (
+                                    <p className="mb-5 text-xs font-medium text-red-600">
+                                        <span className="px-3 py-2 bg-red-100  rounded-2xl text-nowrap">
+                                            This product is currently unavailable because it has been unpublished by the seller.
+                                        </span>
+                                    </p>
+                                )}
                                 <p className="mt-5 mb-4 text-xl font-medium text-slate-800">
                                     Category: {product.category.name}
                                 </p>
@@ -167,9 +173,9 @@ export default function ProductDetails({
                                 <p className="mb-4 text-sm leading-relaxed text-gray-600">
                                     {product.description}
                                 </p>
-                                <div className="flex items-center mb-5 space-x-4">
+                                <div className="flex items-center mb-4 space-x-4">
                                     {product.stock > 0 ? (
-                                        <span className=" text-sm font-medium text-slate-800">
+                                        <span className="text-sm font-medium text-slate-800">
                                             <span className="px-3 py-1 rounded-full shadow-inner text-emerald-100 bg-emerald-600">
                                                 <FaRegCheckSquare className="inline-block mr-2" />
                                                 In Stock
@@ -182,37 +188,11 @@ export default function ProductDetails({
                                                 <MdOutlineRemoveShoppingCart className="inline-block mr-2" />
                                                 Out of Stock
                                             </span>{" "}
-                                            {product.stock === 0 ? 'No products available' : `${product.stock} product${product.stock > 1 ? 's' : ''}`}
+                                            No products available
                                         </p>
                                     )}
-                                    <div className="flex items-center space-x-1">
-                                        <Link
-                                            href={route(
-                                                "seller.public.profile",
-                                                {
-                                                    seller: product.seller.id,
-                                                }
-                                            )}
-                                        >
-                                            <p className="flex items-center text-slate-800 ">
-                                                <IoStorefrontOutline className="mr-2" />
-                                                <span className="font-semibold">
-                                                    {product.seller.name}
-                                                </span>
-                                            </p>
-                                        </Link>
-                                    </div>
                                 </div>
-                                {!isCategoryActive && (
-                                    <p className="mb-5 text-xs font-medium text-red-600">
-                                        <span className="px-3 py-2 bg-transparent sm:text-slate-50 sm:bg-red-500 rounded-2xl leading-8 text-wrap sm:text-nowrap">
-                                            This product is currently unavailable because its category is inactive.
-                                        </span>
-                                    </p>
-
-                                )}
-                                {/* Product Actions */}
-                                {isCategoryActive && product.stock > 0 && (
+                                {isProductPublished && product.stock > 0 && (
                                     <div className="flex items-center w-full space-x-4 ">
                                         <div className="flex items-center justify-between px-3 py-2 bg-opacity-50 rounded-full shadow-md bg-slate-50 backdrop-blur-md text-slate-800">
                                             <button
@@ -224,7 +204,6 @@ export default function ProductDetails({
                                             <span className="px-7">
                                                 {quantity > 0 ? quantity : 1}
                                             </span>
-
                                             <button
                                                 onClick={handleIncrease}
                                                 className="flex items-center justify-center text-sm text-white rounded-full bg-slate-800 size-6"
@@ -252,10 +231,26 @@ export default function ProductDetails({
                                             </div>
                                         </Link>
                                         <ProductLink productId={product.id} success={success} />
+                                        <div className="flex items-center space-x-1">
+                                            <Link
+                                                href={route(
+                                                    "seller.public.profile",
+                                                    {
+                                                        seller: product.seller.id,
+                                                    }
+                                                )}
+                                            >
+                                                <p className="flex items-center text-slate-800 ">
+                                                    <IoStorefrontOutline className="mr-2" />
+                                                    <span className="font-semibold">
+                                                        {product.seller.name}
+                                                    </span>
+                                                </p>
+                                            </Link>
+                                        </div>
                                     </div>
                                 )}
-                                {/* Hide buttons if category is inactive */}
-                                {isCategoryActive && product.stock > 0 && (
+                                {isProductPublished && product.stock > 0 && (
                                     <div className="flex flex-col w-full gap-4 py-4 sm:flex-row">
                                         <button
                                             onClick={handleBuyNow}

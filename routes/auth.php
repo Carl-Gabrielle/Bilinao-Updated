@@ -35,7 +35,7 @@ Route::middleware('guest')->group(function () {
 
     Route::post('reset-password', [NewPasswordController::class, 'store'])
                 ->name('password.store');
-                // Route::get('/', [HomeController::class, 'guestPage'])->name('guest.dashboard');
+    Route::get('/', [HomeController::class, 'guestPage'])->name('guest.dashboard');
 });
 
 Route::middleware('auth')->group(function () {

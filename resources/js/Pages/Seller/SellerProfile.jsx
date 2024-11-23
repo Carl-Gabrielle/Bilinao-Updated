@@ -1,4 +1,4 @@
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import { Head, usePage, Link } from "@inertiajs/react";
 import SellerLayout from "@/Layouts/SellerLayout";
 import { MdOutlineSecurity } from "react-icons/md"
@@ -9,6 +9,7 @@ import { HiOutlineDevicePhoneMobile } from "react-icons/hi2";
 import { GrMapLocation } from "react-icons/gr";
 import { IoStorefrontOutline } from "react-icons/io5";
 import SellerInput from "@/Components/SellerInput";
+import { animateText } from '@/gsap';
 
 export default function SellerProfile() {
     const { auth } = usePage().props;
@@ -20,12 +21,22 @@ export default function SellerProfile() {
                 ? `/storage/${user.image_path}`
                 : '/path/to/default/profile/picture.jpg';
     }, [user.image_path]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
     return (
         <>
             <SellerLayout user={user}>
                 <Head title="Seller Profile" />
                 <div className="container  mx-auto px-4 py-8">
-                    <div className="bg-white shadow-lg rounded-3xl overflow-hidden backdrop-blur-lg relative">
+                    <div className="bg-white shadow-lg rounded-3xl overflow-hidden backdrop-blur-lg relative dashboard-card">
                         <div className="h-60 w-full bg-slate-800 flex items-center justify-center relative overflow-hidden">
                             <h2 className="text-center text-3xl md:text-4xl lg:text-5xl text-slate-100 font-bold z-10 tracking-wide">
                                 Seller Profile
@@ -108,7 +119,7 @@ export default function SellerProfile() {
                     </div>
 
                     <div className="mt-8 space-y-6">
-                        <div className="bg-white shadow-md rounded-3xl p-6">
+                        <div className="bg-white shadow-md rounded-3xl p-6 dashboard-card">
                             <div className="flex items-center mb-4">
                                 <MdOutlineSecurity className="mr-2" />
                                 <h2 className="text-xl font-semibold text-primary ">

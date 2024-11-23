@@ -65,7 +65,7 @@ export default function Categories({ auth, categories }) {
                                             </p>
                                             <Link
                                                 href={`/category/${cat.id}/products`}
-                                                className="inline-flex items-center px-4 sm:px-6 py-2 rounded-lg text-white bg-slate-800"
+                                                className="inline-flex items-center px-4 sm:px-6 py-2 rounded-2xl text-white bg-slate-800"
                                             >
                                                 <span className="mr-2">
                                                     View Products

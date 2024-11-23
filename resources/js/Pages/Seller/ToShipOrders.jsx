@@ -2,6 +2,7 @@ import SellerLayout from "@/Layouts/SellerLayout";
 import { FaPesoSign } from "react-icons/fa6";
 import { AiOutlineEye } from "react-icons/ai";
 import React, { useState, useEffect } from "react";
+import { animateText } from '@/gsap';
 import { FaCheck } from "react-icons/fa6";
 import { Head, Link } from "@inertiajs/react";
 export default function ToShipOrders({ auth = {},
@@ -17,6 +18,16 @@ export default function ToShipOrders({ auth = {},
             return () => clearTimeout(timer);
         }
     }, [success]);
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
     return (
         <SellerLayout user={user}>
             <Head title="To Ship Orders" />
@@ -37,7 +48,7 @@ export default function ToShipOrders({ auth = {},
                             <h1 className="text-xl font-semibold text-gray-800 mb-0">
                                 To Ship Orders
                             </h1>
-                            <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg ">
+                            <div className="w-full border mt-5 overflow-x-auto scroll-bar rounded-lg bg-slate-50 bg-opacity-65 backdrop-blur-lg dashboard-card">
                                 <table className="min-w-full">
                                     <thead className="bg-slate-50 border-b border-gray-200 text-xs uppercase">
                                         <tr>

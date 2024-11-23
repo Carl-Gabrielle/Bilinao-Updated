@@ -6,7 +6,8 @@ import { Inertia } from "@inertiajs/inertia";
 import SectionHeader from "@/Components/SectionHeader";
 import SellerInput from "@/Components/SellerInput";
 import ShippingInformation from "@/Components/ShippingInformation";
-
+import { animateText } from '@/gsap';
+import React, { useState, useEffect } from "react";
 export default function OrderDetails({ auth, order, orderItems }) {
     const { user } = auth;
 
@@ -54,7 +55,16 @@ export default function OrderDetails({ auth, order, orderItems }) {
             },
         });
     };
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
 
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
     return (
         <SellerLayout user={user}>
             <Head title="Order Details" />
@@ -63,7 +73,7 @@ export default function OrderDetails({ auth, order, orderItems }) {
                     <h1 className="text-2xl font-semibold text-gray-800 mb-6">
                         Order Details
                     </h1>
-                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
+                    <div className="grid grid-cols-1 lg:grid-cols-2 gap-8 dashboard-card">
                         {/* SHIPPING INFORMATION */}
                         <ShippingInformation order={order} />
                         <div className="bg-white shadow-sm rounded-3xl p-6">

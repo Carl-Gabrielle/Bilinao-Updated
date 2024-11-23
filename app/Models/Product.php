@@ -17,6 +17,7 @@ class Product extends Model
         'category_id',
         'weight',
         'seller_id',
+        'is_active'
     ];
 
     public function category()

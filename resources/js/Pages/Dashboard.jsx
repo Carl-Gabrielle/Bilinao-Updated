@@ -103,10 +103,10 @@ export default function AdminDashboard({ auth, sellerCount, customerCount, sales
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
                             <DashboardCard title="Net Sales by Seller">
-                                <SalesMetricsChart data={netSalesData} />
+                                <SalesMetricsChart data={netSalesData} title="Net Sales by Seller" />
                             </DashboardCard>
                             <DashboardCard title="Total Contribution by Seller">
-                                <SalesMetricsChart data={contributionData} />
+                                <SalesMetricsChart data={contributionData} title="Total Contribution by Seller" />
                             </DashboardCard>
                         </div>
                     </div>

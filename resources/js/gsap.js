@@ -105,6 +105,7 @@ export const animateText = () => {
             }
         );
     });
+
     gsap.utils.toArray(".product-card").forEach((card, index) => {
         const scaleValue = 0.95;
 
@@ -125,4 +126,18 @@ export const animateText = () => {
             }
         );
     });
+    gsap.fromTo(
+        ".dashboard-card",
+        { opacity: 0, y: 20, scale: 0.95 },
+        {
+            opacity: 1,
+            y: 0,
+            scale: 1,
+            duration: 1.5,
+            ease: "expo.out",
+            stagger: 0.15,
+        }
+    );
+    
+    
 };

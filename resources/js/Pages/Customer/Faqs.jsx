@@ -75,7 +75,7 @@ export default function Faqs({ auth }) {
                         <div className="space-y-4">
                             {faqs.map((faq, index) => (
                                 <div className=" bg-slate-200 rounded-2xl p-3  pb-4 flex items-center space-x-5 justify-center">
-                                    <span className="bg-slate-100 text-primary font-medium rounded-lg px-4 py-1">Q</span>
+                                    <span className="bg-blue-200 text-blue-600 font-medium rounded-lg px-4 py-1">Q</span>
                                     <div key={index}>
                                         <div
                                             className="flex items-center justify-between cursor-pointer"

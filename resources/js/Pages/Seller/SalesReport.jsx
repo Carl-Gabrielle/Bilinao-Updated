@@ -4,17 +4,28 @@ import { Head, Link, usePage } from "@inertiajs/react";
 import { FaPesoSign } from "react-icons/fa6";
 import { IoPrintOutline } from "react-icons/io5";
 import { IoPricetagsOutline } from "react-icons/io5";
+import { animateText } from '@/gsap';
 
 export default function SalesReport({ auth }) {
     const { user } = auth;
     const { data, totalContribution } = usePage().props;
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            animateText();
+        }
+    }, [loading]);
     return (
         <SellerLayout user={user}>
             <Head title="Sales Report" />
             <div className="px-6 py-4 printable-area">
-                <h2 className="text-xl font-semibold text-primary mb-4"> Daily Sales Report</h2>
-                <div className="w-full h-auto p-6 shadow-lg bg-slate-50 rounded-3xl">
-                    <div className="flex  items-center justify-end mb-6">
+                <div className="w-full h-auto p-6 shadow-lg bg-slate-50 rounded-3xl dashboard-card">
+                    <div className="flex  items-center justify-between mb-6">
+                        <h2 className="text-xl font-semibold text-primary mb-4"> Daily Sales Report</h2>
                         <button
                             onClick={() => window.print()}
                             className="flex items-center border border-primary rounded-md text-md text-primary px-6 py-1"

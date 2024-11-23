@@ -39,27 +39,23 @@ class ProductController extends Controller
     public function products()
     {
         $category = Category::where('is_active', 1)->paginate(4);
-        
-        $products = Product::with(['images', 'seller', 'category'])
+        $products = Product::with(['images','category', 'seller'])
             ->whereHas('seller', function ($query) {
-                $query->where('is_active', 1);  
+                $query->where('is_active', 1);
             })
             ->paginate(9);
-        
+    
         $products->getCollection()->transform(function ($product) {
-            $product->is_published = $product->category->is_active ? true : false;
+            $product->is_published = $product->is_active; 
             return $product;
         });
-    
         return Inertia::render('Customer/Products', [
             'success' => session('success'),
-            'category' => CategoryResource::collection($category),
             'products' => $products,
+            'category' => CategoryResource::collection($category),
         ]);
     }
     
-
-
     public function productsByCategory(Category $category)
     {
         $sortOption = request('sort');
@@ -134,32 +130,29 @@ class ProductController extends Controller
 
  
     public function show(Product $product)
-{
-    $product->load(['images', 'category', 'seller']);
+    {
+        $product->load(['images', 'category','seller']);
     
-    // Check if the product's category is active
-    $isCategoryActive = $product->category->is_active;
-
-    $reviews = Review::where('product_id', $product->id)
-        ->with('user')
-        ->orderBy('created_at', 'desc')
-        ->get();
-
-    $relatedProducts = Product::where('category_id', $product->category_id)
-        ->where('id', '!=', $product->id)
-        ->with('images')
-        ->take(4)
-        ->get();
-
-    return Inertia::render('Customer/ProductDetails', [
-        'product' => $product,
-        'reviews' => $reviews,
-        'relatedProducts' => $relatedProducts,
-        'success' => session('success'),
-        'isCategoryActive' => $isCategoryActive, 
-    ]);
-}
-
+        $isProductPublished = $product->is_active;
+    
+        $reviews = Review::where('product_id', $product->id)
+            ->with('user')
+            ->orderBy('created_at', 'desc')
+            ->get();
+    
+        $relatedProducts = Product::where('id', '!=', $product->id)
+            ->with('images')
+            ->take(4)
+            ->get();
+    
+        return Inertia::render('Customer/ProductDetails', [
+            'product' => $product,
+            'reviews' => $reviews,
+            'relatedProducts' => $relatedProducts,
+            'success' => session('success'),
+            'isProductPublished' => $isProductPublished,
+        ]);
+    }
 
 
 
@@ -266,5 +259,22 @@ class ProductController extends Controller
             'averageRating' => $averageRating,
         ]);
     }
+
+    public function publish(Product $product)
+{
+    $product->is_active = true;
+    $product->save();
+
+    return redirect()->back()->with('success', 'Product published successfully.');
+}
+
+public function unpublish(Product $product)
+{
+    $product->is_active = false;
+    $product->save();
+
+    return redirect()->back()->with('success', 'Product unpublished successfully.');
+}
+
 
 }

@@ -67,11 +67,7 @@ export default function Products({ products, auth, success, category }) {
         setFilteredProducts(sortedAndFilteredProducts);
     }, [sortOption, availabilityFilter, products.data]);
 
-    // const [isOpen, setIsOpen] = useState(false);
 
-    // const toggleDropdown = () => {
-    //     setIsOpen((prev) => !prev);
-    // };
     const [isVisible, setIsVisible] = useState(true);
     useEffect(() => {
         if (success) {
@@ -186,13 +182,10 @@ export default function Products({ products, auth, success, category }) {
                             </div>
                             <div className="grid grid-cols-2 lg:grid-cols-3 gap-6">
                                 {filteredProducts.map((product) => (
-                                    <Link
-                                        key={product.id}
-                                        href={route("product.show", product.id)}
-                                    >
+                                    <Link key={product.id} href={route("product.show", product.id)}>
                                         <div className="product-card bg-slate-50 bg-opacity-50 backdrop-blur-md rounded-2xl p-4 flex space-x-2 shadow-lg relative">
                                             <img
-                                                src={`/storage/${product.images[0].image_path}`}
+                                                src={`/storage/${product.images[0]?.image_path || "default.jpg"}`}
                                                 alt={product.name}
                                                 className="w-full h-48 object-cover mb-4 rounded-lg"
                                             />
@@ -204,9 +197,7 @@ export default function Products({ products, auth, success, category }) {
                                         </div>
                                         <div className="text-xs p-3 flex items-center justify-between">
                                             <div>
-                                                <h3 className="pb-1 text-md font-semibold">
-                                                    {product.name}
-                                                </h3>
+                                                <h3 className="pb-1 text-md font-semibold">{product.name}</h3>
                                                 <p className="text-sm">
                                                     <FaPesoSign className="inline-block mr-1" />
                                                     {Number(product.price).toLocaleString("en-PH", {
@@ -234,16 +225,14 @@ export default function Products({ products, auth, success, category }) {
                                                     Out of Stock
                                                 </div>
                                             ) : null}
-
                                         </div>
                                     </Link>
                                 ))}
-
                             </div>
+
                             <Pagination links={products.links} />
                         </div>
                     </div>
-
                 </CustomerContainer>
             </div>
         </CustomerLayout>

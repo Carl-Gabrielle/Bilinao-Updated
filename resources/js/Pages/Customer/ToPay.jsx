@@ -6,7 +6,7 @@ import { LuTruck } from "react-icons/lu";
 import { MdKeyboardArrowRight } from "react-icons/md";
 import ShippingDetails from "@/Components/ShippingDetails";
 import { Link } from "@inertiajs/react";
-
+import { Inertia } from "@inertiajs/inertia";
 export default function ToPay({ toPay }) {
     const handleCompleteOrder = (link) => {
         window.location.href = link;

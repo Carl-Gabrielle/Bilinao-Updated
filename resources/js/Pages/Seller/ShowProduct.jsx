@@ -1,20 +1,20 @@
 import React, { useState, useEffect } from "react";
 import { Head, Link, usePage, router } from "@inertiajs/react";
+import { MdAdd, MdUnpublished, MdPublish } from "react-icons/md";
 import { FaCheck, FaPesoSign } from "react-icons/fa6";
 import SellerLayout from "@/Layouts/SellerLayout";
 import { LiaEditSolid } from "react-icons/lia";
 import { RiDeleteBinLine } from "react-icons/ri";
-import { MdAdd } from "react-icons/md";
+import { CiMenuKebab } from "react-icons/ci";
 import Pagination from "@/Components/Pagination";
-import ConfirmationModal from "@/Components/ConfirmationModal";
+import { animateText } from '@/gsap';
 
 export default function ShowProduct({ success }) {
     const [visibleSuccess, setVisibleSuccess] = useState(!!success);
+    const [showDropdown, setShowDropdown] = useState(null);
     const { props } = usePage();
     const user = props.auth.user;
     const products = props.products || [];
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [productToDelete, setProductToDelete] = useState(null);
 
     useEffect(() => {
         if (success) {
@@ -24,22 +24,27 @@ export default function ShowProduct({ success }) {
             return () => clearTimeout(timer);
         }
     }, [success]);
-
-    const handleDeleteClick = (product) => {
-        setProductToDelete(product);
-        setIsModalOpen(true);
+    const toggleDropdown = (id) => {
+        setShowDropdown((prev) => (prev === id ? null : id));
     };
 
-    const handleConfirmDelete = () => {
-        if (productToDelete) {
-            router.delete(route("products.destroy", productToDelete.id), {
-                onSuccess: () => {
-                    setIsModalOpen(false);
-                    setProductToDelete(null);
-                },
-            });
+    const handleTogglePublish = (product) => {
+        const action = product.is_active ? "products.unpublish" : "products.publish";
+        router.put(route(action, { product: product.id }), {
+            _method: "PUT",
+        });
+        setShowDropdown(null);
+    };
+    const [loading, setLoading] = useState(true);
+    useEffect(() => {
+        setLoading(false);
+    }, []);
+
+    useEffect(() => {
+        if (!loading) {
+            animateText();
         }
-    };
+    }, [loading]);
     return (
         <SellerLayout user={user}>
             <Head title="Show Products" />
@@ -54,7 +59,7 @@ export default function ShowProduct({ success }) {
                         </span>
                     </div>
                 )}
-                <div className="px-10 bg-white bg-opacity-55 backdrop-blur-lg py-8 rounded-3xl">
+                <div className="px-10 bg-white bg-opacity-55 backdrop-blur-lg py-8 rounded-3xl dashboard-card">
                     <div className="flex items-center justify-between mb-8">
                         <h1 className="font-semibold sm:text-2xl text-md text-gray-800 leading-tight">
                             Your Products
@@ -92,6 +97,9 @@ export default function ShowProduct({ success }) {
                                         <th className="py-3 px-6 text-left text-gray-600 font-medium whitespace-nowrap">
                                             Weight (g)
                                         </th>
+                                        <th className="py-3 px-6 text-left text-gray-600 font-medium whitespace-nowrap">
+                                            Status
+                                        </th>
                                         <th className="py-3 px-6 text-left text-gray-600 font-medium">
                                             Actions
                                         </th>
@@ -103,9 +111,8 @@ export default function ShowProduct({ success }) {
                                             key={product.id}
                                             className="border-b hover:bg-gray-50 transition duration-150 ease-in-out text-sm"
                                         >
-                                            <td className="py-4 px-6">
-                                                {product.images &&
-                                                    product.images.length > 0 ? (
+                                            <td className="py-4 px-6 relative">
+                                                {product.images && product.images.length > 0 ? (
                                                     <img
                                                         src={`/storage/${product.images[0].image_path}`}
                                                         alt={product.name}
@@ -113,17 +120,24 @@ export default function ShowProduct({ success }) {
                                                     />
                                                 ) : (
                                                     <div className="w-16 h-16 bg-gray-200 flex items-center justify-center rounded-lg shadow-sm">
-                                                        <span className="text-gray-500">
-                                                            No Image
-                                                        </span>
+                                                        <span className="text-gray-500">No Image</span>
                                                     </div>
                                                 )}
+                                                {/* Status Indicator */}
+                                                <span
+                                                    className={`absolute top-1 right-1 px-2   rounded-full text-[0.6em] font-semibold ${product.is_active
+                                                        ? "bg-green-200 text-green-600"
+                                                        : "bg-red-200 text-red-500"
+                                                        }`}
+                                                >
+                                                    {product.is_active ? "Published" : "Unpublished"}
+                                                </span>
                                             </td>
                                             <Link
                                                 href={`/products/${product.id}/edit`}
                                                 className="hover:underline"
                                             >
-                                                <td className="py-4 px-6 text-gray-800 font-semibold whitespace-nowrap">
+                                                <td className="py-4 px-6 text-gray-800 font-semibold whitespace-nowrap ">
                                                     {product.name}
                                                 </td>
                                             </Link>
@@ -155,6 +169,16 @@ export default function ShowProduct({ success }) {
                                                     (g)
                                                 </span>
                                             </td>
+                                            <td className="px-4 py-2">
+                                                <span
+                                                    className={`px-4 py-1 rounded-2xl ${product.is_active
+                                                        ? "bg-green-200 text-green-600"
+                                                        : "bg-red-200 text-red-500"
+                                                        }`}
+                                                >
+                                                    {product.is_active ? "Published" : "Unpublished"}
+                                                </span>
+                                            </td>
                                             <td className="py-10 px-6 text-center flex items-center justify-center">
                                                 <Link
                                                     href={`/products/${product.id}/edit`}
@@ -162,16 +186,34 @@ export default function ShowProduct({ success }) {
                                                 >
                                                     <LiaEditSolid className="w-5 h-5 mr-2" />
                                                 </Link>
-                                                <button
-                                                    onClick={() =>
-                                                        handleDeleteClick(
-                                                            product
-                                                        )
-                                                    }
-                                                    className="flex items-center justify-center text-red-600"
-                                                >
-                                                    <RiDeleteBinLine />
-                                                </button>
+                                                <div className="relative">
+                                                    <button
+                                                        onClick={() => toggleDropdown(product.id)}
+                                                        className="text-gray-600 py-4 "
+                                                    >
+                                                        <CiMenuKebab />
+                                                    </button>
+                                                    {showDropdown === product.id && (
+                                                        <div className="absolute bottom-0.5 right-8 mt-2 w-32 bg-slate-50 border border-slate-300 rounded-md shadow-lg z-10">
+                                                            <button
+                                                                onClick={() => handleTogglePublish(product)}
+                                                                className={`block w-full text-left px-4 py-2 text-sm text-gray-600 hover:bg-gray-100 ${product.is_active ? "text-red-500 " : "text-green-500"}`}
+                                                            >
+                                                                {product.is_active ? (
+                                                                    <>
+                                                                        <MdUnpublished className="inline mr-2" />
+                                                                        Unpublish
+                                                                    </>
+                                                                ) : (
+                                                                    <>
+                                                                        <MdPublish className="inline mr-2" />
+                                                                        Publish
+                                                                    </>
+                                                                )}
+                                                            </button>
+                                                        </div>
+                                                    )}
+                                                </div>
                                             </td>
                                         </tr>
                                     ))}
@@ -191,14 +233,6 @@ export default function ShowProduct({ success }) {
                     )}
                 </div>
             </div>
-
-            {/* Confirmation Modal */}
-            <ConfirmationModal
-                isOpen={isModalOpen}
-                onClose={() => setIsModalOpen(false)}
-                onConfirm={handleConfirmDelete}
-                message={`Are you sure you want to delete ${productToDelete?.name}?`}
-            />
         </SellerLayout>
     );
 }

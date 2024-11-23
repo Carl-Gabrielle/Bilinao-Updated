@@ -113,15 +113,6 @@ export default function Index({ auth, category, success, categoryCount }) {
                                                 <LiaEditSolid />
                                             </Link>
                                             <div className="relative">
-                                                <button
-                                                    onClick={(e) => {
-                                                        e.preventDefault();
-                                                        toggleDropdown(item.id);
-                                                    }}
-                                                    className="text-primary px-3 py-2 rounded"
-                                                >
-                                                    <CiMenuKebab />
-                                                </button>
                                                 {showDropdown === item.id && (
                                                     <div className="absolute bottom-0.5 right-8 mt-2 w-32 bg-slate-50 border border-slate-300 rounded-md shadow-lg z-10">
                                                         <button
