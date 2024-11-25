@@ -8,7 +8,7 @@ const NavLinkItem = ({ to, label, icon: Icon, isActive, handleClick }) => {
             href={to}
             active={isActive}
             onClick={handleClick}
-            className={`flex items-center justify-between rounded-lg transition-colors ${isActive ? 'bg-gray-800' : 'hover:bg-gray-100'
+            className={`flex items-center justify-between  transition-colors ${isActive ? 'bg-gray-800' : 'hover:bg-gray-100'
                 }`}
         >
             <div className="flex items-center space-x-3">

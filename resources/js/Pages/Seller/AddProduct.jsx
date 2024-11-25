@@ -119,7 +119,7 @@ const SellerDashboard = ({ categories }) => {
                             </button>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5 dashboard-card">
-                            <div className="w-full col-span-2 bg-slate-50  px-6 py-4 rounded-3xl">
+                            <div className="w-full col-span-2 bg-slate-50  px-6 py-4 rounded-3xl shadow-md">
                                 <div className="mb-4">
                                     <SectionHeader text="Product Information" />
                                     <label
@@ -174,7 +174,7 @@ const SellerDashboard = ({ categories }) => {
                                     <Label text="Maximum of 255 words. Exceeding this limit requires shortening." />
                                 </div>
                             </div>
-                            <div className=" bg-slate-50  h-96 px-6 py-4 rounded-3xl  w-full">
+                            <div className=" bg-slate-50  h-96 px-6 py-4 rounded-3xl  w-full shadow-md">
                                 <div className="mb-4">
                                     <SectionHeader text="Pricing & Stock" />
                                     <label className="text-sm font-medium text-gray-700 flex items-center">
@@ -223,10 +223,10 @@ const SellerDashboard = ({ categories }) => {
                             </div>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 mt-5 dashboard-card">
-                            <div className="col-span-2  bg-slate-50 px-6 py-4 rounded-3xl  w-full">
+                            <div className="col-span-2  bg-slate-50 px-6 py-4 rounded-3xl  w-full shadow-md">
                                 <SectionHeader text="Product Images" />
                                 <div className="mb-4">
-                                    <div className="w-full border-slate-600 border-opacity-30 border-2 border-dashed rounded-md h-52 flex items-center justify-center relative">
+                                    <div className="w-full border-slate-600 border-opacity-30 border-2 border-dashed rounded-2xl h-52 flex items-center justify-center relative">
                                         <input
                                             type="file"
                                             id="product_images"
@@ -305,7 +305,7 @@ const SellerDashboard = ({ categories }) => {
                                     </div>
                                 )}
                             </div>
-                            <div className=" bg-slate-50 h-96 px-6 py-4 rounded-3xl w-full ">
+                            <div className=" bg-slate-50 h-96 px-6 py-4 rounded-3xl w-full shadow-md">
                                 <SectionHeader text="Select Category & Weight" />
                                 <div className="mb-4">
                                     <label className="flex items-center text-sm font-medium text-gray-700 ">

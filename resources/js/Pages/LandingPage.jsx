@@ -66,8 +66,8 @@ export default function LandingPage({ category, products }) {
                                             </button>
                                         </Link>
                                         <Link href={route("customer.about")}>
-                                            <button className="cta-button px-8 text-nowrap py-4 rounded-xl text-primary font-semibold flex items-center justify-center border border-primary  ">
-                                                Our Story
+                                            <button className="cta-button px-8 text-nowrap py-4 rounded-2xl text-primary font-semibold flex items-center justify-center border-2 border-primary  ">
+                                                See How It Works
                                             </button>
                                         </Link>
                                     </div>

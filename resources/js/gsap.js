@@ -25,7 +25,6 @@ export const animateText = () => {
             stagger: 0.2,
         }
     );
-   
     gsap.fromTo(
         ".title",
         { opacity: 0, y: -50 },
@@ -128,16 +127,17 @@ export const animateText = () => {
     });
     gsap.fromTo(
         ".dashboard-card",
-        { opacity: 0, y: 20, scale: 0.95 },
+        {  y: 30 },
         {
-            opacity: 1,
             y: 0,
-            scale: 1,
-            duration: 1.5,
-            ease: "expo.out",
-            stagger: 0.15,
+            duration: 1,
+            ease: "power2.out",
+            scrollTrigger: {
+                trigger: ".shop-categories",
+                start: "top 80%",
+                toggleActions: "play none none none",
+            },
         }
     );
-    
     
 };

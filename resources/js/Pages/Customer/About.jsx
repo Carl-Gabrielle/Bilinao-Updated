@@ -11,15 +11,12 @@ import { Head, Link } from "@inertiajs/react";
 import { FaUserAlt, FaShoppingCart, FaTruck, FaStar } from 'react-icons/fa'
 export default function About({ auth }) {
     const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
         }, 500);
-
         return () => clearTimeout(timer);
     }, []);
-
     if (loading) {
         return (
             <CustomerLayout user={auth.user}>
@@ -42,7 +39,7 @@ export default function About({ auth }) {
                             Bili-Nao is a platform dedicated to connecting communities through the timeless artistry of handmade crafts. Our mission is to bring authentic, locally-crafted products to the forefront of global appreciation.
                             By serving as a bridge between artisans and audiences who value unique, culturally-rich creations, we strive to celebrate and sustain the traditions that make every piece a masterpiece.
                         </p>
-                        <span className="items-center justify-end border border-slate-400 rounded-2xl text-slate-700  space-x-4 px-3 py-1 text-sm">Developed by<a href="https://carl-gabrielle.github.io/portfolio/?fbclid=IwAR28TXYma6rU8acfRjY4OfqBxHHxvakf3IQSweKolDF9jSFskmrYlusCFSE" target="_blank" className="text-primary font-medium"> Carl Gabrielle</a> </span>
+                        {/* <span className="items-center justify-end border border-slate-400 rounded-2xl text-slate-700  space-x-4 px-3 py-1 text-sm">Developed by<a href="https://carl-gabrielle.github.io/portfolio/?fbclid=IwAR28TXYma6rU8acfRjY4OfqBxHHxvakf3IQSweKolDF9jSFskmrYlusCFSE" target="_blank" className="text-primary font-medium"> Carl Gabrielle</a> </span> */}
                     </div>
                 </CustomerContainer>
                 <div className=" w-full h-auto mb-10 bg-slate-200 p-24">
@@ -86,7 +83,7 @@ export default function About({ auth }) {
                         </p>
                     </div>
                     <div className="max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-2 gap-8">
-                        <div className="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 ease-in-out  transform hover:scale-105">
+                        <div className="p-6 bg-slate-50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 ease-in-out  transform hover:scale-105">
                             <span className="bg-blue-100 px-5 py-1 rounded-full font-medium text-blue-500 text-lg">
                                 Seller
                             </span>
@@ -137,7 +134,7 @@ export default function About({ auth }) {
                                 </button>
                             </Link>
                         </div>
-                        <div className="p-6 bg-white rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 ease-in-out transform hover:scale-105">
+                        <div className="p-6 bg-slate-50 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-500 ease-in-out transform hover:scale-105">
                             <span className="bg-green-100 px-5 py-1 rounded-full font-medium text-green-500 text-lg">
                                 Customer
                             </span>
