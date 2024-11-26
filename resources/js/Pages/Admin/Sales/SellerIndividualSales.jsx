@@ -55,12 +55,12 @@ export default function SellerIndividualSales({ auth }) {
                             <table className="min-w-full rounded-lg">
                                 <thead className="bg-slate-200">
                                     <tr>
-                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Product Name</th>
-                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Net Pay</th>
-                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Quantity Sold</th>
-                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Sustainability Contribution (4%)</th>
-                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Status</th>
-                                        <th className="px-6 py-4 text-xs font-semibold tracking-wider text-left text-gray-700 uppercase">Action</th>
+                                        <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Product Name</th>
+                                        <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Net Pay</th>
+                                        <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Quantity Sold</th>
+                                        <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Revenue Share (4%)</th>
+                                        <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Status</th>
+                                        <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Action</th>
                                     </tr>
                                 </thead>
                                 <tbody className="text-sm bg-white divide-y divide-gray-200">
@@ -101,9 +101,9 @@ export default function SellerIndividualSales({ auth }) {
                                     ))}
                                 </tbody>
                             </table>
-                            <div className="flex items-center justify-between p-6 font-bold text-gray-800 rounded-b-lg bg-slate-200">
-                                <h3 className="text-gray-700 text-md">Total Sustainability Contribution:</h3>
-                                <p className="flex items-center text-lg text-green-600">
+                            <div className="flex items-center  p-6 font-medium text-gray-800">
+                                <h3 className="text-gray-700 text-sm font-semibold">Total Revenue Share:</h3>
+                                <p className="flex items-center text-md text-green-600">
                                     <FaPesoSign className="mr-1" />
                                     {totalContribution !== null && Math.round(totalContribution)}
                                 </p>

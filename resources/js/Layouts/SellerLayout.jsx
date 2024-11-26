@@ -59,6 +59,9 @@ const SellerLayout = ({ user, children }) => {
     const isProfileActive = route().current('seller.profile');
     const isAddProductActive = route().current('products.create');
     const isShowProductActive = route().current('products.index');
+
+
+    const isShowProductReviews = route().current('product.getProductReviews');
     return (
         <>
             <div className="min-h-screen flex flex-col sm:flex-row bg-slate-300">
@@ -213,6 +216,14 @@ const SellerLayout = ({ user, children }) => {
                                 isActive={isSalesReportActive}
                                 handleClick={handleOrderLinkClick}
                             />
+                            {/* <NavLinkItem
+                                to={route('product.getProductReviews', { productId: productId })}
+                                label="Product Reviews"
+                                icon={IoAnalyticsOutline}
+                                isActive={isShowProductReviews}
+                                handleClick={handleOrderLinkClick}
+                            /> */}
+
                             {/* Account Settings */}
                             <div className="mb-2">
                                 <h3 className="text-gray-600 text-sm font-normal uppercase tracking-wider">

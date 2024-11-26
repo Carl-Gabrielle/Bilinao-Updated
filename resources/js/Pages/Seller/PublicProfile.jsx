@@ -46,14 +46,6 @@ const PublicProfile = ({ seller, products, auth }) => {
                                             </p>
                                         </div>
                                     </div>
-                                    {/* <div className="self-center mt-4 md:mt-0">
-                                        <Link>
-                                            <button className="bg-primary text-slate-50 px-4 py-1 rounded-2xl flex items-center">
-                                                <AiOutlineMessage className="mr-2" />
-                                                Message Seller
-                                            </button>
-                                        </Link>
-                                    </div> */}
                                 </div>
                             </div>
                             <div className="mt-8">

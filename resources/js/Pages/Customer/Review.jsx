@@ -42,10 +42,7 @@ export default function Review({ auth, orderItem, success, error }) {
             <div className="min-h-screen pt-20 pb-1">
                 <Banner title="Product Review" />
                 <CustomerContainer>
-                    <Link
-                        href={route("customer.orders")}
-                        className="w-1/2"
-                    >
+                    <Link href={route("customer.orders")} className="w-1/2">
                         <button className="px-4 py-2 mb-6 text-sm font-semibold rounded-full shadow-lg text-slate-800 bg-slate-100">
                             <MdOutlineKeyboardArrowLeft className="inline-block " />
                             Go back
@@ -75,24 +72,22 @@ export default function Review({ auth, orderItem, success, error }) {
                             </div>
                             {/* Star Rating */}
                             <div className="flex items-center space-x-2 mb-4">
-                                {Array(5)
-                                    .fill(0)
-                                    .map((_, index) => {
-                                        const currentRating = index + 1;
-                                        return (
-                                            <FaStar
-                                                key={index}
-                                                size={30}
-                                                className={`cursor-pointer ${currentRating <= (hover || data.rate)
-                                                    ? "text-yellow-400 transition duration-100 ease-in-out"
-                                                    : "text-gray-400"
-                                                    }`}
-                                                onClick={() => handleRating(currentRating)}
-                                                onMouseEnter={() => setHover(currentRating)}
-                                                onMouseLeave={() => setHover(data.rate)}
-                                            />
-                                        );
-                                    })}
+                                {Array(5).fill(0).map((_, index) => {
+                                    const currentRating = index + 1;
+                                    return (
+                                        <FaStar
+                                            key={index}
+                                            size={30}
+                                            className={`cursor-pointer ${currentRating <= (hover || data.rate)
+                                                ? "text-yellow-400 transition duration-100 ease-in-out"
+                                                : "text-gray-400"
+                                                }`}
+                                            onClick={() => handleRating(currentRating)}
+                                            onMouseEnter={() => setHover(currentRating)}
+                                            onMouseLeave={() => setHover(data.rate)}
+                                        />
+                                    );
+                                })}
                             </div>
                             <textarea
                                 className="mb-4 focus:outline-none focus:ring-0 border focus:border-slate-600 py-3 px-4 w-full rounded-md border-gray-500 bg-transparent"

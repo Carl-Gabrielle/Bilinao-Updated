@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\Http\Requests\UpdateSellerRequest;
 use Inertia\Inertia;
 use App\Models\Product;
+use App\Models\Review;
 use App\Models\Order;
 use App\Models\DailySalesReport;
 use Carbon\Carbon;
@@ -15,6 +16,18 @@ use Illuminate\Support\Facades\Storage;
 
 class SellerDashboardController extends Controller
 {
+    public function getProductReviews($productId)
+    {
+        $reviews = Review::where('product_id', $productId)
+                    ->with('user')
+                        ->get(['rate', 'description', 'sentiment', 'created_at']);
+    
+        return Inertia::render('Seller/ProductReviews', [
+            'reviews' => $reviews,
+        ]);
+    }
+    
+
     public function dashboard() {
         $sellerId = Auth::id();
     

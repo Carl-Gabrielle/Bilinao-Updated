@@ -231,7 +231,42 @@ export default function ProductDetails({
                                             </div>
                                         </Link>
                                         <ProductLink productId={product.id} success={success} />
-                                        <div className="flex items-center space-x-1">
+                                    </div>
+                                )}
+                                {isProductPublished && product.stock > 0 && (
+                                    <>
+                                        <div className="flex flex-col w-full gap-4 py-4 sm:flex-row">
+                                            <button
+                                                onClick={handleBuyNow}
+                                                className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium border rounded-full shadow-md sm:w-52 text-primary border-slate-500 lg:mt-0"
+                                            >
+                                                Buy Now
+                                            </button>
+                                            <Link
+                                                preserveScroll
+                                                href={route("cart.store")}
+                                                method="post"
+                                                data={{
+                                                    product_id: product.id,
+                                                    quantity: quantity,
+                                                }}
+                                                onClick={() => handleAddToCart(product.id)}
+                                            >
+                                                <button className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium text-white rounded-full shadow-inner sm:w-52 bg-slate-800 lg:mt-0">
+                                                    Add to Cart
+                                                </button>
+                                            </Link>
+                                        </div>
+                                        <div className="flex items-center justify-between space-x-1 w-96   mb-4 ">
+                                            <div className="flex items-center space-x-2 text-primary">
+                                                <IoStorefrontOutline className="mr-2" />
+                                                <div className="flex flex-col">
+                                                    <span className="font-medium text-sm">
+                                                        {product.seller.name}
+                                                    </span>
+                                                    <span className="inline text-xs">Verified Seller</span>
+                                                </div>
+                                            </div>
                                             <Link
                                                 href={route(
                                                     "seller.public.profile",
@@ -240,39 +275,10 @@ export default function ProductDetails({
                                                     }
                                                 )}
                                             >
-                                                <p className="flex items-center text-slate-800 ">
-                                                    <IoStorefrontOutline className="mr-2" />
-                                                    <span className="font-semibold">
-                                                        {product.seller.name}
-                                                    </span>
-                                                </p>
+                                                <span className="text-sm font-normal px-6 py-1  border-slate-500 shadow-md border rounded-md text-primary ">Visit Store</span>
                                             </Link>
                                         </div>
-                                    </div>
-                                )}
-                                {isProductPublished && product.stock > 0 && (
-                                    <div className="flex flex-col w-full gap-4 py-4 sm:flex-row">
-                                        <button
-                                            onClick={handleBuyNow}
-                                            className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium border rounded-full shadow-md sm:w-52 text-slate-800 border-slate-500 lg:mt-0"
-                                        >
-                                            Buy Now
-                                        </button>
-                                        <Link
-                                            preserveScroll
-                                            href={route("cart.store")}
-                                            method="post"
-                                            data={{
-                                                product_id: product.id,
-                                                quantity: quantity,
-                                            }}
-                                            onClick={() => handleAddToCart(product.id)}
-                                        >
-                                            <button className="w-full gap-4 px-4 py-3 mt-3 text-sm font-medium text-white rounded-full shadow-inner sm:w-52 bg-slate-800 lg:mt-0">
-                                                Add to Cart
-                                            </button>
-                                        </Link>
-                                    </div>
+                                    </>
                                 )}
                             </div>
                         </div>
@@ -411,6 +417,6 @@ export default function ProductDetails({
                     </CustomerContainer>
                 </main>
             </div>
-        </CustomerLayout>
+        </CustomerLayout >
     );
 }

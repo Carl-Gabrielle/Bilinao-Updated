@@ -9,7 +9,7 @@
     use App\Models\OrderItem;
     use App\Models\Review;
     use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
+    use Illuminate\Support\Facades\Log;
     use Illuminate\Support\Facades\Storage;
     use Illuminate\Contracts\Auth\MustVerifyEmail;
     use Illuminate\Support\Facades\Redirect;
@@ -19,6 +19,8 @@ use Illuminate\Support\Facades\Log;
     use Inertia\Inertia;
     use App\Models\Category;
     use App\Models\Notifications;
+    use Illuminate\Support\Str;
+    use Orhanerday\OpenAi\OpenAi;
     class CustomerController extends Controller
     {
         /**
@@ -27,7 +29,7 @@ use Illuminate\Support\Facades\Log;
         public function notifications()
         {
             $notifications = Notifications::where('user_id', Auth::user()->id)
-                ->orderBy('updated_at', 'desc') // Order by updated_at descending
+                ->orderBy('updated_at', 'desc')
                 ->get();
         
             return Inertia::render('Customer/Notifications', [
@@ -42,9 +44,8 @@ use Illuminate\Support\Facades\Log;
             if ($notification) {
                 $notification->update(['status' => 'read']);
                 
-                // Fetch updated notifications ordered by updated_at
                 $notifications = Notifications::where('user_id', Auth::user()->id)
-                    ->orderBy('updated_at', 'desc') // Maintain the same order
+                    ->orderBy('updated_at', 'desc') 
                     ->get();
                 
                 return Inertia::render('Customer/Notifications', [
@@ -155,6 +156,7 @@ use Illuminate\Support\Facades\Log;
             'orderItem' => $orderItem,
         ]);
     }
+
     public function storeReview(Request $request)
     {
         $request->validate([
@@ -180,6 +182,8 @@ use Illuminate\Support\Facades\Log;
             $newRatingsSum = $existingRatingsSum + $request->rate;
             $newAverageRating = $newRatingsSum / $newRatingsCount;
     
+            $sentiment = $this->analyzeSentiment($request->description);
+    
             $product->update(['rating' => $newAverageRating]);
     
             Review::create([
@@ -188,11 +192,11 @@ use Illuminate\Support\Facades\Log;
                 'order_id' => $orderItem->id,
                 'rate' => $request->rate,
                 'description' => $request->description,
+                'sentiment' => $sentiment,
             ]);
     
             DB::commit();
     
-            // Redirect to the product details page
             return redirect()->route('product.show', ['product' => $product->id])->with('success', 'Review submitted successfully!');
         } catch (\Exception $e) {
             DB::rollBack();
@@ -202,6 +206,43 @@ use Illuminate\Support\Facades\Log;
                 'orderItem' => OrderItem::with('product.images')->find($request->order_id),
                 'error' => 'An error occurred while submitting the review.',
             ]);
+        }
+    }
+    
+    /**
+     * Perform a basic sentiment analysis on the review description.
+     *
+     * @param string $description
+     * @return string
+     */
+    private function analyzeSentiment(string $description)
+    {
+        $positiveKeywords = ['good', 'great', 'amazing', 'excellent', 'love' , 'outstanding'];
+        $negativeKeywords = ['bad', 'poor', 'terrible', 'hate', 'disappointed'];
+    
+        $descriptionLower = Str::lower($description);
+    
+        $positiveScore = 0;
+        $negativeScore = 0;
+    
+        foreach ($positiveKeywords as $keyword) {
+            if (Str::contains($descriptionLower, $keyword)) {
+                $positiveScore++;
+            }
+        }
+    
+        foreach ($negativeKeywords as $keyword) {
+            if (Str::contains($descriptionLower, $keyword)) {
+                $negativeScore++;
+            }
+        }
+    
+        if ($positiveScore > $negativeScore) {
+            return 'positive';
+        } elseif ($negativeScore > $positiveScore) {
+            return 'negative';
+        } else {
+            return 'neutral';
         }
     }
     

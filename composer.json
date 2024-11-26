@@ -11,6 +11,7 @@
         "laravel/sanctum": "^4.0",
         "laravel/tinker": "^2.9",
         "luigel/laravel-paymongo": "^2.5",
+        "orhanerday/open-ai": "^5.2",
         "snipe/banbuilder": "^2.3",
         "tightenco/ziggy": "^2.3"
     },

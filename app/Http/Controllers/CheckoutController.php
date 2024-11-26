@@ -111,7 +111,6 @@ class CheckoutController extends Controller
                     ]);
                     $amountInCentavos = (int) ($product->price * (int) $item['qty']) * 100;
                     
-
                     $line_items[] = [
                         'name' => $product->name,
                         'quantity' => (int) $item['qty'],
@@ -119,7 +118,6 @@ class CheckoutController extends Controller
                         'currency' => 'PHP',
                         'description' => 'Buying product for order id ' . $product->name,
                     ];
-
                     if ($item['cart_id']) {
                         $cart = Cart::find($item['cart_id']);
                         $cart->delete();
@@ -133,7 +131,6 @@ class CheckoutController extends Controller
                 'currency' => 'PHP',
                 'description' => 'Total shipping fee for order',
             ];
-           
             $checkout = Paymongo::checkout()->create([
                 'cancel_url' => route('customer.orders'),
                 'billing' => [
