@@ -40,7 +40,7 @@ export default function SalesReport({ auth }) {
                                 </select>
                                 <button
                                     onClick={() => window.print()}
-                                    className="flex items-center border border-primary rounded-md text-md text-primary px-6 py-1"
+                                    className="flex items-center bg-green-600 rounded-md text-md text-white px-6 py-1"
                                 >
                                     <IoPrintOutline className="mr-2" /> Print
                                 </button>

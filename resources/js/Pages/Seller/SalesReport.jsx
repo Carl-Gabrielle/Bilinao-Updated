@@ -34,7 +34,7 @@ export default function SalesReport({ auth }) {
                         <h2 className="text-xl font-semibold text-primary mb-4">Daily Sales Report</h2>
                         <button
                             onClick={() => window.print()}
-                            className="flex items-center border border-primary rounded-md text-md text-primary px-6 py-1"
+                            className="flex items-center bg-green-600 rounded-md text-md text-white px-6 py-1"
                         >
                             <IoPrintOutline className="mr-2" /> Print
                         </button>

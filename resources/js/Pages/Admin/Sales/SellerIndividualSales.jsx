@@ -8,7 +8,8 @@ import { Inertia } from "@inertiajs/inertia";
 import { IoPricetagsOutline } from "react-icons/io5";
 import DivContainer from "@/Components/DivContainer";
 import ConfirmationModal from "@/Components/ConfirmationModal";
-
+import jsPDF from "jspdf";
+import "jspdf-autotable";
 export default function SellerIndividualSales({ auth }) {
     const { user } = auth;
     const { data, totalContribution } = usePage().props;
@@ -33,6 +34,33 @@ export default function SellerIndividualSales({ auth }) {
             });
         }
     };
+    const generateReceipt = () => {
+        const doc = new jsPDF();
+        const tableColumns = ["Product Name", "Net Pay", "Quantity Sold", "Revenue Share (4%)", "Status"];
+        const tableRows = data.map((item) => [
+            item.order_items.product.name,
+            Math.round(item.net_sales_amount),
+            item.solds,
+            Math.round(item.contribution),
+            item.status,
+        ]);
+
+        doc.text(`Sales Report - ${data[0]?.seller?.name}`, 14, 15);
+        doc.text(`Generated on: ${new Date().toLocaleString()}`, 14, 22);
+        doc.autoTable({
+            head: [tableColumns],
+            body: tableRows,
+            startY: 30,
+        });
+
+        doc.text(
+            `Total Revenue Share: ₱${Math.round(totalContribution)}`,
+            14,
+            doc.lastAutoTable.finalY + 10
+        );
+
+        doc.save(`Sales_Report_${data[0]?.seller?.name}.pdf`);
+    };
     return (
         <AuthenticatedLayout user={user}>
             <Head title="Sales Report" />
@@ -50,6 +78,12 @@ export default function SellerIndividualSales({ auth }) {
                             <h2 className="text-xl font-semibold text-primary">
                                 Sales Report of {data[0].seller.name}
                             </h2>
+                            <button
+                                onClick={generateReceipt}
+                                className="px-4 py-2 bg-green-600 text-white  rounded-2xl"
+                            >
+                                Download Receipt
+                            </button>
                         </div>
                         <div className="overflow-x-auto rounded-lg">
                             <table className="min-w-full rounded-lg">

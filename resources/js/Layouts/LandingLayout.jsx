@@ -148,7 +148,7 @@ export default function CustomerLayout({ header, children }) {
                                     {/* Login Button */}
                                     <Link
                                         href="/login"
-                                        className="relative hidden sm:block text-sm font-medium lg:flex items-center justify-center text-slate-900 cursor-pointer px-6 py-1.5"
+                                        className="relative hidden sm:block text-sm font-medium lg:flex items-center justify-center hover:bg-slate-100 transition-colors duration-300 ease-in-out rounded-full  text-slate-900 cursor-pointer px-6 py-1.5"
                                     >
                                         Login
                                     </Link>
