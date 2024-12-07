@@ -40,7 +40,7 @@ export default function Edit({ auth, category }) {
                 <DivContainer>
                     <Link
                         href={route("category.index")}
-                        className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
+                        className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-2 rounded-full font-semibold"
                     >
                         <MdOutlineKeyboardArrowLeft className="mr-2" />
                         <span>Go Back</span>

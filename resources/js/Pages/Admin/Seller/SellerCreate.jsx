@@ -40,14 +40,14 @@ export default function SellerCreate({ auth }) {
                 <DivContainer>
                     <Link
                         href={route("seller.index")}
-                        className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-1 rounded-full font-semibold"
+                        className="mb-5 flex items-center  text-sm bg-slate-100  w-36 px-6 py-2 rounded-full font-semibold"
                     >
                         <MdOutlineKeyboardArrowLeft className="mr-2" />
                         <span>Go Back</span>
                     </Link>
                     <div className="  bg-slate-50 bg-opacity-80  backdrop-blur-lg   overflow-hidden shadow-sm rounded-3xl p-6 ">
                         <form onSubmit={submit}>
-                            <h1 className="text-2xl font-semibold text-gray-800 mb-6">
+                            <h1 className="text-xl font-semibold text-gray-800 mb-6">
                                 Create Seller
                             </h1>
                             <div className="grid grid-cols-1 lg:grid-cols-2 lg:gap-6">

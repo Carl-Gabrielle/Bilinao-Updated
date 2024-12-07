@@ -82,7 +82,6 @@ class ProductController extends Controller
     public function index()
     {
         $user = Auth::user();
-
         $products = Product::where('seller_id', $user->id)
             ->with(['images', 'category'])
             ->paginate(5);
@@ -128,7 +127,6 @@ class ProductController extends Controller
     }
 
 
- 
     public function show(Product $product)
     {
         $product->load(['images', 'category','seller']);

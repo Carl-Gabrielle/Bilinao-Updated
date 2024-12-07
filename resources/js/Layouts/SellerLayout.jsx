@@ -59,8 +59,6 @@ const SellerLayout = ({ user, children }) => {
     const isProfileActive = route().current('seller.profile');
     const isAddProductActive = route().current('products.create');
     const isShowProductActive = route().current('products.index');
-
-
     const isShowProductReviews = route().current('product.getProductReviews');
     return (
         <>
@@ -111,7 +109,7 @@ const SellerLayout = ({ user, children }) => {
                             <div className="relative">
                                 <button
                                     onClick={handleManageOrdersClick}
-                                    className="flex items-center justify-between px-4 py-2 mb-2 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100 w-full text-left"
+                                    className="flex items-center justify-between px-4 py-3  rounded-2xl text-sm font-medium transition-colors hover:bg-gray-100 w-full text-left"
                                 >
                                     <span className="flex items-center space-x-3">
                                         {" "}
@@ -176,7 +174,7 @@ const SellerLayout = ({ user, children }) => {
                             <div className="relative">
                                 <button
                                     onClick={handleManageProductsClick}
-                                    className="flex items-center justify-between px-4 py-2 mb-2 rounded-lg text-sm font-medium transition-colors hover:bg-gray-100 w-full text-left"
+                                    className="flex items-center justify-between px-4 py-3 mb-2 rounded-2xl text-sm font-medium transition-colors hover:bg-gray-100 w-full text-left"
                                 >
                                     <span className="flex items-center space-x-3">
                                         {" "}
@@ -217,13 +215,12 @@ const SellerLayout = ({ user, children }) => {
                                 handleClick={handleOrderLinkClick}
                             />
                             {/* <NavLinkItem
-                                to={route('product.getProductReviews', { productId: productId })}
+                                to={route('product.getProductReviews')}
                                 label="Product Reviews"
                                 icon={IoAnalyticsOutline}
                                 isActive={isShowProductReviews}
                                 handleClick={handleOrderLinkClick}
                             /> */}
-
                             {/* Account Settings */}
                             <div className="mb-2">
                                 <h3 className="text-gray-600 text-sm font-normal uppercase tracking-wider">
@@ -243,10 +240,6 @@ const SellerLayout = ({ user, children }) => {
                                 onClick={handleNavLinkClick}
                                 method="post"
                                 as="button"
-                                className={`flex items-center justify-between px-4 py-3 rounded-lg transition-colors ${route().current("logout")
-                                    ? "bg-gray-800 text-slate-800"
-                                    : "hover:bg-gray-100"
-                                    }`}
                             >
                                 <div className="flex items-center space-x-3">
                                     <MdLogout

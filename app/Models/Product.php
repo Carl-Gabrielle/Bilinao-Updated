@@ -39,7 +39,4 @@ class Product extends Model
 {
     return $this->category && $this->category->is_active;
 }
-
-    
-   
 }

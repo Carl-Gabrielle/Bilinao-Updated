@@ -1,4 +1,5 @@
 <?php
+use App\Http\Controllers\AnnouncementController;
 use App\Http\Controllers\CategoryController;
 use App\Http\Controllers\CheckoutController;
 use App\Http\Controllers\CustomerController;
@@ -20,6 +21,7 @@ use App\Http\Controllers\SellerOrderController;
 use App\Http\Controllers\ShippingController;
 use App\Http\Controllers\WishlistsController;
 use App\Http\Controllers\Auth\ChangePasswordController;
+use App\Http\Controllers\ReportController;
 
 Route::middleware('guest')->group(function () {
     Route::get('seller/login', [AuthenticatedSellerController::class, 'create'])
@@ -58,7 +60,7 @@ Route::middleware(['auth:seller','enforce.password.change'])->group(function () 
     Route::get('/seller/notification/{order}', [SellerNotificationController::class, 'show'])->name('seller.notification');
     Route::put('/product/{product}/publish', [ProductController::class, 'publish'])->name('products.publish');
     Route::put('product/{product}/unpublish', [ProductController::class, 'unpublish'])->name('products.unpublish');
-    // Route::get('/seller/product-reviews/{productId}', [SellerDashboardController::class, 'getProductReviews'])->name('product.getProductReviews');
+    // Route::get('/seller/product-reviews', [SellerDashboardController::class, 'getProductReviews'])->name('product.getProductReviews');
 });
 
 Route::inertia('/sellerLogin', 'SellerLogin')->name('seller.login');
@@ -83,6 +85,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('category/{category}/unpublish', [CategoryController::class, 'unpublish'])->name('category.unpublish');
         Route::post('/sales-report/{id}/toggle-status', [SalesReportController::class, 'toggleStatus'])->name('salesReport.toggleStatus');
         Route::resource('seller', SellerController::class);
+        Route::get('/announcement', [AnnouncementController::class,'announcement'])->name('admin.announcements');
     });
     // CUSTOMER ROUTES
         Route::middleware('customer')->group(function () {
@@ -109,6 +112,7 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::get('/carts', [CartController::class, 'carts'])->name('customer.carts');
         Route::get('/orderSelection', [CartController::class, 'orderSelection'])->name('customer.orderSelection');
         Route::get('/product/{id}/reviews', [ProductController::class, 'reviews']);
+        Route::post('/reports', [ReportController::class, 'store'])->middleware('auth');
         // CUSTOMER  ORDERS  ROUTE
         Route::get('/orders', [CustomerOrderController::class, 'orders'])->name('customer.orders');
         Route::get('/toPay', [CustomerOrderController::class, 'toPayOrders'])->name('order.toPay');

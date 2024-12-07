@@ -20,15 +20,16 @@ export default function Carts({ auth, carts, cartCount }) {
     const [checkedItemIds, setCheckedItemIds] = useState([]);
     const [subtotal, setSubtotal] = useState(0);
     const [total, setTotal] = useState(0);
-
+    const [selectAll, setSelectAll] = useState(false);
+    const [showPopup, setShowPopup] = useState(false);
 
     const handleDelete = async (id) => {
         try {
             await axios.delete(route("cart.destroy", id));
             setCartItems(cartItems.filter((cart) => cart.id !== id));
             // Clear checked item if deleted
-            if (checkedItemId === id) {
-                setCheckedItemId(null);
+            if (checkedItemIds === id) {
+                setCheckedItemIds(null);
             }
         } catch (error) {
             console.error("Error removing item from the cart!", error);
@@ -37,6 +38,13 @@ export default function Carts({ auth, carts, cartCount }) {
 
     const handleIncrement = (id) => {
         const item = cartItems.find((cart) => cart.id === id);
+
+        if (item.quantity >= item.product.stock) {
+            setShowPopup(true);
+            setTimeout(() => setShowPopup(false), 3000); // Hide popup after 3 seconds
+            return;
+        }
+
         const updatedQuantity = item.quantity + 1;
         updateQuantity(id, updatedQuantity);
     };
@@ -81,6 +89,38 @@ export default function Carts({ auth, carts, cartCount }) {
     }, [cartItems, checkedItemIds]);
     // MANAGING SELECTED ITEMS
 
+    const handleSelectAll = () => {
+        if (selectAll) {
+            // Deselect all items
+            setCheckedItemIds([]);
+        } else {
+            // Select all items
+            const allItems = cartItems.map((cart) => ({
+                product_id: cart.product.id,
+                quantity: cart.quantity,
+                cart_id: cart.id,
+            }));
+            setCheckedItemIds(allItems);
+        }
+        setSelectAll(!selectAll);
+    };
+
+    // const handleChange = (id, qty, cartId) => {
+    //     const isItemChecked = checkedItemIds.some(
+    //         (item) => item.product_id === id
+    //     );
+
+    //     if (isItemChecked) {
+    //         setCheckedItemIds(
+    //             checkedItemIds.filter((item) => item.product_id !== id)
+    //         );
+    //     } else {
+    //         setCheckedItemIds([
+    //             ...checkedItemIds,
+    //             { product_id: id, quantity: qty, cart_id: cartId },
+    //         ]);
+    //     }
+    // };
     const handleChange = (id, qty, cartId) => {
         const isItemChecked = checkedItemIds.some(
             (item) => item.product_id === id
@@ -97,6 +137,12 @@ export default function Carts({ auth, carts, cartCount }) {
             ]);
         }
     };
+
+    useEffect(() => {
+        calculateSummary();
+        // Update the Select All checkbox state
+        setSelectAll(checkedItemIds.length === cartItems.length);
+    }, [checkedItemIds, cartItems]);
 
     const handleCheckout = () => {
         console.log("submitted", { items: checkedItemIds });
@@ -123,7 +169,6 @@ export default function Carts({ auth, carts, cartCount }) {
             </CustomerLayout>
         );
     }
-
     return (
         <CustomerLayout user={auth.user}>
             <Head title="Carts" />
@@ -157,6 +202,13 @@ export default function Carts({ auth, carts, cartCount }) {
                             </div>
                             {cartItems.length > 0 ? (
                                 <div className="px-4 py-2 space-y-4">
+                                    <div className="flex items-center">
+                                        <CustomCheckbox
+                                            isChecked={selectAll}
+                                            onChange={handleSelectAll}
+                                        />
+                                        <span className="ml-2 text-sm font-medium text-slate-700">Select All</span>
+                                    </div>
                                     {cartItems.map((cart) => {
                                         const subtotal =
                                             cart.product.price * cart.quantity;
@@ -350,8 +402,12 @@ export default function Carts({ auth, carts, cartCount }) {
                                 )}
                             </div>
                         </div>
+                        {showPopup && (
+                            <div className="z-10 fixed bottom-5 right-5 bg-red-100 font-semibold text-red-800 px-2 py-0.5 text-md rounded-lg shadow-lg transition-opacity">
+                                <p>Cannot add more items! Stock limit reached.</p>
+                            </div>
+                        )}
                     </div>
-
                 </CustomerContainer >
             </div >
         </CustomerLayout >

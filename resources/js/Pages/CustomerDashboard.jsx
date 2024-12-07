@@ -40,7 +40,6 @@ export default function CustomerDashboard({ auth, category, products }) {
 
     return (
         <CustomerLayout user={auth.user}>
-            {/* landingpagelayput */}
             <div className="min-h-screen  ">
                 <Head title="Home" />
                 <main>
@@ -60,16 +59,14 @@ export default function CustomerDashboard({ auth, category, products }) {
                                     <p className="subtitle text-base text-slate-900 font-normal sm:w-1/2 w-full">
                                         Discover the beauty of handcrafted creations, where every piece reflects passion and skill. Our local artisans create unique treasures that embody cultural richness, adding authentic charm and character to your space.
                                     </p>
-                                    <div className="flex items-center space-x-4">
-                                        {/* Shop Now Button */}
-                                        <Link href={route("customer.products")}>
-                                            <button className="shop-button px-8 text-nowrap py-4 rounded-2xl text-white font-semibold flex items-center justify-center bg-slate-800">
+                                    <div className="flex lg:items-start lg:flex-row flex-col gap-6">
+                                        <Link href={route("customer.products")} className="w-full sm:w-auto">
+                                            <button className="shop-button w-full sm:w-auto px-8 text-nowrap py-4 rounded-xl text-white font-semibold flex items-center justify-center bg-slate-800">
                                                 Shop Now <HiMiniArrowLongRight className="ml-2" />
                                             </button>
                                         </Link>
-                                        {/* Our Story Button */}
-                                        <Link href={route("customer.about")}>
-                                            <button className="cta-button px-8 text-nowrap py-4 rounded-2xl text-primary font-semibold flex items-center justify-center border-2 border-primary  ">
+                                        <Link href={route("customer.about")} className="w-full sm:w-auto">
+                                            <button className="cta-button w-full sm:w-auto px-8 text-nowrap py-4 rounded-2xl text-primary font-semibold flex items-center justify-center border-2 border-primary">
                                                 See How It Works
                                             </button>
                                         </Link>

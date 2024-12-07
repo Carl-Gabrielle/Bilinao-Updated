@@ -88,16 +88,13 @@ class CheckoutController extends Controller
                 'transaction_id' => $transac_id,
                 'order_number' => 'ORDER-' . strtoupper(Str::random(10))
             ]);
-
             $line_items = [];
             // Loop through products and create order items
             if ($request->products == null) {
                 dd('no product found');
             } else {
                 foreach ($request->products as $item) {
-
                     $product = Product::find((int) $item['product_id']);
-
                     // Create order item
                     $orderItem = OrderItem::create([
                         'order_id' => $order->id,
@@ -109,8 +106,8 @@ class CheckoutController extends Controller
                         'shipping_fee_individual' => $item['shipping'],
                         'total_price' => $product->price * (int) $item['qty'] + $item['shipping'],
                     ]);
-                    $amountInCentavos = (int) ($product->price * (int) $item['qty']) * 100;
-                    
+                    // $amountInCentavos = (int) ($product->price * (int) $item['qty']) * 100;
+                    $amountInCentavos = (int) $product->price * 100;
                     $line_items[] = [
                         'name' => $product->name,
                         'quantity' => (int) $item['qty'],

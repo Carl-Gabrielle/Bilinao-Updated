@@ -12,36 +12,9 @@ import WelcomeImg from ".//Illustrations/welcomeImg.png";
 import DashboardCard from "../Components/DashboardCard";
 import SalesMetricsChart from "@/Components/SalesMetricsChart";
 
-export default function AdminDashboard({ auth, sellerCount, customerCount, salesData = [] }) {
+export default function AdminDashboard({ auth, sellerCount, customerCount }) {
     const { user } = auth;
 
-    const safeSalesData = salesData.filter(data => data?.seller && data?.total_net_sales !== undefined && data?.total_contribution !== undefined);
-
-    const netSalesData = {
-        labels: safeSalesData.length ? safeSalesData.map((data) => data.seller.name) : ["No Data"],
-        datasets: [
-            {
-                label: "Net Sales",
-                data: safeSalesData.length ? safeSalesData.map((data) => data.total_net_sales) : [0],
-                backgroundColor: "rgba(75, 124, 15)",
-                borderColor: '#ffffff',
-                borderWidth: 1,
-            },
-        ],
-    };
-
-    const contributionData = {
-        labels: safeSalesData.length ? safeSalesData.map((data) => data.seller.name) : ["No Data"],
-        datasets: [
-            {
-                label: "Total Contribution",
-                data: safeSalesData.length ? safeSalesData.map((data) => data.total_contribution) : [0],
-                backgroundColor: "rgb(51 65 85)",
-                borderColor: '#ffffff',
-                borderWidth: 1,
-            },
-        ],
-    };
 
     const getGreeting = () => {
         const hour = new Date().getHours();
@@ -102,11 +75,11 @@ export default function AdminDashboard({ auth, sellerCount, customerCount, sales
                             </DashboardCard>
                         </div>
                         <div className="grid grid-cols-1 lg:grid-cols-2 gap-5 mt-5">
-                            <DashboardCard title="Net Sales by Seller">
-                                <SalesMetricsChart data={netSalesData} title="Net Sales by Seller" />
+                            <DashboardCard>
+                                <h1 className="text-sm font-medium">Top Sellers of the Month</h1>
                             </DashboardCard>
-                            <DashboardCard title="Total Contribution by Seller">
-                                <SalesMetricsChart data={contributionData} title="Total Contribution by Seller" />
+                            <DashboardCard>
+                                <h1 className="text-sm font-medium">Top Products of the Organization</h1>
                             </DashboardCard>
                         </div>
                     </div>

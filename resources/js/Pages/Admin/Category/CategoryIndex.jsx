@@ -80,11 +80,11 @@ export default function Index({ auth, category, success, categoryCount }) {
                                 No categories available.
                             </p>
                         ) : (
-                            <ul className="space-y-4">
+                            <ul className=" grid grid-cols-1 lg:grid-cols-2 gap-4">
                                 {category.data.map((item) => (
                                     <li
                                         key={item.id}
-                                        className={`p-2 rounded-lg text-xs border ${item.is_active ? "border-slate-300" : "border-red-300"
+                                        className={`p-2 rounded-xl text-xs bg-white shadow-md ${item.is_active ? "border-slate-300" : "border-red-300"
                                             } relative`}
                                     >
                                         <div className="flex items-center space-x-4">
@@ -108,9 +108,9 @@ export default function Index({ auth, category, success, categoryCount }) {
                                             </span>
                                             <Link
                                                 href={route("category.edit", item.id)}
-                                                className="border border-slate-500 text-slate-800 px-3 py-2 rounded"
+                                                className="  text-primary px-3 py-2 rounded-md hover:bg-slate-100 transition-colors duration-300 ease-in-out"
                                             >
-                                                <LiaEditSolid />
+                                                <LiaEditSolid className="size-4" />
                                             </Link>
                                             <div className="relative">
                                                 {showDropdown === item.id && (

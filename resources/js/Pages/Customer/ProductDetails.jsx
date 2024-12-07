@@ -22,6 +22,7 @@ import CustomerContainer from "@/Components/CustomerContainer";
 import Banner from "@/Components/Banner";
 import { applyFloatingAnimation } from "../Animations/gsap";
 import ProductRatingReviews from "@/Components/ProductRatingReviews";
+import ReportModal from "@/Components/ReportModal";
 export default function ProductDetails({
     product,
     auth,
@@ -91,6 +92,8 @@ export default function ProductDetails({
         console.log("submitted", { items: [item] });
         router.get(route("show.checkout", { items: [item] }));
     };
+    const [isReportModalVisible, setReportModalVisible] = useState(false);
+
     return (
         <CustomerLayout user={auth.user}>
             <div className="min-h-screen pt-20 pb-1">
@@ -264,7 +267,7 @@ export default function ProductDetails({
                                                     <span className="font-medium text-sm">
                                                         {product.seller.name}
                                                     </span>
-                                                    <span className="inline text-xs">Verified Seller</span>
+                                                    <span className="inline text-xs text-slate-500">Verified Seller</span>
                                                 </div>
                                             </div>
                                             <Link
@@ -275,9 +278,20 @@ export default function ProductDetails({
                                                     }
                                                 )}
                                             >
-                                                <span className="text-sm font-normal px-6 py-1  border-slate-500 shadow-md border rounded-md text-primary ">Visit Store</span>
+                                                <span className="text-sm  px-6 py-2 font-medium   bg-slate-50 backdrop-blur-md  shadow-md  rounded-md text-primary ">Visit Store</span>
                                             </Link>
                                         </div>
+                                        {/* <button
+                                            className="border-2 border-primary rounded-md px-6 py-2"
+                                            onClick={() => setReportModalVisible(true)}
+                                        >
+                                            Report Item
+                                        </button>
+                                        <ReportModal
+                                            productId={product.id}
+                                            isReportModalVisible={isReportModalVisible}
+                                            onClose={() => setReportModalVisible(false)}
+                                        /> */}
                                     </>
                                 )}
                             </div>

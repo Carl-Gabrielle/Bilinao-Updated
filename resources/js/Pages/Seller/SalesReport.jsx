@@ -34,9 +34,9 @@ export default function SalesReport({ auth }) {
                         <h2 className="text-xl font-semibold text-primary mb-4">Daily Sales Report</h2>
                         <button
                             onClick={() => window.print()}
-                            className="flex items-center bg-green-600 rounded-md text-md text-white px-6 py-1"
+                            className="flex items-center bg-green-600 rounded-2xl text-md text-white px-6 py-2"
                         >
-                            <IoPrintOutline className="mr-2" /> Print
+                            <IoPrintOutline className="mr-2" /> Generate Report
                         </button>
                     </div>
                     <div className="overflow-x-auto rounded-lg">
@@ -48,7 +48,7 @@ export default function SalesReport({ auth }) {
                                     <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Net Pay</th>
                                     <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Quantity Sold</th>
                                     <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Revenue Share (4%)</th>
-                                    <th className="px-6 py-4  text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase">Date</th>
+                                    {/* <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Date</th> */}
                                     <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase">Status</th>
                                 </tr>
                             </thead>
@@ -87,13 +87,13 @@ export default function SalesReport({ auth }) {
                                                 <FaPesoSign className="mr-1 text-green-500" />
                                                 {Math.round(item.contribution)}
                                             </td>
-                                            <td className="px-6 py-4 font-medium text-primary">
-                                                {new Date(item.created_at).toLocaleDateString("en-US", {
+                                            {/* <th className="px-6 py-4 font-medium text-primary">
+                                                {new Date(data.created_at).toLocaleDateString("en-US", {
                                                     year: "numeric",
                                                     month: "long",
                                                     day: "numeric",
                                                 })}
-                                            </td>
+                                            </th> */}
                                             <td className="px-6 py-4">
                                                 <span
                                                     className={`py-1 px-3 rounded-full ${item.status === "Paid" ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}

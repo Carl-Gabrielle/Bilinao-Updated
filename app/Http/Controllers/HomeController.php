@@ -20,22 +20,24 @@ class HomeController extends Controller
         if (Auth::user()->role === 'admin') {
             $sellerCount = Seller::count();
             $customerCount = User::count();
-    
             $firstDayOfMonth = Carbon::now()->startOfMonth()->toDateString();
+    
+            // Fetch sales data with seller information
             $salesData = MonthlySalesReport::where('month_date', $firstDayOfMonth)
                 ->select('seller_id', 'total_net_sales', 'total_contribution')
-                ->with('seller')
+                ->with('seller:id,name,profile_image') // Fetch seller details
                 ->get();
-                return Inertia::render('Dashboard', [
-                    'sellerCount' => $sellerCount,
-                    'customerCount' => $customerCount,
-                    'salesData' => $salesData ?? []
-                ]);
-                
-                
+    
+            return Inertia::render('Dashboard', [
+                'sellerCount' => $sellerCount,
+                'customerCount' => $customerCount,
+                'salesData' => $salesData, // Send raw data
+            ]);
         }
+    
         return redirect('/customer');
     }
+    
     
     public function guestPage(){
         $category = Category::where('is_active', 1)->paginate(7);

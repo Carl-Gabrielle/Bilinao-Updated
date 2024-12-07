@@ -21,6 +21,9 @@
     use App\Models\Notifications;
     use Illuminate\Support\Str;
     use Orhanerday\OpenAi\OpenAi;
+
+    use App\Models\Report;
+    // use Google\Cloud\Language\LanguageClient;
     class CustomerController extends Controller
     {
         /**
@@ -85,8 +88,6 @@
                 'products' => $products,
             ]);
         }
-        
-        
             public function  about (){
                 return Inertia::render('Customer/About');
             }
@@ -146,8 +147,7 @@
         ]);
     }
 
-        
-        
+            
     public function review($orderItemId)
     {
         $orderItem = OrderItem::with('product.images')->find($orderItemId);
@@ -164,7 +164,7 @@
             'product_id' => 'required|exists:products,id',
             'order_id' => 'required|exists:order_items,id',
             'rate' => 'required|integer|min:1|max:5',
-            'description' => 'required|string|min:10|max:1000',
+            'description' => 'required|string|min:10|max:200',
         ]);
     
         try {

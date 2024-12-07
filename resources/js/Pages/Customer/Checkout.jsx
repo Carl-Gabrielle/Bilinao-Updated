@@ -95,7 +95,6 @@ export default function Checkout({ auth }) {
         }));
     }, [shippingFees]);
 
-    console.log(product);
     useEffect(() => {
         if (selectedProvince) {
             axios
@@ -155,21 +154,17 @@ export default function Checkout({ auth }) {
         const isFromCart = urlParams.get("from_cart") || "false"; // Check against the string '1'
         setStatus(isFromCart); // Set the value
     }, []);
-
     useEffect(() => {
         setData("is_from_cart", status);
     }, [status]);
-
     const handleCheckoutButton = (e) => {
         e.preventDefault();
         console.log("submitted data => ", data);
         post(route("store.checkout"));
     };
-
     const handlePaymentChange = (method) => {
         setData("payment_method", method);
     };
-
     const calculateShippingFee = (regionCode, weight) => {
         const shippingRegion = regionMapping[regionCode];
         const matchingRange = shipping_data.find(

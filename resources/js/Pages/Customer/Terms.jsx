@@ -65,6 +65,10 @@ export default function Terms({ auth }) {
                             <h1 className="font-bold text-primary  text-xl"> 8.Modification of Terms</h1>
                             <p className="space-y-4 text-slate-700 leading-8 tracking-wide mt-4">Bili-Nao reserves the right to change these Terms and Conditions at any time. We will notify you of any significant changes by posting the revised terms on the platform. Your continued use of the platform following any changes constitutes acceptance of the new terms.  </p>
                         </div>
+                        <div className="mt-6 bg-slate-200 rounded-2xl p-3 ">
+                            <h1 className="font-bold text-primary  text-xl"> 9.User Conduct</h1>
+                            <p className="space-y-4 text-slate-700 leading-8 tracking-wide mt-4">Bili-Nao reserves the right to change these Terms and Conditions at any time. We will notify you of any significant changes by posting the revised terms on the platform. Your continued use of the platform following any changes constitutes acceptance of the new terms.  </p>
+                        </div>
                     </div>
                 </div>
             </CustomerContainer>

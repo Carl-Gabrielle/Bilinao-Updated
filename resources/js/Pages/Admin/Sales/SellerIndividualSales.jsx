@@ -67,7 +67,7 @@ export default function SellerIndividualSales({ auth }) {
             <DivContainer>
                 <Link
                     href={route("admin.salesReport")}
-                    className="flex items-center px-6 py-1 mb-5 text-sm font-semibold rounded-full bg-slate-100 w-36"
+                    className="flex items-center px-6 py-2 mb-5 text-sm font-semibold rounded-full bg-slate-100 w-36"
                 >
                     <MdOutlineKeyboardArrowLeft className="mr-2" />
                     <span>Go Back</span>
@@ -82,7 +82,7 @@ export default function SellerIndividualSales({ auth }) {
                                 onClick={generateReceipt}
                                 className="px-4 py-2 bg-green-600 text-white  rounded-2xl"
                             >
-                                Download Receipt
+                                Download Report
                             </button>
                         </div>
                         <div className="overflow-x-auto rounded-lg">
@@ -146,7 +146,6 @@ export default function SellerIndividualSales({ auth }) {
                     </div>
                 </div>
             </DivContainer>
-
             <ConfirmationModal
                 isOpen={isModalOpen}
                 onClose={closeModal}

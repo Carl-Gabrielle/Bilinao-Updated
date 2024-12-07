@@ -24,11 +24,11 @@ export default function SalesReport({ auth }) {
             <DivContainer>
                 <div className="w-full h-auto p-6 shadow-lg bg-slate-50 bg-opacity-80 backdrop-blur-lg rounded-3xl printable-area">
                     <div className="p-2">
-                        <div className="flex items-center justify-between mb-6">
+                        <div className="flex items-center justify-between sm:flex-row flex-col mb-6">
                             <h2 className="text-xl font-semibold text-primary">Monthly Sales Report</h2>
-                            <div className="flex items-center space-x-4">
+                            <div className="flex items-center space-x-4  sm:mt-0 mt-5">
                                 <select
-                                    className="border cursor-pointer border-primary rounded-md bg-transparent px-6 py-0.5 text-primary"
+                                    className="border cursor-pointer text-md border-primary rounded-2xl bg-transparent px-6 py-1 text-primary"
                                     value={selectedMonth}
                                     onChange={(e) => setSelectedMonth(Number(e.target.value))}
                                 >
@@ -40,9 +40,9 @@ export default function SalesReport({ auth }) {
                                 </select>
                                 <button
                                     onClick={() => window.print()}
-                                    className="flex items-center bg-green-600 rounded-md text-md text-white px-6 py-1"
+                                    className="flex items-center bg-green-600 rounded-2xl text-nowrap text-md text-white px-6 py-1"
                                 >
-                                    <IoPrintOutline className="mr-2" /> Print
+                                    <IoPrintOutline className="mr-2" /> Generate Report
                                 </button>
                             </div>
                         </div>
@@ -55,7 +55,7 @@ export default function SalesReport({ auth }) {
                                         <th className="px-6 py-4  text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase  text-nowrap">Net Sales</th>
                                         <th className="px-6 py-4  text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase  text-nowrap">Quantity Sold</th>
                                         <th className="px-6 py-4  text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase  text-nowrap">Revenue Share (4%)</th>
-                                        <th className="px-6 py-4  text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase  text-nowrap">Date</th>
+                                        <th className="px-6 py-4  text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase  text-nowrap">Date</th>
                                         <th className="px-6 py-4  text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase  text-nowrap">Action</th>
                                     </tr>
                                 </thead>

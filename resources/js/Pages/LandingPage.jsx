@@ -10,6 +10,8 @@ import ScrollTrigger from 'gsap/ScrollTrigger';
 import Footer from "@/Components/Footer";
 import { animateText } from '@/gsap';
 import CustomerContainer from "@/Components/CustomerContainer";
+import CookieConsent from "@/Components/CookieConsent";
+
 
 export default function LandingPage({ category, products }) {
     const categoryData = category?.data ?? [];
@@ -40,6 +42,7 @@ export default function LandingPage({ category, products }) {
     }
     return (
         <LandingLayout>
+            <CookieConsent />
             <div className="min-h-screen">
                 <Head title="Discover Page" />
                 <main>
@@ -59,14 +62,14 @@ export default function LandingPage({ category, products }) {
                                     <p className="subtitle text-base text-slate-900 font-normal sm:w-1/2 w-full">
                                         Discover the beauty of handcrafted creations, where every piece reflects passion and skill. Our local artisans create unique treasures that embody cultural richness, adding authentic charm and character to your space.
                                     </p>
-                                    <div className="flex items-center space-x-4">
-                                        <Link href={route("customer.products")}>
-                                            <button className="shop-button px-8 text-nowrap py-4 rounded-xl text-white font-semibold flex items-center justify-center bg-slate-800">
+                                    <div className="flex lg:items-start lg:flex-row flex-col gap-6">
+                                        <Link href={route("customer.products")} className="w-full sm:w-auto">
+                                            <button className="shop-button w-full sm:w-auto px-8 text-nowrap py-4 rounded-xl text-white font-semibold flex items-center justify-center bg-slate-800">
                                                 Shop Now <HiMiniArrowLongRight className="ml-2" />
                                             </button>
                                         </Link>
-                                        <Link href={route("customer.about")}>
-                                            <button className="cta-button px-8 text-nowrap py-4 rounded-2xl text-primary font-semibold flex items-center justify-center border-2 border-primary  ">
+                                        <Link href={route("customer.about")} className="w-full sm:w-auto">
+                                            <button className="cta-button w-full sm:w-auto px-8 text-nowrap py-4 rounded-2xl text-primary font-semibold flex items-center justify-center border-2 border-primary">
                                                 See How It Works
                                             </button>
                                         </Link>
@@ -183,6 +186,6 @@ export default function LandingPage({ category, products }) {
                     </div>
                 </main>
             </div>
-        </LandingLayout>
+        </LandingLayout >
     )
 }

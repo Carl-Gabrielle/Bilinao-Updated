@@ -18,12 +18,8 @@ class SellerDashboardController extends Controller
 {
     public function getProductReviews($productId)
     {
-        $reviews = Review::where('product_id', $productId)
-                    ->with('user')
-                        ->get(['rate', 'description', 'sentiment', 'created_at']);
     
         return Inertia::render('Seller/ProductReviews', [
-            'reviews' => $reviews,
         ]);
     }
     

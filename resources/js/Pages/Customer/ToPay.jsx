@@ -56,22 +56,23 @@ export default function ToPay({ toPay }) {
                                         const imagePath = item.product.images[0]?.image_path;
                                         const imageUrl = imagePath ? `/storage/${imagePath}` : '/path/to/default-image.jpg';
                                         return (
-                                            <div key={itemIndex} >
+                                            <div key={itemIndex}>
                                                 <div className="flex items-center justify-between mt-3">
                                                     <img
                                                         src={imageUrl}
                                                         alt={item.product.name}
-                                                        className="object-cover w-24 h-24 border-2 rounded-md border-slate-500"
+                                                        className="object-cover rounded-md  w-16 h-16 border border-slate-400"
                                                     />
-                                                    <div className="flex-grow ml-4">
-                                                        <h3 className="text-sm font-semibold text-primary">{item.product.name}</h3>
+                                                    <div className="ml-4 flex-grow">
+                                                        <h3 className="font-semibold text-sm text-primary">{item.product.name}</h3>
                                                         <span className="text-sm text-slate-600">Qty. {item.qty}</span>
                                                     </div>
-                                                    <div className="flex items-center text-sm text-slate-800">
+                                                    <div className="text-sm text-slate-800 flex items-center">
                                                         <FaPesoSign className="mr-1 text-sm" />
                                                         {item.price}
                                                     </div>
                                                 </div>
+                                                <hr className="mt-2" />
                                             </div>
                                         );
                                     })}

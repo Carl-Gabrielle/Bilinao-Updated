@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { FaUser } from "react-icons/fa";
+import { TfiAnnouncement } from "react-icons/tfi";
 import { LiaShippingFastSolid } from "react-icons/lia";
 import { RiMenuUnfold3Line2 } from "react-icons/ri";
 import { IoAnalyticsOutline } from "react-icons/io5";
@@ -62,7 +63,7 @@ export default function AuthenticatedLayout({ user, header, children }) {
             </div>
             {/* Sidebar */}
             <div
-                className={`fixed top-24 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-slate-200    rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${isSidebarOpen ? "w-64 p-4" : "w-28 p-3"
+                className={`fixed top-16 left-5 hidden sm:block  bottom-0  sm:bottom-5 bg-slate-200    rounded-3xl text-gray-800 shadow-lg transition-all duration-300 ease-in-out ${isSidebarOpen ? "w-64 p-4" : "w-28 p-3"
                     }`}
             >
                 <div className="flex flex-col justify-between h-full bg-slate-50 rounded-xl p-3">
@@ -76,7 +77,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <AdminLink
                                 href={route("dashboard")}
                                 active={route().current("dashboard")}
-                                className="rounded-lg transition-colors px-4 py-3"
                             >
                                 <SidebarItem
                                     icon={IoHomeOutline}
@@ -88,7 +88,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <AdminLink
                                 href={route("category.index")}
                                 active={route().current("category.index")}
-                                className=" rounded-lg transition-colors px-4 py-3"
                             >
                                 <SidebarItem
                                     icon={BiCategory}
@@ -100,7 +99,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <AdminLink
                                 href={route("seller.index")}
                                 active={route().current("seller.index")}
-                                className=" rounded-lg transition-colors px-4 py-3"
                             >
                                 <SidebarItem
                                     icon={FaRegUser}
@@ -112,7 +110,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <AdminLink
                                 href={route("shipping.index")}
                                 active={route().current("shipping.index")}
-                                className="rounded-lg transition-colors px-4 py-3"
                             >
                                 <SidebarItem
                                     icon={LiaShippingFastSolid}
@@ -124,12 +121,20 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <AdminLink
                                 href={route("admin.salesReport")}
                                 active={route().current("admin.salesReport")}
-                                className=" rounded-lg transition-colors px-4 py-3"
                             >
                                 <SidebarItem
                                     icon={IoAnalyticsOutline}
                                     label="Sales Report"
                                     routeName="admin.salesReport"
+                                    isSidebarOpen={isSidebarOpen}
+                                />
+                            </AdminLink>
+                            <AdminLink href={route("admin.announcements")}
+                                active={route().current("admin.announcements")}>
+                                <SidebarItem
+                                    icon={TfiAnnouncement}
+                                    label="Announcements"
+                                    routeName="admin.announcements"
                                     isSidebarOpen={isSidebarOpen}
                                 />
                             </AdminLink>
@@ -141,7 +146,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             <AdminLink
                                 href={route("profile.edit")}
                                 active={route().current("profile.edit")}
-                                className=" rounded-lg transition-colors px-4 py-3"
                             >
                                 <SidebarItem
                                     icon={RiUserSettingsLine}
@@ -158,7 +162,6 @@ export default function AuthenticatedLayout({ user, header, children }) {
                             method="post"
                             as="button"
                             active={route().current("logout")}
-                            className=" rounded-lg transition-colors px-4 py-3"
                         >
                             <SidebarLogoutItem isSidebarOpen={isSidebarOpen} />
                         </AdminLink>
@@ -177,6 +180,14 @@ export default function AuthenticatedLayout({ user, header, children }) {
                     </header>
                 )}
                 <main className="px-4  sm:px-6">{children}</main>
+            </div>
+            <div className="h-10 bg-slate-50 bg-opacity-30 backdrop-blur-md shadow-md   text-slate-700  fixed   bottom-0 w-full flex items-center justify-between px-6">
+                <div className="text-xs space-x-4">
+                    <a href="">Home</a>
+                    <a href="">Terms & Conditions</a>
+                    <a href="">Privacy Policy</a>
+                </div>
+                <span className="text-xs">&copy; 2024  Bili-Nao.All rights reserved. </span>
             </div>
         </div >
     );

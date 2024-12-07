@@ -67,7 +67,7 @@ export default function ToReceive({ receivedData }) {
                                                             <img
                                                                 src={imageUrl}
                                                                 alt={item.product.name}
-                                                                className="object-cover rounded-md w-24 h-24 border-2 border-slate-500"
+                                                                className="object-cover rounded-md w-16 h-16 border border-slate-400"
                                                             />
                                                             <div className="ml-4 flex-grow">
                                                                 <h3 className="font-semibold text-sm text-primary">{item.product.name}</h3>
@@ -78,6 +78,7 @@ export default function ToReceive({ receivedData }) {
                                                                 {item.price}
                                                             </div>
                                                         </div>
+                                                        <hr className="mt-2" />
                                                         <ShippingDetails
                                                             shippingFee={order.shipping_fee}
                                                             subtotal={subtotal}
@@ -92,7 +93,6 @@ export default function ToReceive({ receivedData }) {
                                                             </Link>
                                                         </div>
                                                     </div>
-
                                                 );
                                             })}
                                         </>

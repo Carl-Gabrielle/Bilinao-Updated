@@ -95,8 +95,9 @@ export default function Review({ auth, orderItem, success, error }) {
                                 rows={5}
                                 value={data.description}
                                 onChange={(e) => setData("description", e.target.value)}
-                                onKeyDown={handleKeyDown} // Detect Enter key press
+                                onKeyDown={handleKeyDown}
                             />
+                            <span className="mb-4 text-sm font-medium text-slate-500">0/200</span>
                             {errors.description && (
                                 <div className="text-red-500 text-sm mb-4">{errors.description}</div>
                             )}
@@ -104,7 +105,7 @@ export default function Review({ auth, orderItem, success, error }) {
                                 <div className="text-red-500 text-sm mb-4">{errors.rate}</div>
                             )}
                             <button
-                                className="w-full bg-slate-800 text-white py-2 rounded-2xl font-semibold"
+                                className="w-full bg-slate-800 text-white py-2 rounded-2xl font-semibold mt-4"
                                 onClick={handleSubmit}
                                 disabled={processing}
                             >
