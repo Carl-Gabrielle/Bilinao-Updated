@@ -11,9 +11,9 @@ import { MdMoreVert } from "react-icons/md";
 import { RiVerifiedBadgeLine } from "react-icons/ri";
 
 export default function Notifications({ auth, notifications = [] }) {
-
     const [filter, setFilter] = useState("all");
     const [showDropdown, setShowDropdown] = useState(false);
+    const [loading, setLoading] = useState(true);
 
     const handleNotificationClick = (notificationId) => {
         Inertia.patch(
@@ -46,8 +46,6 @@ export default function Notifications({ auth, notifications = [] }) {
         return true; // For "all", return all notifications
     });
 
-    const [loading, setLoading] = useState(true);
-
     useEffect(() => {
         const timer = setTimeout(() => {
             setLoading(false);
@@ -72,34 +70,34 @@ export default function Notifications({ auth, notifications = [] }) {
                 <Banner title="Notifications" />
                 <CustomerContainer>
                     <div className="w-full px-4 sm:px-10 md:px-20 lg:px-40 xl:px-60">
-                        <div className="bg-slate-50 bg-opacity-60 backdrop-blur-lg rounded-3xl p-6 text-sm h-96 ">
-                            <div className=" overflow-x-auto scroll-bar h-full px-6">
-                                <div className="px-2 py-2 flex items-center justify-between mb-2 ">
-                                    <h1 className="text-lg text-primary font-semibold text-slate">
+                        <div className="bg-slate-50 bg-opacity-60 backdrop-blur-lg rounded-3xl p-6 text-sm h-96">
+                            <div className="overflow-x-auto scroll-bar h-full px-6">
+                                <div className="px-2 py-2 flex items-center justify-between mb-4">
+                                    <h1 className="text-xl text-primary font-semibold text-slate">
                                         Notifications
                                     </h1>
-                                    <div className="bg-primary text-white px-3 rounded-md py-1">
-                                        <span>
-                                            {filteredNotifications.length} new
-                                        </span>
+                                    <div className="bg-primary text-white px-3 rounded-md py-1 text-sm">
+                                        <span>{filteredNotifications.length} new</span>
                                     </div>
                                 </div>
-                                <div className="flex items-center justify-between mb-2">
+
+                                {/* Filter & Dropdown */}
+                                <div className="flex items-center justify-between mb-4">
                                     <div className="flex items-center space-x-4">
                                         <span
                                             onClick={() => setFilter("all")}
-                                            className={`border px-3 py-0.5 rounded-full cursor-pointer ${filter === "all"
+                                            className={`px-4 py-2 rounded-full cursor-pointer text-sm ${filter === "all"
                                                 ? "bg-primary text-white"
-                                                : "border-slate-300"
+                                                : "border border-slate-300 text-slate-600"
                                                 }`}
                                         >
                                             All
                                         </span>
                                         <span
                                             onClick={() => setFilter("unread")}
-                                            className={`border px-3 py-0.5 rounded-full cursor-pointer ${filter === "unread"
+                                            className={`px-4 py-2 rounded-full cursor-pointer text-sm ${filter === "unread"
                                                 ? "bg-primary text-white"
-                                                : "border-slate-300"
+                                                : "border border-slate-300 text-slate-600"
                                                 }`}
                                         >
                                             Unread
@@ -108,9 +106,7 @@ export default function Notifications({ auth, notifications = [] }) {
                                     <div className="relative">
                                         <MdMoreVert
                                             className="size-4 text-slate-600 cursor-pointer"
-                                            onClick={() =>
-                                                setShowDropdown(!showDropdown)
-                                            }
+                                            onClick={() => setShowDropdown(!showDropdown)}
                                         />
                                         {showDropdown && (
                                             <div className="absolute right-0 mt-2 w-48 bg-slate-50 rounded-md shadow-lg z-10">
@@ -124,87 +120,58 @@ export default function Notifications({ auth, notifications = [] }) {
                                         )}
                                     </div>
                                 </div>
-                                <ul className="space-y-4 ">
+
+                                {/* Notifications */}
+                                <ul className="space-y-4">
                                     {filteredNotifications.length > 0 ? (
-                                        filteredNotifications.map(
-                                            (notification) => (
-                                                <li
-                                                    key={notification.id}
-                                                    className={`rounded-lg p-4 ${notification.status ===
-                                                        "unread"
-                                                        ? "bg-slate-50 border-0 font-semibold"
-                                                        : "border border-slate-300"
-                                                        }`}
-                                                >
-                                                    <div className="flex items-center justify-between">
-                                                        <div className="flex-1">
-                                                            <p
-                                                                className={`text-md font-medium text-primary ${notification.status ===
-                                                                    "unread"
-                                                                    ? "font-semibold"
-                                                                    : "text-primary"
-                                                                    }`}
-                                                                onClick={() =>
-                                                                    handleNotificationClick(
-                                                                        notification.id
-                                                                    )
-                                                                } // Make the message clickable as well
-                                                            >
-                                                                <div className="flex items-center ">
-                                                                    <RiVerifiedBadgeLine className="mr-1" />
-                                                                    {
-                                                                        notification.message
-                                                                    }
-                                                                </div>
-                                                            </p>
-                                                            <span className="text-gray-500 text-xs">
-                                                                {new Date(
-                                                                    notification.updated_at
-                                                                ).toLocaleDateString(
-                                                                    "en-US",
-                                                                    {
-                                                                        year: "numeric",
-                                                                        month: "short",
-                                                                        day: "numeric",
-                                                                    }
-                                                                )}
-                                                                ,{" "}
-                                                                {new Date(
-                                                                    notification.updated_at
-                                                                ).toLocaleTimeString(
-                                                                    "en-US",
-                                                                    {
-                                                                        hour: "numeric",
-                                                                        minute: "numeric",
-                                                                        hour12: true,
-                                                                    }
-                                                                )}
-                                                            </span>
-                                                        </div>
-                                                        {notification.status ===
-                                                            "unread" && (
-                                                                <button
-                                                                    onClick={() =>
-                                                                        handleNotificationClick(
-                                                                            notification.id
-                                                                        )
-                                                                    }
-                                                                    className="ml-4 bg-slate-500 bg-opacity-30 backdrop-blur-md text-primary font-medium flex items-center px-2 py-1 rounded"
-                                                                >
-                                                                    <HiCheck className="mr-1" />
-                                                                    Mark as Read
-                                                                </button>
-                                                            )}
+                                        filteredNotifications.map((notification) => (
+                                            <li
+                                                key={notification.id}
+                                                className={`rounded-lg p-4 transition-all duration-300 ease-in-out 
+                                                ${notification.status === "unread"
+                                                        ? "bg-gradient-to-r from-blue-50 to-white border-0 font-semibold"
+                                                        : "bg-white border border-slate-300"
+                                                    }`}
+                                            >
+                                                <div className="flex items-center justify-between">
+                                                    <div className="flex-1">
+                                                        <p
+                                                            className={`text-md font-medium text-primary ${notification.status === "unread" ? "font-semibold" : "text-primary"}`}
+                                                            onClick={() => handleNotificationClick(notification.id)}
+                                                        >
+                                                            <div className="w-full flex items-center">
+                                                                <RiVerifiedBadgeLine className="mr-2 text-blue-500 flex-shrink-0" />
+                                                                <p className="flex-1 text-sm text-gray-700">
+                                                                    {notification.message}
+                                                                </p>
+                                                            </div>
+                                                        </p>
+                                                        <span className="text-gray-500 text-xs">
+                                                            {new Date(notification.updated_at).toLocaleDateString("en-US", {
+                                                                year: "numeric", month: "short", day: "numeric",
+                                                            })}
+                                                            ,{" "}
+                                                            {new Date(notification.updated_at).toLocaleTimeString("en-US", {
+                                                                hour: "numeric", minute: "numeric", hour12: true,
+                                                            })}
+                                                        </span>
                                                     </div>
-                                                </li>
-                                            )
-                                        )
+                                                    {notification.status === "unread" && (
+                                                        <button
+                                                            onClick={() => handleNotificationClick(notification.id)}
+                                                            className="ml-4 bg-blue-500 text-white px-3 py-1 rounded-full text-xs flex items-center"
+                                                        >
+                                                            <HiCheck className="mr-1" />
+                                                            Mark as Read
+                                                        </button>
+                                                    )}
+                                                </div>
+                                            </li>
+                                        ))
                                     ) : (
                                         <div className="flex flex-col items-center justify-center mt-8">
-                                            <HiBell className="text-slate-500 text-3xl " />
-                                            <p className="mt-2 text-gray-600">
-                                                No notifications at this time.
-                                            </p>
+                                            <HiBell className="text-slate-500 text-4xl" />
+                                            <p className="mt-2 text-gray-600">No notifications at this time.</p>
                                         </div>
                                     )}
                                 </ul>
