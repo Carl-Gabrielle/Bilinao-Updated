@@ -1,21 +1,41 @@
+import { useState, useRef, useEffect } from "react";
 import DivContainer from "@/Components/DivContainer";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { TbSpeakerphone } from "react-icons/tb";
 import { MdAdd } from "react-icons/md";
 import { CiMenuKebab } from "react-icons/ci";
-import { Head } from "@inertiajs/react";
+import { Head, usePage, router } from "@inertiajs/react";
 import { FaRegClock } from "react-icons/fa";
+import { AiOutlineEdit, AiOutlineDelete } from "react-icons/ai";
 import { IoClose } from "react-icons/io5";
 import { MdOutlineAnnouncement } from "react-icons/md";
-import { useState } from "react";
 import SellerInput from "@/Components/SellerInput";
 
-export default function Announcement({ auth }) {
+export default function Announcement({ auth, announcements }) {
     const [isModalOpen, setIsModalOpen] = useState(false);
-
+    const [activeMenuId, setActiveMenuId] = useState(null); // Track which menu is open
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [tags, setTags] = useState("");
+    const menuRef = useRef(null);
+
+    const handleToggleMenu = (id, event) => {
+        event.stopPropagation();
+        setActiveMenuId((prevId) => (prevId === id ? null : id)); // Toggle menu open/close
+    };
+
+    const handleClickOutside = (event) => {
+        if (menuRef.current && !menuRef.current.contains(event.target)) {
+            setActiveMenuId(null); // Close all menus when clicking outside
+        }
+    };
+
+    useEffect(() => {
+        document.addEventListener("click", handleClickOutside);
+        return () => {
+            document.removeEventListener("click", handleClickOutside);
+        };
+    }, []);
 
     const closeModal = () => {
         setIsModalOpen(false);
@@ -26,8 +46,20 @@ export default function Announcement({ auth }) {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        console.log({ title, description, tags });
-        closeModal();
+        const tagsArray = tags.split(" ").filter(Boolean);
+        router.post(route("announcements.store"), {
+            title,
+            description,
+            tags: tagsArray,
+        }, {
+            onSuccess: () => closeModal(),
+        });
+    };
+
+    const handleDelete = (id) => {
+        if (confirm("Are you sure you want to delete this announcement?")) {
+            router.delete(route("announcements.destroy", { id }));
+        }
     };
 
     return (
@@ -51,66 +83,52 @@ export default function Announcement({ auth }) {
                             Share Announcements to Keep Users Informed and Updated
                         </p>
                         <div className="gap-5 grid grid-cols-1 lg:grid-cols-2">
-                            <div className="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden ">
-                                <div className="p-4 flex flex-col justify-between w-full">
-                                    <div>
-                                        <div className="mb-2 flex items-center justify-between ">
+                            {announcements.map((announcement) => (
+                                <div key={announcement.id} className="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden">
+                                    <div className="p-4 flex flex-col justify-between w-full relative">
+                                        <div className="mb-2 flex items-center justify-between">
                                             <h2 className="text-lg font-semibold text-primary flex items-center">
-                                                < TbSpeakerphone className="mr-2 size-4" />
-                                                Platform Maintenance
-                                            </h2>
-                                            <div className="p-2  rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-                                                <CiMenuKebab className=" size-4" />
-                                            </div>
-                                        </div>
-                                        <p className="text-sm text-gray-700 mb-4">
-                                            Our platform will undergo maintenance on Dec 10th from 1:00 AM to 3:00 AM.
-                                        </p>
-                                        <div className="flex flex-wrap gap-2">
-                                            <span className="text-xs font-medium bg-blue-100 text-blue-700 py-1 px-3 rounded-full">
-                                                #maintenance
-                                            </span>
-                                            <span className="text-xs font-medium bg-blue-100 text-blue-700 py-1 px-3 rounded-full">
-                                                #update
-                                            </span>
-                                        </div>
-                                    </div>
-                                    <div className="flex items-center mt-4 text-sm text-gray-500 font-medium">
-                                        <FaRegClock className="mr-2" />
-                                        <span>December 6, 2024</span>
-                                    </div>
-                                </div>
-                            </div>
-                            <div className="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden">
-                                <div className="p-4 flex flex-col justify-between w-full">
-                                    <div>
-                                        <div className="mb-2 flex items-center justify-between ">
-                                            <h2 className="text-lg font-semibold text-primary mb-2 flex items-center">
                                                 <TbSpeakerphone className="mr-2 size-4" />
-                                                New Feature Launch
+                                                {announcement.title}
                                             </h2>
-                                            <div className="p-2  rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-300 ease-in-out">
-                                                <CiMenuKebab className=" size-4" />
+                                            <button
+                                                onClick={(event) => handleToggleMenu(announcement.id, event)} // Pass announcement ID
+                                                ref={menuRef}
+                                                className="p-2 rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-300 ease-in-out"
+                                            >
+                                                <CiMenuKebab className="size-4" />
+                                            </button>
+                                        </div>
+                                        {activeMenuId === announcement.id && ( // Only display menu if it's active
+                                            <div className="absolute w-36 h-auto flex flex-col items-start p-2 bg-white shadow-lg border rounded-md right-12 top-5 z-10">
+                                                <button className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full rounded-md transition duration-200">
+                                                    <AiOutlineEdit className="mr-2 text-blue-500" />
+                                                    Edit
+                                                </button>
+                                                <button
+                                                    onClick={() => handleDelete(announcement.id)}
+                                                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full rounded-md transition duration-200"
+                                                >
+                                                    <AiOutlineDelete className="mr-2 text-red-500" />
+                                                    Delete
+                                                </button>
                                             </div>
-                                        </div>
-                                        <p className="text-sm text-gray-700 mb-4">
-                                            We are excited to announce a new feature that enhances your experience!
-                                        </p>
+                                        )}
+                                        <p className="text-sm text-gray-700 mb-4">{announcement.description}</p>
                                         <div className="flex flex-wrap gap-2">
-                                            <span className="text-xs font-medium bg-blue-100 text-blue-700 py-1 px-3 rounded-full">
-                                                #feature
-                                            </span>
-                                            <span className="text-xs font-medium bg-blue-100 text-blue-700 py-1 px-3 rounded-full">
-                                                #announcement
-                                            </span>
+                                            {announcement.tags.map((tag, index) => (
+                                                <span key={index} className="text-xs font-medium bg-blue-100 text-blue-700 py-1 px-3 rounded-full">
+                                                    {tag}
+                                                </span>
+                                            ))}
                                         </div>
-                                    </div>
-                                    <div className="flex items-center mt-4 text-sm text-gray-500 font-medium">
-                                        <FaRegClock className="mr-2" />
-                                        <span>December 6, 2024</span>
+                                        <div className="flex items-center mt-4 text-sm text-gray-500 font-medium">
+                                            <FaRegClock className="mr-2" />
+                                            <span>{new Date(announcement.created_at).toLocaleDateString()}</span>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
+                            ))}
                         </div>
                     </div>
                 </div>
@@ -123,7 +141,7 @@ export default function Announcement({ auth }) {
                             <button
                                 type="button"
                                 onClick={closeModal}
-                                className=" text-gray-700 p-3 rounded-full text-sm font-semibold hover:bg-gray-100 transition-colors duration-300 ease-in-out"
+                                className="text-gray-700 p-3 rounded-full text-sm font-semibold hover:bg-gray-100 transition-colors duration-300 ease-in-out"
                             >
                                 <IoClose className="size-5" />
                             </button>
@@ -143,7 +161,7 @@ export default function Announcement({ auth }) {
                                 <textarea
                                     value={description}
                                     onChange={(e) => setDescription(e.target.value)}
-                                    className="focus:outline-none focus:ring-0 border  focus:border-slate-800 focus:border hover:border-gray-900   py-2 px-4 w-full rounded-2xl  border-gray-500 bg-transparent "
+                                    className="focus:outline-none focus:ring-0 border focus:border-slate-800 focus:border hover:border-gray-900 py-2 px-4 w-full rounded-2xl border-gray-500 bg-transparent"
                                     rows="5"
                                     required
                                 />
@@ -159,7 +177,7 @@ export default function Announcement({ auth }) {
                             </div>
                             <button
                                 type="submit"
-                                className="w-full bg-primary py-2 px-6 rounded-2xl text-slate-50 text-sm font-semibold "
+                                className="w-full bg-primary py-2 px-6 rounded-2xl text-slate-50 text-sm font-semibold"
                             >
                                 Publish
                             </button>

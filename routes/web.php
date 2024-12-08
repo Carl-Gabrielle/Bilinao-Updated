@@ -85,7 +85,9 @@ Route::middleware(['auth', 'verified'])->group(function () {
         Route::put('category/{category}/unpublish', [CategoryController::class, 'unpublish'])->name('category.unpublish');
         Route::post('/sales-report/{id}/toggle-status', [SalesReportController::class, 'toggleStatus'])->name('salesReport.toggleStatus');
         Route::resource('seller', SellerController::class);
-        Route::get('/announcement', [AnnouncementController::class,'announcement'])->name('admin.announcements');
+        Route::get('/announcements', [AnnouncementController::class,'announcements'])->name('admin.announcements');
+        Route::post('/announcements', [AnnouncementController::class, 'store'])->name('announcements.store');
+        Route::delete('/announcements/{id}', [AnnouncementController::class, 'destroy'])->name('announcements.destroy');
     });
     // CUSTOMER ROUTES
         Route::middleware('customer')->group(function () {
