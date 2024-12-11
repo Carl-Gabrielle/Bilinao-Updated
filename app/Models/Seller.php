@@ -29,4 +29,8 @@ class Seller extends Authenticatable
     {
         return $this->hasMany(Product::class, 'seller_id');
     }
+    public function notifications()
+    {
+        return $this->hasMany(Notifications::class, 'seller_id');
+    }
 }

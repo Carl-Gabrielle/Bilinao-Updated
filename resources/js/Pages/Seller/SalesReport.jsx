@@ -49,7 +49,7 @@ export default function SalesReport({ auth }) {
                                     <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Quantity Sold</th>
                                     <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Revenue Share (4%)</th>
                                     {/* <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Date</th> */}
-                                    <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase">Status</th>
+                                    {/* <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase">Status</th> */}
                                 </tr>
                             </thead>
                             <tbody className="text-sm bg-white divide-y divide-gray-200">
@@ -94,13 +94,13 @@ export default function SalesReport({ auth }) {
                                                     day: "numeric",
                                                 })}
                                             </th> */}
-                                            <td className="px-6 py-4">
+                                            {/* <td className="px-6 py-4">
                                                 <span
                                                     className={`py-1 px-3 rounded-full ${item.status === "Paid" ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}
                                                 >
                                                     {item.status}
                                                 </span>
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     ))
                                 )}

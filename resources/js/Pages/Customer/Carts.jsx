@@ -266,7 +266,7 @@ export default function Carts({ auth, carts, cartCount }) {
                                                             className="object-cover rounded sm:size-16 size-10 border border-slate-200"
                                                         />
                                                     </Link>
-                                                    <div className="flex-1 ml-4 text-xs text-slate-800 ">
+                                                    <div className="flex-1 ml-4  text-xs text-slate-800 ">
                                                         <h3 className="font-semibold">
                                                             {cart.product.name}
                                                         </h3>

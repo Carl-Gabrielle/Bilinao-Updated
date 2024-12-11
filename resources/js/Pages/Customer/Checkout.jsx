@@ -7,6 +7,7 @@ import { FaCcPaypal, FaGooglePay } from "react-icons/fa";
 import { RiSecurePaymentLine } from "react-icons/ri";
 import { MdOutlinePayments } from "react-icons/md";
 import Banner from "@/Components/Banner";
+import { CiDeliveryTruck } from "react-icons/ci";
 import { Head, Link, useForm, usePage } from "@inertiajs/react";
 import BillingInput from "@/Components/BillingInput";
 import axios from "axios";
@@ -521,13 +522,36 @@ export default function Checkout({ auth }) {
                                 </div>
                             </div>
                             <div className="w-full lg:mt-10 ">
-                                <div className="p-6 space-y-4 overflow-y-auto bg-white lg:w-96 lg:h-72 rounded-3xl h-72">
+                                <div className="p-6 space-y-4 overflow-y-auto bg-white h-full rounded-3xl ">
                                     <div className="font-semibold text-gray-700 text-md">
                                         <h1>How would you like to pay?</h1>
                                     </div>
                                     <div className="mt-4 space-y-4">
+                                        {/* Cash on Delivery Payment option */}
+                                        <div className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method === "cod"
+                                            ? "bg-yellow-100 border-0 hover:bg-blue-100"
+                                            : "hover:bg-slate-100"
+                                            }`}
+                                            onClick={() =>
+                                                handlePaymentChange("cod")
+                                            }>
+                                            <input type="radio" className="hidden" />
+                                            <div className="flex items-center justify-center w-10 h-10 bg-yellow-500 rounded-full">
+                                                <CiDeliveryTruck className="text-2xl text-white" />
+                                            </div>
+                                            <div className="flex-1 text-sm font-normal text-primary">
+                                                Cash on Delivery
+                                            </div>
+                                            <HiOutlineCheckCircle
+                                                className={`text-gray-300 text-xl ${data.payment_method ===
+                                                    "cod"
+                                                    ? "text-yellow-500"
+                                                    : "text-gray-300"
+                                                    }`}
+                                            />
+                                        </div>
                                         {/* GCash Payment Option */}
-                                        <label
+                                        <div
                                             className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method === "gcash"
                                                 ? "bg-blue-100 border-0 hover:bg-blue-100"
                                                 : "hover:bg-slate-100"
@@ -544,7 +568,7 @@ export default function Checkout({ auth }) {
                                             <div className="flex items-center justify-center w-10 h-10 bg-blue-500 rounded-full">
                                                 <FaGooglePay className="text-2xl text-white" />
                                             </div>
-                                            <div className="flex-1 text-sm font-medium text-slate-700">
+                                            <div className="flex-1 text-sm font-normal  text-slate-700">
                                                 GCash
                                             </div>
                                             <HiOutlineCheckCircle
@@ -554,9 +578,9 @@ export default function Checkout({ auth }) {
                                                     : "text-gray-300"
                                                     }`}
                                             />
-                                        </label>
+                                        </div>
                                         {/* PayMaya Payment Option */}
-                                        <label
+                                        <div
                                             className={`flex items-center space-x-4 p-2 border rounded-xl cursor-pointer transition ${data.payment_method ===
                                                 "paymaya"
                                                 ? "bg-green-100 border-0 hover:bg-green-100"
@@ -574,7 +598,7 @@ export default function Checkout({ auth }) {
                                             <div className="flex items-center justify-center w-10 h-10 bg-green-500 rounded-full">
                                                 <FaCcPaypal className="text-2xl text-white" />
                                             </div>
-                                            <div className="flex-1 text-sm font-medium text-slate-700">
+                                            <div className="flex-1 text-sm font-normal text-primary">
                                                 PayMaya
                                             </div>
                                             <HiOutlineCheckCircle
@@ -584,7 +608,7 @@ export default function Checkout({ auth }) {
                                                     : "text-gray-300"
                                                     }`}
                                             />
-                                        </label>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -620,7 +644,7 @@ export default function Checkout({ auth }) {
                         </div>
                     </div>
                 </CustomerContainer>
-            </div>
-        </CustomerLayout>
+            </div >
+        </CustomerLayout >
     );
 }

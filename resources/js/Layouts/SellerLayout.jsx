@@ -16,6 +16,7 @@ import { MdLogout } from "react-icons/md";
 import { FaClock } from 'react-icons/fa';
 import Logo from "../Pages/Illustrations/LOGO.png";
 import { BsBasket } from "react-icons/bs";
+import { TbSpeakerphone } from "react-icons/tb";
 import { IoMdAdd } from "react-icons/io";
 import { FaListAlt, FaSignOutAlt, FaRegUser } from "react-icons/fa";
 import NavLinkItem from "@/Pages/Seller/NavLinkItem";
@@ -60,6 +61,7 @@ const SellerLayout = ({ user, children }) => {
     const isAddProductActive = route().current('products.create');
     const isShowProductActive = route().current('products.index');
     const isShowProductReviews = route().current('product.getProductReviews');
+    const isShowSellerAnnouncements = route().current('seller.sellerAnnouncement');
     return (
         <>
             <div className="min-h-screen flex flex-col sm:flex-row bg-slate-300">
@@ -214,13 +216,13 @@ const SellerLayout = ({ user, children }) => {
                                 isActive={isSalesReportActive}
                                 handleClick={handleOrderLinkClick}
                             />
-                            {/* <NavLinkItem
-                                to={route('product.getProductReviews')}
-                                label="Product Reviews"
-                                icon={IoAnalyticsOutline}
-                                isActive={isShowProductReviews}
+                            <NavLinkItem
+                                to={route('seller.sellerAnnouncement')}
+                                label="Announcements"
+                                icon={TbSpeakerphone}
+                                isActive={isShowSellerAnnouncements}
                                 handleClick={handleOrderLinkClick}
-                            /> */}
+                            />
                             {/* Account Settings */}
                             <div className="mb-2">
                                 <h3 className="text-gray-600 text-sm font-normal uppercase tracking-wider">

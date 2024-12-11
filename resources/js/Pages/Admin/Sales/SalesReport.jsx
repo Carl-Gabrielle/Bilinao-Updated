@@ -28,7 +28,7 @@ export default function SalesReport({ auth }) {
                             <h2 className="text-xl font-semibold text-primary">Monthly Sales Report</h2>
                             <div className="flex items-center space-x-4  sm:mt-0 mt-5">
                                 <select
-                                    className="border cursor-pointer text-md border-primary rounded-2xl bg-transparent px-6 py-1 text-primary"
+                                    className="border cursor-pointer text-md border-primary rounded-2xl bg-transparent px-6 py-3 text-primary"
                                     value={selectedMonth}
                                     onChange={(e) => setSelectedMonth(Number(e.target.value))}
                                 >
@@ -40,7 +40,7 @@ export default function SalesReport({ auth }) {
                                 </select>
                                 <button
                                     onClick={() => window.print()}
-                                    className="flex items-center bg-green-600 rounded-2xl text-nowrap text-md text-white px-6 py-1"
+                                    className="flex items-center bg-green-600 rounded-2xl text-nowrap text-md text-white px-4 py-3"
                                 >
                                     <IoPrintOutline className="mr-2" /> Generate Report
                                 </button>

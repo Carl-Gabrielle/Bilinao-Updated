@@ -52,7 +52,7 @@
                     ->get();
                 
                 return Inertia::render('Customer/Notifications', [
-                    'notifications' => $notifications, // Send the updated list
+                    'notifications' => $notifications,
                 ]);
             }
         

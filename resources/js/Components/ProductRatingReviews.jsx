@@ -25,7 +25,6 @@ const ProductRatingReviews = ({ reviews, averageRating }) => {
                         <span className="text-sm text-slate-800">{averageRating} out of 5</span>
                     </div>
                 </div>
-
                 <div className="flex flex-col justify-center col-span-2">
                     {[5, 4, 3, 2, 1].map((star, index) => (
                         <div key={index} className="flex items-center justify-between my-1 space-x-2">
@@ -47,7 +46,6 @@ const ProductRatingReviews = ({ reviews, averageRating }) => {
                     ))}
                 </div>
             </div>
-
             <h1 className="mt-10 mb-6 text-2xl font-medium leading-relaxed tracking-wider uppercase text-slate-900">
                 Customer Says
             </h1>
@@ -62,7 +60,6 @@ const ProductRatingReviews = ({ reviews, averageRating }) => {
                     </span>
                 </div>
             </div>
-
             {/* Display Reviews */}
             <div>
                 {reviews.map((review) => (

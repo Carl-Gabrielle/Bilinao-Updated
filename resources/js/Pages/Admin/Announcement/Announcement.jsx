@@ -3,6 +3,7 @@ import DivContainer from "@/Components/DivContainer";
 import AuthenticatedLayout from "@/Layouts/AuthenticatedLayout";
 import { TbSpeakerphone } from "react-icons/tb";
 import { MdAdd } from "react-icons/md";
+import { FaRegBell } from "react-icons/fa";
 import { CiMenuKebab } from "react-icons/ci";
 import { Head, usePage, router } from "@inertiajs/react";
 import { FaRegClock } from "react-icons/fa";
@@ -78,58 +79,69 @@ export default function Announcement({ auth, announcements }) {
                                 Add New
                             </button>
                         </div>
-                        <p className="mb-6 text-md text-gray-700 flex items-center">
-                            <MdOutlineAnnouncement className="mr-2 text-primary" />
-                            Share Announcements to Keep Users Informed and Updated
-                        </p>
-                        <div className="gap-5 grid grid-cols-1 lg:grid-cols-2">
-                            {announcements.map((announcement) => (
-                                <div key={announcement.id} className="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden">
-                                    <div className="p-4 flex flex-col justify-between w-full relative">
-                                        <div className="mb-2 flex items-center justify-between">
-                                            <h2 className="text-lg font-semibold text-primary flex items-center">
-                                                <TbSpeakerphone className="mr-2 size-4" />
-                                                {announcement.title}
-                                            </h2>
-                                            <button
-                                                onClick={(event) => handleToggleMenu(announcement.id, event)}
-                                                ref={menuRef}
-                                                className="p-2 rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-300 ease-in-out"
-                                            >
-                                                <CiMenuKebab className="size-4" />
-                                            </button>
-                                        </div>
-                                        {activeMenuId === announcement.id && (
-                                            <div className="absolute w-36 h-auto flex flex-col items-start p-2 bg-white shadow-lg border rounded-md right-12 top-5 z-10">
-                                                <button className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full rounded-md transition duration-200">
-                                                    <AiOutlineEdit className="mr-2 text-blue-500" />
-                                                    Edit
-                                                </button>
+                        {announcements.length > 0 ? (
+                            <div className="gap-5 grid grid-cols-1 lg:grid-cols-2">
+                                {announcements.map((announcement) => (
+                                    <div key={announcement.id} className="flex flex-col md:flex-row bg-white shadow-md rounded-xl overflow-hidden">
+                                        <div className="p-4 flex flex-col justify-between w-full relative">
+                                            <div className="mb-2 flex items-center justify-between">
+                                                <h2 className="text-lg font-semibold text-primary flex items-center">
+                                                    <TbSpeakerphone className="mr-2 size-4" />
+                                                    {announcement.title}
+                                                </h2>
                                                 <button
-                                                    onClick={() => handleDelete(announcement.id)}
-                                                    className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full rounded-md transition duration-200"
+                                                    onClick={(event) => handleToggleMenu(announcement.id, event)}
+                                                    ref={menuRef}
+                                                    className="p-2 rounded-full cursor-pointer hover:bg-gray-100 transition-colors duration-300 ease-in-out"
                                                 >
-                                                    <AiOutlineDelete className="mr-2 text-red-500" />
-                                                    Delete
+                                                    <CiMenuKebab className="size-4" />
                                                 </button>
                                             </div>
-                                        )}
-                                        <p className="text-sm text-gray-700 mb-4">{announcement.description}</p>
-                                        <div className="flex flex-wrap gap-2">
-                                            {announcement.tags.map((tag, index) => (
-                                                <span key={index} className="text-xs font-medium bg-blue-100 text-blue-700 py-1 px-3 rounded-full">
-                                                    {tag}
-                                                </span>
-                                            ))}
-                                        </div>
-                                        <div className="flex items-center mt-4 text-sm text-gray-500 font-medium">
-                                            <FaRegClock className="mr-2" />
-                                            <span>{new Date(announcement.created_at).toLocaleDateString()}</span>
+                                            {activeMenuId === announcement.id && (
+                                                <div className="absolute w-36 h-auto flex flex-col items-start p-2 bg-white shadow-lg border rounded-md right-12 top-5 z-10">
+                                                    <button className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full rounded-md transition duration-200">
+                                                        <AiOutlineEdit className="mr-2 text-blue-500" />
+                                                        Edit
+                                                    </button>
+                                                    <button
+                                                        onClick={() => handleDelete(announcement.id)}
+                                                        className="flex items-center px-4 py-2 text-sm text-gray-700 hover:bg-gray-100 w-full rounded-md transition duration-200"
+                                                    >
+                                                        <AiOutlineDelete className="mr-2 text-red-500" />
+                                                        Delete
+                                                    </button>
+                                                </div>
+                                            )}
+                                            <p className="text-sm text-gray-700 mb-4">{announcement.description}</p>
+                                            <div className="flex flex-wrap gap-2">
+                                                {announcement.tags.map((tag, index) => (
+                                                    <span key={index} className="text-xs font-medium bg-blue-100 text-blue-700 py-1 px-3 rounded-full">
+                                                        {tag}
+                                                    </span>
+                                                ))}
+                                            </div>
+                                            <div className="flex items-center mt-4 text-sm text-gray-500 font-medium">
+                                                <FaRegClock className="mr-2" />
+                                                <span>{new Date(announcement.created_at).toLocaleDateString()}</span>
+                                            </div>
                                         </div>
                                     </div>
+                                ))}
+                            </div>
+                        ) : (
+                            <div className="flex flex-col items-center gap-3">
+                                <div className="p-3 rounded-full bg-gray-200">
+                                    <FaRegBell className="text-3xl text-gray-500" />
                                 </div>
-                            ))}
-                        </div>
+                                <h1 className="font-medium text-gray-800">
+                                    No announcements at the moment
+                                </h1>
+                                <p className="mb-6 text-sm text-gray-600 flex items-center">
+                                    <MdOutlineAnnouncement className="mr-2 text-primary" />
+                                    Share Announcements to Keep Users Informed and Updated
+                                </p>
+                            </div>
+                        )}
                     </div>
                 </div>
             </DivContainer>

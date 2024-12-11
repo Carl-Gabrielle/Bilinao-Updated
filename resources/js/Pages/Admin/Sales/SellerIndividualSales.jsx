@@ -93,8 +93,8 @@ export default function SellerIndividualSales({ auth }) {
                                         <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Net Pay</th>
                                         <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Quantity Sold</th>
                                         <th className="px-6 py-4 text-[0.7rem] font-medium  tracking-wider text-left text-gray-700 uppercase text-nowrap">Revenue Share (4%)</th>
-                                        <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Status</th>
-                                        <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Action</th>
+                                        {/* <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Status</th>
+                                        <th className="px-6 py-4 text-[0.7rem] font-medium   tracking-wider text-left text-gray-700 uppercase text-nowrap">Action</th> */}
                                     </tr>
                                 </thead>
                                 <tbody className="text-sm bg-white divide-y divide-gray-200">
@@ -110,7 +110,7 @@ export default function SellerIndividualSales({ auth }) {
                                                 <FaPesoSign className="mr-1 text-green-500" />
                                                 {Math.round(item.contribution)}
                                             </td>
-                                            <td className="px-6 py-4">
+                                            {/* <td className="px-6 py-4">
                                                 <span
                                                     className={`py-1 px-3 rounded-full ${item.status === "Paid" ? "bg-green-100 text-green-500" : "bg-red-100 text-red-500"}`}
                                                 >
@@ -130,7 +130,7 @@ export default function SellerIndividualSales({ auth }) {
                                                         <FaCheckCircle className="mr-2" /> Paid
                                                     </span>
                                                 )}
-                                            </td>
+                                            </td> */}
                                         </tr>
                                     ))}
                                 </tbody>
